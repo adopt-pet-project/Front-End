@@ -1,8 +1,8 @@
-import styles from '@/styles/components/header/header.module.scss';
+import {RefObject} from 'react';
 import Logo from './logo';
 import Menu from './menu';
 import Profile from './profile';
-import {RefObject} from 'react';
+import styles from '@/styles/components/header/header.module.scss';
 
 export default function Header({asideRef}: {asideRef: RefObject<HTMLElement>}) {
 	return (
