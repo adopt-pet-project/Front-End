@@ -1,0 +1,22 @@
+.header {
+	grid-area: header;
+	display: flex;
+	z-index: 99;
+	align-items: center;
+	justify-content: space-between;
+	box-sizing: border-box;
+	width: 100%;
+	height: var(--header-height);
+	padding: 0 16px;
+	box-shadow: rgb(0 0 0 / 10%) 0px -1px 0px 0px inset;
+	background-color: var(--background);
+}
+
+.button {
+	display: flex;
+	height: 36px;
+	padding: 0 14px;
+	outline: none;
+	background-color: var(--black);
+	color: var(--white);
+}

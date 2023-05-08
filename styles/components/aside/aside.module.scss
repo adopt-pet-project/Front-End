@@ -1,0 +1,27 @@
+.aside {
+	position: fixed;
+	z-index: 99;
+	top: var(--header-height);
+	left: 0;
+	display: block;
+	width: var(--aside-width);
+	height: calc(100vh - var(--header-height));
+	background-color: var(--white);
+	grid-area: aside;
+	box-shadow: rgba(0, 0, 0, 0.1) -1px 0px 0px 0px inset;
+	transition: var(--transition);
+}
+.aside[data-active] {
+	display: block;
+}
+@media screen and (max-width: 1024px) and (min-width: 501px) {
+	.aside {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.aside {
+		width: 100%;
+	}
+}

@@ -1,0 +1,81 @@
+:root {
+	/* 레이아웃 속성 */
+	--header-height: 60px;
+	--aside-width: 280px;
+
+	/* 레이아웃 색상 */
+	--background: var(--white);
+	--greyBackground: var(--bluewhite);
+	--color-text: var(--black);
+	--color-text-light: var(--lightblack);
+
+	/* 기타 속성 */
+	--transition: 0.3s ease-in-out;
+
+	/* 색상 */
+	--white: #fff;
+	--bluewhite: #f2f4f6;
+	--black: #18181b;
+	--lightblack: #444447;
+	--gray: #ececee;
+	--lightgray: #f4f4f5;
+	--darkgray: #71717a;
+}
+
+#__next,
+body,
+html {
+	max-width: 100%;
+	min-height: 100vh;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	-webkit-font-smoothing: antialiased;
+}
+
+.layout {
+	position: relative;
+	width: 100%;
+	min-height: 100vh;
+	display: grid;
+	grid-template-areas:
+		'header header'
+		'aside main';
+	grid-template-rows: var(--header-height) 1fr;
+	grid-template-columns: var(--aside-width) 1fr;
+	justify-items: center;
+
+	.main {
+		position: relative;
+		grid-area: main;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.layout {
+		grid-template-columns: none;
+		grid-template-areas:
+			'header'
+			'main';
+	}
+}
+
+.main {
+	width: 100%;
+	background-color: var(--bluewhite);
+	display: flex;
+	justify-content: center;
+}
+
+.container {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+	max-width: 768px;
+	padding: 48px 16px;
+	margin: 0 auto;
+}
