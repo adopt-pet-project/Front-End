@@ -22,6 +22,11 @@
 	--darkgray: #71717a;
 }
 
+* {
+	font-family: 'AppleSDGothicNeo', sans-serif;
+	box-sizing: border-box;
+}
+
 #__next,
 body,
 html {

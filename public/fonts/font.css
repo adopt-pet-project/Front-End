@@ -1,0 +1,6 @@
+@font-face {
+  font-family: "AppleSDGothicNeo";
+  src: url("./AppleSDGothicNeoR.ttf") format("woff2"),
+    url("./AppleSDGothicNeoR.woff") format("woff"),
+    url("./AppleSDGothicNeoR.ttf") format("turetype");
+}

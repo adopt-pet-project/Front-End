@@ -1,0 +1,44 @@
+.nav {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	user-select: none;
+}
+
+.menuList {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding: 24px 24px 0 24px;
+	margin: 0;
+	justify-content: space-between;
+	list-style-type: none;
+
+	li {
+		padding-left: 8px;
+		width: 100%;
+		border-radius: 4px;
+		transition: var(--transition);
+
+		&:hover {
+			background-color: var(--gray);
+		}
+	}
+
+	span {
+		padding-bottom: 6px;
+		font-weight: bold;
+		font-size: 22px;
+	}
+}
+
+.link {
+	display: block;
+	font-weight: 600;
+	width: 100%;
+	line-height: 32px;
+	height: 32px;
+	text-decoration: none;
+	color: var(--black);
+	transition: var(--transition);
+}
