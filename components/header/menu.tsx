@@ -1,5 +1,5 @@
-import styles from '@/styles/components/header/menu.module.scss';
 import {RefObject, useState} from 'react';
+import styles from '@/styles/components/header/menu.module.scss';
 
 export default function Menu({asideRef}: {asideRef: RefObject<HTMLElement>}) {
 	const [isOpen, setIsOpen] = useState<boolean>(false);

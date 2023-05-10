@@ -24,6 +24,11 @@
 	--skyblue: #3586ff;
 }
 
+* {
+	font-family: 'AppleSDGothicNeo', sans-serif;
+	box-sizing: border-box;
+}
+
 #__next,
 body,
 html {

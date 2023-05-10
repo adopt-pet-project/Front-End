@@ -1,10 +1,11 @@
-import '@/styles/globals.css';
 import {NextPage} from 'next';
 import type {AppProps} from 'next/app';
-import Head from 'next/head';
 import {ReactElement, ReactNode} from 'react';
 import {RecoilRoot} from 'recoil';
 import {QueryClient, QueryClientProvider} from 'react-query';
+import Head from 'next/head';
+import '@/styles/globals.css';
+import '@/public/fonts/font.css';
 
 const queryClient = new QueryClient();
 
