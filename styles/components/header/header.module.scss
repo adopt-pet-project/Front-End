@@ -1,10 +1,12 @@
 .header {
 	grid-area: header;
+	position: fixed;
 	display: flex;
 	z-index: 99;
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
+	max-width: 100vw;
 	height: var(--header-height);
 	padding: 0 16px;
 	box-shadow: rgb(0 0 0 / 10%) 0px -1px 0px 0px inset;
@@ -18,4 +20,10 @@
 	outline: none;
 	background-color: var(--black);
 	color: var(--white);
+}
+
+@media screen and (max-width: 768px) {
+	.header {
+		box-shadow: rgb(0 0 0 / 25%) 0px -1px 0px 0px inset;
+	}
 }
