@@ -2,6 +2,12 @@
 	display: none;
 }
 
+.icon {
+	cursor: pointer;
+	width: 28px;
+	height: 28px;
+}
+
 @media screen and (max-width: 1024px) {
 	.menu {
 		display: block;

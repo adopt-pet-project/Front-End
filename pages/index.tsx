@@ -1,6 +1,6 @@
-import Layout from '@/components/layout.tsx/layout';
 import {GetServerSideProps} from 'next';
 import {ReactElement} from 'react';
+import Layout from '@/components/layout/layout';
 
 export default function Home(props: {str: string}) {
 	return <>response from server : {props.str}</>;
