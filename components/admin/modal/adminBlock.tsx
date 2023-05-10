@@ -57,7 +57,7 @@ function AdminBlock() {
 					</button>
 					<button
 						type="submit"
-						onClick={() => {
+						onClick={e => {
 							e.preventDefault();
 							setOption('제한');
 							setIsSelectTime(true);
