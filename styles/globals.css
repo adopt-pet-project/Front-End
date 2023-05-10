@@ -8,6 +8,7 @@
 	--greyBackground: var(--bluewhite);
 	--color-text: var(--black);
 	--color-text-light: var(--lightblack);
+	--selected-category-btn: var(#3586ff);
 
 	/* 기타 속성 */
 	--transition: 0.3s ease-in-out;
@@ -20,6 +21,7 @@
 	--gray: #ececee;
 	--lightgray: #f4f4f5;
 	--darkgray: #71717a;
+	--skyblue: #3586ff;
 }
 
 #__next,
@@ -78,4 +80,13 @@ body {
 	max-width: 768px;
 	padding: 48px 16px;
 	margin: 0 auto;
+}
+
+/*드래그 방지를 위한CSS*/
+.drag-prevent {
+	-ms-user-select: none;
+	-moz-user-select: -moz-none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
 }

@@ -1,9 +1,23 @@
 import {atom} from 'recoil';
 import {v1} from 'uuid';
 
-export const Aexample = atom<string>({
-	key: `example/${v1}`,
-	default: 'test',
+export const AisStatistic = atom<boolean>({
+	key: `adminCtg/${v1}`,
+	default: false,
 });
 
-export default Aexample;
+export const AisAdminModalOn = atom<boolean>({
+	key: `adminModal/${v1}`,
+	default: false,
+});
+
+export const AselectedTime = atom<string>({
+	key: `selectedTime/${v1}`,
+	default: '1',
+});
+
+export const AisSelectTime = atom<boolean>({
+	key: `selectModal/${v1}`,
+	default: false,
+});
+export default {};

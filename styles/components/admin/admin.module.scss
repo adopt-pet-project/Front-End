@@ -1,0 +1,595 @@
+.adminCategory {
+	display: flex;
+	justify-content: left;
+	width: 100%;
+	position: relative;
+	margin-bottom: 30px;
+
+	.categoryBtn {
+		margin-right: 20px;
+		width: 50px;
+		font-weight: bold;
+		color: var(--skyblue);
+		font-size: 23px;
+		margin-bottom: 8px;
+		cursor: pointer;
+	}
+	.currentBtn {
+		color: var(--black);
+	}
+
+	.ctgBoundary {
+		position: absolute;
+		width: 45px;
+		left: 0px;
+		top: 23px;
+		border: 1px solid var(--skyblue);
+
+		transition: var(--transition);
+	}
+
+	.onRight {
+		left: 69px;
+	}
+}
+
+.AccordionUl {
+	width: 100%;
+	padding: 0px;
+	display: flex;
+	justify-content: left;
+	flex-direction: column;
+
+	.menuLi {
+		font-weight: bold;
+
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		list-style: none;
+
+		.menuTitle {
+			width: 100%;
+			cursor: pointer;
+		}
+
+		.menuBoundary {
+			width: 100%;
+		}
+		.on {
+			color: var(--skyblue);
+		}
+	}
+}
+
+.tableCtg {
+	margin-top: 16px;
+	display: flex;
+	width: 100%;
+	justify-content: space-around;
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 6px;
+
+	span {
+		width: 25%;
+		text-align: center;
+		cursor: pointer;
+	}
+	.current {
+		color: red;
+	}
+}
+
+.searchBar {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	border-radius: 8px;
+	padding: 3px;
+	border: 1px solid black;
+	margin-bottom: 9px;
+	:focus {
+		outline: none;
+	}
+	input {
+		width: 100%;
+		padding: 3px;
+		font-size: 20px;
+		border: none;
+		background: none;
+	}
+}
+
+.userLineTag {
+	width: 100%;
+	text-align: center;
+	display: flex;
+	:nth-child(1) {
+		flex: 0.5;
+	}
+	:nth-child(n + 2):nth-child(-n + 4) {
+		flex: 1;
+		border-left: 1px solid lightgrey;
+	}
+
+	:nth-child(5) {
+		flex: 2.5;
+		border-left: 1px solid lightgrey;
+	}
+	:nth-child(6) {
+		flex: 0.5;
+		border-left: 1px solid lightgrey;
+	}
+}
+
+.userList {
+	padding: 0px;
+	width: 100%;
+	margin: 0px;
+	text-align: center;
+
+	li {
+		margin: 3px 0;
+		width: 100%;
+		display: flex;
+		list-style: none;
+		:nth-child(1) {
+			flex: 0.5;
+		}
+		:nth-child(n + 2):nth-child(-n + 4) {
+			flex: 1;
+			border-left: 1px solid lightgrey;
+		}
+
+		:nth-child(5) {
+			flex: 2.5;
+			border-left: 1px solid lightgrey;
+		}
+		:nth-child(6) {
+			flex: 0.5;
+			border-left: 1px solid lightgrey;
+		}
+		:last-child {
+			cursor: pointer;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+}
+
+.tagBoundary {
+	width: 100%;
+}
+
+.reportLineTag {
+	width: 100%;
+	text-align: center;
+	display: flex;
+	:nth-child(1) {
+		flex: 0.7;
+	}
+	:nth-child(n + 2):nth-child(-n + 3) {
+		flex: 1;
+		border-left: 1px solid lightgrey;
+	}
+
+	:nth-child(4) {
+		flex: 2;
+		border-left: 1px solid lightgrey;
+	}
+
+	:nth-child(5) {
+		flex: 1;
+		border-left: 1px solid lightgrey;
+	}
+	:nth-child(6) {
+		flex: 0.5;
+		border-left: 1px solid lightgrey;
+	}
+}
+
+.reportList {
+	padding: 0px;
+	width: 100%;
+	margin: 0px;
+	text-align: center;
+
+	li {
+		margin: 3px 0;
+		width: 100%;
+		display: flex;
+		list-style: none;
+		:nth-child(1) {
+			flex: 0.7;
+		}
+		:nth-child(n + 2):nth-child(-n + 3) {
+			flex: 1;
+			border-left: 1px solid lightgrey;
+		}
+
+		:nth-child(4) {
+			flex: 2;
+			border-left: 1px solid lightgrey;
+		}
+
+		:nth-child(5) {
+			flex: 1;
+			border-left: 1px solid lightgrey;
+		}
+		:nth-child(6) {
+			flex: 0.5;
+			border-left: 1px solid lightgrey;
+		}
+		:last-child {
+			cursor: pointer;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+}
+
+.blockLineTag {
+	width: 100%;
+	text-align: center;
+	display: flex;
+	:nth-child(1) {
+		flex: 1;
+	}
+	:nth-child(2) {
+		flex: 0.8;
+		border-left: 1px solid lightgrey;
+	}
+	:nth-child(3) {
+		flex: 0.4;
+		border-left: 1px solid lightgrey;
+	}
+	:nth-child(4) {
+		flex: 0.8;
+		border-left: 1px solid lightgrey;
+	}
+
+	:nth-child(5) {
+		flex: 1;
+		border-left: 1px solid lightgrey;
+	}
+	:nth-child(6) {
+		flex: 0.5;
+		border-left: 1px solid lightgrey;
+	}
+}
+
+.blockList {
+	padding: 0px;
+	width: 100%;
+	margin: 0px;
+	text-align: center;
+
+	li {
+		margin: 3px 0;
+		width: 100%;
+		display: flex;
+		list-style: none;
+		:nth-child(1) {
+			flex: 1;
+		}
+		:nth-child(2) {
+			flex: 0.8;
+			border-left: 1px solid lightgrey;
+		}
+		:nth-child(3) {
+			flex: 0.4;
+			border-left: 1px solid lightgrey;
+		}
+		:nth-child(4) {
+			flex: 0.8;
+			border-left: 1px solid lightgrey;
+		}
+
+		:nth-child(5) {
+			flex: 1;
+			border-left: 1px solid lightgrey;
+		}
+		:nth-child(6) {
+			flex: 0.5;
+			border-left: 1px solid lightgrey;
+		}
+		:last-child {
+			cursor: pointer;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+}
+
+.ipBlockLineTag {
+	width: 100%;
+	text-align: center;
+	display: flex;
+	:nth-child(1) {
+		flex: 1;
+	}
+	:nth-child(2) {
+		flex: 0.8;
+		border-left: 1px solid lightgrey;
+	}
+	:nth-child(3) {
+		flex: 0.4;
+		border-left: 1px solid lightgrey;
+	}
+}
+
+.ipBlockList {
+	padding: 0px;
+	width: 100%;
+	margin: 0px;
+	text-align: center;
+
+	li {
+		margin: 3px 0;
+		width: 100%;
+		display: flex;
+		list-style: none;
+		:nth-child(1) {
+			flex: 1;
+		}
+		:nth-child(2) {
+			flex: 0.8;
+			border-left: 1px solid lightgrey;
+		}
+		:nth-child(3) {
+			flex: 0.4;
+			border-left: 1px solid lightgrey;
+		}
+		:last-child {
+			cursor: pointer;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+}
+
+.ipAddBtn {
+	padding: 5px;
+	width: 100%;
+	margin-bottom: 6px;
+	border-radius: 5px;
+	border: 1px solid black;
+	background: rgb(220, 220, 220);
+	font-weight: bold;
+	font-size: 17px;
+	cursor: pointer;
+	&:hover {
+		background: rgb(189, 189, 189);
+	}
+}
+
+.ipAddLine {
+	padding: 5px 0px;
+	display: flex;
+	width: 100%;
+	justify-content: right;
+	input {
+		width: 38px;
+		text-align: right;
+		font-size: 20px;
+		background: none;
+		border: 1px solid var(--black);
+		margin-right: 5px;
+		border: none;
+		border-bottom: 2px solid var(--black);
+	}
+	button {
+		margin-right: 10px;
+		width: 50px;
+		padding: 5px;
+		border: 2px solid black;
+		border-radius: 8px;
+		font-weight: bold;
+		background: grey;
+	}
+	.admit {
+		background: lightgreen;
+	}
+}
+
+.timeSelectBar {
+	margin: 15px 0;
+	text-align: right;
+	span {
+		margin-left: 10px;
+		font-weight: normal;
+		cursor: pointer;
+	}
+	.selected {
+		font-weight: bold;
+	}
+}
+
+.modalWrap {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 100;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.05);
+	.adminBlock {
+		background: white;
+		width: max(30%, 420px);
+		height: max(50%, 350px);
+		margin-bottom: 40px;
+	}
+}
+
+.adminBlock {
+	input {
+		border: none;
+		width: 80%;
+		font-family: none;
+		font-size: 15px;
+		&:focus {
+			outline: none;
+		}
+	}
+	textarea {
+		font-family: none;
+		font-size: 15px;
+		height: 98%;
+		margin: 0px;
+		padding: 2px;
+		resize: none;
+		width: 80%;
+		border: 1px solid lightgrey;
+		&:focus {
+			outline: none;
+			border: 1px solid black;
+		}
+	}
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid black;
+	padding: 5px;
+	hr {
+		width: 100%;
+	}
+	:nth-child(1),
+	:nth-child(3),
+	:nth-child(5) {
+		:nth-child(1) {
+			padding-right: 5px;
+			margin-right: 5px;
+			border-right: 1px solid black;
+		}
+	}
+
+	:nth-child(5) {
+		display: flex;
+		height: 400px;
+		:nth-child(1) {
+			height: 100%;
+			display: flex;
+			align-items: center;
+		}
+	}
+	:nth-child(7) {
+		display: flex;
+		justify-content: space-between;
+
+		.cancelBtn {
+			border: none;
+			background: none;
+			cursor: pointer;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+		:nth-child(2) {
+			button {
+				text-decoration: none;
+				background: rgb(255, 68, 68);
+				border: 2px solid rgb(255, 155, 155);
+				border-radius: 8px;
+				margin-left: 5px;
+				font-weight: bold;
+				color: white;
+				padding: 8px;
+				cursor: pointer;
+				&:hover {
+					background: rgb(219, 58, 58);
+				}
+			}
+		}
+	}
+}
+
+.selectTimeWrap {
+	margin: 0;
+	background: rgba(0, 0, 0, 0.8);
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.selectTime {
+		margin: 0;
+		background: rgb(255, 224, 224);
+		width: 90%;
+		height: 40%;
+		border-radius: 8px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		.admitBtn {
+			display: span;
+			margin-top: 20px;
+		}
+		.slider {
+			border: none;
+			width: 100%;
+			height: 20px;
+			padding: 0px;
+
+			margin: 0px;
+			margin-top: 10px;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			align-items: center;
+			margin-bottom: 5px;
+			.bar {
+				position: relative;
+				width: 80%;
+				background: rgb(210, 218, 224);
+				height: 8px;
+				border: none;
+				cursor: pointer;
+			}
+
+			.checker {
+				position: absolute;
+				cursor: pointer;
+				border: none;
+				padding: 0px;
+				margin: 0px;
+				width: 20px;
+				top: -3px;
+				height: 20px;
+				background: var(--skyblue);
+				border-radius: 50%;
+				transition: var(--transition);
+				transform: translate(-10px, -3px);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				div {
+					width: 10px;
+					height: 10px;
+					background: blue;
+					padding: 0px;
+					margin: 0px;
+					border: none;
+					border-radius: 50%;
+				}
+				&:hover {
+					width: 26px;
+					height: 26px;
+					transform: translate(-13px, -6px);
+				}
+			}
+		}
+	}
+}
