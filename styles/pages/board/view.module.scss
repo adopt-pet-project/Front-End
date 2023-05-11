@@ -76,6 +76,41 @@
 	min-height: 200px;
 }
 
+.commentContainer {
+	padding: 0 16px;
+	border-top: 1px solid var(--gray);
+}
+
+.writeComment {
+	border-radius: 0 0 8px 8px;
+	position: sticky;
+	padding: 12px;
+	border-top: 1px solid var(--black);
+	bottom: 0;
+	background-color: var(--white);
+	display: flex;
+
+	button {
+		text-align: center;
+		cursor: pointer;
+		margin: 0;
+		padding: 0;
+		border-radius: 6px;
+		border: none;
+		background-color: var(--black);
+		color: var(--white);
+		height: 28px;
+		padding: 4px 14px;
+	}
+}
+
+.commentInput {
+	flex-grow: 1;
+	margin-right: 12px;
+	border: none;
+	outline: none;
+}
+
 @media screen and (max-width: 768px) {
 	.return {
 		margin: 0 12px 12px 12px;
@@ -90,7 +125,12 @@
 		padding: 12px;
 	}
 
-	.option {
+	.option,
+	.commentContainer {
 		padding: 0 12px 12px 12px;
+	}
+
+	.writeComment {
+		padding: 12px;
 	}
 }
