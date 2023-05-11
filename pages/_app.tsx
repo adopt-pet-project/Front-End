@@ -6,7 +6,7 @@ import {QueryClient, QueryClientProvider} from 'react-query';
 import Head from 'next/head';
 import '@/styles/globals.css';
 import '@/public/fonts/font.css';
-import ModalWrap from '@/components/layout.tsx/modalWrap';
+import ModalWrap from '@/components/layout/modalWrap';
 
 const queryClient = new QueryClient();
 
