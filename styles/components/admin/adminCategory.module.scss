@@ -1,0 +1,34 @@
+.adminCategory {
+	display: flex;
+	justify-content: left;
+	width: 100%;
+	position: relative;
+	margin-bottom: 30px;
+
+	.categoryBtn {
+		margin-right: 20px;
+		width: 50px;
+		font-weight: bold;
+		color: var(--skyblue);
+		font-size: 23px;
+		margin-bottom: 8px;
+		cursor: pointer;
+	}
+	.currentBtn {
+		color: var(--black);
+	}
+
+	.ctgBoundary {
+		position: absolute;
+		width: 45px;
+		left: 0px;
+		top: 23px;
+		border: 1px solid var(--skyblue);
+
+		transition: var(--transition);
+	}
+
+	.onRight {
+		left: 69px;
+	}
+}

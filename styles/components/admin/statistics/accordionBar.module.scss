@@ -1,0 +1,28 @@
+.AccordionUl {
+	width: 100%;
+	padding: 0px;
+	display: flex;
+	justify-content: left;
+	flex-direction: column;
+
+	.menuLi {
+		font-weight: bold;
+
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		list-style: none;
+
+		.menuTitle {
+			width: 100%;
+			cursor: pointer;
+		}
+
+		.menuBoundary {
+			width: 100%;
+		}
+		.on {
+			color: var(--skyblue);
+		}
+	}
+}

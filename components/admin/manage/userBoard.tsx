@@ -1,4 +1,4 @@
-import styles from '@/styles/components/admin/admin.module.scss';
+import styles from '@/styles/components/admin/manage/userBoard.module.scss';
 import BoardUserLine from './userBoardLine';
 import {useState} from 'react';
 

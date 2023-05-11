@@ -1,4 +1,4 @@
-import styles from '@/styles/components/admin/admin.module.scss';
+import styles from '@/styles/components/admin/adminCategory.module.scss';
 import {useRecoilState} from 'recoil';
 import {AisStatistic} from '@/utils/recoil/recoilStore';
 function AdminCategory() {

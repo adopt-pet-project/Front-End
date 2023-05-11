@@ -1,5 +1,5 @@
 import React, { useState }  from 'react';
-import styles from '@/styles/components/admin/admin.module.scss';
+import styles from '@/styles/components/admin/statistics/accordionBar.module.scss';
 import UserStatistics from './userStatistics';
 import AdoptStatistics from './adoptStatistics';
 import ContentsStatistics from './contentsStatistics';

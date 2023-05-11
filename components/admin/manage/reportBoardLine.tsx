@@ -12,7 +12,7 @@ function BoardReportLine({lineData}: {lineData: Boardreport}) {
 		reportDate,
 	} = lineData;
 	return (
-		<li className={styles.reportLine}>
+		<li>
 			<span>{state}</span>
 			<span>{reporter}</span>
 			<span>{target}</span>

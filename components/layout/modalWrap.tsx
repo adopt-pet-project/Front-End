@@ -1,12 +1,16 @@
 import React, {useEffect, useRef} from 'react';
-import styles from '@/styles/components/admin/admin.module.scss';
-import AdminBlock from '../admin/modal/adminBlock';
+import styles from '@/styles/components/layout/modalWrap.module.scss';
+
 import {useRecoilState} from 'recoil';
-import {AmodalWrap} from '@/utils/recoil/recoilStore';
+import {AmodalType, AmodalWrap} from '@/utils/recoil/recoilStore';
+
+import UserInfo from '../admin/modal/userInfo';
+import AdminBlock from '../admin/modal/adminBlock';
 
 function ModalWrap() {
 	const modalWrapRef = useRef<HTMLDivElement>(null);
 	const [modalRef, setModalRef] = useRecoilState(AmodalWrap);
+	const [modalType, setModalType] = useRecoilState(AmodalType);
 
 	useEffect(() => {
 		setModalRef(modalWrapRef);
@@ -22,7 +26,11 @@ function ModalWrap() {
 			}}
 			className={styles.modalWrap}
 		>
-			{<AdminBlock />}
+			{modalType === 'adminBlock' ? (
+				<AdminBlock />
+			) : modalType === 'userInfo' ? (
+				<UserInfo />
+			) : null}
 		</div>
 	);
 }

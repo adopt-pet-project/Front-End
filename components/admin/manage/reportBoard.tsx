@@ -1,4 +1,4 @@
-import styles from '@/styles/components/admin/admin.module.scss';
+import styles from '@/styles/components/admin/manage/reportBoard.module.scss';
 import BoardReportLine from './reportBoardLine';
 import {useState} from 'react';
 

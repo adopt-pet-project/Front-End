@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import styles from '@/styles/components/admin/admin.module.scss';
+import styles from '@/styles/components/admin/statistics/userStatistics.module.scss';
 import {
 	Chart as ChartJS,
 	CategoryScale,

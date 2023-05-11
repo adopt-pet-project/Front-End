@@ -1,9 +1,9 @@
-import styles from '@/styles/components/admin/admin.module.scss';
+import styles from '@/styles/components/admin/manage/blockBoardLine.module.scss';
 
 function BlockBoardLine({lineData}: {lineData: Boardblock}) {
 	const {state, userId, userName, times, blockDate, reason} = lineData;
 	return (
-		<li className={styles.reportLine}>
+		<li>
 			<span>{state}</span>
 			<span>{userName}</span>
 			<span>{times}</span>

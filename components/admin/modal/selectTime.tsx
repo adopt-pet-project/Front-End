@@ -1,4 +1,4 @@
-import styles from '@/styles/components/admin/admin.module.scss';
+import styles from '@/styles/components/admin/modal/selectTime.module.scss';
 import Slider from './slider';
 import {useRecoilState} from 'recoil';
 import {

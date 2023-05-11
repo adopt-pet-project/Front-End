@@ -1,5 +1,4 @@
-import styles from '@/styles/components/admin/admin.module.scss';
-import BoardReportLine from './reportBoardLine';
+import styles from '@/styles/components/admin/manage/blockBoard.module.scss';
 import {useState} from 'react';
 import BlockBoardLine from './blockBoardLine';
 

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import styles from '@/styles/components/admin/admin.module.scss';
+import styles from '@/styles/components/admin/manage/ManageBoard.module.scss';
 import UserBoard from './userBoard';
 import ReportBoard from './reportBoard';
 import BlockBoard from './blockBoard';
