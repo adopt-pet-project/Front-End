@@ -1,18 +1,3 @@
-.ipAddBtn {
-	padding: 5px;
-	width: 100%;
-	margin-bottom: 6px;
-	border-radius: 5px;
-	border: 1px solid black;
-	background: rgb(220, 220, 220);
-	font-weight: bold;
-	font-size: 17px;
-	cursor: pointer;
-	&:hover {
-		background: rgb(189, 189, 189);
-	}
-}
-
 .ipAddLine {
 	padding: 5px 0px;
 	display: flex;
