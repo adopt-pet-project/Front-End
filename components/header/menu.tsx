@@ -15,7 +15,11 @@ export default function Menu({asideRef}: {asideRef: RefObject<HTMLElement>}) {
 				setIsOpen(!isOpen);
 			}}
 		>
-			{isOpen ? 'close' : 'open'}
+			{isOpen ? (
+				<img className={styles.icon} src="/icon/close.svg" alt="" />
+			) : (
+				<img className={styles.icon} src="/icon/menu.svg" alt="" />
+			)}
 		</div>
 	);
 }
