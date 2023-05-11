@@ -1,0 +1,36 @@
+.order {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 16px;
+}
+
+.orderItem {
+	cursor: pointer;
+	outline: none;
+	text-decoration: none;
+	font-size: 14px;
+	color: var(--darkgray);
+	background-color: transparent;
+	border-radius: 50px;
+	padding: 4px 12px;
+	margin-right: 8px;
+	border: none;
+}
+
+.active {
+	font-weight: 600;
+	background-color: var(--white);
+	color: var(--black);
+}
+
+@media screen and (max-width: 768px) {
+	.order {
+		padding: 0 12px;
+		margin-bottom: 8px;
+	}
+
+	.active {
+		background-color: var(--gray);
+	}
+}

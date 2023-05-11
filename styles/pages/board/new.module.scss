@@ -1,0 +1,78 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	padding: 12px;
+}
+
+.imageInput {
+	display: none;
+}
+
+.imageButton {
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--gray);
+	min-width: 64px;
+	width: 64px;
+	height: 64px;
+	border-radius: 6px;
+	margin: 16px 8px 16px 0;
+
+	img {
+		width: 32px;
+		height: 32px;
+	}
+
+	span {
+		font-size: bold;
+		margin-top: 4px;
+	}
+}
+
+.imageContainer {
+	overflow-x: hidden;
+	overflow-y: hidden;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	flex-direction: row;
+	border-bottom: 1px solid var(--gray);
+}
+
+.preview {
+	cursor: pointer;
+	margin: 0 8px;
+	width: 64px;
+	height: 64px;
+	border-radius: 6px;
+}
+
+.title,
+.context {
+	border: none;
+	outline: none;
+}
+
+.title {
+	font-size: 24px;
+	padding: 16px 0;
+	border-bottom: 1px solid var(--gray);
+}
+
+.context {
+	min-height: 300px;
+	resize: vertical;
+	max-width: 100%;
+	padding: 16px 0;
+}
+
+@media screen and (max-width: 501px) {
+	.imageContainer {
+		overflow-x: scroll;
+		overflow-y: hidden;
+		flex-wrap: nowrap;
+	}
+}
