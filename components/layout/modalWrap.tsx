@@ -1,4 +1,4 @@
-import React, {RefObject, useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import styles from '@/styles/components/admin/admin.module.scss';
 import AdminBlock from '../admin/modal/adminBlock';
 import {useRecoilState} from 'recoil';
