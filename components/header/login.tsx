@@ -2,7 +2,11 @@ import styles from '@/styles/components/header/login.module.scss';
 import Link from 'next/link';
 import {BaseSyntheticEvent} from 'react';
 
-const providerList = ['kakao', 'naver', 'google'];
+const providerList: Link[] = [
+	{text: 'kakao', href: ''},
+	{text: 'naver', href: ''},
+	{text: 'google', href: ''},
+];
 
 export default function Login({hideModal}: {hideModal: () => void}) {
 	return (
@@ -25,20 +29,23 @@ export default function Login({hideModal}: {hideModal: () => void}) {
 					기존 계정으로 간단하게 시작하세요.
 				</span>
 				<ul className={styles.provider}>
-					{providerList.map((provider: string) => {
+					{providerList.map((provider: Link) => {
 						return (
 							<>
 								<li>
-									<div className={`${styles[provider]}`}>
+									<Link
+										className={`${styles[provider.text]}`}
+										href={provider.href}
+									>
 										<img
 											className={styles.logo}
-											src={`/icon/provider/${provider}.svg`}
-											alt={provider}
+											src={`/icon/provider/${provider.text}.svg`}
+											alt={provider.text}
 										/>
-									</div>
+									</Link>
 									<span
 										className={styles.subMessage}
-									>{`${provider.toUpperCase()}로 계속하기`}</span>
+									>{`${provider.text.toUpperCase()}로 계속하기`}</span>
 								</li>
 							</>
 						);
