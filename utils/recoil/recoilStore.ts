@@ -21,7 +21,9 @@ export const AmodalWrap = atom<React.RefObject<HTMLDivElement> | null>({
 	default: null,
 });
 
-export const AmodalType = atom<'adminBlock' | 'userInfo' | 'none'>({
+export const AmodalType = atom<
+	'adminBlock' | 'userInfo' | 'checkReport' | 'none'
+>({
 	key: `modalType/${v1()}`,
 	default: 'none',
 });

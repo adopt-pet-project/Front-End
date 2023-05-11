@@ -16,6 +16,7 @@ function IpBlockBoard() {
 				<img src={`/magnifier.svg`} alt="menu" />
 				<input type="text" placeholder="search" />
 			</div>
+
 			<div className={styles.ipBlockLineTag}>
 				<span>IP Address</span>
 				<span>차단일</span>

@@ -9,8 +9,8 @@ function IpAddLine() {
 					<input type="text" />. <input type="text" />. <input type="text" />.{' '}
 					<input type="text" />
 				</div>
-				<button className={styles.admit}>추가</button>
-				<button>취소</button>
+				<button className={styles.ipAddBtn}>추가</button>
+				<button className={styles.cancelBtn}>취소</button>
 			</div>
 			<hr></hr>
 		</div>

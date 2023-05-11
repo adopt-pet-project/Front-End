@@ -17,12 +17,13 @@
 		margin-right: 10px;
 		width: 50px;
 		padding: 5px;
-		border: 2px solid black;
+		border: 2px solid rgb(110, 110, 110);
 		border-radius: 8px;
 		font-weight: bold;
-		background: grey;
+		background: lightgrey;
+		cursor: pointer;
 	}
-	.admit {
+	.ipAddBtn {
 		background: lightgreen;
 		border: 2px solid rgb(0, 157, 39);
 	}

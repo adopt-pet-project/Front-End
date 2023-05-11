@@ -20,7 +20,7 @@
 
 	.ctgBoundary {
 		position: absolute;
-		width: 45px;
+		width: 42px;
 		left: 0px;
 		top: 23px;
 		border: 1px solid var(--skyblue);
@@ -30,5 +30,17 @@
 
 	.onRight {
 		left: 69px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.adminCategory {
+		display: flex;
+		justify-content: left;
+		width: 100%;
+		position: relative;
+		margin-bottom: 30px;
+		margin-top: 30px;
+		margin-left: 40px;
 	}
 }

@@ -6,6 +6,7 @@ import {AmodalType, AmodalWrap} from '@/utils/recoil/recoilStore';
 
 import UserInfo from '../admin/modal/userInfo';
 import AdminBlock from '../admin/modal/adminBlock';
+import CheckReport from '../admin/modal/checkReport';
 
 function ModalWrap() {
 	const modalWrapRef = useRef<HTMLDivElement>(null);
@@ -30,6 +31,8 @@ function ModalWrap() {
 				<AdminBlock />
 			) : modalType === 'userInfo' ? (
 				<UserInfo />
+			) : modalType === 'checkReport' ? (
+				<CheckReport />
 			) : null}
 		</div>
 	);
