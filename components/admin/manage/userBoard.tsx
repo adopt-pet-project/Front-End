@@ -49,7 +49,9 @@ function UserBoard() {
 				<span>제재누적</span>
 				<span>가입일</span>
 				<span>상태(IP)</span>
-				<span>리셋</span>
+				<span>
+					<img width="18" height="18" src={`/reload.svg`} alt="" />
+				</span>
 			</div>
 			<hr className={styles.tagBoundary} />
 			<ul className={styles.userList}>

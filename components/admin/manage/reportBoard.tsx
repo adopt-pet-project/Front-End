@@ -61,7 +61,9 @@ function ReportBoard() {
 				<span>대상</span>
 				<span>내용</span>
 				<span>신고일자</span>
-				<span>리셋</span>
+				<span>
+					<img width="18" height="18" src={`/reload.svg`} alt="" />
+				</span>
 			</div>
 			<hr className={styles.tagBoundary} />
 			<ul className={styles.reportList}>

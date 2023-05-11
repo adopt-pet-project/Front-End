@@ -49,7 +49,9 @@ function BlockBoard() {
 				<span>누적</span>
 				<span>신고일자</span>
 				<span>사유</span>
-				<span>리셋</span>
+				<span>
+					<img width="18" height="18" src={`/reload.svg`} alt="" />
+				</span>
 			</div>
 			<hr className={styles.tagBoundary} />
 			<ul className={styles.blockList}>

@@ -16,7 +16,6 @@ function CheckReport() {
 			}}
 			className={styles.reportBox}
 		>
-			<hr />
 			<div className={styles.line}>
 				<div>신고자</div>
 				<div>성익현</div>

@@ -20,7 +20,9 @@ function IpBlockBoard() {
 			<div className={styles.ipBlockLineTag}>
 				<span>IP Address</span>
 				<span>차단일</span>
-				<span>리셋</span>
+				<span>
+					<img width="18" height="18" src={`/reload.svg`} alt="" />
+				</span>
 			</div>
 			<hr className={styles.tagBoundary} />
 			<ul className={styles.ipBlockList}>
