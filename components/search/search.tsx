@@ -45,7 +45,13 @@ export default function Search({currentPath}: {currentPath: string}) {
 
 	return (
 		<div className={styles.container} ref={containerRef} onClick={activate}>
-			<img src="icon/search.svg" alt="search" onClick={clickSearch} />
+			<img
+				src="icon/search.svg"
+				width={32}
+				height={32}
+				alt="search"
+				onClick={clickSearch}
+			/>
 			<input
 				type="text"
 				placeholder="검색할 내용을 입력하세요."

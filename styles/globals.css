@@ -95,6 +95,11 @@ body {
 	user-select: none;
 }
 
+.preventScroll {
+	max-height: calc(100vh - var(--header-height));
+	padding-bottom: 0;
+}
+
 @media screen and (max-width: 1024px) {
 	.layout {
 		grid-template-columns: none;
