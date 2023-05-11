@@ -1,7 +1,11 @@
 import {RefObject, useState} from 'react';
 import styles from '@/styles/components/header/menu.module.scss';
 
-export default function Menu({asideRef}: {asideRef: RefObject<HTMLElement>}) {
+export default function Menu({
+	asideRef,
+}: {
+	asideRef: RefObject<HTMLDivElement>;
+}) {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	return (
 		<div
