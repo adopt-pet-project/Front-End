@@ -27,6 +27,7 @@ const dummyData = {
 
 const dummyComments = [
 	{
+		id: 1,
 		author: '홍길동',
 		type: 'comment',
 		context: 'ㅋㅋ 그러게 조심좀 하시지',
@@ -36,6 +37,7 @@ const dummyComments = [
 		like: 3,
 		commments: [
 			{
+				id: 2,
 				author: '김철수',
 				type: 'reply',
 				context: 'ㅠㅠ',
@@ -45,6 +47,7 @@ const dummyComments = [
 				like: 5,
 			},
 			{
+				id: 3,
 				author: '김철수',
 				type: 'reply',
 				context: 'ㅠㅠ',
@@ -56,6 +59,7 @@ const dummyComments = [
 		],
 	},
 	{
+		id: 4,
 		author: '홍길동',
 		type: 'comment',
 		context: 'ㅋㅋ 그러게 조심좀 하시지',

@@ -5,12 +5,11 @@ export default function Comments({comments}: {comments: any}) {
 		<>
 			{comments.map((comment: any) => {
 				return (
-					<>
+					<div key={comment.id}>
 						<div
 							className={`${styles.comment} ${
 								comment.type === 'reply' ? styles.reply : ''
 							}`}
-							key={comment.id}
 						>
 							<div className={styles.upper}>
 								<div className={styles.user}>
@@ -36,7 +35,7 @@ export default function Comments({comments}: {comments: any}) {
 						{comment.type === 'comment' && (
 							<Comments comments={comment.commments} />
 						)}
-					</>
+					</div>
 				);
 			})}
 		</>

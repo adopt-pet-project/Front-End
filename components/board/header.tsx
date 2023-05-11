@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Search from '../search/search';
 import styles from '@/styles/components/board/header.module.scss';
 
@@ -8,7 +9,7 @@ export default function Header({query}: {query: string}) {
 		<div className={styles.header}>
 			<span className={styles.title}>{titleText}</span>
 			<Search currentPath="board" />
-			<button className={styles.writeButton}>
+			<Link className={styles.writeButton} href={'/board/new'}>
 				<img
 					style={{padding: '4px'}}
 					width={32}
@@ -16,7 +17,7 @@ export default function Header({query}: {query: string}) {
 					src="/icon/write.svg"
 					alt="write icon"
 				/>
-			</button>
+			</Link>
 		</div>
 	);
 }
