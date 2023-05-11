@@ -1,0 +1,28 @@
+.container {
+	user-select: none;
+	width: 24px;
+	height: 20px;
+	img {
+		cursor: pointer;
+		height: 32px;
+		width: 32px;
+	}
+}
+
+.menu {
+	border-radius: 4px;
+	width: 96px;
+	height: 60px;
+	background-color: var(--white);
+	position: absolute;
+	top: 75px;
+	right: 16px;
+	border: 1px solid var(--gray);
+	box-shadow: 0 4px 8px rgb(0 0 0 / 16%), 0 0px 4px rgb(0 0 0 / 5%);
+}
+
+@media screen and (max-width: 768px) {
+	.menu {
+		right: 12px;
+	}
+}
