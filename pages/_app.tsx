@@ -1,11 +1,12 @@
 import {NextPage} from 'next';
 import type {AppProps} from 'next/app';
-import {ReactElement, ReactNode} from 'react';
-import {RecoilRoot} from 'recoil';
+import {ReactElement, ReactNode, useEffect} from 'react';
+import {RecoilRoot, useRecoilState} from 'recoil';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import Head from 'next/head';
 import '@/styles/globals.css';
 import '@/public/fonts/font.css';
+import ModalWrap from '@/components/layout.tsx/modalWrap';
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ export default function App({Component, pageProps}: AppPropsWithLayout) {
 			</Head>
 			<QueryClientProvider client={queryClient}>
 				<RecoilRoot>
+					<ModalWrap />
 					<Component {...pageProps} />
 				</RecoilRoot>
 			</QueryClientProvider>

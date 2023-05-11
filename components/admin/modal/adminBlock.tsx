@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import styles from '@/styles/components/admin/admin.module.scss';
-import {AisAdminModalOn, AisSelectTime} from '@/utils/recoil/recoilStore';
+import {AisSelectTime, AmodalWrap} from '@/utils/recoil/recoilStore';
 import {useRecoilState} from 'recoil';
 import SelectTime from './selectTime';
 
 function AdminBlock() {
-	const [_, setIsModal] = useRecoilState(AisAdminModalOn);
 	const [isSelectTime, setIsSelectTime] = useRecoilState(AisSelectTime);
 	const [option, setOption] = useState<'차단' | '제한'>('차단');
+	const [isModalWrap, setIsModalWrap] = useRecoilState(AmodalWrap);
 	return (
 		<form
 			onClick={e => {
@@ -37,8 +37,11 @@ function AdminBlock() {
 			<hr />
 			<div>
 				<button
-					onClick={() => {
-						setIsModal(false);
+					onClick={e => {
+						e.preventDefault();
+						if (isModalWrap && isModalWrap.current) {
+							isModalWrap.current.style.display = 'none';
+						}
 					}}
 					className={styles.cancelBtn}
 				>

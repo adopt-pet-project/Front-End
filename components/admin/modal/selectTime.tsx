@@ -2,14 +2,15 @@ import styles from '@/styles/components/admin/admin.module.scss';
 import Slider from './slider';
 import {useRecoilState} from 'recoil';
 import {
-	AisAdminModalOn,
 	AisSelectTime,
+	AmodalWrap,
 	AselectedTime,
 } from '@/utils/recoil/recoilStore';
 function SelectTime({option}: {option: '차단' | '제한'}) {
 	const [selectedTime, setSelectedTime] = useRecoilState(AselectedTime);
-	const [_, setIsModal] = useRecoilState(AisAdminModalOn);
 	const [isSelectTime, setIsSelectTime] = useRecoilState(AisSelectTime);
+	const [isModalWrap, setIsModalWrap] = useRecoilState(AmodalWrap);
+
 	return (
 		<div
 			onClick={e => {
@@ -30,7 +31,8 @@ function SelectTime({option}: {option: '차단' | '제한'}) {
 				<div>
 					<button
 						className={styles.cancelBtn}
-						onClick={() => {
+						onClick={e => {
+							e.preventDefault();
 							setIsSelectTime(false);
 						}}
 					>
@@ -39,7 +41,9 @@ function SelectTime({option}: {option: '차단' | '제한'}) {
 					<button
 						className={styles.admitBtn}
 						onClick={() => {
-							setIsModal(false);
+							if (isModalWrap && isModalWrap.current) {
+								isModalWrap.current.style.display = 'none';
+							}
 							setIsSelectTime(false);
 						}}
 					>

@@ -1,10 +1,10 @@
 import styles from '@/styles/components/admin/admin.module.scss';
-import {AisAdminModalOn} from '@/utils/recoil/recoilStore';
+import {AmodalWrap} from '@/utils/recoil/recoilStore';
 import {useRecoilState} from 'recoil';
 
 function BoardUserLine({lineData}: {lineData: Boarduser}) {
 	const {id, name, sanctions, joinDate, ip, state} = lineData;
-	const [isModal, setIsModal] = useRecoilState(AisAdminModalOn);
+	const [isModalWrap, setIsModalWrap] = useRecoilState(AmodalWrap);
 	return (
 		<li className={styles.userList}>
 			<span>{id}</span>
@@ -25,7 +25,9 @@ function BoardUserLine({lineData}: {lineData: Boarduser}) {
 			</span>
 			<span
 				onClick={() => {
-					setIsModal(true);
+					if (isModalWrap && isModalWrap.current) {
+						isModalWrap.current.style.display = 'flex';
+					}
 				}}
 			>
 				차단

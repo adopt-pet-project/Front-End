@@ -6,11 +6,6 @@ export const AisStatistic = atom<boolean>({
 	default: false,
 });
 
-export const AisAdminModalOn = atom<boolean>({
-	key: `adminModal/${v1}`,
-	default: false,
-});
-
 export const AselectedTime = atom<string>({
 	key: `selectedTime/${v1}`,
 	default: '1',
@@ -19,5 +14,10 @@ export const AselectedTime = atom<string>({
 export const AisSelectTime = atom<boolean>({
 	key: `selectModal/${v1}`,
 	default: false,
+});
+
+export const AmodalWrap = atom<React.RefObject<HTMLDivElement> | null>({
+	key: `modalWrap/${v1}`,
+	default: null,
 });
 export default {};
