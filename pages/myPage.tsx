@@ -3,18 +3,14 @@ import {ReactElement} from 'react';
 import Layout from '@/components/layout/layout';
 import MyPageCtg from '@/components/myPage/myPageCtg';
 import Header from '@/components/myPage/header';
+import MyPageCardList from '@/components/myPage/myPageCardList';
 
 function MyPage() {
 	return (
 		<>
 			<Header />
 			<MyPageCtg />
-			<ul>
-				<li>내용1</li>
-				<li>내용2</li>
-				<li>내용3</li>
-				<li>내용4</li>
-			</ul>
+			<MyPageCardList />
 		</>
 	);
 }

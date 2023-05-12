@@ -1,29 +1,22 @@
-.header {
-	grid-area: header;
-	position: fixed;
+.container {
 	display: flex;
-	z-index: 99;
 	align-items: center;
-	justify-content: space-between;
+	height: 48px;
+	padding: 6px 12px;
+	border-bottom: 1px solid var(--gray);
 	width: 100%;
-	max-width: 100vw;
-	height: var(--header-height);
-	padding: 0 16px;
-	box-shadow: rgb(0 0 0 / 10%) 0px -1px 0px 0px inset;
-	background-color: var(--background);
+	font-weight: bold;
 }
 
-.button {
-	display: flex;
+.goBack {
+	cursor: pointer;
+	width: 36px;
 	height: 36px;
-	padding: 0 14px;
-	outline: none;
-	background-color: var(--black);
-	color: var(--white);
+	transform: translateY(-1px);
 }
 
 @media screen and (max-width: 768px) {
-	.header {
-		box-shadow: rgb(0 0 0 / 25%) 0px -1px 0px 0px inset;
+	.container {
+		padding: 0;
 	}
 }

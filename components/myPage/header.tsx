@@ -12,9 +12,6 @@ export default function Header({}: {}) {
 				}}
 			/>
 			새 게시글 작성
-			<button type="submit" className={styles.writeButton}>
-				작성
-			</button>
 		</div>
 	);
 }
