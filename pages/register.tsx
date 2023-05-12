@@ -30,7 +30,6 @@ export default function Register() {
 			let {latitude, longitude} = position.coords;
 			const geocoder = new window.kakao.maps.services.Geocoder();
 			const coord = new window.kakao.maps.LatLng(latitude, longitude);
-			console.log(latitude, longitude);
 			geocoder.coord2RegionCode(
 				coord.getLng(),
 				coord.getLat(),
