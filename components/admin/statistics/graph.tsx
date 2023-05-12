@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from '@/styles/components/admin/statistics/graph.module.scss';
 import {
 	Chart as ChartJS,
@@ -38,6 +38,7 @@ function StatisticsGraph({
 	const [timeSelect, setTimeSelect] = useState<'일간' | '주간' | '월간'>(
 		'일간',
 	);
+	const [on, setOn] = useState(false);
 	const options = {
 		responsive: true,
 		plugins: {
@@ -51,8 +52,11 @@ function StatisticsGraph({
 		},
 	};
 
+	useEffect(() => {
+		setOn(true);
+	}, []);
 	return (
-		<div>
+		<div className={`${styles.graphWrap} ${on ? styles.on : null}`}>
 			<Line data={data} options={options} />
 			<div className={styles.timeSelectBar}>
 				<span

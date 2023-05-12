@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from '@/styles/components/admin/statistics/accordionBar.module.scss';
 import Graph from './graph';
 
@@ -84,6 +84,27 @@ function AccordionBar() {
 			},
 		],
 	};
+
+	useEffect(() => {
+		if (isUserGraph === true) {
+			setIsAdoptGraph(false);
+			setIsContentGraph(false);
+		}
+	}, [isUserGraph]);
+
+	useEffect(() => {
+		if (isAdoptGraph === true) {
+			setIsUserGraph(false);
+			setIsContentGraph(false);
+		}
+	}, [isAdoptGraph]);
+
+	useEffect(() => {
+		if (isContentGraph === true) {
+			setIsAdoptGraph(false);
+			setIsUserGraph(false);
+		}
+	}, [isContentGraph]);
 
 	return (
 		<ul className={styles.AccordionUl}>

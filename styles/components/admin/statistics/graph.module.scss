@@ -10,3 +10,13 @@
 		font-weight: bold;
 	}
 }
+
+.graphWrap {
+	transition: all 0.6s ease-in-out;
+	height: 0px;
+	overflow: hidden;
+}
+
+.on {
+	height: 100%;
+}
