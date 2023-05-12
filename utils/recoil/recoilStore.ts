@@ -27,4 +27,9 @@ export const AmodalType = atom<
 	key: `modalType/${v1()}`,
 	default: 'none',
 });
+
+export const AcurrentTable = atom<'user' | 'report' | 'block' | 'IP-block'>({
+	key: `adminTable/${v1()}`,
+	default: 'user',
+});
 export default {};

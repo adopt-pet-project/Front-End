@@ -1,13 +1,12 @@
-import React, { useState }  from 'react';
+import React, {useState} from 'react';
 import styles from '@/styles/components/admin/statistics/accordionBar.module.scss';
-import Graph from './graph'
-
+import Graph from './graph';
 
 function AccordionBar() {
-	const [isUserGraph, setIsUserGraph] = useState(false)
-	const [isAdoptGraph, setIsAdoptGraph] = useState(false)
-	const [isContentGraph, setIsContentGraph] = useState(false)
-	
+	const [isUserGraph, setIsUserGraph] = useState(false);
+	const [isAdoptGraph, setIsAdoptGraph] = useState(false);
+	const [isContentGraph, setIsContentGraph] = useState(false);
+
 	const userData = {
 		labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
 		datasets: [
@@ -86,41 +85,49 @@ function AccordionBar() {
 		],
 	};
 
-
-
-
 	return (
 		<ul className={styles.AccordionUl}>
 			<li className={styles.menuLi}>
 				{isUserGraph ? <Graph data={userData} /> : null}
-				<div 
-					onClick={()=>{setIsUserGraph(prev=>!prev)}}
-					className={styles.menuTitle} 
+				<div
+					onClick={() => {
+						setIsUserGraph(prev => !prev);
+					}}
+					className={styles.menuTitle}
 				>
-					<p className={`${isUserGraph? styles.on: null}`}> 사용자 통계 ></p>
-					<hr className={styles.menuBoundary} />
-				</div>
-				
-			</li>
-
-			<li className={styles.menuLi}>
-			{isAdoptGraph ? <Graph data={adoptData} /> : null}
-				<div 
-					onClick={()=>{setIsAdoptGraph(prev=>!prev)}}
-					className={styles.menuTitle} 
-				>
-					<p className={`${isAdoptGraph? styles.on: null}`}> 분양 통계 ></p>
+					<p className={`${isUserGraph ? styles.on : null}`}>
+						사용자 통계 {'>'}
+					</p>
 					<hr className={styles.menuBoundary} />
 				</div>
 			</li>
 
 			<li className={styles.menuLi}>
-			{isContentGraph ? <Graph data={contentsData} /> : null}
-				<div 
-					onClick={()=>{setIsContentGraph(prev=>!prev)}} 
-					className={styles.menuTitle} 
+				{isAdoptGraph ? <Graph data={adoptData} /> : null}
+				<div
+					onClick={() => {
+						setIsAdoptGraph(prev => !prev);
+					}}
+					className={styles.menuTitle}
 				>
-					<p className={`${isContentGraph? styles.on: null}`}> 컨텐츠 통계 ></p>
+					<p className={`${isAdoptGraph ? styles.on : null}`}>
+						분양 통계 {'>'}
+					</p>
+					<hr className={styles.menuBoundary} />
+				</div>
+			</li>
+
+			<li className={styles.menuLi}>
+				{isContentGraph ? <Graph data={contentsData} /> : null}
+				<div
+					onClick={() => {
+						setIsContentGraph(prev => !prev);
+					}}
+					className={styles.menuTitle}
+				>
+					<p className={`${isContentGraph ? styles.on : null}`}>
+						컨텐츠 통계 {'>'}
+					</p>
 					<hr className={styles.menuBoundary} />
 				</div>
 			</li>
