@@ -7,7 +7,7 @@ export default function Header({query}: {query: string}) {
 
 	return (
 		<div className={styles.header}>
-			<span className={styles.title}>{titleText}</span>
+			<h1 className={styles.title}>{titleText}</h1>
 			<Search currentPath="board" />
 			<Link className={styles.writeButton} href={'/board/new'}>
 				<img
