@@ -9,6 +9,7 @@
 
 .title {
 	position: absolute;
+	display: inline-block;
 	top: 0;
 	left: 0;
 	width: auto;
@@ -17,6 +18,7 @@
 	font-size: 24px;
 	font-weight: bold;
 	line-height: 32px;
+	margin: 0;
 	padding-right: 8px;
 	height: 32px;
 	overflow: hidden;

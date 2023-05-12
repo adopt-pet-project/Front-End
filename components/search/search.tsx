@@ -1,4 +1,4 @@
-import {BaseSyntheticEvent, useRef, useState} from 'react';
+import {useRef} from 'react';
 import {useRouter} from 'next/router';
 import styles from '@/styles/components/search/search.module.scss';
 
@@ -19,7 +19,8 @@ export default function Search({currentPath}: {currentPath: string}) {
 
 	function deActivate() {
 		setTimeout(() => {
-			(containerRef.current as HTMLElement).removeAttribute('data-active');
+			if (containerRef.current)
+				(containerRef.current as HTMLElement).removeAttribute('data-active');
 		}, 0);
 	}
 
