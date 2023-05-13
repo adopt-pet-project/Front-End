@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styles from '@/styles/components/admin/statistics/accordionBar.module.scss';
 import Graph from './graph';
 
+
 function AccordionBar() {
 	const [isUserGraph, setIsUserGraph] = useState(false);
 	const [isAdoptGraph, setIsAdoptGraph] = useState(false);

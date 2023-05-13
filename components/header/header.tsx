@@ -4,12 +4,18 @@ import Menu from './menu';
 import Profile from './profile';
 import styles from '@/styles/components/header/header.module.scss';
 
-export default function Header({asideRef}: {asideRef: RefObject<HTMLElement>}) {
+export default function Header({
+	asideRef,
+	containerRef,
+}: {
+	asideRef: RefObject<HTMLDivElement>;
+	containerRef: RefObject<HTMLDivElement>;
+}) {
 	return (
 		<header className={styles.header}>
 			<Menu asideRef={asideRef} />
 			<Logo />
-			<Profile />
+			<Profile containerRef={containerRef} />
 		</header>
 	);
 }

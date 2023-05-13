@@ -13,6 +13,7 @@ function ModalWrap() {
 	const [modalRef, setModalRef] = useRecoilState(AmodalWrap);
 	const [modalType, setModalType] = useRecoilState(AmodalType);
 
+
 	useEffect(() => {
 		setModalRef(modalWrapRef);
 	}, []);

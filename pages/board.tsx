@@ -1,23 +1,11 @@
 import {GetServerSideProps} from 'next';
 import {ReactElement} from 'react';
-import Link from 'next/link';
-import ArticleSkeleton from '@/components/board/articleSkeleton';
 import Layout from '@/components/layout/layout';
-import Search from '@/components/search/search';
 import Article from '@/components/board/article';
-import styles from '@/styles/pages/board.module.scss';
-
-const moreData = {
-	id: 1,
-	title: '제목입니다',
-	context: '적당한 길이를 가진 본문 내용입니다',
-	author: '작성자',
-	view: 5,
-	comment: 5,
-	like: 5,
-	publishedAt: '50분 전',
-	thumb: 'null',
-};
+import Order from '@/components/board/order';
+import Header from '@/components/board/header';
+import Banner from '@/components/board/banner';
+import Paging from '@/components/board/paging';
 
 const DummyData: any[] = [];
 
@@ -37,80 +25,20 @@ for (let i = 0; i < 9; i++) {
 }
 
 export default function Board({order, query}: {order: string; query: string}) {
-	const titleText = query ? `${query}에 대한 검색 결과` : '게시판';
-
 	return (
 		<>
-			<div className={styles.header}>
-				<span className={styles.title}>{titleText}</span>
-				<Search currentPath="board" />
-				<button className={styles.writeButton}>
-					<img
-						style={{padding: '4px'}}
-						width={32}
-						height={32}
-						src="/icon/write.svg"
-						alt="write icon"
-					/>
-				</button>
-			</div>
-			{!query && (
-				<div className={styles.order}>
-					<Link
-						className={`${styles.orderItem} ${
-							order === 'recent' ? `${styles.active}` : ''
-						}`}
-						href="/board?order=recent"
-					>
-						최신순
-					</Link>
-					<Link
-						className={`${styles.orderItem} ${
-							order === 'popular' ? `${styles.active}` : ''
-						}`}
-						href="/board?order=popular"
-					>
-						인기순
-					</Link>
-				</div>
-			)}
+			<Header query={query} />
+			{!query && <Order order={order} />}
 			<section className="body">
-				{!query && (
-					<div className={styles.banner}>
-						<div className={styles.weekly}>
-							<div
-								className={styles.hot}
-								style={{backgroundColor: 'var(--red)'}}
-							>
-								Weekly
-							</div>
-							<span className={styles.bannerTitle}>꿀팁 & 링크 모음</span>
-							<span className={styles.bannerTime}>3일 전</span>
-						</div>
-						<div className={styles.trending}>
-							<div
-								className={styles.hot}
-								style={{backgroundColor: 'var(--black)'}}
-							>
-								Trending
-							</div>
-							<div className={styles.article}>
-								<span className={styles.bannerTitle}>옆집이 수상해요..</span>
-								<span className={styles.bannerTime}>3시간 전</span>
-							</div>
-						</div>
-					</div>
-				)}
+				{!query && <Banner />}
 				{DummyData.map((article: any) => {
 					return <Article key={article.id} article={article} />;
 				})}
-				<ArticleSkeleton />
-				<div className={styles.more}>
-					<span className={styles.text}>더보기</span>
-					<div style={{filter: 'blur(5px)'}}>
-						<Article article={moreData} />
-					</div>
-				</div>
+				<Paging
+					lastArticleId={DummyData[DummyData.length - 1].id}
+					query={order}
+					order={order}
+				/>
 			</section>
 		</>
 	);

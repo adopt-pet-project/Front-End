@@ -1,0 +1,30 @@
+.container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 48px;
+	padding: 6px 12px;
+	border-bottom: 1px solid var(--gray);
+}
+
+.goBack {
+	cursor: pointer;
+	width: 36px;
+	height: 36px;
+}
+
+.writeButton {
+	cursor: pointer;
+	border: none;
+	background-color: var(--black);
+	color: var(--white);
+	border-radius: 6px;
+	height: 28px;
+	padding: 4px 16px;
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		padding: 0;
+	}
+}
