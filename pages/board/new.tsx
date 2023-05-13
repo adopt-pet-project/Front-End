@@ -1,6 +1,6 @@
-import Header from '@/components/board/new/header';
-import Layout from '@/components/layout/layout';
 import {BaseSyntheticEvent, ReactElement, useState} from 'react';
+import Header from '@/components/new/header';
+import Layout from '@/components/layout/layout';
 import styles from '@/styles/pages/board/new.module.scss';
 
 export default function New() {

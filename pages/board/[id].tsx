@@ -5,6 +5,7 @@ import Images from '@/components/board/images';
 import More from '@/components/board/more';
 import Link from 'next/link';
 import Comments from '@/components/board/comments';
+import {GetServerSideProps} from 'next';
 
 const dummyData = {
 	title: '저 라면쏟음.. ㅠㅠ',
@@ -131,6 +132,19 @@ export default function View() {
 		</section>
 	);
 }
+
+export const getServerSideProps: GetServerSideProps = async ({
+	req,
+	res,
+	resolvedUrl,
+	query,
+}) => {
+	// let result = await (await fetch('http://3.36.132.160/hello')).text();
+	// 게시글 상세 로직. 이때 comment도 같이 받아옴
+	return {
+		props: {},
+	};
+};
 
 View.getLayout = function getLayout(page: ReactElement) {
 	return <Layout>{page}</Layout>;
