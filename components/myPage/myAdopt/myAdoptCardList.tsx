@@ -1,14 +1,14 @@
 import React from 'react';
-import styles from '@/styles/components/myPage/myPageCardList.module.scss';
+import styles from '@/styles/components/myPage/myAdopt/myAdoptCardList.module.scss';
 
-import MyPageCard from './myPageCard';
+import MyAdoptCard from './myAdoptCard';
 import {useRecoilState} from 'recoil';
-import {AmyPageBoardType} from '@/utils/recoil/recoilStore';
+import {AmyAdoptBoardType} from '@/utils/recoil/recoilStore';
 
-function MyPageCardList() {
+function MyAdoptCardList() {
 	const DummyData: any[] = [];
-	const [myPageBoardType, setMyPageBoardType] =
-		useRecoilState(AmyPageBoardType);
+	const [myAdoptBoardType, setMyAdoptBoardType] =
+		useRecoilState(AmyAdoptBoardType);
 
 	for (let i = 0; i < 9; i++) {
 		DummyData.push({
@@ -28,10 +28,10 @@ function MyPageCardList() {
 	return (
 		<ul className={styles.cardList}>
 			{DummyData.map((data, i) => (
-				<MyPageCard key={i} boardType={myPageBoardType} article={data} />
+				<MyAdoptCard key={i} boardType={myAdoptBoardType} article={data} />
 			))}
 		</ul>
 	);
 }
 
-export default MyPageCardList;
+export default MyAdoptCardList;

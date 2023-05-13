@@ -1,9 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
-import styles from '@/styles/components/myPage/myPageCard.module.scss';
+import styles from '@/styles/components/myPage/myAdopt/myAdoptCard.module.scss';
 import {useRouter} from 'next/router';
 
-function MyPageCard({article, boardType}: {article: any; boardType: string}) {
+function MyAdoptCard({article, boardType}: {article: any; boardType: string}) {
 	const router = useRouter();
 	return (
 		<li
@@ -73,4 +73,4 @@ function MyPageCard({article, boardType}: {article: any; boardType: string}) {
 	);
 }
 
-export default MyPageCard;
+export default MyAdoptCard;

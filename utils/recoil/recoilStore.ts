@@ -33,7 +33,7 @@ export const AcurrentTable = atom<'user' | 'report' | 'block' | 'IP-block'>({
 	default: 'user',
 });
 
-export const AmyPageBoardType = atom<
+export const AmyAdoptBoardType = atom<
 	'adopting' | 'reserved' | 'end' | 'interested'
 >({
 	key: `myPageBoardType/${v1()}`,

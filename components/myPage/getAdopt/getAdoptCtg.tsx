@@ -1,5 +1,5 @@
-import styles from '@/styles/components/myPage/myPageCtg.module.scss';
-import {AmyPageBoardType} from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/myPage/getAdopt/getAdoptCtg.module.scss';
+import {AmyAdoptBoardType} from '@/utils/recoil/recoilStore';
 import {useEffect, useRef, useState} from 'react';
 import {useRecoilState} from 'recoil';
 
@@ -7,8 +7,8 @@ function MyPageCtg() {
 	const ctgRef = useRef<HTMLDivElement>(null);
 
 	const [currentBtn, setCurrentBtn] = useState<0 | 1 | 2 | 3>(0);
-	const [myPageBoardType, setMyPageBoardType] =
-		useRecoilState(AmyPageBoardType);
+	const [myAdoptBoardType, setMyAdoptBoardType] =
+		useRecoilState(AmyAdoptBoardType);
 
 	return (
 		<>
@@ -16,7 +16,7 @@ function MyPageCtg() {
 				<div
 					onClick={e => {
 						setCurrentBtn(0);
-						setMyPageBoardType('adopting');
+						setMyAdoptBoardType('adopting');
 					}}
 					className={`${styles.categoryBtn} ${
 						currentBtn === 0 ? styles.currentBtn : null
@@ -27,7 +27,7 @@ function MyPageCtg() {
 				<div
 					onClick={e => {
 						setCurrentBtn(1);
-						setMyPageBoardType('reserved');
+						setMyAdoptBoardType('reserved');
 					}}
 					className={`${styles.categoryBtn} ${
 						currentBtn === 1 ? styles.currentBtn : null
@@ -38,7 +38,7 @@ function MyPageCtg() {
 				<div
 					onClick={e => {
 						setCurrentBtn(2);
-						setMyPageBoardType('end');
+						setMyAdoptBoardType('end');
 					}}
 					className={`${styles.categoryBtn} ${
 						currentBtn === 2 ? styles.currentBtn : null
@@ -49,7 +49,7 @@ function MyPageCtg() {
 				<div
 					onClick={e => {
 						setCurrentBtn(3);
-						setMyPageBoardType('interested');
+						setMyAdoptBoardType('interested');
 					}}
 					className={`${styles.categoryBtn} ${
 						currentBtn === 3 ? styles.currentBtn : null

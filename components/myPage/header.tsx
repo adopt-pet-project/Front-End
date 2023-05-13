@@ -1,6 +1,6 @@
 import styles from '@/styles/components/myPage/header.module.scss';
 
-export default function Header({}: {}) {
+export default function Header({type}: {type: string}) {
 	return (
 		<div className={styles.container}>
 			<img
@@ -11,7 +11,7 @@ export default function Header({}: {}) {
 					window.history.back();
 				}}
 			/>
-			나의 분양
+			{type}
 		</div>
 	);
 }
