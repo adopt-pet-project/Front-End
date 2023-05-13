@@ -8,6 +8,8 @@ export default function New() {
 
 	function onSubmit(e: BaseSyntheticEvent) {
 		e.preventDefault();
+
+		// 게시글 작성 로직
 		console.log(e.target.title.value);
 		console.log(e.target.context.value);
 		console.log(currentImages);

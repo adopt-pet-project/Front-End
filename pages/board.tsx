@@ -51,6 +51,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 	query,
 }) => {
 	// let result = await (await fetch('http://3.36.132.160/hello')).text();
+	// 게시글 로직, query, order에 따라 다른 내용을 fetch
 	return {
 		props: {order: query.order || 'recent', query: query.q || ''},
 	};
