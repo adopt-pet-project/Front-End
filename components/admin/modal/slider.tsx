@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import styles from '@/styles/components/admin/admin.module.scss';
+import styles from '@/styles/components/admin/modal/selectTime.module.scss';
 import {useRecoilState} from 'recoil';
 import {AselectedTime} from '@/utils/recoil/recoilStore';
 

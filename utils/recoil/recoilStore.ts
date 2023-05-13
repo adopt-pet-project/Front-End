@@ -20,4 +20,23 @@ export const AmodalWrap = atom<React.RefObject<HTMLDivElement> | null>({
 	key: `modalWrap/${v1()}`,
 	default: null,
 });
+
+export const AmodalType = atom<
+	'adminBlock' | 'userInfo' | 'checkReport' | 'none'
+>({
+	key: `modalType/${v1()}`,
+	default: 'none',
+});
+
+export const AcurrentTable = atom<'user' | 'report' | 'block' | 'IP-block'>({
+	key: `adminTable/${v1()}`,
+	default: 'user',
+});
+
+export const AmyPageBoardType = atom<
+	'adopting' | 'reserved' | 'end' | 'interested'
+>({
+	key: `myPageBoardType/${v1()}`,
+	default: 'adopting',
+});
 export default {};

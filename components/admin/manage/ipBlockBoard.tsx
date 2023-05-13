@@ -1,4 +1,4 @@
-import styles from '@/styles/components/admin/admin.module.scss';
+import styles from '@/styles/components/admin/manage/ipBlockBoard.module.scss';
 import {useState} from 'react';
 import IpBlockBoardLine from './ipBlockBoardLine';
 import IpAddLine from './ipAddLine';
@@ -13,17 +13,19 @@ function IpBlockBoard() {
 	return (
 		<>
 			<div className={styles.searchBar}>
-				<img src={`/magnifier.svg`} alt="menu" />
+				<img src={`/icon/magnifier.svg`} alt="menu" />
 				<input type="text" placeholder="search" />
 			</div>
+
 			<div className={styles.ipBlockLineTag}>
 				<span>IP Address</span>
 				<span>차단일</span>
-				<span>리셋</span>
+				<span>
+					<img width="18" height="18" src={`/icon/reload.svg`} alt="" />
+				</span>
 			</div>
 			<hr className={styles.tagBoundary} />
 			<ul className={styles.ipBlockList}>
-				<button className={styles.ipAddBtn}>+ 추가</button>
 				<IpAddLine />
 				{ipList.map((data, i) => (
 					<IpBlockBoardLine key={i} lineData={data} />

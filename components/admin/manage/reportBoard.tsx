@@ -1,4 +1,4 @@
-import styles from '@/styles/components/admin/admin.module.scss';
+import styles from '@/styles/components/admin/manage/reportBoard.module.scss';
 import BoardReportLine from './reportBoardLine';
 import {useState} from 'react';
 
@@ -52,7 +52,7 @@ function ReportBoard() {
 	return (
 		<>
 			<div className={styles.searchBar}>
-				<img src={`/magnifier.svg`} alt="menu" />
+				<img src={`/icon/magnifier.svg`} alt="menu" />
 				<input type="text" placeholder="search" />
 			</div>
 			<div className={styles.reportLineTag}>
@@ -61,7 +61,9 @@ function ReportBoard() {
 				<span>대상</span>
 				<span>내용</span>
 				<span>신고일자</span>
-				<span>리셋</span>
+				<span>
+					<img width="18" height="18" src={`/icon/reload.svg`} alt="" />
+				</span>
 			</div>
 			<hr className={styles.tagBoundary} />
 			<ul className={styles.reportList}>

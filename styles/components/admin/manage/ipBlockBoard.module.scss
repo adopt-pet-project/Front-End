@@ -1,0 +1,74 @@
+.tagBoundary {
+	width: 100%;
+}
+
+.searchBar {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	border-radius: 8px;
+	padding: 3px;
+	border: 1px solid black;
+	margin-bottom: 9px;
+	:focus {
+		outline: none;
+	}
+	input {
+		width: 100%;
+		padding: 3px;
+		font-size: 20px;
+		border: none;
+		background: none;
+	}
+}
+.ipBlockLineTag {
+	width: 100%;
+	text-align: center;
+	display: flex;
+	:nth-child(1) {
+		flex: 1;
+	}
+	:nth-child(2) {
+		flex: 0.8;
+		border-left: 1px solid lightgrey;
+	}
+	:nth-child(3) {
+		flex: 0.4;
+		border-left: 1px solid lightgrey;
+	}
+
+	> span > img {
+		cursor: pointer;
+	}
+}
+
+.ipBlockList {
+	padding: 0px;
+	width: 100%;
+	margin: 0px;
+	text-align: center;
+
+	li {
+		margin: 3px 0;
+		width: 100%;
+		display: flex;
+		list-style: none;
+		:nth-child(1) {
+			flex: 1;
+		}
+		:nth-child(2) {
+			flex: 0.8;
+			border-left: 1px solid lightgrey;
+		}
+		:nth-child(3) {
+			flex: 0.4;
+			border-left: 1px solid lightgrey;
+		}
+		:last-child {
+			cursor: pointer;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+}

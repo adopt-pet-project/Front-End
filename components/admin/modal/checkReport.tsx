@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import styles from '@/styles/components/admin/modal/adminBlock.module.scss';
+import styles from '@/styles/components/admin/modal/checkReport.module.scss';
 import {AisSelectTime, AmodalWrap} from '@/utils/recoil/recoilStore';
 import {useRecoilState} from 'recoil';
 import SelectTime from './selectTime';
 
-function AdminBlock() {
+function CheckReport() {
 	const [isSelectTime, setIsSelectTime] = useRecoilState(AisSelectTime);
 	const [option, setOption] = useState<'차단' | '제한'>('차단');
 	const [isModalWrap, setIsModalWrap] = useRecoilState(AmodalWrap);
@@ -14,26 +14,41 @@ function AdminBlock() {
 			onClick={e => {
 				e.stopPropagation();
 			}}
-			className={styles.adminBlock}
+			className={styles.reportBox}
 		>
-			<div>
-				<span>대상</span>
-				<span>성익현</span>
+			<div className={styles.line}>
+				<div>신고자</div>
+				<div>성익현</div>
 			</div>
 			<hr />
-			<div>
-				<label htmlFor="cause">사유</label>
-				<input
-					name="cause"
-					id="cause"
-					placeholder="사유를 입력하세요"
-					type="text"
-				/>
+			<div className={styles.line}>
+				<div>대상</div>
+				<div>홍길동</div>
 			</div>
 			<hr />
-			<div>
-				<label htmlFor="content">내용</label>
-				<textarea name="content" id="content"></textarea>
+			<div className={styles.line}>
+				<div>날짜</div>
+				<div>2023. 5. 3</div>
+			</div>
+			<hr />
+			<div className={styles.line}>
+				<div>분류</div>
+				<div>게시글</div>
+			</div>
+			<hr />
+			<div className={styles.line}>
+				<div>컨텐츠내용</div>
+				<div>나루토 사스케 싸움 수준 실화냐 진짜 가슴이 웅장해진다</div>
+			</div>
+			<hr />
+			<div className={styles.line}>
+				<div>사유</div>
+				<div>음란물 기재</div>
+			</div>
+			<hr />
+			<div className={styles.line}>
+				<div>신고내용</div>
+				<div>이 사람 계속 이상한거 올려요;</div>
 			</div>
 			<hr />
 			<div>
@@ -51,6 +66,7 @@ function AdminBlock() {
 				<div>
 					<button
 						type="submit"
+						className={styles.blockBtn}
 						onClick={e => {
 							e.preventDefault();
 							setOption('차단');
@@ -61,6 +77,7 @@ function AdminBlock() {
 					</button>
 					<button
 						type="submit"
+						className={styles.blockBtn}
 						onClick={e => {
 							e.preventDefault();
 							setOption('제한');
@@ -77,4 +94,4 @@ function AdminBlock() {
 	);
 }
 
-export default AdminBlock;
+export default CheckReport;

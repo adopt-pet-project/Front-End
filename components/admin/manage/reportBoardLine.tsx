@@ -1,4 +1,6 @@
-import styles from '@/styles/components/admin/admin.module.scss';
+import styles from '@/styles/components/admin/manage/boardLine.module.scss';
+import {AmodalType, AmodalWrap} from '@/utils/recoil/recoilStore';
+import {useRecoilState} from 'recoil';
 
 function BoardReportLine({lineData}: {lineData: Boardreport}) {
 	const {
@@ -11,14 +13,46 @@ function BoardReportLine({lineData}: {lineData: Boardreport}) {
 		content,
 		reportDate,
 	} = lineData;
+
+	const [modalType, setModalType] = useRecoilState(AmodalType);
+	const [isModalWrap, setIsModalWrap] = useRecoilState(AmodalWrap);
 	return (
-		<li className={styles.reportLine}>
+		<li>
 			<span>{state}</span>
-			<span>{reporter}</span>
-			<span>{target}</span>
+			<span
+				onClick={() => {
+					setModalType('userInfo');
+					if (isModalWrap && isModalWrap.current) {
+						isModalWrap.current.style.display = 'flex';
+					}
+				}}
+				className={styles.userName}
+			>
+				{reporter}
+			</span>
+			<span
+				onClick={() => {
+					setModalType('userInfo');
+					if (isModalWrap && isModalWrap.current) {
+						isModalWrap.current.style.display = 'flex';
+					}
+				}}
+				className={styles.userName}
+			>
+				{target}
+			</span>
 			<span>{content}</span>
 			<span>{reportDate}</span>
-			<span>보기</span>
+			<span
+				onClick={() => {
+					setModalType('checkReport');
+					if (isModalWrap && isModalWrap.current) {
+						isModalWrap.current.style.display = 'flex';
+					}
+				}}
+			>
+				보기
+			</span>
 		</li>
 	);
 }
