@@ -1,4 +1,4 @@
-import styles from '@/styles/components/board/articleSkeleton.module.scss';
+import styles from '@/styles/components/articleSkeleton.module.scss';
 
 export default function ArticleSkeleton() {
 	return (

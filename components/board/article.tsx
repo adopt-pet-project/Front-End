@@ -3,7 +3,12 @@ import Image from 'next/image';
 
 export default function Article({article}: {article: any}) {
 	return (
-		<article className={styles.container}>
+		<article
+			className={styles.container}
+			onClick={() => {
+				if (article.id != null) window.location.href = `/board/${article.id}`;
+			}}
+		>
 			{article.thumb && article.thumb === 'null' ? (
 				<div className={styles.dummyThumbnails} />
 			) : (
