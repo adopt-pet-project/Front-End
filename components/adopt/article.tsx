@@ -46,10 +46,10 @@ export default function Article({article}: {article: any}) {
 							</div>
 						)}
 					</div>
-					<span className={styles.location}>{article.location}</span>
+					<span className={styles.species}>{article.species}</span>
 				</div>
 				<div className={styles.metadata}>
-					<span>{`${article.author} · ${article.publishedAt}`}</span>
+					<span>{`${article.location} · ${article.publishedAt}`}</span>
 					<ul className={styles.dataList}>
 						<li>
 							<img
