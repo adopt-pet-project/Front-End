@@ -32,4 +32,11 @@ export const AcurrentTable = atom<'user' | 'report' | 'block' | 'IP-block'>({
 	key: `adminTable/${v1()}`,
 	default: 'user',
 });
+
+export const AmyPageBoardType = atom<
+	'adopting' | 'reserved' | 'end' | 'interested'
+>({
+	key: `myPageBoardType/${v1()}`,
+	default: 'adopting',
+});
 export default {};

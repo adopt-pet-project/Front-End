@@ -9,7 +9,7 @@
 		margin-right: 20px;
 		width: 25%;
 		font-weight: bold;
-		color: var(--skyblue);
+		color: black;
 		font-size: 20px;
 		margin: 0px;
 		cursor: pointer;
@@ -28,5 +28,6 @@
 			rgba(243, 247, 255, 0)
 		);
 		border-bottom: 3px solid var(--skyblue);
+		color: var(--skyblue);
 	}
 }

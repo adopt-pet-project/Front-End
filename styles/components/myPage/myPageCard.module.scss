@@ -44,6 +44,11 @@
 	display: flex;
 	justify-content: space-between;
 	padding-right: 7px;
+	.release,
+	.delete {
+		font-size: 12px;
+		font-weight: normal;
+	}
 }
 
 .context {

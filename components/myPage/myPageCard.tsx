@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import styles from '@/styles/components/myPage/myPageCard.module.scss';
 
-function MyPageCard({article}: {article: any}) {
+function MyPageCard({article, boardType}: {article: any; boardType: string}) {
 	return (
 		<li className={styles.card}>
 			{article.thumb && article.thumb === 'null' ? (
@@ -23,7 +23,19 @@ function MyPageCard({article}: {article: any}) {
 				<div className={styles.preview}>
 					<div className={styles.title}>
 						<span>{article.title}</span>
-						<span>...</span>
+						{boardType === 'adopting' ? (
+							<span>
+								<img width={20} src="/icon/more.svg" alt="" />
+							</span>
+						) : boardType === 'reserved' ? (
+							<span>
+								<img width={20} src="/icon/more.svg" alt="" />
+							</span>
+						) : boardType === 'end' ? (
+							<span className={styles.delete}>삭제</span>
+						) : boardType === 'interested' ? (
+							<span className={styles.release}>해제</span>
+						) : null}
 					</div>
 
 					<span className={styles.context}>{article.context}</span>

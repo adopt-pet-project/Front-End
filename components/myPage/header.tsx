@@ -11,7 +11,7 @@ export default function Header({}: {}) {
 					window.history.back();
 				}}
 			/>
-			새 게시글 작성
+			나의 분양
 		</div>
 	);
 }
