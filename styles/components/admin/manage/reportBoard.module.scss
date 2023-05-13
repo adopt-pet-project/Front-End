@@ -47,6 +47,9 @@
 		flex: 0.5;
 		border-left: 1px solid lightgrey;
 	}
+	> span > img {
+		cursor: pointer;
+	}
 }
 
 .reportList {

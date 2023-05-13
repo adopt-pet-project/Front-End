@@ -36,6 +36,10 @@
 		flex: 0.4;
 		border-left: 1px solid lightgrey;
 	}
+
+	> span > img {
+		cursor: pointer;
+	}
 }
 
 .ipBlockList {

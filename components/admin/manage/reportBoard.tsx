@@ -52,7 +52,7 @@ function ReportBoard() {
 	return (
 		<>
 			<div className={styles.searchBar}>
-				<img src={`/magnifier.svg`} alt="menu" />
+				<img src={`/icon/magnifier.svg`} alt="menu" />
 				<input type="text" placeholder="search" />
 			</div>
 			<div className={styles.reportLineTag}>
@@ -62,7 +62,7 @@ function ReportBoard() {
 				<span>내용</span>
 				<span>신고일자</span>
 				<span>
-					<img width="18" height="18" src={`/reload.svg`} alt="" />
+					<img width="18" height="18" src={`/icon/reload.svg`} alt="" />
 				</span>
 			</div>
 			<hr className={styles.tagBoundary} />

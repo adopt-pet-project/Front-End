@@ -26,8 +26,8 @@ function BoardUserLine({lineData}: {lineData: Boarduser}) {
 			<span>
 				{state ? (
 					<>
-						<span style={{color: 'lightgreen'}}>●</span>
-						{ip}
+						<span style={{color: 'lightgreen'}}>●</span>접속중
+						{' ' + ip}
 					</>
 				) : (
 					<>

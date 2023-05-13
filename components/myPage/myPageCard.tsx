@@ -1,10 +1,17 @@
 import React from 'react';
 import Image from 'next/image';
 import styles from '@/styles/components/myPage/myPageCard.module.scss';
+import {useRouter} from 'next/router';
 
 function MyPageCard({article, boardType}: {article: any; boardType: string}) {
+	const router = useRouter();
 	return (
-		<li className={styles.card}>
+		<li
+			className={styles.card}
+			onClick={() => {
+				router.push('/board/11');
+			}}
+		>
 			{article.thumb && article.thumb === 'null' ? (
 				<div className={styles.dummyThumbnails} />
 			) : (

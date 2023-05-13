@@ -40,7 +40,7 @@ function UserBoard() {
 	return (
 		<>
 			<div className={styles.searchBar}>
-				<img src={`/magnifier.svg`} alt="menu" />
+				<img src={`/icon/magnifier.svg`} alt="menu" />
 				<input type="text" placeholder="search" />
 			</div>
 			<div className={styles.userLineTag}>
@@ -50,7 +50,7 @@ function UserBoard() {
 				<span>가입일</span>
 				<span>상태(IP)</span>
 				<span>
-					<img width="18" height="18" src={`/reload.svg`} alt="" />
+					<img width="18" height="18" src={`/icon/reload.svg`} alt="" />
 				</span>
 			</div>
 			<hr className={styles.tagBoundary} />
