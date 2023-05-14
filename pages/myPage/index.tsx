@@ -1,7 +1,7 @@
 import Layout from '@/components/layout/layout';
 import React from 'react';
 import {ReactElement} from 'react';
-import Profile from '@/components/myPage/Profile';
+import Profile from '@/components/myPage/profile';
 import ProfileModify from '@/components/myPage/profileModify';
 
 function MyPage() {
