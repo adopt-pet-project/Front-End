@@ -30,18 +30,10 @@ function MyPageCard({article, boardType}: {article: any; boardType: string}) {
 				<div className={styles.preview}>
 					<div className={styles.title}>
 						<span>{article.title}</span>
-						{boardType === 'adopting' ? (
-							<span>
-								<img width={20} src="/icon/more.svg" alt="" />
-							</span>
-						) : boardType === 'reserved' ? (
-							<span>
-								<img width={20} src="/icon/more.svg" alt="" />
-							</span>
+						{boardType === 'reserved' ? (
+							<span className={styles.delete}>삭제</span>
 						) : boardType === 'end' ? (
 							<span className={styles.delete}>삭제</span>
-						) : boardType === 'interested' ? (
-							<span className={styles.release}>해제</span>
 						) : null}
 					</div>
 

@@ -1,16 +1,16 @@
 import React from 'react';
 import {ReactElement} from 'react';
 import Layout from '@/components/layout/layout';
-import MyPageCtg from '@/components/myPage/myAdopt/myAdoptCtg';
+import GetAdoptCtg from '@/components/myPage/getAdopt/getAdoptCtg';
 import Header from '@/components/myPage/header';
-import MyPageCardList from '@/components/myPage/myAdopt/myAdoptCardList';
+import GetAdoptCardList from '@/components/myPage/getAdopt/getAdoptCardList';
 
 function GetAdopt() {
 	return (
 		<>
 			<Header type={'분양 받기'} />
-			<MyPageCtg />
-			<MyPageCardList />
+			<GetAdoptCtg />
+			<GetAdoptCardList />
 		</>
 	);
 }

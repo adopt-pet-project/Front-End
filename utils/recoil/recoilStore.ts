@@ -36,7 +36,12 @@ export const AcurrentTable = atom<'user' | 'report' | 'block' | 'IP-block'>({
 export const AmyAdoptBoardType = atom<
 	'adopting' | 'reserved' | 'end' | 'interested'
 >({
-	key: `myPageBoardType/${v1()}`,
+	key: `myAdoptBoardType/${v1()}`,
 	default: 'adopting',
+});
+
+export const AgetAdoptBoardType = atom<'reserved' | 'end'>({
+	key: `getAdoptBoardType/${v1()}`,
+	default: 'reserved',
 });
 export default {};

@@ -1,14 +1,14 @@
 import styles from '@/styles/components/myPage/getAdopt/getAdoptCtg.module.scss';
-import {AmyAdoptBoardType} from '@/utils/recoil/recoilStore';
+import {AgetAdoptBoardType} from '@/utils/recoil/recoilStore';
 import {useEffect, useRef, useState} from 'react';
 import {useRecoilState} from 'recoil';
 
-function MyPageCtg() {
+function GetAdoptCtg() {
 	const ctgRef = useRef<HTMLDivElement>(null);
 
-	const [currentBtn, setCurrentBtn] = useState<0 | 1 | 2 | 3>(0);
-	const [myAdoptBoardType, setMyAdoptBoardType] =
-		useRecoilState(AmyAdoptBoardType);
+	const [currentBtn, setCurrentBtn] = useState<0 | 1>(0);
+	const [getAdoptBoardType, setGetAdoptBoardType] =
+		useRecoilState(AgetAdoptBoardType);
 
 	return (
 		<>
@@ -16,50 +16,28 @@ function MyPageCtg() {
 				<div
 					onClick={e => {
 						setCurrentBtn(0);
-						setMyAdoptBoardType('adopting');
+						setGetAdoptBoardType('reserved');
 					}}
 					className={`${styles.categoryBtn} ${
 						currentBtn === 0 ? styles.currentBtn : null
-					}`}
-				>
-					분양중
-				</div>
-				<div
-					onClick={e => {
-						setCurrentBtn(1);
-						setMyAdoptBoardType('reserved');
-					}}
-					className={`${styles.categoryBtn} ${
-						currentBtn === 1 ? styles.currentBtn : null
 					}`}
 				>
 					예약됨
 				</div>
 				<div
 					onClick={e => {
-						setCurrentBtn(2);
-						setMyAdoptBoardType('end');
+						setCurrentBtn(1);
+						setGetAdoptBoardType('end');
 					}}
 					className={`${styles.categoryBtn} ${
-						currentBtn === 2 ? styles.currentBtn : null
+						currentBtn === 1 ? styles.currentBtn : null
 					}`}
 				>
 					분양완료
-				</div>
-				<div
-					onClick={e => {
-						setCurrentBtn(3);
-						setMyAdoptBoardType('interested');
-					}}
-					className={`${styles.categoryBtn} ${
-						currentBtn === 3 ? styles.currentBtn : null
-					}`}
-				>
-					관심분양
 				</div>
 			</div>
 		</>
 	);
 }
 
-export default MyPageCtg;
+export default GetAdoptCtg;
