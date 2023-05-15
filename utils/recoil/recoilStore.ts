@@ -6,6 +6,11 @@ export const AisStatistic = atom<boolean>({
 	default: false,
 });
 
+export const AisComment = atom<boolean>({
+	key: `activityCtg/${v1()}`,
+	default: false,
+});
+
 export const AselectedTime = atom<string>({
 	key: `selectedTime/${v1()}`,
 	default: '1',

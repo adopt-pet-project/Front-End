@@ -12,6 +12,14 @@
 		.profileImg {
 			border-radius: 50%;
 			border: 1px solid black;
+			width: 200px;
+			height: 200px;
+		}
+		@media screen and (max-width: 768px) {
+			.profileImg {
+				width: 150px;
+				height: 150px;
+			}
 		}
 
 		.hoverWrap {
@@ -61,11 +69,17 @@
 		.saveBtn {
 			border: 1px solid rgb(79, 152, 0);
 			border-radius: 10px;
-			font-size: 18px;
+			font-size: 17px;
 			font-weight: bold;
 			background: rgb(168, 255, 37);
 			&:hover {
 				background: rgb(149, 235, 20);
+			}
+		}
+
+		@media screen and (max-width: 768px) {
+			.saveBtn {
+				font-size: 15px;
 			}
 		}
 	}
