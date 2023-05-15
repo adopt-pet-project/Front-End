@@ -1,0 +1,27 @@
+.container {
+	display: flex;
+	padding: 16px;
+	border-bottom: 1px solid var(--gray);
+}
+
+.profile {
+	margin-right: 16px;
+	width: 64px;
+	height: 64px;
+	border-radius: 50%;
+}
+
+.author {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		padding: 12px;
+	}
+
+	.profile {
+		margin-right: 12px;
+	}
+}
