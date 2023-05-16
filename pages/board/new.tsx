@@ -1,11 +1,13 @@
 import {BaseSyntheticEvent, ReactElement, useState} from 'react';
 import Header from '@/components/new/header';
 import Layout from '@/components/layout/layout';
-import styles from '@/styles/pages/board/new.module.scss';
 import ImageUploader from '@/components/imageUploader';
+import styles from '@/styles/pages/board/new.module.scss';
 
 export default function New() {
-	const [serverImageList, setServerImageList] = useState<(string | null)[]>([]);
+	const [serverImageList, setServerImageList] = useState<
+		(string | undefined)[]
+	>([]);
 
 	function onSubmit(e: BaseSyntheticEvent) {
 		e.preventDefault();
@@ -19,7 +21,7 @@ export default function New() {
 	return (
 		<section className="body">
 			<form className={styles.form} onSubmit={onSubmit} method="POST">
-				<Header />
+				<Header type="게시글" />
 				<ImageUploader
 					serverImageList={serverImageList}
 					setServerImageList={setServerImageList}
