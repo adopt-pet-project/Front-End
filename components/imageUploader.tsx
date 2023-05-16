@@ -2,6 +2,7 @@ import {
 	BaseSyntheticEvent,
 	Dispatch,
 	SetStateAction,
+	useEffect,
 	useRef,
 	useState,
 } from 'react';
@@ -11,13 +12,26 @@ export default function ImageUploader({
 	serverImageList,
 	setServerImageList,
 }: {
-	serverImageList: (string | null)[];
-	setServerImageList: Dispatch<SetStateAction<(string | null)[]>>;
+	serverImageList: (string | undefined)[];
+	setServerImageList: Dispatch<SetStateAction<(string | undefined)[]>>;
 }) {
 	const localImageList = useRef<MyFile[]>([]);
 	const [localImageUploadState, setLocalImageUploadState] = useState<boolean[]>(
 		[],
 	);
+
+	useEffect(() => {
+		if (serverImageList.length !== 0) {
+			localImageList.current = serverImageList.map(
+				(value: string | undefined) => {
+					return {
+						isUploaded: false,
+						src: value || '',
+					};
+				},
+			);
+		}
+	}, []);
 
 	function changeImageInput(e: BaseSyntheticEvent) {
 		let prevLength = localImageList.current.length;
@@ -36,7 +50,6 @@ export default function ImageUploader({
 			newLocalImageList.push({
 				localFile: fileList[i],
 				isUploaded: false,
-				imageId: null,
 				src: URL.createObjectURL(fileList[i]),
 			});
 		}
@@ -79,7 +92,7 @@ export default function ImageUploader({
 			myFile.imageId = 'response from server';
 			updateState();
 		} else {
-			alert(`${myFile.localFile.name} 업로드 실패\n사유 : 어쩌고저쩌고`);
+			alert('업로드 실패\n사유 : 어쩌고저쩌고');
 			deleteImage(index);
 		}
 	}
