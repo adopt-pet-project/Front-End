@@ -35,7 +35,7 @@ export default function Carousel({images}: {images: any}) {
 			preventScroll.current = true;
 			imagesRef.current.ontransitionend = () => {
 				if (page === carouselImages.length - 2 && imagesRef.current) {
-					setPage(carouselImages.length - 2);
+					setPage(1);
 					imagesRef.current.style.transition = 'none';
 					setTimeout(() => {
 						if (imagesRef.current)
