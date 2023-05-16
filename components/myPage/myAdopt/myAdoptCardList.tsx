@@ -3,12 +3,14 @@ import styles from '@/styles/components/myPage/myAdopt/myAdoptCardList.module.sc
 
 import MyAdoptCard from './myAdoptCard';
 import {useRecoilState} from 'recoil';
-import {AmyAdoptBoardType} from '@/utils/recoil/recoilStore';
+import {AmyAdoptBoardType, AmyAdoptModal} from '@/utils/recoil/recoilStore';
+import MyAdoptModal from './myAdoptModal';
 
 function MyAdoptCardList() {
 	const DummyData: any[] = [];
 	const [myAdoptBoardType, setMyAdoptBoardType] =
 		useRecoilState(AmyAdoptBoardType);
+	const [myAdoptModal, setMyAdoptModal] = useRecoilState(AmyAdoptModal);
 
 	for (let i = 0; i < 9; i++) {
 		DummyData.push({
@@ -26,11 +28,14 @@ function MyAdoptCardList() {
 	}
 
 	return (
-		<ul className={styles.cardList}>
-			{DummyData.map((data, i) => (
-				<MyAdoptCard key={i} boardType={myAdoptBoardType} article={data} />
-			))}
-		</ul>
+		<>
+			<ul className={styles.cardList}>
+				{DummyData.map((data, i) => (
+					<MyAdoptCard key={i} boardType={myAdoptBoardType} article={data} />
+				))}
+			</ul>
+			{myAdoptModal.isOn ? <MyAdoptModal /> : null}
+		</>
 	);
 }
 

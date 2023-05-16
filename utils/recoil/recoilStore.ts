@@ -49,4 +49,15 @@ export const AgetAdoptBoardType = atom<'reserved' | 'end'>({
 	key: `getAdoptBoardType/${v1()}`,
 	default: 'reserved',
 });
+
+export const AmyAdoptModal = atom({
+	key: `myAdoptModal/${v1()}`,
+	default: {
+		modalID: 0,
+		type: 'adopting',
+		isOn: false,
+		x: 0,
+		y: 0,
+	},
+});
 export default {};

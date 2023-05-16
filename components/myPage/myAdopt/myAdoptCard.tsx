@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import styles from '@/styles/components/myPage/myAdopt/myAdoptCard.module.scss';
 import {useRouter} from 'next/router';
+import More from '../more';
 
 function MyAdoptCard({article, boardType}: {article: any; boardType: string}) {
 	const router = useRouter();
@@ -31,13 +32,9 @@ function MyAdoptCard({article, boardType}: {article: any; boardType: string}) {
 					<div className={styles.title}>
 						<span>{article.title}</span>
 						{boardType === 'adopting' ? (
-							<span>
-								<img width={20} src="/icon/more.svg" alt="" />
-							</span>
+							<More mID={article.id} type={'adopting'} />
 						) : boardType === 'reserved' ? (
-							<span>
-								<img width={20} src="/icon/more.svg" alt="" />
-							</span>
+							<More mID={article.id} type={'reserved'} />
 						) : boardType === 'end' ? (
 							<span className={styles.delete}>삭제</span>
 						) : boardType === 'interested' ? (
