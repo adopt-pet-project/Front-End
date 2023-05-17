@@ -17,7 +17,9 @@ function ProfileLoginTrue() {
 				<div className={styles.alarmD}></div>
 			</div>
 
-			{isProfileBoxOn ? <ProfileBox /> : null}
+			{isProfileBoxOn ? (
+				<ProfileBox setIsProfileBoxOn={setIsProfileBoxOn} />
+			) : null}
 
 			<div
 				onClick={() => {

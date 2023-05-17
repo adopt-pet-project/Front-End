@@ -60,4 +60,5 @@ export const AmyAdoptModal = atom({
 		y: 0,
 	},
 });
+
 export default {};
