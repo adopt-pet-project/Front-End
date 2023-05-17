@@ -51,6 +51,12 @@
 			span {
 				margin-right: 10px;
 			}
+			:first-child {
+				cursor: pointer;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
 		}
 	}
 
