@@ -1,0 +1,41 @@
+.box {
+	padding: 0px;
+	margin: 0px;
+	width: 450px;
+	height: 500px;
+	position: absolute;
+	top: 60px;
+	right: 60px;
+	background: white;
+	border: 1px solid black;
+	.boxHeader {
+		height: 60px;
+		display: none;
+		width: 100%;
+		justify-content: right;
+		.closeBtn {
+			cursor: pointer;
+			margin-right: 20px;
+			height: 100%;
+			font-size: 60px;
+		}
+	}
+	.headerBoundary {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 528px) {
+	.box {
+		width: 100vw;
+		height: 100vh;
+		left: 0px;
+		top: 0px;
+		.boxHeader {
+			display: flex;
+		}
+		.headerBoundary {
+			display: block;
+		}
+	}
+}
