@@ -1,6 +1,6 @@
-import styles from '@/styles/components/board/new/header.module.scss';
+import styles from '@/styles/components/new/header.module.scss';
 
-export default function Header({}: {}) {
+export default function Header({type}: {type: string}) {
 	return (
 		<div className={styles.container}>
 			<img
@@ -11,7 +11,7 @@ export default function Header({}: {}) {
 					window.history.back();
 				}}
 			/>
-			새 게시글 작성
+			새 {type} 작성
 			<button type="submit" className={styles.writeButton}>
 				작성
 			</button>

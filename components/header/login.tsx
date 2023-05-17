@@ -2,11 +2,8 @@ import styles from '@/styles/components/header/login.module.scss';
 import Link from 'next/link';
 import {BaseSyntheticEvent} from 'react';
 
-const REDIRECT_URI = 'http://localhost:3000/test';
-const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-
 const providerList: Link[] = [
-	{text: 'kakao', href: KAKAO_AUTH_URL},
+	{text: 'kakao', href: 'https://ez-tour.org/oauth2/authorization/kakao'},
 	{text: 'naver', href: ''},
 	{text: 'google', href: ''},
 ];
@@ -34,23 +31,23 @@ export default function Login({hideModal}: {hideModal: () => void}) {
 				<ul className={styles.provider}>
 					{providerList.map((provider: Link) => {
 						return (
-							<>
-								<li>
-									<Link
-										className={`${styles[provider.text]}`}
-										href={provider.href}
-									>
-										<img
-											className={styles.logo}
-											src={`/icon/provider/${provider.text}.svg`}
-											alt={provider.text}
-										/>
-									</Link>
-									<span
-										className={styles.subMessage}
-									>{`${provider.text.toUpperCase()}로 계속하기`}</span>
-								</li>
-							</>
+							<li key={provider.text}>
+								<button
+									onClick={() =>
+										window.open(provider.href, '_blank', 'popup=yes')
+									}
+									className={`${styles[provider.text]}`}
+								>
+									<img
+										className={styles.logo}
+										src={`/icon/provider/${provider.text}.svg`}
+										alt={provider.text}
+									/>
+								</button>
+								<span
+									className={styles.subMessage}
+								>{`${provider.text.toUpperCase()}로 계속하기`}</span>
+							</li>
 						);
 					})}
 				</ul>

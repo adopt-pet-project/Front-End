@@ -1,63 +1,3 @@
-.header {
-	padding: 16px 16px 4px 16px;
-	border-bottom: 1px solid var(--gray);
-	position: relative;
-
-	.title {
-		display: inline-block;
-		margin-bottom: 4px;
-		font-size: 20px;
-		font-weight: bold;
-	}
-	.profile {
-		width: 20px;
-		height: 20px;
-		margin-right: 8px;
-		border-radius: 50%;
-	}
-
-	.authorInfo {
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
-	}
-
-	.author {
-		display: inline-block;
-		height: 20px;
-	}
-
-	.metadata {
-		display: flex;
-		justify-content: space-between;
-		font-size: 12px;
-		margin-top: 8px;
-	}
-}
-
-.option {
-	user-select: none;
-	padding: 0 16px 16px 16px;
-	display: flex;
-
-	.item {
-		cursor: pointer;
-		padding: 8px 16px;
-		border-radius: 50px;
-		font-size: 14px;
-		background-color: var(--gray);
-		display: flex;
-		justify-content: center;
-		margin-right: 8px;
-
-		img {
-			width: 16px;
-			height: 16px;
-			margin-right: 6px;
-		}
-	}
-}
-
 .return {
 	display: inline-block;
 	color: var(--black);
@@ -71,17 +11,12 @@
 	border-radius: 8px;
 }
 
-.context {
-	padding: 16px;
-	min-height: 200px;
-}
-
 .commentContainer {
-	padding: 0 16px;
+	padding: 0 16px 16px 16px;
 	border-top: 1px solid var(--gray);
 }
 
-.writeComment {
+.commentInputContainer {
 	border-radius: 0 0 8px 8px;
 	position: sticky;
 	padding: 12px;
@@ -117,20 +52,11 @@
 		width: calc(100% - 24px);
 	}
 
-	.header {
-		padding: 12px 12px 4px 12px;
-	}
-
-	.context {
-		padding: 12px;
-	}
-
-	.option,
 	.commentContainer {
 		padding: 0 12px 12px 12px;
 	}
 
-	.writeComment {
+	.commentInputContainer {
 		padding: 12px;
 	}
 }

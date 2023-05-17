@@ -1,0 +1,40 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	padding: 16px 0;
+	margin: 0;
+	border-bottom: 1px solid var(--gray);
+
+	span {
+		font-size: 24px;
+		font-weight: bold;
+		margin-bottom: 16px;
+	}
+
+	li {
+		list-style-type: none;
+		margin-bottom: 12px;
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	label {
+		margin-right: 16px;
+	}
+
+	input {
+		outline: none;
+		border: none;
+	}
+
+	select {
+		outline: none;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		padding: 12px 0;
+	}
+}

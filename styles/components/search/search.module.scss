@@ -30,13 +30,13 @@
 	}
 
 	&:hover {
-		background-color: #d1d6db;
+		background-color: var(--white);
 	}
 }
 
 .container[data-active] {
 	flex-direction: row-reverse;
-	background-color: #d1d6db;
+	background-color: var(--white);
 	width: calc(100% - 16px);
 	flex-grow: 1;
 }

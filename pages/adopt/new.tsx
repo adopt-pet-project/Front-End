@@ -2,9 +2,12 @@ import {BaseSyntheticEvent, ReactElement, useState} from 'react';
 import Header from '@/components/new/header';
 import Layout from '@/components/layout/layout';
 import ImageUploader from '@/components/imageUploader';
-import styles from '@/styles/pages/board/new.module.scss';
+import styles from '@/styles/pages/adopt/new.module.scss';
+import {GetServerSideProps} from 'next';
+import AnimalInput from '@/components/adopt/animalInput';
+import CoordsInput from '@/components/adopt/coordsInput';
 
-export default function New() {
+export default function New({query}: {query: {type: string}}) {
 	const [serverImageList, setServerImageList] = useState<
 		(string | undefined)[]
 	>([]);
@@ -21,11 +24,13 @@ export default function New() {
 	return (
 		<section className="body">
 			<form className={styles.form} onSubmit={onSubmit} method="POST">
-				<Header type="게시글" />
+				<Header type="분양글" />
 				<ImageUploader
 					serverImageList={serverImageList}
 					setServerImageList={setServerImageList}
 				/>
+				<AnimalInput />
+				<CoordsInput />
 				<input
 					className={styles.title}
 					type="text"
@@ -41,6 +46,12 @@ export default function New() {
 		</section>
 	);
 }
+
+export const getServerSideProps: GetServerSideProps = async ({query}) => {
+	return {
+		props: {query},
+	};
+};
 
 New.getLayout = function getLayout(page: ReactElement) {
 	return <Layout>{page}</Layout>;

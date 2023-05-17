@@ -1,0 +1,12 @@
+.more {
+	position: relative;
+
+	.text {
+		position: absolute;
+		font-weight: bold;
+		font-size: 18px;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+}

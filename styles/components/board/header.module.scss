@@ -1,54 +1,42 @@
-.header {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
-	width: 100%;
+.container {
+	padding: 16px 16px 4px 16px;
+	border-bottom: 1px solid var(--gray);
 	position: relative;
-	margin-bottom: 16px;
-}
 
-.title {
-	position: absolute;
-	display: inline-block;
-	top: 0;
-	left: 0;
-	width: auto;
-	max-width: calc(100% - 40px);
-	user-select: none;
-	font-size: 24px;
-	font-weight: bold;
-	line-height: 32px;
-	margin: 0;
-	padding-right: 8px;
-	height: 32px;
-	overflow: hidden;
-}
+	.title {
+		display: inline-block;
+		margin-bottom: 4px;
+		font-size: 20px;
+		font-weight: bold;
+	}
+	.profile {
+		width: 20px;
+		height: 20px;
+		margin-right: 8px;
+		border-radius: 50%;
+	}
 
-.writeButton {
-	cursor: pointer;
-	margin-left: 12px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 32px;
-	height: 32px;
-	border: 1px solid #d1d6db;
-	background-color: var(--greyBackground);
-	border-radius: 4px;
-	transition: var(--transition);
-	&:hover {
-		background-color: #d1d6db;
+	.authorInfo {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+	}
+
+	.author {
+		display: inline-block;
+		height: 20px;
+	}
+
+	.metadata {
+		display: flex;
+		justify-content: space-between;
+		font-size: 12px;
+		margin-top: 8px;
 	}
 }
 
 @media screen and (max-width: 768px) {
-	.header {
-		padding: 0 12px;
-		margin: 8px 0;
-	}
-
-	.title {
-		left: 12px;
-		padding-right: 8px;
+	.container {
+		padding: 12px 12px 4px 12px;
 	}
 }

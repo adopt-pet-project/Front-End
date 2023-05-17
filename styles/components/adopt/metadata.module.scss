@@ -1,0 +1,33 @@
+.container {
+	margin: 0;
+	padding: 16px;
+	border-bottom: 1px solid var(--gray);
+	color: var(--lightblack);
+	li {
+		display: flex;
+		justify-content: flex-start;
+		margin-bottom: 16px;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.dataName {
+		margin-right: 32px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		padding: 12px;
+
+		li {
+			margin-bottom: 12px;
+		}
+	}
+
+	.dataName {
+		margin-right: 24px;
+	}
+}
