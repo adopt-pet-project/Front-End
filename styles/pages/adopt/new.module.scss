@@ -1,0 +1,25 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	padding: 0 12px 12px 12px;
+}
+
+.title,
+.context {
+	background-color: transparent;
+	border: none;
+	outline: none;
+}
+
+.title {
+	font-size: 24px;
+	padding: 16px 0;
+	border-bottom: 1px solid var(--gray);
+}
+
+.context {
+	min-height: 300px;
+	resize: vertical;
+	max-width: 100%;
+	padding: 16px 0;
+}

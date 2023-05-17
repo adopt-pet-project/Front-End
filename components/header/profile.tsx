@@ -1,6 +1,7 @@
 import styles from '@/styles/components/header/profile.module.scss';
-import {RefObject, useState} from 'react';
+import {RefObject, useEffect, useState} from 'react';
 import Login from './login';
+import {useRouter} from 'next/router';
 
 export default function Profile({
 	containerRef,
@@ -8,6 +9,11 @@ export default function Profile({
 	containerRef: RefObject<HTMLDivElement>;
 }) {
 	const [isModalActive, setIsModalActive] = useState<boolean>(false);
+	const router = useRouter();
+
+	useEffect(() => {
+		if (Boolean(router.query.login)) onClickLogin();
+	}, []);
 
 	function onClickLogin() {
 		setIsModalActive(true);
@@ -15,6 +21,7 @@ export default function Profile({
 	}
 
 	function hideModal() {
+		router.push(router.asPath.split('?')[0]);
 		setIsModalActive(false);
 		containerRef.current?.classList.remove('preventScroll');
 	}
@@ -26,7 +33,12 @@ export default function Profile({
 				<span>로그인</span>
 			</button>
 			{isModalActive && (
-				<div className={styles.loginWrap} tabIndex={-1} onClick={hideModal}>
+				<div
+					key={Date.now()}
+					className={styles.loginWrap}
+					tabIndex={-1}
+					onClick={hideModal}
+				>
 					<Login hideModal={hideModal} />
 				</div>
 			)}

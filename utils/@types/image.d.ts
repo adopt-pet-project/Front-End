@@ -1,6 +1,6 @@
 interface MyFile {
-	localFile: File;
+	localFile?: File;
 	isUploaded: boolean;
 	src: string;
-	imageId: string | null;
+	imageId?: string;
 }
