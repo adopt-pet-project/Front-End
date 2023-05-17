@@ -16,7 +16,7 @@ export default function Author({author}: {author: any}) {
 				}}
 			>
 				<span className={styles.author}>{author.author}</span>
-				<span className={styles.location}>{author.location}</span>
+				<span>{author.address}</span>
 			</div>
 		</div>
 	);

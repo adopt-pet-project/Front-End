@@ -5,6 +5,7 @@ import ImageUploader from '@/components/imageUploader';
 import styles from '@/styles/pages/adopt/new.module.scss';
 import {GetServerSideProps} from 'next';
 import AnimalInput from '@/components/adopt/animalInput';
+import CoordsInput from '@/components/adopt/coordsInput';
 
 export default function New({query}: {query: {type: string}}) {
 	const [serverImageList, setServerImageList] = useState<
@@ -29,6 +30,7 @@ export default function New({query}: {query: {type: string}}) {
 					setServerImageList={setServerImageList}
 				/>
 				<AnimalInput />
+				<CoordsInput />
 				<input
 					className={styles.title}
 					type="text"
