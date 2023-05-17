@@ -1,8 +1,10 @@
 import styles from '@/styles/components/adopt/animalInput.module.scss';
+import Script from 'next/script';
 
 export default function AnimalInput() {
 	return (
-		<ul className={styles.animalInput}>
+		<ul className={styles.container}>
+			<span>동물정보 입력</span>
 			<li>
 				<label htmlFor="name">이름</label>
 				<input
