@@ -17,6 +17,7 @@
 }
 
 .inquiry {
+	z-index: 1;
 	border-radius: 0 0 8px 8px;
 	position: sticky;
 	padding: 12px;
@@ -24,6 +25,7 @@
 	bottom: 0;
 	background-color: var(--white);
 	display: flex;
+	justify-content: space-between;
 
 	button {
 		text-align: center;

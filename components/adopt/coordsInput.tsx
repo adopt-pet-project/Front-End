@@ -1,6 +1,6 @@
 import styles from '@/styles/components/adopt/coordsInput.module.scss';
 import Script from 'next/script';
-import {BaseSyntheticEvent, useRef} from 'react';
+import {BaseSyntheticEvent, useEffect, useRef} from 'react';
 
 export default function CoordsInput() {
 	const mapRef = useRef<HTMLDivElement>(null);
@@ -10,6 +10,12 @@ export default function CoordsInput() {
 	let map: any;
 	let marker: any;
 
+	useEffect(() => {
+		if (window.kakao) {
+			window.kakao.maps.load(loadMap);
+		}
+	});
+
 	function setPosition(latLng: any) {
 		map.setCenter(latLng);
 		marker.setPosition(latLng);
@@ -17,11 +23,14 @@ export default function CoordsInput() {
 		longitudeRef.current!.value = latLng.La;
 	}
 
-	const loadMap = () => {
+	function loadMap() {
 		const mapOption = {
 			center: new window.kakao.maps.LatLng(37.55467, 126.970609),
 			level: 6,
 		};
+
+		latitudeRef.current!.value = '37.55467';
+		longitudeRef.current!.value = '126.970609';
 
 		map = new window.kakao.maps.Map(mapRef.current, mapOption);
 		marker = new window.kakao.maps.Marker({
@@ -37,7 +46,7 @@ export default function CoordsInput() {
 				setPosition(latlng);
 			},
 		);
-	};
+	}
 
 	function setCurrentPosition(e: BaseSyntheticEvent) {
 		e.preventDefault();
