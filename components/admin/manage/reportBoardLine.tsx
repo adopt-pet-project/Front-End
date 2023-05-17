@@ -10,7 +10,7 @@ function BoardReportLine({lineData}: {lineData: Boardreport}) {
 		reporter,
 		targetId,
 		target,
-		content,
+		summary,
 		reportDate,
 	} = lineData;
 
@@ -41,7 +41,7 @@ function BoardReportLine({lineData}: {lineData: Boardreport}) {
 			>
 				{target}
 			</span>
-			<span>{content}</span>
+			<span>{summary}</span>
 			<span>{reportDate}</span>
 			<span
 				onClick={() => {

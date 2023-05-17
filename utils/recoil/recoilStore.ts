@@ -6,6 +6,11 @@ export const AisStatistic = atom<boolean>({
 	default: false,
 });
 
+export const AisComment = atom<boolean>({
+	key: `activityCtg/${v1()}`,
+	default: false,
+});
+
 export const AselectedTime = atom<string>({
 	key: `selectedTime/${v1()}`,
 	default: '1',
@@ -33,10 +38,26 @@ export const AcurrentTable = atom<'user' | 'report' | 'block' | 'IP-block'>({
 	default: 'user',
 });
 
-export const AmyPageBoardType = atom<
+export const AmyAdoptBoardType = atom<
 	'adopting' | 'reserved' | 'end' | 'interested'
 >({
-	key: `myPageBoardType/${v1()}`,
+	key: `myAdoptBoardType/${v1()}`,
 	default: 'adopting',
+});
+
+export const AgetAdoptBoardType = atom<'reserved' | 'end'>({
+	key: `getAdoptBoardType/${v1()}`,
+	default: 'reserved',
+});
+
+export const AmyAdoptModal = atom({
+	key: `myAdoptModal/${v1()}`,
+	default: {
+		modalID: 0,
+		type: 'adopting',
+		isOn: false,
+		x: 0,
+		y: 0,
+	},
 });
 export default {};

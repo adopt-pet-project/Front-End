@@ -1,0 +1,33 @@
+.moreModal {
+	border: 1px solid lightgrey;
+	padding: 10px;
+	margin: 0px;
+	display: none;
+	position: absolute;
+	background: white;
+	left: 0;
+	top: 0;
+	width: 200px;
+	height: 200px;
+	flex-direction: column;
+	justify-content: space-between;
+	border-radius: 8px;
+	> div {
+		padding-left: 10px;
+		display: flex;
+		align-items: center;
+		height: 25%;
+		cursor: pointer;
+		border-bottom: 1px solid lightgrey;
+		&:hover {
+			background: rgb(227, 227, 227);
+		}
+	}
+	> :last-child {
+		border: none;
+	}
+}
+
+.on {
+	display: flex;
+}

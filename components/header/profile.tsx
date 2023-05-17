@@ -1,6 +1,7 @@
 import styles from '@/styles/components/header/profile.module.scss';
 import {RefObject, useEffect, useState} from 'react';
 import Login from './login';
+import ProfileLoginTrue from './profileLoginTrue';
 import {useRouter} from 'next/router';
 
 export default function Profile({
@@ -9,6 +10,7 @@ export default function Profile({
 	containerRef: RefObject<HTMLDivElement>;
 }) {
 	const [isModalActive, setIsModalActive] = useState<boolean>(false);
+	const [isLogin, setIsLogin] = useState(true);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -28,10 +30,15 @@ export default function Profile({
 
 	return (
 		<>
-			<button className={styles.loginButton} onClick={onClickLogin}>
-				<img src="/icon/login.svg" width={24} height={24} alt="login icon" />
-				<span>로그인</span>
-			</button>
+			{isLogin ? (
+				<ProfileLoginTrue />
+			) : (
+				<button className={styles.loginButton} onClick={onClickLogin}>
+					<img src="/icon/login.svg" width={24} height={24} alt="login icon" />
+					<span>로그인</span>
+				</button>
+			)}
+
 			{isModalActive && (
 				<div
 					key={Date.now()}

@@ -16,11 +16,12 @@ declare global {
 		reporter: string;
 		targetId: number;
 		target: string;
-		content: string;
+		summary: string;
 		reportDate: string;
 	}
 
 	interface Boardblock {
+		id: number;
 		state: string;
 		userId: number;
 		userName: string;
