@@ -24,15 +24,15 @@ function ProfileBox({
 			if (node === null) {
 				return false;
 			}
-			return findHaveParent(node.parentElement as HTMLDivElement, target);
+			return findHaveParent(node.parentElement as HTMLElement, target);
 		}
 	};
 	const handleCloseProfile = (e: MouseEvent) => {
-		const target = e.target as HTMLDivElement;
+		const target = e.target as HTMLElement;
 		if (
 			findHaveParent(
-				e.target as HTMLDivElement,
-				profileBoxRef.current as HTMLDivElement,
+				e.target as HTMLElement,
+				profileBoxRef.current as HTMLElement,
 			) ||
 			target.classList[0].includes('profileLoginTrue_profile')
 		) {

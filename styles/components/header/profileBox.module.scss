@@ -1,5 +1,5 @@
 .box {
-	border-radius: 5px;
+	border-radius: 8px;
 	padding: 0px;
 	margin: 0px;
 	width: 450px;
@@ -27,8 +27,8 @@
 
 	.profileCard {
 		display: flex;
-		border-bottom-right-radius: 8px;
-		border-bottom-left-radius: 8px;
+		border-radius: 8px;
+
 		background: rgb(53, 53, 53);
 		padding: 10px;
 		.profileImgWrap {
@@ -71,6 +71,10 @@
 		&:hover {
 			background: rgb(182, 180, 179);
 		}
+	}
+	:nth-last-child(1) {
+		border-bottom-left-radius: 8px;
+		border-bottom-right-radius: 8px;
 	}
 }
 

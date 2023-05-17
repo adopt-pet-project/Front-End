@@ -3,19 +3,19 @@
 	justify-content: center;
 	align-items: center;
 	.imgWrap {
-		overflow: hidden;
 		display: flex;
 		background: none;
 		position: relative;
 		cursor: pointer;
 
 		.alarmD {
-			width: 10px;
-			height: 10px;
+			width: 18px;
+			height: 18px;
 			background: red;
 			position: absolute;
 			border-radius: 50%;
-			left: 18px;
+			top: -5px;
+			left: 13px;
 		}
 	}
 	.profile {
