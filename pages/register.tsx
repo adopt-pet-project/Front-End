@@ -44,7 +44,7 @@ export default function Register() {
 		if (!formRef.current) return;
 		e.preventDefault();
 
-		await fetch('http://3.36.132.160/member/register', {
+		await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member/register`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

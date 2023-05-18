@@ -5,7 +5,7 @@ interface Adopt {
 	location: string;
 	bookmark: number;
 	chat: number;
-	regDate: string;
+	publishedAt: number;
 	thumbnail: string;
 	type: string;
 	status: number;
