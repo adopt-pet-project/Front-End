@@ -1,9 +1,17 @@
 import styles from '@/styles/components/adopt/article.module.scss';
 import Image from 'next/image';
 
-const statusList: Status[] = [
-	{text: '분양 예약', backgroundColor: '#65d329', color: 'var(--white)'},
-	{text: '분양 완료', backgroundColor: 'var(--black)', color: 'var(--white)'},
+const status = [
+	{
+		text: '분양 예약',
+		backgroundColor: '#65d329',
+		color: 'var(--white)',
+	},
+	{
+		text: '분양 완료',
+		backgroundColor: 'var(--black)',
+		color: 'var(--white)',
+	},
 ];
 
 export default function Article({article}: {article: Adopt}) {
@@ -23,7 +31,7 @@ export default function Article({article}: {article: Adopt}) {
 					quality={75}
 					loading="lazy"
 					className={styles.thumbnail}
-					src={article.thumbnail}
+					src={article.thumbnail === '기본' ? '' : article.thumbnail}
 					alt={`${article.title} thumbnail`}
 				/>
 			)}
@@ -34,22 +42,22 @@ export default function Article({article}: {article: Adopt}) {
 						<span className={styles.title}>{article.title}</span>
 						{article.status != 0 && (
 							<div
-								style={{
-									backgroundColor: `${
-										statusList[article.status + 1].backgroundColor
-									}`,
-									color: `${statusList[article.status + 1].color}`,
-								}}
+								style={
+									{
+										// backgroundColor: `${}`,
+										// color: `${}`,
+									}
+								}
 								className={styles.status}
 							>
-								{statusList[article.status].text}
+								{/* {status[article.status].text} */}
 							</div>
 						)}
 					</div>
 					<span className={styles.kind}>{article.kind}</span>
 				</div>
 				<div className={styles.metadata}>
-					<span>{`${article.location} · ${article.regDate}`}</span>
+					<span>{`${article.location} · ${article.publishedAt}`}</span>
 					<ul className={styles.dataList}>
 						<li>
 							<img
