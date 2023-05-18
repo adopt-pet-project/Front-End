@@ -1,9 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
-import styles from '@/styles/components/myPage/myPageCard.module.scss';
+import styles from '@/styles/components/activity/activityCard.module.scss';
 import {useRouter} from 'next/router';
 
-function MyPageCard({article, boardType}: {article: any; boardType: string}) {
+function ActivityCard({article}: {article: any}) {
 	const router = useRouter();
 	return (
 		<li
@@ -30,19 +30,6 @@ function MyPageCard({article, boardType}: {article: any; boardType: string}) {
 				<div className={styles.preview}>
 					<div className={styles.title}>
 						<span>{article.title}</span>
-						{boardType === 'adopting' ? (
-							<span>
-								<img width={20} src="/icon/more.svg" alt="" />
-							</span>
-						) : boardType === 'reserved' ? (
-							<span>
-								<img width={20} src="/icon/more.svg" alt="" />
-							</span>
-						) : boardType === 'end' ? (
-							<span className={styles.delete}>삭제</span>
-						) : boardType === 'interested' ? (
-							<span className={styles.release}>해제</span>
-						) : null}
 					</div>
 
 					<span className={styles.context}>{article.context}</span>
@@ -73,4 +60,4 @@ function MyPageCard({article, boardType}: {article: any; boardType: string}) {
 	);
 }
 
-export default MyPageCard;
+export default ActivityCard;

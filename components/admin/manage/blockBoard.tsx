@@ -5,6 +5,7 @@ import BlockBoardLine from './blockBoardLine';
 function BlockBoard() {
 	const [reportList, setReportList] = useState<Boardblock[]>([
 		{
+			id: 3,
 			state: '접속차단 3일',
 			userId: 3,
 			userName: '성익현',
@@ -13,6 +14,7 @@ function BlockBoard() {
 			reason: '음란물 게시',
 		},
 		{
+			id: 3,
 			state: '작성제한 영구',
 			userId: 223,
 			userName: '홍길동',
@@ -21,6 +23,7 @@ function BlockBoard() {
 			reason: '음란물 게시',
 		},
 		{
+			id: 3,
 			state: '접속차단 3일',
 			userId: 223,
 			userName: '홍길동',
@@ -29,6 +32,7 @@ function BlockBoard() {
 			reason: '음란물 게시',
 		},
 		{
+			id: 3,
 			state: '작성제한 1달',
 			userId: 223,
 			userName: '홍길동',

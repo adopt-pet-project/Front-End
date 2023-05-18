@@ -1,0 +1,118 @@
+.box {
+	border-radius: 8px;
+	padding: 0px;
+	margin: 0px;
+	width: 450px;
+	height: 350px;
+	position: absolute;
+	top: 66px;
+	right: 60px;
+	background: rgb(226, 226, 226);
+	border: 1px solid black;
+	.boxHeader {
+		height: 60px;
+		display: none;
+		width: 100%;
+		justify-content: right;
+		.closeBtn {
+			cursor: pointer;
+			margin-right: 20px;
+			height: 100%;
+			font-size: 60px;
+		}
+	}
+	.headerBoundary {
+		display: none;
+	}
+
+	.profileCard {
+		display: flex;
+		border-radius: 8px;
+
+		background: rgb(53, 53, 53);
+		padding: 10px;
+		.profileImgWrap {
+			width: 100px;
+			height: 100px;
+			background: white;
+			border-radius: 50%;
+			margin-right: 10px;
+		}
+		.name {
+			margin: 10px 0;
+			font-size: 25px;
+			color: white;
+		}
+		.address {
+			color: white;
+		}
+		.activity {
+			color: white;
+			span {
+				margin-right: 10px;
+			}
+			:first-child {
+				cursor: pointer;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+
+	.myNav {
+		display: flex;
+		align-items: center;
+		height: 30px;
+		font-size: 25px;
+		padding: 28px 10px;
+		border-bottom: 1px solid lightgrey;
+		cursor: pointer;
+		&:hover {
+			background: rgb(182, 180, 179);
+		}
+	}
+	:nth-last-child(1) {
+		border-bottom-left-radius: 8px;
+		border-bottom-right-radius: 8px;
+	}
+}
+
+@media screen and (max-width: 528px) {
+	.box {
+		border-radius: 0px;
+		border: none;
+		width: 100vw;
+		height: 100vh;
+		left: 0px;
+		top: 0px;
+
+		.profileCard {
+			height: 180px;
+			.profileImgWrap {
+				width: 160px;
+				height: 160px;
+			}
+			.name {
+				margin: 20px 0 50px 0;
+				font-size: 25px;
+				color: white;
+			}
+			.address {
+				color: white;
+			}
+			.activity {
+				color: white;
+				span {
+					margin-right: 10px;
+				}
+			}
+		}
+		.boxHeader {
+			display: flex;
+		}
+		.headerBoundary {
+			display: block;
+		}
+	}
+}

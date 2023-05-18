@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import styles from '@/styles/components/admin/statistics/accordionBar.module.scss';
 import Graph from './graph';
 
-
 function AccordionBar() {
 	const [isUserGraph, setIsUserGraph] = useState(false);
 	const [isAdoptGraph, setIsAdoptGraph] = useState(false);
@@ -78,7 +77,7 @@ function AccordionBar() {
 				backgroundColor: 'rgba(70, 255, 170, 0.5)',
 			},
 			{
-				label: '글 생성 수 수',
+				label: '글 생성 수',
 				data: [0, 2, 4, 6, 8, 9, 5],
 				borderColor: 'rgb(255, 99, 132)',
 				backgroundColor: 'rgba(255, 120, 155, 0.5)',

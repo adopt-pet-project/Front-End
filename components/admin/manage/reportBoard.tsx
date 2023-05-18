@@ -12,7 +12,7 @@ function ReportBoard() {
 			reporter: '성익현',
 			targetId: 3,
 			target: '홍길동',
-			content: '음란물 게시',
+			summary: '음란물 게시',
 			reportDate: '2023. 5. 1',
 		},
 		{
@@ -23,7 +23,7 @@ function ReportBoard() {
 			reporter: '성익현',
 			targetId: 223,
 			target: '전우치',
-			content: '음란물 게시',
+			summary: '음란물 게시',
 			reportDate: '2023. 5. 1',
 		},
 		{
@@ -34,7 +34,7 @@ function ReportBoard() {
 			reporter: '성익현',
 			targetId: 71,
 			target: '전우치',
-			content: '음란물 게시',
+			summary: '음란물 게시',
 			reportDate: '2023. 5. 1',
 		},
 		{
@@ -45,7 +45,7 @@ function ReportBoard() {
 			reporter: '성익현',
 			targetId: 4,
 			target: '정상수',
-			content: '음란물 게시',
+			summary: '음란물 게시',
 			reportDate: '2023. 5. 1',
 		},
 	]);

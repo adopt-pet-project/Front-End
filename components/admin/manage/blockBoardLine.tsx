@@ -3,7 +3,7 @@ import {AmodalType, AmodalWrap} from '@/utils/recoil/recoilStore';
 import {useRecoilState} from 'recoil';
 
 function BlockBoardLine({lineData}: {lineData: Boardblock}) {
-	const {state, userId, userName, times, blockDate, reason} = lineData;
+	const {id, state, userId, userName, times, blockDate, reason} = lineData;
 	const [modalType, setModalType] = useRecoilState(AmodalType);
 	const [isModalWrap, setIsModalWrap] = useRecoilState(AmodalWrap);
 	return (
