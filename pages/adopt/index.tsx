@@ -22,38 +22,43 @@ export default function Adopt({
 	query: string;
 	firstPage: Adopt[];
 }) {
-	console.log(firstPage);
-
 	return (
 		<>
 			<Header query={query} path={'adopt'} />
 			{!query && <OrderBy orderList={orderList} currentOrder={filter} />}
 			<section className="body">
-				{/* {firstPage.map((article: any) => {
+				{firstPage.map((article: any) => {
 					return <Article key={article.id} article={article} />;
 				})}
+				{/* {firstPage.length === 10 && ( */}
 				<Paging
 					lastArticleId={firstPage[firstPage.length - 1].id}
 					query={filter}
 					order={filter}
-				/> */}
+				/>
+				{/* )} */}
 			</section>
 		</>
 	);
 }
 
 export const getServerSideProps: GetServerSideProps = async ({query}) => {
-	// let result = await (
-	// 	await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/adopt`)
-	// ).json();
-
-	return {
-		props: {
-			filter: query.filter || 'all',
-			query: query.q || '',
-			// firstPage: result,
-		},
-	};
+	let response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/adopt`);
+	let result = await response.json();
+	return result.status
+		? {
+				redirect: {
+					permanent: false,
+					destination: '/404',
+				},
+		  }
+		: {
+				props: {
+					filter: query.filter || 'all',
+					query: query.q || '',
+					firstPage: result,
+				},
+		  };
 };
 
 Adopt.getLayout = function getLayout(page: ReactElement) {
