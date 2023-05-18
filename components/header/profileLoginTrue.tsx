@@ -11,6 +11,7 @@ function ProfileLoginTrue() {
 			<div
 				onClick={() => {
 					setIsAlarmBoxOn(prev => !prev);
+					setIsProfileBoxOn(false);
 				}}
 				className={styles.imgWrap}
 			>
@@ -25,13 +26,10 @@ function ProfileLoginTrue() {
 				<div className={styles.alarmD}></div>
 			</div>
 
-			{isProfileBoxOn ? (
-				<ProfileBox setIsProfileBoxOn={setIsProfileBoxOn} />
-			) : null}
-
 			<div
 				onClick={() => {
 					setIsProfileBoxOn(prev => !prev);
+					setIsAlarmBoxOn(false);
 				}}
 				className={styles.profile}
 			>
@@ -44,6 +42,11 @@ function ProfileLoginTrue() {
 					alt="profile icon"
 				/>
 			</div>
+			{isProfileBoxOn ? (
+				<ProfileBox setIsProfileBoxOn={setIsProfileBoxOn} />
+			) : null}
+
+			{isAlarmBoxOn ? <AlarmBox setIsAlarmBoxOn={setIsAlarmBoxOn} /> : null}
 		</div>
 	);
 }
