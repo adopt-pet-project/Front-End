@@ -107,52 +107,54 @@ function AccordionBar() {
 	}, [isContentGraph]);
 
 	return (
-		<ul className={styles.AccordionUl}>
-			<li className={styles.menuLi}>
-				{isUserGraph ? <Graph data={userData} /> : null}
-				<div
-					onClick={() => {
-						setIsUserGraph(prev => !prev);
-					}}
-					className={styles.menuTitle}
-				>
-					<p className={`${isUserGraph ? styles.on : null}`}>
-						사용자 통계 {'>'}
-					</p>
-					<hr className={styles.menuBoundary} />
-				</div>
-			</li>
+		<section className="body">
+			<ul className={styles.AccordionUl}>
+				<li className={styles.menuLi}>
+					{isUserGraph ? <Graph data={userData} /> : null}
+					<div
+						onClick={() => {
+							setIsUserGraph(prev => !prev);
+						}}
+						className={styles.menuTitle}
+					>
+						<p className={`${isUserGraph ? styles.on : null}`}>
+							사용자 통계 {'>'}
+						</p>
+						<hr className={styles.menuBoundary} />
+					</div>
+				</li>
 
-			<li className={styles.menuLi}>
-				{isAdoptGraph ? <Graph data={adoptData} /> : null}
-				<div
-					onClick={() => {
-						setIsAdoptGraph(prev => !prev);
-					}}
-					className={styles.menuTitle}
-				>
-					<p className={`${isAdoptGraph ? styles.on : null}`}>
-						분양 통계 {'>'}
-					</p>
-					<hr className={styles.menuBoundary} />
-				</div>
-			</li>
+				<li className={styles.menuLi}>
+					{isAdoptGraph ? <Graph data={adoptData} /> : null}
+					<div
+						onClick={() => {
+							setIsAdoptGraph(prev => !prev);
+						}}
+						className={styles.menuTitle}
+					>
+						<p className={`${isAdoptGraph ? styles.on : null}`}>
+							분양 통계 {'>'}
+						</p>
+						<hr className={styles.menuBoundary} />
+					</div>
+				</li>
 
-			<li className={styles.menuLi}>
-				{isContentGraph ? <Graph data={contentsData} /> : null}
-				<div
-					onClick={() => {
-						setIsContentGraph(prev => !prev);
-					}}
-					className={styles.menuTitle}
-				>
-					<p className={`${isContentGraph ? styles.on : null}`}>
-						컨텐츠 통계 {'>'}
-					</p>
-					<hr className={styles.menuBoundary} />
-				</div>
-			</li>
-		</ul>
+				<li className={styles.menuLi}>
+					{isContentGraph ? <Graph data={contentsData} /> : null}
+					<div
+						onClick={() => {
+							setIsContentGraph(prev => !prev);
+						}}
+						className={styles.menuTitle}
+					>
+						<p className={`${isContentGraph ? styles.on : null}`}>
+							컨텐츠 통계 {'>'}
+						</p>
+						<hr className={styles.menuBoundary} />
+					</div>
+				</li>
+			</ul>
+		</section>
 	);
 }
 

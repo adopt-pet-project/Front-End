@@ -3,7 +3,8 @@
 	justify-content: left;
 	width: 100%;
 	position: relative;
-	margin-bottom: 30px;
+	margin-bottom: 15px;
+	padding: 20px 16px;
 
 	.categoryBtn {
 		margin-right: 20px;
@@ -21,15 +22,15 @@
 	.ctgBoundary {
 		position: absolute;
 		width: 42px;
-		left: 0px;
-		top: 23px;
+		left: 12px;
+		top: 40px;
 		border: 1px solid var(--skyblue);
 
 		transition: var(--transition);
 	}
 
 	.onRight {
-		left: 69px;
+		left: 81px;
 	}
 }
 
@@ -39,8 +40,6 @@
 		justify-content: left;
 		width: 100%;
 		position: relative;
-		margin-bottom: 30px;
-		margin-top: 30px;
-		margin-left: 40px;
+		padding: 20px 12px;
 	}
 }

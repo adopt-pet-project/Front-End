@@ -4,12 +4,8 @@ import {useRouter} from 'next/router';
 
 function ProfileBox({
 	setIsProfileBoxOn,
-	isProfileBoxOn,
-	profileBtnRef,
 }: {
 	setIsProfileBoxOn: (status: boolean) => void;
-	isProfileBoxOn: boolean;
-	profileBtnRef: React.RefObject<HTMLDivElement>;
 }) {
 	const router = useRouter();
 	const profileBoxRef = useRef<HTMLDivElement>(null);
@@ -50,14 +46,16 @@ function ProfileBox({
 	return (
 		<div ref={profileBoxRef} className={styles.box}>
 			<div className={styles.boxHeader}>
-				<div
+				<img
+					className={styles.closeBtn}
+					src="/icon/close.svg"
 					onClick={() => {
 						setIsProfileBoxOn(false);
 					}}
-					className={styles.closeBtn}
-				>
-					X
-				</div>
+					width={30}
+					height={30}
+					alt=""
+				/>
 			</div>
 
 			<div className={styles.profileCard}>
