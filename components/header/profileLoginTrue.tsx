@@ -1,11 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styles from '@/styles/components/header/profileLoginTrue.module.scss';
 import ProfileBox from './profileBox';
+import AlarmBox from './alarmBox';
 
 function ProfileLoginTrue() {
 	const [isProfileBoxOn, setIsProfileBoxOn] = useState(false);
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useState(false);
-	const profileBtnRef = useRef<HTMLDivElement>(null);
 	return (
 		<div className={styles.profileLoginWrap}>
 			<div
@@ -26,15 +26,10 @@ function ProfileLoginTrue() {
 			</div>
 
 			{isProfileBoxOn ? (
-				<ProfileBox
-					isProfileBoxOn={isProfileBoxOn}
-					setIsProfileBoxOn={setIsProfileBoxOn}
-					profileBtnRef={profileBtnRef}
-				/>
+				<ProfileBox setIsProfileBoxOn={setIsProfileBoxOn} />
 			) : null}
 
 			<div
-				ref={profileBtnRef}
 				onClick={() => {
 					setIsProfileBoxOn(prev => !prev);
 				}}
