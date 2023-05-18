@@ -1,17 +1,22 @@
 import styles from '@/styles/components/adopt/setAdoptType.module.scss';
 import {AmodalWrap} from '@/utils/recoil/recoilStore';
 import {useRouter} from 'next/router';
-import {useRef} from 'react';
+import {BaseSyntheticEvent, useRef, useState} from 'react';
 import {useRecoilState} from 'recoil';
 
 export default function SetAdoptType() {
 	const [modalRef] = useRecoilState(AmodalWrap);
-	const selectRef = useRef<HTMLSelectElement>();
+	const [currentType, setCurrentType] = useState<string>('강아지');
+	const [isVisibleOption, setIsVisibleOption] = useState<boolean>(false);
 	const router = useRouter();
 
 	function onClickApply() {
 		modalRef!.current!.style.display = 'none';
-		router.push(`/adopt/new?type=${selectRef.current?.value}`);
+		router.push(`/adopt/new?type=${currentType}`);
+	}
+
+	function onClickOption(e: BaseSyntheticEvent) {
+		if (e.target.nodeName != 'DIV') setCurrentType(e.target.innerText);
 	}
 
 	return (
@@ -21,12 +26,37 @@ export default function SetAdoptType() {
 			}}
 			className={styles.container}
 		>
-			<span>카테고리를 선택 해 주세요.</span>
-			<select className={styles.selector}>
-				<option value="dog">강아지</option>
-				<option value="cat">고양이</option>
-				<option value="etc">기타</option>
-			</select>
+			<span style={{fontWeight: 'bold'}}>카테고리를 선택 해 주세요.</span>
+
+			<ul
+				className={styles.selector}
+				onClick={() => {
+					setIsVisibleOption(!isVisibleOption);
+				}}
+			>
+				<span style={{fontWeight: 'bold'}}>{currentType}</span>
+				<img
+					src="/icon/triangle.svg"
+					alt=""
+					width={10}
+					height={10}
+					style={{
+						transform: `${
+							isVisibleOption ? 'rotate(360deg)' : 'rotate(180deg)'
+						}`,
+						transition: 'var(--transition)',
+					}}
+				/>
+
+				{isVisibleOption && (
+					<div onClick={onClickOption} className={styles.options}>
+						<li className={styles.option}>강아지</li>
+						<li className={styles.option}>고양이</li>
+						<li className={styles.option}>기타</li>
+					</div>
+				)}
+			</ul>
+
 			<button onClick={onClickApply} className={styles.button}>
 				확인
 			</button>

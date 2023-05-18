@@ -8,5 +8,5 @@ interface Adopt {
 	publishedAt: number;
 	thumbnail: string;
 	type: string;
-	status: number;
+	status: string;
 }
