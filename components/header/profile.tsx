@@ -1,7 +1,7 @@
-import styles from '@/styles/components/header/profile.module.scss';
 import {RefObject, useEffect, useState} from 'react';
 import Login from './login';
 import {useRouter} from 'next/router';
+import styles from '@/styles/components/header/profile.module.scss';
 
 export default function Profile({
 	containerRef,
@@ -10,9 +10,13 @@ export default function Profile({
 }) {
 	const [isModalActive, setIsModalActive] = useState<boolean>(false);
 	const router = useRouter();
-
 	useEffect(() => {
-		if (Boolean(router.query.login)) onClickLogin();
+		window.addEventListener('fadeLogin', onClickLogin);
+		window.addEventListener('hideLogin', hideModal);
+		return () => {
+			window.removeEventListener('toggleLogin', onClickLogin);
+			window.removeEventListener('hideLogin', hideModal);
+		};
 	}, []);
 
 	function onClickLogin() {
@@ -21,7 +25,6 @@ export default function Profile({
 	}
 
 	function hideModal() {
-		router.push(router.asPath.split('?')[0]);
 		setIsModalActive(false);
 		containerRef.current?.classList.remove('preventScroll');
 	}

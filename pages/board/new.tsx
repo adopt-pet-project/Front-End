@@ -5,9 +5,7 @@ import ImageUploader from '@/components/imageUploader';
 import styles from '@/styles/pages/board/new.module.scss';
 
 export default function New() {
-	const [serverImageList, setServerImageList] = useState<
-		(string | undefined)[]
-	>([]);
+	const [serverImageList, setServerImageList] = useState<MyFile[]>([]);
 
 	function onSubmit(e: BaseSyntheticEvent) {
 		e.preventDefault();
@@ -20,12 +18,12 @@ export default function New() {
 
 	return (
 		<section className="body">
+			<Header type="게시글" />
+			<ImageUploader
+				serverImageList={serverImageList}
+				setServerImageList={setServerImageList}
+			/>
 			<form className={styles.form} onSubmit={onSubmit} method="POST">
-				<Header type="게시글" />
-				<ImageUploader
-					serverImageList={serverImageList}
-					setServerImageList={setServerImageList}
-				/>
 				<input
 					className={styles.title}
 					type="text"

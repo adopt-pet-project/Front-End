@@ -25,40 +25,49 @@ for (let i = 0; i < 9; i++) {
 
 const orderList: Order[] = [
 	{order: 'all', orderText: '전체', href: '/adopt'},
-	{order: 'dog', orderText: '강아지', href: '/adopt?order=dog'},
-	{order: 'cat', orderText: '고양이', href: '/adopt?order=cat'},
-	{order: 'etc', orderText: '기타', href: '/adopt?order=etc'},
+	{order: 'dog', orderText: '강아지', href: '/adopt?filter=dog'},
+	{order: 'cat', orderText: '고양이', href: '/adopt?filter=cat'},
+	{order: 'etc', orderText: '기타', href: '/adopt?filter=etc'},
 ];
 
-export default function Adopt({order, query}: {order: string; query: string}) {
+export default function Adopt({
+	filter,
+	query,
+	firstPage,
+}: {
+	filter: string;
+	query: string;
+	firstPage: Adopt[];
+}) {
 	return (
 		<>
 			<Header query={query} path={'adopt'} />
-			{!query && <OrderBy orderList={orderList} currentOrder={order} />}
+			{!query && <OrderBy orderList={orderList} currentOrder={filter} />}
 			<section className="body">
-				{DummyData.map((article: any) => {
+				{firstPage.map((article: any) => {
 					return <Article key={article.id} article={article} />;
 				})}
 				<Paging
-					lastArticleId={DummyData[DummyData.length - 1].id}
-					query={order}
-					order={order}
+					lastArticleId={firstPage[firstPage.length - 1].id}
+					query={filter}
+					order={filter}
 				/>
 			</section>
 		</>
 	);
 }
 
-export const getServerSideProps: GetServerSideProps = async ({
-	req,
-	res,
-	resolvedUrl,
-	query,
-}) => {
-	// let result = await (await fetch('http://3.36.132.160/hello')).text();
-	// 분양글 로직, dog,cat,etc에 따라 다른 내용을 fetch
+export const getServerSideProps: GetServerSideProps = async ({query}) => {
+	let result = await (
+		await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/adopt`)
+	).json();
+
 	return {
-		props: {order: query.order || 'all', query: query.q || ''},
+		props: {
+			filter: query.filter || 'all',
+			query: query.q || '',
+			firstPage: result,
+		},
 	};
 };
 

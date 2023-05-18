@@ -6,6 +6,7 @@ export default function CoordsInput() {
 	const mapRef = useRef<HTMLDivElement>(null);
 	const latitudeRef = useRef<HTMLInputElement>(null);
 	const longitudeRef = useRef<HTMLInputElement>(null);
+	const addressRef = useRef<HTMLInputElement>(null);
 
 	let map: any;
 	let marker: any;
@@ -21,6 +22,23 @@ export default function CoordsInput() {
 		marker.setPosition(latLng);
 		latitudeRef.current!.value = latLng.Ma;
 		longitudeRef.current!.value = latLng.La;
+		const geocoder = new window.kakao.maps.services.Geocoder();
+		geocoder.coord2RegionCode(
+			latLng.La,
+			latLng.Ma,
+			(result: any, status: any) => {
+				if (
+					status === window.kakao.maps.services.Status.OK &&
+					addressRef.current
+				) {
+					addressRef.current.value = result[0].address_name
+						.split(' ')
+						.slice(0, 2)
+						.join(' ');
+					console.log(result[0].address_name.split(' ').slice(0, 2).join(' '));
+				}
+			},
+		);
 	}
 
 	function loadMap() {
@@ -75,6 +93,7 @@ export default function CoordsInput() {
 				<div className={styles.map} ref={mapRef} />
 				<input type="text" name="latitude" id="latitude" ref={latitudeRef} />
 				<input type="text" name="longitude" id="longitude" ref={longitudeRef} />
+				<input type="text" name="address" id="address" ref={addressRef} />
 			</div>
 		</>
 	);

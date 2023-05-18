@@ -1,14 +1,25 @@
-import {ReactElement, useEffect, useLayoutEffect} from 'react';
-import Layout from '@/components/layout/layout';
+import {useEffect} from 'react';
+
 import {useRouter} from 'next/router';
+import useRegister from '@/utils/hooks/useRegister';
 
 export default function LoginSuccess() {
 	const router = useRouter();
-	const code = router.query.code;
+	const setRegister = useRegister();
 
-	useLayoutEffect(() => {
-		console.log(code);
+	useEffect(() => {
+		if (!router.isReady) return;
+
+		const accessToken = router.query.accessToken;
+		if (accessToken) {
+			// 토큰 설정 로직
+		} else {
+			setRegister({
+				email: router.query.email as string,
+				provider: router.query.provider as string,
+			});
+		}
 		close();
-	}, []);
+	}, [router.isReady]);
 	return <></>;
 }
