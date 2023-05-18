@@ -1,6 +1,5 @@
 .box {
 	border-radius: 8px;
-	padding: 0px;
 	margin: 0px;
 	width: 450px;
 	height: 350px;
@@ -77,6 +76,11 @@
 		border-bottom-right-radius: 8px;
 	}
 }
+@media screen and (max-width: 768px) {
+	.box {
+		padding: 16px;
+	}
+}
 
 @media screen and (max-width: 528px) {
 	.box {
@@ -88,6 +92,7 @@
 		top: 0px;
 
 		.profileCard {
+			display: flex;
 			height: 180px;
 			.profileImgWrap {
 				width: 160px;
@@ -103,7 +108,11 @@
 			}
 			.activity {
 				color: white;
+				:first-child {
+					font-size: 15px;
+				}
 				span {
+					font-size: 12px;
 					margin-right: 10px;
 				}
 			}
