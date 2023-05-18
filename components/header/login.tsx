@@ -1,14 +1,46 @@
 import styles from '@/styles/components/header/login.module.scss';
+import useRegister from '@/utils/hooks/useRegister';
 import Link from 'next/link';
-import {BaseSyntheticEvent} from 'react';
+import {useRouter} from 'next/router';
+import {BaseSyntheticEvent, useEffect} from 'react';
 
 const providerList: Link[] = [
-	{text: 'kakao', href: 'https://ez-tour.org/oauth2/authorization/kakao'},
-	{text: 'naver', href: ''},
-	{text: 'google', href: ''},
+	{
+		text: 'kakao',
+		href: 'http://localhost:3000/loginSuccess?email=sungtae1005@gmail.com&provider=kakao',
+	},
+	{text: 'naver', href: 'https://ez-tour.org/oauth2/authorization/naver'},
+	{text: 'google', href: 'https://ez-tour.org/oauth2/authorization/google'},
 ];
 
 export default function Login({hideModal}: {hideModal: () => void}) {
+	const setRegister = useRegister();
+	const router = useRouter();
+
+	useEffect(() => {
+		const reset = () => {
+			setRegister();
+		};
+
+		const toRegister = () => {
+			window.dispatchEvent(new Event('hideLogin'));
+			const register = JSON.parse(
+				window.localStorage.getItem('register') || '',
+			);
+
+			router.push(
+				`/register?email=${register.email}&provider=${register.provider}`,
+			);
+		};
+		window.addEventListener('beforeunload', reset);
+		window.addEventListener('storage', toRegister);
+
+		return () => {
+			window.removeEventListener('beforeunload', reset);
+			window.removeEventListener('storage', toRegister);
+		};
+	}, []);
+
 	return (
 		<div
 			onClick={(e: BaseSyntheticEvent) => {
@@ -33,9 +65,14 @@ export default function Login({hideModal}: {hideModal: () => void}) {
 						return (
 							<li key={provider.text}>
 								<button
-									onClick={() =>
-										window.open(provider.href, '_blank', 'popup=yes')
-									}
+									onClick={() => {
+										setRegister();
+										window.open(
+											provider.href,
+											'_blank',
+											'toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=500,height=500',
+										);
+									}}
 									className={`${styles[provider.text]}`}
 								>
 									<img

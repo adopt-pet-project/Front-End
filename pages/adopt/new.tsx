@@ -8,9 +8,7 @@ import AnimalInput from '@/components/adopt/animalInput';
 import CoordsInput from '@/components/adopt/coordsInput';
 
 export default function New({query}: {query: {type: string}}) {
-	const [serverImageList, setServerImageList] = useState<
-		(string | undefined)[]
-	>([]);
+	const [serverImageList, setServerImageList] = useState<MyFile[]>([]);
 
 	function onSubmit(e: BaseSyntheticEvent) {
 		e.preventDefault();
@@ -23,12 +21,12 @@ export default function New({query}: {query: {type: string}}) {
 
 	return (
 		<section className="body">
+			<Header type="분양글" />
+			<ImageUploader
+				serverImageList={serverImageList}
+				setServerImageList={setServerImageList}
+			/>
 			<form className={styles.form} onSubmit={onSubmit} method="POST">
-				<Header type="분양글" />
-				<ImageUploader
-					serverImageList={serverImageList}
-					setServerImageList={setServerImageList}
-				/>
 				<AnimalInput />
 				<CoordsInput />
 				<input

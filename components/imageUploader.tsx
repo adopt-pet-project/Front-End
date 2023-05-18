@@ -7,43 +7,55 @@ import {
 	useState,
 } from 'react';
 import styles from '@/styles/components/imageUploader.module.scss';
+import {useRouter} from 'next/router';
+import useDepsOnlyEffect from '@/utils/hooks/useDepsOnlyEffect';
 
 export default function ImageUploader({
 	serverImageList,
 	setServerImageList,
 }: {
-	serverImageList: (string | undefined)[];
-	setServerImageList: Dispatch<SetStateAction<(string | undefined)[]>>;
+	serverImageList: MyFile[];
+	setServerImageList: Dispatch<SetStateAction<MyFile[]>>;
 }) {
-	const localImageList = useRef<MyFile[]>([]);
+	const router = useRouter();
 	const [localImageUploadState, setLocalImageUploadState] = useState<boolean[]>(
 		[],
 	);
+	const localImageList = useRef<MyFile[]>([]);
+	const inputRef = useRef<HTMLInputElement>(null);
+	let type: string;
+
+	useDepsOnlyEffect(() => {
+		if (router.asPath.includes('adopt')) type = 'adopt';
+		else if (router.asPath.includes('board')) type = 'community';
+		else if (router.asPath.includes('register')) type = 'profile';
+	}, [router.isReady]);
 
 	useEffect(() => {
+		// Modify 시 serverImageList 를 LocalImageList로 불러와 사용
 		if (serverImageList.length !== 0) {
-			localImageList.current = serverImageList.map(
-				(value: string | undefined) => {
-					return {
-						isUploaded: false,
-						src: value || '',
-					};
-				},
-			);
+			localImageList.current = serverImageList;
 		}
 	}, []);
 
 	function changeImageInput(e: BaseSyntheticEvent) {
 		let prevLength = localImageList.current.length;
 		let fileList: File[] = [
-			...localImageList.current,
+			...localImageList.current.map((myFile: MyFile) => myFile.localFile),
 			...e.currentTarget.files,
 		];
+		e.currentTarget.value = '';
 
 		if (fileList.length > 8) {
-			alert('이미지는 최대 8개까지 업로드가 가능합니다.');
-			fileList = fileList.slice(0, 8);
+			alert('최대 8개까지만 선택이 가능합니다.');
 		}
+
+		fileList = fileList
+			.filter((file: File) => {
+				const regExp = /(.*?)\.(jpg|jpeg|png|bmp|gif)$/;
+				return file.name.match(regExp) != null;
+			})
+			.filter((file: File, index: number) => index < 8);
 
 		const newLocalImageList: MyFile[] = [...localImageList.current];
 		for (let i = prevLength; i < fileList.length; i++) {
@@ -54,7 +66,6 @@ export default function ImageUploader({
 			});
 		}
 		localImageList.current = newLocalImageList;
-
 		updateState();
 
 		newLocalImageList.map((myFile: MyFile, index: number) => {
@@ -80,20 +91,35 @@ export default function ImageUploader({
 	}
 
 	async function uploadImage(myFile: MyFile, index: number) {
-		function Delay(delay: number) {
-			return new Promise(function (resolve) {
-				setTimeout(resolve, delay);
-			});
-		}
-		let res: any = await Delay(10000); // 서버 응답 대기
+		try {
+			let formData = new FormData();
+			if (!myFile.localFile) {
+				throw new Error('Missing files');
+			}
+			formData.append('imageFile', myFile.localFile);
+			formData.append('type', type);
 
-		if (true) {
+			let response = await fetch(
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/API/Image`,
+				{
+					method: 'POST',
+					headers: {
+						Authorization: 'testToken',
+						'Content-Type': 'multipart/form-data',
+					},
+					body: formData,
+				},
+			);
+
+			let result: ImageUploadResponse = await response.json();
 			myFile.isUploaded = true;
-			myFile.imageId = 'response from server';
-			updateState();
-		} else {
-			alert('업로드 실패\n사유 : 어쩌고저쩌고');
+			myFile.imageId = result.imageNo;
+			// myFile.src = result.imageUrl;
+		} catch (e) {
+			alert(e);
 			deleteImage(index);
+		} finally {
+			updateState();
 		}
 	}
 
@@ -103,15 +129,11 @@ export default function ImageUploader({
 				return myFile.isUploaded;
 			}),
 		);
-		setServerImageList(
-			localImageList.current.map((myFile: MyFile) => {
-				return myFile.imageId;
-			}),
-		);
+		setServerImageList(localImageList.current);
 	}
 
 	return (
-		<>
+		<form>
 			<div className={styles.imageContainer}>
 				<label className={styles.imageButton} htmlFor="articleImage">
 					<img src="/icon/picture.svg" alt="add image icon" />
@@ -135,6 +157,7 @@ export default function ImageUploader({
 				})}
 			</div>
 			<input
+				ref={inputRef}
 				onChange={changeImageInput}
 				multiple={true}
 				className={styles.imageInput}
@@ -143,6 +166,6 @@ export default function ImageUploader({
 				name="image"
 				id="articleImage"
 			/>
-		</>
+		</form>
 	);
 }

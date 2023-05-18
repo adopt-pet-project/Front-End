@@ -54,11 +54,15 @@
 }
 
 .form {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 	width: 100%;
 	max-width: 500px;
 }
 
 .profile {
+	position: relative;
 	cursor: pointer;
 	object-fit: cover;
 	background-color: var(--gray);
@@ -68,6 +72,7 @@
 }
 
 .registerButton {
+	margin-top: 50px;
 	cursor: pointer;
 	width: 100%;
 	border: none;
@@ -77,6 +82,23 @@
 	height: 48px;
 	border-radius: 8px;
 	max-width: 500px;
+}
+
+.loading {
+	position: absolute;
+	z-index: 1;
+	font-size: 14px;
+	user-select: none;
+	color: var(--white);
+	background-color: #00000075;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 96px;
+	height: 96px;
+	border-radius: 50%;
+	top: 0;
+	left: 0;
 }
 
 @media screen and (max-width: 768px) {

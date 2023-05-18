@@ -6,7 +6,7 @@ const statusList: Status[] = [
 	{text: '분양 완료', backgroundColor: 'var(--black)', color: 'var(--white)'},
 ];
 
-export default function Article({article}: {article: any}) {
+export default function Article({article}: {article: Adopt}) {
 	return (
 		<article
 			className={styles.container}
@@ -14,7 +14,7 @@ export default function Article({article}: {article: any}) {
 				if (article.id != null) window.location.href = `/adopt/${article.id}`;
 			}}
 		>
-			{article.thumb && article.thumb === 'null' ? (
+			{article.thumbnail && article.thumbnail === 'null' ? (
 				<div className={styles.dummyThumbnails} />
 			) : (
 				<Image
@@ -23,7 +23,7 @@ export default function Article({article}: {article: any}) {
 					quality={75}
 					loading="lazy"
 					className={styles.thumbnail}
-					src={article.thumb}
+					src={article.thumbnail}
 					alt={`${article.title} thumbnail`}
 				/>
 			)}
@@ -46,10 +46,10 @@ export default function Article({article}: {article: any}) {
 							</div>
 						)}
 					</div>
-					<span className={styles.species}>{article.species}</span>
+					<span className={styles.kind}>{article.kind}</span>
 				</div>
 				<div className={styles.metadata}>
-					<span>{`${article.location} · ${article.publishedAt}`}</span>
+					<span>{`${article.location} · ${article.regDate}`}</span>
 					<ul className={styles.dataList}>
 						<li>
 							<img
