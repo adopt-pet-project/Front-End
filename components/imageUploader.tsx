@@ -100,11 +100,10 @@ export default function ImageUploader({
 			formData.append('type', type);
 
 			let response = await fetch(
-				`${process.env.NEXT_PUBLIC_SERVER_URL}/API/Image`,
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/api/image`,
 				{
 					method: 'POST',
 					headers: {
-						Authorization: 'testToken',
 						'Content-Type': 'multipart/form-data',
 					},
 					body: formData,
