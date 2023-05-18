@@ -1,16 +1,17 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styles from '@/styles/components/header/profileLoginTrue.module.scss';
 import ProfileBox from './profileBox';
+import AlarmBox from './alarmBox';
 
 function ProfileLoginTrue() {
 	const [isProfileBoxOn, setIsProfileBoxOn] = useState(false);
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useState(false);
-	const profileBtnRef = useRef<HTMLDivElement>(null);
 	return (
 		<div className={styles.profileLoginWrap}>
 			<div
 				onClick={() => {
 					setIsAlarmBoxOn(prev => !prev);
+					setIsProfileBoxOn(false);
 				}}
 				className={styles.imgWrap}
 			>
@@ -25,18 +26,10 @@ function ProfileLoginTrue() {
 				<div className={styles.alarmD}></div>
 			</div>
 
-			{isProfileBoxOn ? (
-				<ProfileBox
-					isProfileBoxOn={isProfileBoxOn}
-					setIsProfileBoxOn={setIsProfileBoxOn}
-					profileBtnRef={profileBtnRef}
-				/>
-			) : null}
-
 			<div
-				ref={profileBtnRef}
 				onClick={() => {
 					setIsProfileBoxOn(prev => !prev);
+					setIsAlarmBoxOn(false);
 				}}
 				className={styles.profile}
 			>
@@ -49,6 +42,11 @@ function ProfileLoginTrue() {
 					alt="profile icon"
 				/>
 			</div>
+			{isProfileBoxOn ? (
+				<ProfileBox setIsProfileBoxOn={setIsProfileBoxOn} />
+			) : null}
+
+			{isAlarmBoxOn ? <AlarmBox setIsAlarmBoxOn={setIsAlarmBoxOn} /> : null}
 		</div>
 	);
 }
