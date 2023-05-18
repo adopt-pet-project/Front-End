@@ -30,9 +30,6 @@ function ActivityCard({article}: {article: any}) {
 				<div className={styles.preview}>
 					<div className={styles.title}>
 						<span>{article.title}</span>
-						<span>
-							<img width={20} src="/icon/more.svg" alt="" />
-						</span>
 					</div>
 
 					<span className={styles.context}>{article.context}</span>

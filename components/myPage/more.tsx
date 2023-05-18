@@ -1,10 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect} from 'react';
 import styles from '@/styles/components/myPage/more.module.scss';
 import {useRecoilState} from 'recoil';
 import {AmyAdoptModal} from '@/utils/recoil/recoilStore';
 
 function More({type, mID}: {type: string; mID: number}) {
-	const moreBtn = useRef<HTMLSpanElement>(null);
 	const [myAdoptModal, setMyAdoptModal] = useRecoilState(AmyAdoptModal);
 
 	const handleCloseModal = (e: any) => {
@@ -28,7 +27,6 @@ function More({type, mID}: {type: string; mID: number}) {
 		<>
 			<div>
 				<span
-					ref={moreBtn}
 					className={styles.moreBtn}
 					onClick={e => {
 						e.stopPropagation();
