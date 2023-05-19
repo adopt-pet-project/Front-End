@@ -1,7 +1,7 @@
 .form {
 	display: flex;
 	flex-direction: column;
-	padding: 0 12px 12px 12px;
+	padding: 0 16px 16px 16px;
 }
 
 .title,
@@ -22,4 +22,10 @@
 	resize: vertical;
 	max-width: 100%;
 	padding: 16px 0;
+}
+
+@media screen and (max-width: 768px) {
+	.form {
+		padding: 0 12px 12px 12px;
+	}
 }

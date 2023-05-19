@@ -31,8 +31,8 @@ export default function Article({article}: {article: Adopt}) {
 					quality={75}
 					loading="lazy"
 					className={styles.thumbnail}
-					src={article.thumbnail === '기본' ? '' : article.thumbnail}
-					alt={`${article.title} thumbnail`}
+					src={article.thumbnail}
+					alt={`${article.title} image`}
 				/>
 			)}
 
@@ -42,19 +42,19 @@ export default function Article({article}: {article: Adopt}) {
 						<span className={styles.title}>{article.title}</span>
 						{article.status != 0 && (
 							<div
-								style={
-									{
-										// backgroundColor: `${}`,
-										// color: `${}`,
-									}
-								}
+								style={{
+									backgroundColor: `${
+										status[article.status - 1].backgroundColor
+									}`,
+									color: `${status[article.status - 1].color}`,
+								}}
 								className={styles.status}
 							>
-								{/* {status[article.status].text} */}
+								{status[article.status - 1].text}
 							</div>
 						)}
 					</div>
-					<span className={styles.kind}>{article.kind}</span>
+					<span className={styles.species}>{article.species}</span>
 				</div>
 				<div className={styles.metadata}>
 					<span>{`${article.location} · ${article.publishedAt}`}</span>

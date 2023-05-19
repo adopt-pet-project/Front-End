@@ -20,7 +20,7 @@ export default function New({query}: {query: {type: string}}) {
 	}
 
 	return (
-		<section className="body">
+		<section className="body" style={{zIndex: '101'}}>
 			<Header type="분양글" />
 			<ImageUploader
 				serverImageList={serverImageList}

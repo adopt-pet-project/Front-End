@@ -1,0 +1,36 @@
+.article {
+	padding: 16px 16px 0 16px;
+}
+
+.lastArticle {
+	padding-bottom: 16px;
+}
+
+.title {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.map {
+	margin-top: 16px;
+	width: 100%;
+	border: 1px solid #000;
+	height: 500px;
+}
+
+@media screen and (max-width: 768px) {
+	.article {
+		padding: 12px 12px 0 12px;
+	}
+
+	.lastArticle {
+		padding-bottom: 12px;
+	}
+
+	.map {
+		margin-top: 12px;
+		width: 100%;
+		border: 1px solid #000;
+		height: 500px;
+	}
+}

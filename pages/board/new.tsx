@@ -17,7 +17,7 @@ export default function New() {
 	}
 
 	return (
-		<section className="body">
+		<section className="body" style={{zIndex: '101'}}>
 			<Header type="게시글" />
 			<ImageUploader
 				serverImageList={serverImageList}
