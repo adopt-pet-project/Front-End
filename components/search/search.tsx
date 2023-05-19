@@ -57,14 +57,15 @@ export default function Search({currentPath}: {currentPath: string}) {
 				type="text"
 				placeholder="검색할 내용을 입력하세요."
 				ref={inputRef}
-				onBlur={() => {
-					if (containerRef.current?.getAttribute('data-active'))
-						setTimeout(() => {
-							deActivate();
-						}, 250);
-				}}
+				// onBlur={() => {
+				// 	if (containerRef.current?.getAttribute('data-active'))
+				// 		setTimeout(() => {
+				// 			deActivate();
+				// 		}, 250);
+				// }}
 				onKeyUp={enterSearch}
 			/>
+			<span>test</span>
 		</div>
 	);
 }

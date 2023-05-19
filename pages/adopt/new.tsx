@@ -21,12 +21,12 @@ export default function New({query}: {query: {type: string}}) {
 
 	return (
 		<section className="body" style={{zIndex: '101'}}>
-			<Header type="분양글" />
-			<ImageUploader
-				serverImageList={serverImageList}
-				setServerImageList={setServerImageList}
-			/>
 			<form className={styles.form} onSubmit={onSubmit} method="POST">
+				<Header type="분양글" />
+				<ImageUploader
+					serverImageList={serverImageList}
+					setServerImageList={setServerImageList}
+				/>
 				<AnimalInput />
 				<CoordsInput />
 				<input
