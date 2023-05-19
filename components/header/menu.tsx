@@ -1,5 +1,6 @@
-import {RefObject, useState} from 'react';
+import {RefObject, useEffect, useState} from 'react';
 import styles from '@/styles/components/header/menu.module.scss';
+import {useRouter} from 'next/router';
 
 export default function Menu({
 	asideRef,
@@ -7,6 +8,15 @@ export default function Menu({
 	asideRef: RefObject<HTMLDivElement>;
 }) {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const router = useRouter();
+
+	useEffect(() => {
+		if (asideRef.current != null && isOpen) {
+			asideRef.current.removeAttribute('data-active');
+			setIsOpen(false);
+		}
+	}, [router.asPath]);
+
 	return (
 		<div
 			className={styles.menu}
