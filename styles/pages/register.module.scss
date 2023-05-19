@@ -15,63 +15,50 @@
 	padding: 16px;
 }
 
-.inputContainer {
+.header {
 	display: flex;
-	padding-bottom: 24px;
-}
-
-.label {
-	display: inline-block;
-	font-size: 24px;
-	font-weight: bold;
-	padding: 16px 0;
-}
-
-.input {
-	width: calc(100% - 88px);
-	border: none;
-	outline: none;
-	border-radius: 50px;
-	padding: 12px;
-	background-color: var(--gray);
-	transition: 0.15s linear;
-	margin-right: 16px;
-}
-
-.valid {
-	margin-right: 0;
 	width: 100%;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+
+	.blank {
+		width: 36px;
+		height: 36px;
+	}
+
+	img {
+		cursor: pointer;
+	}
+
+	span {
+		padding: 4px;
+		font-size: 18px;
+		font-weight: bold;
+	}
 }
 
-.button {
-	cursor: pointer;
-	border-radius: 6px;
-	outline: none;
-	border: none;
-	background-color: var(--black);
-	color: var(--white);
-	min-width: 72px;
-}
+// .button {
+// 	cursor: pointer;
+// 	border-radius: 6px;
+// 	outline: none;
+// 	border: none;
+// 	background-color: var(--black);
+// 	color: var(--white);
+// 	min-width: 72px;
+// }
 
-.form {
+.wrap {
+	flex-grow: 1;
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	height: 100%;
 	width: 100%;
 	max-width: 500px;
 }
 
-.profile {
-	position: relative;
-	cursor: pointer;
-	object-fit: cover;
-	background-color: var(--gray);
-	width: 96px;
-	height: 96px;
-	border-radius: 50%;
-}
-
-.registerButton {
+.nextButton {
 	margin-top: 50px;
 	cursor: pointer;
 	width: 100%;
@@ -80,25 +67,15 @@
 	color: var(--white);
 	background-color: var(--black);
 	height: 48px;
+	font-size: 18px;
+	font-weight: bold;
 	border-radius: 8px;
 	max-width: 500px;
 }
 
-.loading {
-	position: absolute;
-	z-index: 1;
-	font-size: 14px;
-	user-select: none;
-	color: var(--white);
-	background-color: #00000075;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 96px;
-	height: 96px;
-	border-radius: 50%;
-	top: 0;
-	left: 0;
+.blankButton {
+	margin-top: 50px;
+	height: 48px;
 }
 
 @media screen and (max-width: 768px) {

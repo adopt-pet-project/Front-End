@@ -7,7 +7,7 @@ import {BaseSyntheticEvent, useEffect} from 'react';
 const providerList: Link[] = [
 	{
 		text: 'kakao',
-		href: 'http://localhost:3000/loginSuccess?email=sungtae1005@gmail.com&provider=kakao',
+		href: 'https://ez-tour.org/oauth2/authorization/kakao',
 	},
 	{text: 'naver', href: 'https://ez-tour.org/oauth2/authorization/naver'},
 	{text: 'google', href: 'https://ez-tour.org/oauth2/authorization/google'},

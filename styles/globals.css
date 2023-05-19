@@ -12,6 +12,7 @@
 
 	/* 기타 속성 */
 	--transition: 0.3s ease-in-out;
+	--fadeIn: fadeIn;
 
 	/* 색상 */
 	--white: #fff;
@@ -102,6 +103,18 @@ body {
 	max-height: calc(100vh - var(--header-height));
 	overflow: hidden;
 	padding-bottom: 0;
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+		transform: translate3d(0px, -50px, 0px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translate3d(0px, 0px, 0px);
+	}
 }
 
 @media screen and (max-width: 1024px) {
