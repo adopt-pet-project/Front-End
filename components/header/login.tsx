@@ -7,7 +7,7 @@ import {BaseSyntheticEvent, useEffect} from 'react';
 const providerList: Link[] = [
 	{
 		text: 'kakao',
-		href: 'http://localhost:3000/loginSuccess?email=sungtae1005@gmail.com&provider=kakao',
+		href: 'https://ez-tour.org/oauth2/authorization/kakao',
 	},
 	{text: 'naver', href: 'https://ez-tour.org/oauth2/authorization/naver'},
 	{text: 'google', href: 'https://ez-tour.org/oauth2/authorization/google'},
@@ -22,22 +22,27 @@ export default function Login({hideModal}: {hideModal: () => void}) {
 			setRegister();
 		};
 
-		const toRegister = () => {
+		const loginSuccess = () => {
 			window.dispatchEvent(new Event('hideLogin'));
-			const register = JSON.parse(
-				window.localStorage.getItem('register') || '',
-			);
 
-			router.push(
-				`/register?email=${register.email}&provider=${register.provider}`,
-			);
+			const register = window.localStorage.getItem('register');
+			const accessToken = window.localStorage.getItem('accessToken');
+
+			if (register) {
+				const registerJSON = JSON.parse(register);
+				router.push(
+					`/register?email=${registerJSON.email}&provider=${registerJSON.provider}`,
+				);
+			} else if (accessToken) {
+				router.replace(router.asPath);
+			}
 		};
 		window.addEventListener('beforeunload', reset);
-		window.addEventListener('storage', toRegister);
+		window.addEventListener('storage', loginSuccess);
 
 		return () => {
 			window.removeEventListener('beforeunload', reset);
-			window.removeEventListener('storage', toRegister);
+			window.removeEventListener('storage', loginSuccess);
 		};
 	}, []);
 

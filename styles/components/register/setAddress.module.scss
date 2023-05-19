@@ -1,0 +1,38 @@
+.inputContainer {
+	display: flex;
+	padding-bottom: 24px;
+	opacity: 0;
+	animation: 1s ease-in-out 1s forwards var(--fadeIn);
+}
+
+.input {
+	width: calc(100% - 88px);
+	border: none;
+	outline: none;
+	border-radius: 50px;
+	padding: 12px;
+	background-color: var(--gray);
+	transition: 0.15s linear;
+	margin-right: 16px;
+}
+.button {
+	cursor: pointer;
+	border-radius: 6px;
+	outline: none;
+	border: none;
+	background-color: var(--black);
+	color: var(--white);
+	min-width: 96px;
+}
+
+.label {
+	display: inline-block;
+	font-size: 24px;
+	font-weight: bold;
+	padding: 16px 0;
+}
+
+.valid {
+	margin-right: 0;
+	width: 100%;
+}

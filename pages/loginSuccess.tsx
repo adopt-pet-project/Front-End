@@ -10,9 +10,9 @@ export default function LoginSuccess() {
 	useEffect(() => {
 		if (!router.isReady) return;
 
-		const accessToken = router.query.accessToken;
+		const accessToken = router.query.accessToken as string;
 		if (accessToken) {
-			// 토큰 설정 로직
+			window.localStorage.setItem('accessToken', accessToken);
 		} else {
 			setRegister({
 				email: router.query.email as string,

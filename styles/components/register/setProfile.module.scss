@@ -1,0 +1,40 @@
+.inputContainer {
+	display: flex;
+	padding-bottom: 24px;
+	opacity: 0;
+	animation: 1s ease-in-out 1s forwards var(--fadeIn);
+}
+
+.label {
+	display: inline-block;
+	font-size: 24px;
+	font-weight: bold;
+	padding: 16px 0;
+}
+
+.profile {
+	position: relative;
+	cursor: pointer;
+	object-fit: cover;
+	background-color: var(--gray);
+	width: 96px;
+	height: 96px;
+	border-radius: 50%;
+}
+
+.loading {
+	position: absolute;
+	z-index: 1;
+	font-size: 14px;
+	user-select: none;
+	color: var(--white);
+	background-color: #00000075;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 96px;
+	height: 96px;
+	border-radius: 50%;
+	top: 0;
+	left: 0;
+}

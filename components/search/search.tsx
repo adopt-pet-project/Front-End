@@ -58,9 +58,10 @@ export default function Search({currentPath}: {currentPath: string}) {
 				placeholder="검색할 내용을 입력하세요."
 				ref={inputRef}
 				onBlur={() => {
-					setTimeout(() => {
-						deActivate();
-					}, 250);
+					if (containerRef.current?.getAttribute('data-active'))
+						setTimeout(() => {
+							deActivate();
+						}, 250);
 				}}
 				onKeyUp={enterSearch}
 			/>
