@@ -56,7 +56,6 @@ export default function SetAdoptType() {
 					</div>
 				)}
 			</ul>
-
 			<button onClick={onClickApply} className={styles.button}>
 				확인
 			</button>
