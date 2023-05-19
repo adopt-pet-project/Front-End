@@ -22,9 +22,9 @@ export default function setProfile({
 	}, []);
 
 	function changeImageInput(e: BaseSyntheticEvent) {
-		const newProfileImage = {
+		const newProfileImage: MyFile = {
 			localFile: e.currentTarget.files[0],
-			src: URL.createObjectURL(e.currentTarget.files[0]),
+			localSrc: URL.createObjectURL(e.currentTarget.files[0]),
 			isUploaded: false,
 		};
 		setProfileImage(newProfileImage);
@@ -57,7 +57,7 @@ export default function setProfile({
 					{profileImage && (
 						<img
 							className={styles.profile}
-							src={profileImage.src}
+							src={profileImage.localSrc}
 							alt="profile"
 						/>
 					)}
