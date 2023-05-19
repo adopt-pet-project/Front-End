@@ -9,7 +9,7 @@
 	background: rgb(226, 226, 226);
 	border: 1px solid black;
 	.boxHeader {
-		height: 60px;
+		height: 30px;
 		display: none;
 		width: 100%;
 		justify-content: right;
@@ -76,14 +76,10 @@
 		border-bottom-right-radius: 8px;
 	}
 }
-@media screen and (max-width: 768px) {
-	.box {
-		padding: 16px;
-	}
-}
 
 @media screen and (max-width: 528px) {
 	.box {
+		padding: 16px;
 		border-radius: 0px;
 		border: none;
 		width: 100vw;

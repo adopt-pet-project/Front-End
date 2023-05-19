@@ -1,0 +1,24 @@
+.ctgWrap {
+	position: relative;
+	.ctgBtn {
+		margin-right: 15px;
+		font-size: 20px;
+		cursor: pointer;
+	}
+	.ctgBoundary {
+		width: 48px;
+		position: absolute;
+		left: 0px;
+		top: 16px;
+		border: 1px solid black;
+		transition: var(--transition);
+	}
+	.message {
+		left: 63px;
+	}
+
+	.chatting {
+		left: 126px;
+	}
+	margin-bottom: 10px;
+}

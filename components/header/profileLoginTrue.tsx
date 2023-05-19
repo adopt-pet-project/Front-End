@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styles from '@/styles/components/header/profileLoginTrue.module.scss';
 import ProfileBox from './profileBox';
-import AlarmBox from './alarmBox';
+import AlarmBox from './alarm/alarmBox';
 
 function ProfileLoginTrue() {
 	const [isProfileBoxOn, setIsProfileBoxOn] = useState(false);
@@ -23,7 +23,7 @@ function ProfileLoginTrue() {
 					height={30}
 					alt="alarm icon"
 				/>
-				<div className={styles.alarmD}></div>
+				<div style={{pointerEvents: 'none'}} className={styles.alarmD}></div>
 			</div>
 
 			<div
