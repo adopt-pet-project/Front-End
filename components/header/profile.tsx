@@ -12,11 +12,16 @@ export default function Profile({
 	const [isModalActive, setIsModalActive] = useState<boolean>(false);
 	const [isLogin, setIsLogin] = useState(false);
 	const router = useRouter();
+
+	useEffect(() => {
+		setIsLogin(Boolean(window.localStorage.getItem('accessToken')));
+	});
+
 	useEffect(() => {
 		window.addEventListener('fadeLogin', onClickLogin);
 		window.addEventListener('hideLogin', hideModal);
 		return () => {
-			window.removeEventListener('toggleLogin', onClickLogin);
+			window.removeEventListener('fadeLogin', onClickLogin);
 			window.removeEventListener('hideLogin', hideModal);
 		};
 	}, []);
