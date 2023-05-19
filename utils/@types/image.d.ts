@@ -1,7 +1,8 @@
 interface MyFile {
 	localFile?: File;
 	isUploaded: boolean;
-	src: string;
+	localSrc?: string;
+	serverSrc?: string;
 	imageId?: number;
 }
 

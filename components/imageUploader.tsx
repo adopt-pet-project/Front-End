@@ -36,6 +36,10 @@ export default function ImageUploader({
 		if (serverImageList.length !== 0) {
 			localImageList.current = serverImageList;
 		}
+
+		if (!window.localStorage.getItem('accessToken')) {
+			router.back();
+		}
 	}, []);
 
 	function changeImageInput(e: BaseSyntheticEvent) {
@@ -62,7 +66,7 @@ export default function ImageUploader({
 			newLocalImageList.push({
 				localFile: fileList[i],
 				isUploaded: false,
-				src: URL.createObjectURL(fileList[i]),
+				localSrc: URL.createObjectURL(fileList[i]),
 			});
 		}
 		localImageList.current = newLocalImageList;
@@ -104,6 +108,7 @@ export default function ImageUploader({
 				{
 					method: 'POST',
 					headers: {
+						Authorization: window.localStorage.getItem('accessToken') as string,
 						'Content-Type': 'multipart/form-data',
 					},
 					body: formData,
@@ -111,9 +116,15 @@ export default function ImageUploader({
 			);
 
 			let result: ImageUploadResponse = await response.json();
-			myFile.isUploaded = true;
-			myFile.imageId = result.imageNo;
-			// myFile.src = result.imageUrl;
+			if (result.imageNo) {
+				myFile.isUploaded = true;
+				myFile.imageId = result.imageNo;
+				myFile.serverSrc = result.imageUrl;
+				console.log(result);
+			} else {
+				updateState();
+				throw new Error('이미지 업로드 실패');
+			}
 		} catch (e) {
 			alert(e);
 			deleteImage(index);
@@ -132,7 +143,7 @@ export default function ImageUploader({
 	}
 
 	return (
-		<form>
+		<>
 			<div className={styles.imageContainer}>
 				<label className={styles.imageButton} htmlFor="articleImage">
 					<img src="/icon/picture.svg" alt="add image icon" />
@@ -140,13 +151,13 @@ export default function ImageUploader({
 				</label>
 				{localImageList.current.map((myFile: MyFile, index: number) => {
 					return (
-						<div key={myFile.src} className={styles.previewContainer}>
+						<div key={myFile.localSrc} className={styles.previewContainer}>
 							<img
 								onClick={() => {
 									deleteImage(index);
 								}}
 								className={styles.preview}
-								src={myFile.src}
+								src={myFile.localSrc}
 							/>
 							{!myFile.isUploaded && (
 								<div className={styles.loading}>업로드 중</div>
@@ -165,6 +176,6 @@ export default function ImageUploader({
 				name="image"
 				id="articleImage"
 			/>
-		</form>
+		</>
 	);
 }
