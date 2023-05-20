@@ -2,21 +2,22 @@ import styles from '@/styles/components/header/alarm/alarmBox.module.scss';
 import AlarmCtg from './alarmCtg';
 import {useEffect, useRef, useState} from 'react';
 import CardListWrap from './alarmCard/cardListWrap';
+import {useRecoilState} from 'recoil';
+import {AalarmboxCtg, AisAlarmBoxOn} from '@/utils/recoil/recoilStore';
 
 function AlarmBox({
-	setIsAlarmBoxOn,
 	alarmData,
 	noteData,
 	chatData,
 }: {
-	setIsAlarmBoxOn: (status: boolean) => void;
 	alarmData: Alarmdata[];
 	noteData: Notedata[];
 	chatData: Chatdata[];
 }) {
-	const [currentCtg, setCurrentCtg] = useState<0 | 1 | 2>(0);
+	const [currentCtg, setCurrentCtg] = useRecoilState(AalarmboxCtg);
 
 	const alarmBoxRef = useRef<HTMLDivElement>(null);
+	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
 
 	const findHaveParent = (
 		node: HTMLElement,
@@ -66,12 +67,11 @@ function AlarmBox({
 				/>
 			</div>
 			<hr className={styles.headerBoundary} />
-			<AlarmCtg setCurrentCtg={setCurrentCtg} currentCtg={currentCtg} />
+			<AlarmCtg />
 			<CardListWrap
 				alarmData={alarmData}
 				noteData={noteData}
 				chatData={chatData}
-				ctgType={currentCtg}
 			/>
 		</div>
 	);

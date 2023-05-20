@@ -2,10 +2,12 @@ import React, {useEffect, useRef, useState} from 'react';
 import styles from '@/styles/components/header/profileLoginTrue.module.scss';
 import ProfileBox from './profileBox';
 import AlarmBox from './alarm/alarmBox';
+import {useRecoilState} from 'recoil';
+import {AisAlarmBoxOn, AisProfileBoxOn} from '@/utils/recoil/recoilStore';
 
 function ProfileLoginTrue() {
-	const [isProfileBoxOn, setIsProfileBoxOn] = useState(false);
-	const [isAlarmBoxOn, setIsAlarmBoxOn] = useState(false);
+	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
+	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
 
 	const [alarmData, setAlarmData] = useState<Alarmdata[]>([
 		{
@@ -109,16 +111,13 @@ function ProfileLoginTrue() {
 					alt="profile icon"
 				/>
 			</div>
-			{isProfileBoxOn ? (
-				<ProfileBox setIsProfileBoxOn={setIsProfileBoxOn} />
-			) : null}
+			{isProfileBoxOn ? <ProfileBox /> : null}
 
 			{isAlarmBoxOn ? (
 				<AlarmBox
 					alarmData={alarmData}
 					chatData={chatData}
 					noteData={noteData}
-					setIsAlarmBoxOn={setIsAlarmBoxOn}
 				/>
 			) : null}
 		</div>

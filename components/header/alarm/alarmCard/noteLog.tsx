@@ -1,25 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import styles from '@/styles/components/header/alarm/alarmCard/noteLog.module.scss';
 import NoteCard from './noteCard';
+import {useRecoilState} from 'recoil';
+import {AnoteLog} from '@/utils/recoil/recoilStore';
 
-function NoteLog({
-	isLogOn,
-	setIsLogOn,
-}: {
-	isLogOn: {
-		id: number;
-		on: boolean;
-		name: string;
-	};
-	setIsLogOn: React.Dispatch<
-		React.SetStateAction<{
-			id: number;
-			on: boolean;
-			name: string;
-		}>
-	>;
-}) {
+function NoteLog() {
 	const [on, setOn] = useState(false);
+	const [isLogOn, setIsLogOn] = useRecoilState(AnoteLog);
 	const [garaData, setGaraData] = useState([
 		{
 			id: 3,
