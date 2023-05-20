@@ -1,16 +1,25 @@
 .container {
 	padding: 16px;
-
-	text-align: center;
 	.map {
 		height: 300px;
 		border-radius: 8px;
 	}
 
-	span {
-		display: inline-block;
+	.title,
+	.address {
 		font-size: 24px;
 		font-weight: bold;
+		display: inline-block;
+	}
+
+	.title {
+		text-align: left;
+		margin-bottom: 16px;
+	}
+
+	.address {
+		width: 100%;
+		text-align: center;
 		margin-top: 16px;
 	}
 }
@@ -19,7 +28,11 @@
 	.container {
 		padding: 12px;
 
-		span {
+		.title {
+			margin-bottom: 12px;
+		}
+
+		.address {
 			font-size: 18px;
 			margin-top: 12px;
 		}

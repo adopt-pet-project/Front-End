@@ -60,9 +60,9 @@ export default function View() {
 			<div>
 				<Carousel imageList={dummyData.imageList} />
 				<Header header={dummyData.header} />
+				<Author author={dummyData.author} />
 				<Metadata metadata={dummyData.metadata} />
 				<Context context={dummyData.context} />
-				<Author author={dummyData.author} />
 				<Position coords={dummyData.coords} />
 			</div>
 			<div className={styles.inquiry}>
