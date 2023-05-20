@@ -29,11 +29,12 @@ export default function New({query}: {query: {type: string}}) {
 				/>
 				<AnimalInput />
 				<CoordsInput />
+				<span className={styles.contextTitle}>글 작성</span>
 				<input
 					className={styles.title}
 					type="text"
 					name="title"
-					placeholder="제목을 입력하세요."
+					placeholder="제목"
 				/>
 				<textarea
 					name="context"

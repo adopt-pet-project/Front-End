@@ -6,6 +6,7 @@
 	align-items: center;
 	flex-direction: row;
 	border-bottom: 1px solid var(--gray);
+	padding: 0 16px;
 }
 
 .imageButton {
@@ -74,5 +75,6 @@
 		overflow-x: scroll;
 		overflow-y: hidden;
 		flex-wrap: nowrap;
+		padding: 0 12px;
 	}
 }

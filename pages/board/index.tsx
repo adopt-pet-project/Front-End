@@ -50,11 +50,11 @@ export default function Board({order, query}: {order: string; query: string}) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({query}) => {
-	// let result = await (
-	// 	await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article`)
-	// ).json();
+	let result = await (
+		await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article`)
+	).json();
 
-	// console.log(result);
+	console.log(result);
 
 	return {
 		props: {order: query.order || 'recent', query: query.q || ''},
