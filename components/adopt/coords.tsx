@@ -1,12 +1,9 @@
 import styles from '@/styles/components/adopt/coords.module.scss';
+import {AdoptCoords} from '@/utils/@types/adopt';
 import Script from 'next/script';
 import {useRef} from 'react';
 
-export default function Position({
-	coords,
-}: {
-	coords: {latitude: number; longitude: number};
-}) {
+export default function Position({coords}: {coords: AdoptCoords}) {
 	const mapRef = useRef<HTMLDivElement>(null);
 
 	function loadMap() {
