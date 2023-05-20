@@ -1,5 +1,3 @@
-import {Context} from '@/components/adopt/context';
-import {Metadata} from '@/components/adopt/metadata';
 interface Adopt {
 	id?: number;
 	title: string;
