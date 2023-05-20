@@ -25,7 +25,7 @@
 			font-size: 18px;
 		}
 		div {
-			:nth-child(n):nth-child(-n + 3) {
+			:nth-child(1) {
 				cursor: pointer;
 				&:hover {
 					text-decoration: underline;
