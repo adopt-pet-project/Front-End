@@ -8,6 +8,7 @@
 	flex-direction: column;
 	height: min(calc(100vh - 100px), 600px);
 	overflow-y: auto;
+	overflow-x: hidden;
 	position: absolute;
 	top: 66px;
 	right: 80px;
