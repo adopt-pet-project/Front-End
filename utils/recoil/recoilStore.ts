@@ -61,4 +61,24 @@ export const AmyAdoptModal = atom({
 	},
 });
 
+export const AisProfileBoxOn = atom({
+	key: `profileBox/${v1()}`,
+	default: false,
+});
+
+export const AisAlarmBoxOn = atom({
+	key: `alarmBox/${v1()}`,
+	default: false,
+});
+
+export const AalarmboxCtg = atom<0 | 1 | 2>({
+	key: `alarmboxCtg/${v1()}`,
+	default: 0,
+});
+
+export const AnoteLog = atom({
+	key: `alarmboxCtg/${v1()}`,
+	default: {id: 2, on: false, name: ''},
+});
+
 export default {};

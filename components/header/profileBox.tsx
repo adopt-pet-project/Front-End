@@ -1,15 +1,13 @@
 import React, {MouseEvent, useEffect, useRef} from 'react';
 import styles from '@/styles/components/header/profileBox.module.scss';
 import {useRouter} from 'next/router';
+import {useRecoilState} from 'recoil';
+import {AisProfileBoxOn} from '@/utils/recoil/recoilStore';
 
-function ProfileBox({
-	setIsProfileBoxOn,
-}: {
-	setIsProfileBoxOn: (status: boolean) => void;
-}) {
+function ProfileBox() {
 	const router = useRouter();
 	const profileBoxRef = useRef<HTMLDivElement>(null);
-
+	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
 	const findHaveParent = (
 		node: HTMLElement,
 		target: HTMLElement,

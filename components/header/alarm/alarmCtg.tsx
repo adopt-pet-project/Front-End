@@ -1,17 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from '@/styles/components/header/alarm/alarmCtg.module.scss';
+import {useRecoilState} from 'recoil';
+import {AalarmboxCtg} from '@/utils/recoil/recoilStore';
 
-function AlarmCtg({
-	currentCtg,
-	setCurrentCtg,
-}: {
-	currentCtg: 0 | 1 | 2;
-	setCurrentCtg: (type: 0 | 1 | 2) => void;
-}) {
+function AlarmCtg() {
 	const nStyle = {
 		color: 'red',
 		fontWeight: 'bold',
 	};
+
+	const [currentCtg, setCurrentCtg] = useRecoilState(AalarmboxCtg);
 	return (
 		<div className={styles.ctgWrap}>
 			<span

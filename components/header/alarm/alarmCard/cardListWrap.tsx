@@ -4,22 +4,21 @@ import AlarmCard from './alarmCard';
 import NoteCard from './noteCard';
 import ChatCard from './chatCard';
 import NoteLog from './noteLog';
+import {useRecoilState} from 'recoil';
+import {AalarmboxCtg, AnoteLog} from '@/utils/recoil/recoilStore';
 
 function CardListWrap({
-	ctgType,
 	alarmData,
 	noteData,
 	chatData,
 }: {
-	ctgType: 0 | 1 | 2;
 	alarmData: Alarmdata[];
 	chatData: Chatdata[];
 	noteData: Notedata[];
 }) {
-	const [isLogOn, setIsLogOn] = useState({id: 2, on: false, name: ''});
-	useEffect(() => {
-		console.log(isLogOn);
-	}, [isLogOn]);
+	const [ctgType, setCtgType] = useRecoilState(AalarmboxCtg);
+	const [isLogOn, setIsLogOn] = useRecoilState(AnoteLog);
+
 	return (
 		<>
 			<ul className={styles.listWrap}>
@@ -38,9 +37,7 @@ function CardListWrap({
 					  ))
 					: chatData.map((data, i) => <ChatCard key={i} data={data} />)}
 			</ul>
-			{isLogOn.on ? (
-				<NoteLog setIsLogOn={setIsLogOn} isLogOn={isLogOn} />
-			) : null}
+			{isLogOn.on ? <NoteLog /> : null}
 		</>
 	);
 }
