@@ -1,0 +1,53 @@
+.noteLog {
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: white;
+	padding: 5px;
+	transition: left 0.3s;
+
+	.listWrap {
+		flex-grow: 1;
+		padding: 12px;
+		margin: 0px;
+		overflow-y: auto;
+	}
+
+	.boxHeader {
+		height: 30px;
+		display: flex;
+		width: 100%;
+		align-items: center;
+		font-weight: bold;
+		display: flex;
+		justify-content: space-between;
+		.backWrap {
+			height: 100%;
+			display: flex;
+			align-items: center;
+			.goBack {
+				cursor: pointer;
+				margin-right: 5px;
+				height: 100%;
+				font-size: 60px;
+			}
+		}
+		.writeNote {
+			width: 25px;
+			margin-right: 20px;
+			cursor: pointer;
+		}
+	}
+	.headerBoundary {
+		display: flex;
+	}
+}
+
+.on {
+	left: 0;
+}
+
+@media screen and (max-width: 528px) {
+}

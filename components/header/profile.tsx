@@ -13,9 +13,9 @@ export default function Profile({
 	const [isLogin, setIsLogin] = useState(true);
 	const router = useRouter();
 
-	useEffect(() => {
-		setIsLogin(Boolean(window.localStorage.getItem('accessToken')));
-	});
+	// useEffect(() => {
+	// 	setIsLogin(Boolean(window.localStorage.getItem('accessToken')));
+	// });
 
 	useEffect(() => {
 		window.addEventListener('fadeLogin', onClickLogin);

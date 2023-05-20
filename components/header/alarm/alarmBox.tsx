@@ -38,7 +38,8 @@ function AlarmBox({
 				e.target as HTMLElement,
 				alarmBoxRef.current as HTMLElement,
 			) ||
-			target.classList[0].includes('profileLoginTrue_imgWrap')
+			target.classList[0].includes('profileLoginTrue_imgWrap') ||
+			target.classList[0].includes('noteLog_goBack')
 		) {
 		} else setIsAlarmBoxOn(false);
 	};

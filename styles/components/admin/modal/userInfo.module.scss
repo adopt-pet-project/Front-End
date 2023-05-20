@@ -5,7 +5,9 @@
 	padding: 10px;
 	display: flex;
 	background: var(--white);
-	border: 1px solid grey;
+	border: 1px solid rgb(201, 201, 201);
+	box-shadow: var(--boxShadow);
+
 	img {
 		width: 140px;
 		height: 140px;

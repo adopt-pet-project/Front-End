@@ -6,8 +6,9 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	border: 1px solid black;
 	padding: 5px;
+	border: 1px solid rgb(129, 129, 129);
+	border-radius: 8px;
 	hr {
 		width: 100%;
 	}
