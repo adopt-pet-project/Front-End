@@ -58,11 +58,12 @@ export default function New() {
 					serverImageList={serverImageList}
 					setServerImageList={setServerImageList}
 				/>
+				<span className={styles.contextTitle}>글 작성</span>
 				<input
 					className={styles.title}
 					type="text"
 					name="title"
-					placeholder="제목을 입력하세요."
+					placeholder="제목"
 				/>
 				<textarea
 					name="context"
