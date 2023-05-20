@@ -8,7 +8,6 @@ import Metadata from '@/components/adopt/metadata';
 import Context from '@/components/adopt/context';
 import Author from '@/components/adopt/author';
 import Position from '@/components/adopt/coords';
-import {AdoptDetail} from '@/utils/@types/adopt';
 
 const dummyData: AdoptDetail = {
 	id: 3,
