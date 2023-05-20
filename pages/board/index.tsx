@@ -49,14 +49,13 @@ export default function Board({order, query}: {order: string; query: string}) {
 	);
 }
 
-export const getServerSideProps: GetServerSideProps = async ({
-	req,
-	res,
-	resolvedUrl,
-	query,
-}) => {
-	// let result = await (await fetch('http://3.36.132.160/hello')).text();
-	// 게시글 로직, query, order에 따라 다른 내용을 fetch
+export const getServerSideProps: GetServerSideProps = async ({query}) => {
+	// let result = await (
+	// 	await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article`)
+	// ).json();
+
+	// console.log(result);
+
 	return {
 		props: {order: query.order || 'recent', query: query.q || ''},
 	};

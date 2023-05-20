@@ -7,7 +7,7 @@ export default function More() {
 	const menuRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		window.addEventListener('click', (e: MouseEvent) => {
+		function onClickOutside(e: MouseEvent) {
 			if (
 				containerRef.current &&
 				containerRef.current.contains(e.target as HTMLElement)
@@ -16,19 +16,12 @@ export default function More() {
 			} else {
 				setIsActive(false);
 			}
-		});
+		}
+
+		window.addEventListener('click', onClickOutside);
 
 		return () => {
-			window.removeEventListener('click', (e: MouseEvent) => {
-				if (
-					containerRef.current &&
-					containerRef.current.contains(e.target as HTMLElement)
-				) {
-					setIsActive(!isActive);
-				} else {
-					setIsActive(false);
-				}
-			});
+			window.removeEventListener('click', onClickOutside);
 		};
 	}, []);
 

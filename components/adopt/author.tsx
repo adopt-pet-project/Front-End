@@ -1,6 +1,7 @@
 import styles from '@/styles/components/adopt/author.module.scss';
+import {AdoptAuthor} from '@/utils/@types/adopt';
 
-export default function Author({author}: {author: any}) {
+export default function Author({author}: {author: AdoptAuthor}) {
 	return (
 		<div className={styles.container}>
 			<img
@@ -16,7 +17,7 @@ export default function Author({author}: {author: any}) {
 				}}
 			>
 				<span className={styles.author}>{author.author}</span>
-				<span>{author.address}</span>
+				<span>{author.location}</span>
 			</div>
 		</div>
 	);

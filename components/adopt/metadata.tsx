@@ -1,6 +1,7 @@
 import styles from '@/styles/components/adopt/metadata.module.scss';
+import {AdoptMetadata} from '@/utils/@types/adopt';
 
-export default function Metadata({metadata}: {metadata: any}) {
+export default function Metadata({metadata}: {metadata: AdoptMetadata}) {
 	return (
 		<ul className={styles.container}>
 			<li>

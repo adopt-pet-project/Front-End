@@ -1,14 +1,18 @@
 import styles from '@/styles/components/adopt/carousel.module.scss';
-import {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 
-export default function Carousel({images}: {images: any}) {
+export default function Carousel({images}: {images: ImageUploadResponse[]}) {
 	const [page, setPage] = useState<number>(1);
 
 	const preventScroll = useRef<boolean>(false);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const imagesRef = useRef<HTMLDivElement>(null);
 
-	const carouselImages = [images[images.length - 1], ...images, images[0]];
+	const carouselImages = [
+		images[images.length - 1].imageUrl,
+		...images.map((img: ImageUploadResponse) => img.imageUrl),
+		images[0].imageUrl,
+	];
 
 	function onClickLeft() {
 		if (!preventScroll.current && imagesRef.current) {

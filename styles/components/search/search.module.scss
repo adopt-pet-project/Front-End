@@ -34,6 +34,7 @@
 }
 
 .container[data-active] {
+	overflow: visible;
 	flex-direction: row-reverse;
 	background-color: var(--white);
 	width: calc(100% - 16px);
