@@ -1,9 +1,16 @@
-import {useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import Script from 'next/script';
 import styles from '@/styles/components/adopt/coords.module.scss';
 
 export default function Position({coords}: {coords: AdoptCoords}) {
 	const mapRef = useRef<HTMLDivElement>(null);
+	const [address, setAddress] = useState<string>('');
+
+	useEffect(() => {
+		if (window.kakao) {
+			window.kakao.maps.load(loadMap);
+		}
+	});
 
 	function loadMap() {
 		const mapOption = {
@@ -16,6 +23,22 @@ export default function Position({coords}: {coords: AdoptCoords}) {
 			position: map.getCenter(),
 		});
 		marker.setMap(map);
+
+		const geocoder = new window.kakao.maps.services.Geocoder();
+
+		geocoder.coord2Address(
+			coords.longitude,
+			coords.latitude,
+			(result: any, status: any) => {
+				if (status === window.kakao.maps.services.Status.OK) {
+					setAddress(
+						result[0].road_address
+							? result[0].road_address.address_name
+							: result[0].address.address_name,
+					);
+				}
+			},
+		);
 	}
 
 	return (
@@ -28,8 +51,8 @@ export default function Position({coords}: {coords: AdoptCoords}) {
 				}}
 			/>
 			<div className={styles.container}>
-				<span>분양 지역</span>
 				<div className={styles.map} ref={mapRef} />
+				<span>{address}</span>
 			</div>
 		</>
 	);

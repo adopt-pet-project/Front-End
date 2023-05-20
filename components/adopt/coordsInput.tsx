@@ -23,22 +23,16 @@ export default function CoordsInput() {
 		latitudeRef.current!.value = latLng.Ma;
 		longitudeRef.current!.value = latLng.La;
 		const geocoder = new window.kakao.maps.services.Geocoder();
-		geocoder.coord2RegionCode(
-			latLng.La,
-			latLng.Ma,
-			(result: any, status: any) => {
-				if (
-					status === window.kakao.maps.services.Status.OK &&
-					addressRef.current
-				) {
-					addressRef.current.value = result[0].address_name
-						.split(' ')
-						.slice(0, 2)
-						.join(' ');
-					console.log(result[0].address_name.split(' ').slice(0, 2).join(' '));
-				}
-			},
-		);
+		geocoder.coord2Address(latLng.La, latLng.Ma, (result: any, status: any) => {
+			if (
+				status === window.kakao.maps.services.Status.OK &&
+				addressRef.current
+			) {
+				addressRef.current.value = result[0].road_address
+					? result[0].road_address.address_name.split(' ').slice(0, 2).join(' ')
+					: result[0].address.address_name.split(' ').slice(0, 3).join(' ');
+			}
+		});
 	}
 
 	function loadMap() {
