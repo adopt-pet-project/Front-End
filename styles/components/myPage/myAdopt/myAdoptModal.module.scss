@@ -12,6 +12,7 @@
 	flex-direction: column;
 	justify-content: space-between;
 	border-radius: 8px;
+	box-shadow: var(--boxShadow);
 	> div {
 		padding-left: 10px;
 		display: flex;
