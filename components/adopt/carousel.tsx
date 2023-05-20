@@ -40,7 +40,7 @@ export default function Carousel({
 			imagesRef.current.style.transform = `translateX(${
 				-1 * page
 			}00%) translate(${
-				dragAmount.current + (beginX.current - e.touches[0].pageX) * 1.25
+				dragAmount.current + (e.touches[0].pageX - beginX.current) * 1.25
 			}px)`;
 		},
 		[imagesRef.current, preventScroll.current, page],
@@ -59,9 +59,9 @@ export default function Carousel({
 
 			imagesRef.current.style.transition = 'var(--transition)';
 			if (translate / width < -0.15) {
-				onClickLeft();
-			} else if (translate / width > 0.15) {
 				onClickRight();
+			} else if (translate / width > 0.15) {
+				onClickLeft();
 			} else {
 				imagesRef.current.style.transform =
 					imagesRef.current.style.transform.split(' ')[0];
