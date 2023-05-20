@@ -58,10 +58,10 @@ export default function Carousel({
 				);
 
 			imagesRef.current.style.transition = 'var(--transition)';
-			if (translate / width < -0.2) {
-				onClickRight();
-			} else if (translate / width > 0.2) {
+			if (translate / width < -0.15) {
 				onClickLeft();
+			} else if (translate / width > 0.15) {
+				onClickRight();
 			} else {
 				imagesRef.current.style.transform =
 					imagesRef.current.style.transform.split(' ')[0];
