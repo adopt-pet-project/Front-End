@@ -1,6 +1,5 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
 import styles from '@/styles/components/adopt/carousel.module.scss';
-import useDepsOnlyEffect from '@/utils/hooks/useDepsOnlyEffect';
 
 export default function Carousel({
 	imageList,
@@ -136,8 +135,8 @@ export default function Carousel({
 				ref={imagesRef}
 				style={{transform: `translateX(${-1 * page}00%)`}}
 			>
-				{carouselImageList.map((imageSrc: string, index: number) => {
-					return <img key={index} className={styles.image} src={imageSrc} />;
+				{carouselImageList.map((imageSrc: string) => {
+					return <img key={imageSrc} className={styles.image} src={imageSrc} />;
 				})}
 			</div>
 
