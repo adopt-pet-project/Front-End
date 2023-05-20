@@ -51,8 +51,9 @@ export default function Position({coords}: {coords: AdoptCoords}) {
 				}}
 			/>
 			<div className={styles.container}>
+				<span className={styles.title}>분양 지역</span>
 				<div className={styles.map} ref={mapRef} />
-				<span>{address}</span>
+				<span className={styles.address}>{address}</span>
 			</div>
 		</>
 	);
