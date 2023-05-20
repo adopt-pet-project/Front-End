@@ -5,8 +5,14 @@ import CardListWrap from './alarmCard/cardListWrap';
 
 function AlarmBox({
 	setIsAlarmBoxOn,
+	alarmData,
+	noteData,
+	chatData,
 }: {
 	setIsAlarmBoxOn: (status: boolean) => void;
+	alarmData: Alarmdata[];
+	noteData: Notedata[];
+	chatData: Chatdata[];
 }) {
 	const [currentCtg, setCurrentCtg] = useState<0 | 1 | 2>(0);
 
@@ -60,7 +66,12 @@ function AlarmBox({
 			</div>
 			<hr className={styles.headerBoundary} />
 			<AlarmCtg setCurrentCtg={setCurrentCtg} currentCtg={currentCtg} />
-			<CardListWrap ctgType={currentCtg} />
+			<CardListWrap
+				alarmData={alarmData}
+				noteData={noteData}
+				chatData={chatData}
+				ctgType={currentCtg}
+			/>
 		</div>
 	);
 }
