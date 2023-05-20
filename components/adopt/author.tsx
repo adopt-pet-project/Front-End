@@ -6,7 +6,7 @@ export default function Author({author}: {author: AdoptAuthor}) {
 			<img
 				className={styles.profile}
 				src={author.profile}
-				alt={`${author.author} profile`}
+				alt={`${author.username} profile`}
 			/>
 			<div
 				style={{
@@ -15,8 +15,8 @@ export default function Author({author}: {author: AdoptAuthor}) {
 					justifyContent: 'space-between',
 				}}
 			>
-				<span className={styles.author}>{author.author}</span>
-				<span>{author.location}</span>
+				<span className={styles.author}>{author.username}</span>
+				<span>{author.address}</span>
 			</div>
 		</div>
 	);
