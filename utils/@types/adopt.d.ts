@@ -1,11 +1,10 @@
 interface Adopt {
 	id?: number;
 	title: string;
-	kind: string;
-	location: string;
+	address: string;
 	bookmark: number;
 	chat: number;
-	publishedAt: string;
+	publishedAt: number;
 	thumbnail: string;
 	species: string;
 	status: number;

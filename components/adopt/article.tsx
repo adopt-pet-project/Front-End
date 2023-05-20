@@ -57,7 +57,7 @@ export default function Article({article}: {article: Adopt}) {
 					<span className={styles.species}>{article.species}</span>
 				</div>
 				<div className={styles.metadata}>
-					<span>{`${article.location} · ${article.publishedAt}`}</span>
+					<span>{`${article.address} · ${article.publishedAt}`}</span>
 					<ul className={styles.dataList}>
 						<li>
 							<img
