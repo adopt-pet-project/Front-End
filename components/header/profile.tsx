@@ -10,7 +10,7 @@ export default function Profile({
 	containerRef: RefObject<HTMLDivElement>;
 }) {
 	const [isModalActive, setIsModalActive] = useState<boolean>(false);
-	const [isLogin, setIsLogin] = useState(false);
+	const [isLogin, setIsLogin] = useState(true);
 	const router = useRouter();
 
 	useEffect(() => {
