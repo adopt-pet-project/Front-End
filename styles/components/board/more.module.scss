@@ -18,7 +18,7 @@
 	top: 75px;
 	right: 16px;
 	border: 1px solid var(--gray);
-	box-shadow: 0 4px 8px rgb(0 0 0 / 16%), 0 0px 4px rgb(0 0 0 / 5%);
+	box-shadow: var(--boxShadow);
 }
 
 @media screen and (max-width: 768px) {

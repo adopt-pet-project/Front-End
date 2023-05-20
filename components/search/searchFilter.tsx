@@ -57,7 +57,11 @@ export default function SearchFilter({
 				onClick={setFilter}
 			>
 				{option.map((opt: string, index: number) => {
-					return <li data-filter={index}>{opt}</li>;
+					return (
+						<li key={opt} data-filter={index}>
+							{opt}
+						</li>
+					);
 				})}
 			</ul>
 		</div>

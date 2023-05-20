@@ -10,7 +10,7 @@
 }
 
 .optionList {
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25), 0 0px 4px rgba(0, 0, 0, 0.25);
+	box-shadow: var(--boxShadow);
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
