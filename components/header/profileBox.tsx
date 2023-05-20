@@ -57,7 +57,7 @@ function ProfileBox({
 					alt=""
 				/>
 			</div>
-
+			<hr className={styles.headerBoundary} />
 			<div className={styles.profileCard}>
 				<img
 					className={styles.profileImgWrap}
