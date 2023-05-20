@@ -2,7 +2,11 @@ import {useCallback, useEffect, useRef, useState} from 'react';
 import styles from '@/styles/components/adopt/carousel.module.scss';
 import useDepsOnlyEffect from '@/utils/hooks/useDepsOnlyEffect';
 
-export default function Carousel({images}: {images: ImageUploadResponse[]}) {
+export default function Carousel({
+	imageList,
+}: {
+	imageList: ImageUploadResponse[];
+}) {
 	const [page, setPage] = useState<number>(1);
 
 	const preventScroll = useRef<boolean>(false);
@@ -15,10 +19,10 @@ export default function Carousel({images}: {images: ImageUploadResponse[]}) {
 
 	const regExp = /[^a-z,(]+[^px]/g;
 
-	const carouselImages = [
-		images[images.length - 1].imageUrl,
-		...images.map((img: ImageUploadResponse) => img.imageUrl),
-		images[0].imageUrl,
+	const carouselImageList = [
+		imageList[imageList.length - 1].imageUrl,
+		...imageList.map((img: ImageUploadResponse) => img.imageUrl),
+		imageList[0].imageUrl,
 	];
 
 	const touchStart = useCallback(
@@ -92,7 +96,7 @@ export default function Carousel({images}: {images: ImageUploadResponse[]}) {
 			preventScroll.current = true;
 			imagesRef.current.ontransitionend = () => {
 				if (page === 1 && imagesRef.current) {
-					setPage(carouselImages.length - 2);
+					setPage(carouselImageList.length - 2);
 					imagesRef.current.style.transition = 'none';
 					setTimeout(() => {
 						if (imagesRef.current)
@@ -110,7 +114,7 @@ export default function Carousel({images}: {images: ImageUploadResponse[]}) {
 			setPage(page + 1);
 			preventScroll.current = true;
 			imagesRef.current.ontransitionend = () => {
-				if (page === carouselImages.length - 2 && imagesRef.current) {
+				if (page === carouselImageList.length - 2 && imagesRef.current) {
 					setPage(1);
 					imagesRef.current.style.transition = 'none';
 					setTimeout(() => {
@@ -132,8 +136,8 @@ export default function Carousel({images}: {images: ImageUploadResponse[]}) {
 				ref={imagesRef}
 				style={{transform: `translateX(${-1 * page}00%)`}}
 			>
-				{carouselImages.map((image: any, index: number) => {
-					return <img key={index} className={styles.image} src={image} />;
+				{carouselImageList.map((imageSrc: string, index: number) => {
+					return <img key={index} className={styles.image} src={imageSrc} />;
 				})}
 			</div>
 

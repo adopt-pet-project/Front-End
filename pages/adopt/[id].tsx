@@ -58,7 +58,7 @@ export default function View() {
 	return (
 		<section className="body">
 			<div>
-				<Carousel images={dummyData.images} />
+				<Carousel imageList={dummyData.imageList} />
 				<Header header={dummyData.header} />
 				<Metadata metadata={dummyData.metadata} />
 				<Context context={dummyData.context} />

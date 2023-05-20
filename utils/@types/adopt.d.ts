@@ -37,19 +37,19 @@ interface AdoptContext {
 }
 
 interface AdoptAuthor {
-	author: string;
+	id: number;
+	username: string;
 	profile: string;
-	location: string;
-	mine: boolean;
+	address: string;
 }
 
 interface AdoptDetail {
 	id: number;
-	authorId: string;
-	images: ImageUploadResponse[];
+	imageList: ImageUploadResponse[];
 	coords: AdoptCoords;
 	header: AdoptHeader;
 	metadata: AdoptMetadata;
 	context: AdoptContext;
 	author: AdoptAuthor;
+	mine: boolean;
 }
