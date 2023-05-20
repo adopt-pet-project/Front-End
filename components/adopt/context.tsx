@@ -1,5 +1,4 @@
 import styles from '@/styles/components/adopt/context.module.scss';
-import {AdoptContext} from '@/utils/@types/adopt';
 
 export default function Context({context}: {context: AdoptContext}) {
 	return (

@@ -1,6 +1,6 @@
-import styles from '@/styles/components/adopt/coordsInput.module.scss';
-import Script from 'next/script';
 import {BaseSyntheticEvent, useEffect, useRef} from 'react';
+import Script from 'next/script';
+import styles from '@/styles/components/adopt/coordsInput.module.scss';
 
 export default function CoordsInput() {
 	const mapRef = useRef<HTMLDivElement>(null);

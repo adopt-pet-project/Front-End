@@ -1,5 +1,5 @@
-import styles from '@/styles/components/adopt/carousel.module.scss';
 import {useRef, useState} from 'react';
+import styles from '@/styles/components/adopt/carousel.module.scss';
 
 export default function Carousel({images}: {images: ImageUploadResponse[]}) {
 	const [page, setPage] = useState<number>(1);

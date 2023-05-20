@@ -1,8 +1,8 @@
-import styles from '@/styles/components/adopt/setAdoptType.module.scss';
-import {AmodalWrap} from '@/utils/recoil/recoilStore';
-import {useRouter} from 'next/router';
 import {BaseSyntheticEvent, useState} from 'react';
+import {useRouter} from 'next/router';
 import {useRecoilState} from 'recoil';
+import {AmodalWrap} from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/adopt/setAdoptType.module.scss';
 
 export default function SetAdoptType() {
 	const [modalRef] = useRecoilState(AmodalWrap);
