@@ -1,5 +1,5 @@
-import styles from '@/styles/components/adopt/article.module.scss';
 import Image from 'next/image';
+import styles from '@/styles/components/adopt/article.module.scss';
 
 const status = [
 	{

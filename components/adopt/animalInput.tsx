@@ -1,5 +1,4 @@
 import styles from '@/styles/components/adopt/animalInput.module.scss';
-import Script from 'next/script';
 
 export default function AnimalInput() {
 	return (

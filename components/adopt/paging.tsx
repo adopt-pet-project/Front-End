@@ -1,7 +1,7 @@
 import {BaseSyntheticEvent, useState} from 'react';
-import styles from '@/styles/components/adopt/paging.module.scss';
 import Article from './article';
 import ArticleSkeleton from '../articleSkeleton';
+import styles from '@/styles/components/adopt/paging.module.scss';
 
 const moreData = {
 	title: '강아지 한마리 분양합니다.',

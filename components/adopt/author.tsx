@@ -1,5 +1,4 @@
 import styles from '@/styles/components/adopt/author.module.scss';
-import {AdoptAuthor} from '@/utils/@types/adopt';
 
 export default function Author({author}: {author: AdoptAuthor}) {
 	return (
