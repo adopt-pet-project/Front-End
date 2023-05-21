@@ -3,7 +3,7 @@ import styles from '@/styles/components/header/alarm/alarmCard/cardListWrap.modu
 import AlarmCard from './alarmCard';
 import NoteCard from './noteCard';
 import ChatCard from './chatCard';
-import NoteLog from './note/noteLog';
+import LogWrap from './logWrap';
 import {useRecoilState} from 'recoil';
 import {AalarmboxCtg, AnoteLog} from '@/utils/recoil/recoilStore';
 
@@ -30,14 +30,24 @@ function CardListWrap({
 								onClick={() => {
 									setIsLogOn(prev => ({...prev, on: true, name: data.name}));
 								}}
-								setIsLogOn={setIsLogOn}
 								key={i}
 								data={data}
 							/>
 					  ))
-					: chatData.map((data, i) => <ChatCard key={i} data={data} />)}
+					: chatData.map((data, i) => (
+							<ChatCard
+								onClick={() => {
+									setIsLogOn(prev => ({
+										...prev,
+										on: true,
+										name: `${data.name}ㆍ${data.docTitle}`,
+									}));
+								}}
+								key={i}
+								data={data}
+							/>
+					  ))}
 			</ul>
-			{isLogOn.on ? <NoteLog /> : null}
 		</>
 	);
 }

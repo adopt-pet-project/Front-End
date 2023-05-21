@@ -1,9 +1,14 @@
 import React from 'react';
 import styles from '@/styles/components/header/alarm/alarmCard/chatCard.module.scss';
 
-function ChatCard({data}: {data: Chatdata}) {
+function ChatCard({data, onClick}: {data: Chatdata; onClick: () => void}) {
 	return (
-		<div className={styles.cardWrap}>
+		<div
+			onClick={() => {
+				onClick();
+			}}
+			className={styles.cardWrap}
+		>
 			<div className={styles.nameWrap}>
 				<span className={styles.name}>
 					{data.name}ㆍ{data.docTitle}

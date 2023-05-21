@@ -5,6 +5,7 @@ import CardListWrap from './alarmCard/cardListWrap';
 import {useRecoilState} from 'recoil';
 import {AisAlarmBoxOn, AnoteLog, AwriteNote} from '@/utils/recoil/recoilStore';
 import WriteNote from './alarmCard/note/writeNote';
+import LogWrap from './alarmCard/logWrap';
 
 function AlarmBox({
 	alarmData,
@@ -83,7 +84,7 @@ function AlarmBox({
 				noteData={noteData}
 				chatData={chatData}
 			/>
-			{isWriteNote ? <WriteNote /> : null}
+			{isLogOn.on ? <LogWrap /> : null}
 		</div>
 	);
 }
