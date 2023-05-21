@@ -1,8 +1,8 @@
 import {ReactElement, RefObject, useRef} from 'react';
-import Aside from '../aside/aside';
-import Header from '../header/header';
 import {RecoilRoot, useRecoilState} from 'recoil';
 import {QueryClient, QueryClientProvider} from 'react-query';
+import Aside from '../aside/aside';
+import Header from '../header/header';
 import ModalWrap from './modalWrap';
 
 const queryClient = new QueryClient();

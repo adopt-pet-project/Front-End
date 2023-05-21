@@ -16,7 +16,7 @@ type AppPropsWithLayout = AppProps & {
 	Component: NextPageWithLayout;
 };
 
-NProgress.configure({showSpinner: false});
+NProgress.configure({showSpinner: false, minimum: 0.25, speed: 250});
 
 Router.events.on('routeChangeStart', () => {
 	NProgress.start();
