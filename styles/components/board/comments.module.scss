@@ -22,10 +22,12 @@
 }
 
 .upper {
+	align-items: flex-start;
 	padding-top: 16px;
 }
 
 .lower {
+	align-items: center;
 	margin-top: 16px;
 	padding-bottom: 8px;
 }
@@ -47,8 +49,8 @@
 
 .profile {
 	user-select: none;
-	width: 32px;
-	height: 32px;
+	width: 28px;
+	height: 28px;
 	margin-right: 8px;
 	border-radius: 50%;
 }
