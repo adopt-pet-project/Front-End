@@ -1,12 +1,15 @@
-import styles from '@/styles/components/board/article.module.scss';
+import {useRouter} from 'next/router';
 import Image from 'next/image';
+import styles from '@/styles/components/board/article.module.scss';
 
 export default function Article({article}: {article: any}) {
+	const router = useRouter();
+
 	return (
 		<article
 			className={styles.container}
 			onClick={() => {
-				if (article.id != null) window.location.href = `/board/${article.id}`;
+				if (article.id != null) router.push(`/board/${article.id}`);
 			}}
 		>
 			{article.thumb && article.thumb === 'null' ? (

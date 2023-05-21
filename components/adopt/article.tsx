@@ -1,3 +1,4 @@
+import {useRouter} from 'next/router';
 import Image from 'next/image';
 import styles from '@/styles/components/adopt/article.module.scss';
 
@@ -15,11 +16,13 @@ const status = [
 ];
 
 export default function Article({article}: {article: Adopt}) {
+	const router = useRouter();
+
 	return (
 		<article
 			className={styles.container}
 			onClick={() => {
-				if (article.id != null) window.location.href = `/adopt/${article.id}`;
+				if (article.id != null) router.push(`/adopt/${article.id}`);
 			}}
 		>
 			{article.thumbnail && article.thumbnail === 'null' ? (

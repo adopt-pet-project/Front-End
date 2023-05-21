@@ -1,4 +1,4 @@
-import {BaseSyntheticEvent, useState} from 'react';
+import {BaseSyntheticEvent, useEffect, useRef, useState} from 'react';
 import Article from './article';
 import ArticleSkeleton from '../articleSkeleton';
 import styles from '@/styles/components/adopt/paging.module.scss';
@@ -12,7 +12,7 @@ const moreData = {
 	publishedAt: 16236247457,
 	thumbnail: '/image8',
 	species: '시베리안 허스키',
-	status: 1,
+	status: 0,
 };
 
 const DummyData: any[] = [];
@@ -43,13 +43,19 @@ export default function Paging({
 }) {
 	const [lazyLoadArticle, setLazyLoadArticle] = useState<any>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const lastestLastArticleId = useRef<any>();
+
+	useEffect(() => {
+		lastestLastArticleId.current = lastArticleId;
+	}, []);
 
 	function loadArticle(e: BaseSyntheticEvent) {
 		setIsLoading(true);
 		setTimeout(() => {
 			setLazyLoadArticle([...lazyLoadArticle, ...DummyData]);
 			setIsLoading(false);
-		}, 1000);
+			// lastestLastArticleId 갱신
+		}, 10000000);
 	}
 
 	return (

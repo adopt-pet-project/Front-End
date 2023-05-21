@@ -8,7 +8,7 @@
 	--greyBackground: var(--bluewhite);
 	--color-text: var(--black);
 	--color-text-light: var(--lightblack);
-	--selected-category-btn: var(#3586ff);
+	--selected-category-btn: var(--skyblue);
 
 	/* 기타 속성 */
 	--boxShadow: 0 4px 8px rgba(0, 0, 0, 0.25), 0 0px 4px rgba(0, 0, 0, 0.25);
