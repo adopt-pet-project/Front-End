@@ -4,7 +4,6 @@ import {useEffect, useRef, useState} from 'react';
 import CardListWrap from './alarmCard/cardListWrap';
 import {useRecoilState} from 'recoil';
 import {AisAlarmBoxOn, AnoteLog, AwriteNote} from '@/utils/recoil/recoilStore';
-import WriteNote from './alarmCard/note/writeNote';
 import LogWrap from './alarmCard/logWrap';
 
 function AlarmBox({
@@ -24,14 +23,10 @@ function AlarmBox({
 		node: HTMLElement,
 		target: HTMLElement,
 	): boolean | HTMLElement => {
-		console.log(node);
-		console.log(target);
 		if (node === target) {
-			console.log(1);
 			return true;
 		} else {
 			if (node === null) {
-				console.log(2);
 				return false;
 			}
 			return findHaveParent(node.parentElement as HTMLElement, target);
@@ -39,7 +34,6 @@ function AlarmBox({
 	};
 	const handleCloseAlarm = (e: MouseEvent) => {
 		const target = e.target as HTMLElement;
-		console.log(target);
 		if (
 			findHaveParent(
 				e.target as HTMLElement,

@@ -44,7 +44,7 @@ function ChatLog() {
 		{
 			id: 4,
 			type: 'location',
-			chatContents: {x: '127.3003', y: '37.3002'},
+			chatContents: {x: '37.55467', y: '126.970609'},
 			date: '2023. 5. 7 16:38',
 			checked: true,
 			isMy: true,
