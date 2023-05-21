@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import styles from '@/styles/components/header/alarm/alarmCard/noteLog.module.scss';
-import NoteCard from './noteCard';
+import styles from '@/styles/components/header/alarm/alarmCard/note/noteLog.module.scss';
+import NoteCard from '../noteCard';
 import {useRecoilState} from 'recoil';
 import {AnoteLog, AwriteNote} from '@/utils/recoil/recoilStore';
 

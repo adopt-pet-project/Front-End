@@ -3,7 +3,7 @@ import styles from '@/styles/components/header/alarm/alarmCard/cardListWrap.modu
 import AlarmCard from './alarmCard';
 import NoteCard from './noteCard';
 import ChatCard from './chatCard';
-import NoteLog from './noteLog';
+import NoteLog from './note/noteLog';
 import {useRecoilState} from 'recoil';
 import {AalarmboxCtg, AnoteLog} from '@/utils/recoil/recoilStore';
 

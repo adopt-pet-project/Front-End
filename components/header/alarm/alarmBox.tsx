@@ -4,7 +4,7 @@ import {useEffect, useRef, useState} from 'react';
 import CardListWrap from './alarmCard/cardListWrap';
 import {useRecoilState} from 'recoil';
 import {AisAlarmBoxOn, AnoteLog, AwriteNote} from '@/utils/recoil/recoilStore';
-import WriteNote from './alarmCard/writeNote';
+import WriteNote from './alarmCard/note/writeNote';
 
 function AlarmBox({
 	alarmData,

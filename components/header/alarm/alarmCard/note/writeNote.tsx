@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '@/styles/components/header/alarm/alarmCard/writeNote.module.scss';
+import styles from '@/styles/components/header/alarm/alarmCard/note/writeNote.module.scss';
 import {useRecoilState} from 'recoil';
 import {AwriteNote} from '@/utils/recoil/recoilStore';
 
