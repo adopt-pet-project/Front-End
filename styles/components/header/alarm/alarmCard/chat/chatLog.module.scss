@@ -3,6 +3,7 @@
 	position: relative;
 	overflow-y: auto;
 	margin: 0 0 5px 0;
+	scroll-behavior: smooth;
 
 	&::-webkit-scrollbar {
 		width: 8px;
