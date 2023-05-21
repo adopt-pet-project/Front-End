@@ -3,7 +3,8 @@ import AlarmCtg from './alarmCtg';
 import {useEffect, useRef, useState} from 'react';
 import CardListWrap from './alarmCard/cardListWrap';
 import {useRecoilState} from 'recoil';
-import {AalarmboxCtg, AisAlarmBoxOn} from '@/utils/recoil/recoilStore';
+import {AisAlarmBoxOn, AnoteLog, AwriteNote} from '@/utils/recoil/recoilStore';
+import LogWrap from './alarmCard/logWrap';
 
 function AlarmBox({
 	alarmData,
@@ -14,11 +15,10 @@ function AlarmBox({
 	noteData: Notedata[];
 	chatData: Chatdata[];
 }) {
-	const [currentCtg, setCurrentCtg] = useRecoilState(AalarmboxCtg);
-
 	const alarmBoxRef = useRef<HTMLDivElement>(null);
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
-
+	const [isLogOn, setIsLogOn] = useRecoilState(AnoteLog);
+	const [isWriteNote, setIsWriteNote] = useRecoilState(AwriteNote);
 	const findHaveParent = (
 		node: HTMLElement,
 		target: HTMLElement,
@@ -32,7 +32,7 @@ function AlarmBox({
 			return findHaveParent(node.parentElement as HTMLElement, target);
 		}
 	};
-	const handleCloseProfile = (e: MouseEvent) => {
+	const handleCloseAlarm = (e: MouseEvent) => {
 		const target = e.target as HTMLElement;
 		if (
 			findHaveParent(
@@ -40,15 +40,20 @@ function AlarmBox({
 				alarmBoxRef.current as HTMLElement,
 			) ||
 			target.classList[0].includes('profileLoginTrue_imgWrap') ||
-			target.classList[0].includes('noteLog_goBack')
+			target.classList[0].includes('writeNote_writeWrap')
 		) {
-		} else setIsAlarmBoxOn(false);
+		} else {
+			setIsAlarmBoxOn(false);
+			setIsLogOn(prev => ({...prev, on: false}));
+			setIsWriteNote(false);
+		}
 	};
+
 	useEffect(() => {
-		window.addEventListener<any>('click', handleCloseProfile);
+		window.addEventListener<any>('click', handleCloseAlarm);
 
 		return () => {
-			window.removeEventListener<any>('click', handleCloseProfile);
+			window.removeEventListener<any>('click', handleCloseAlarm);
 		};
 	}, []);
 
@@ -73,6 +78,7 @@ function AlarmBox({
 				noteData={noteData}
 				chatData={chatData}
 			/>
+			{isLogOn.on ? <LogWrap /> : null}
 		</div>
 	);
 }

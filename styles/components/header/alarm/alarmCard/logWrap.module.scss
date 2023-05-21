@@ -1,4 +1,4 @@
-.noteLog {
+.logWrap {
 	position: absolute;
 	top: 0;
 	left: -100%;
@@ -7,13 +7,8 @@
 	background: white;
 	padding: 5px;
 	transition: left 0.3s;
-
-	.listWrap {
-		flex-grow: 1;
-		padding: 12px;
-		margin: 0px;
-		overflow-y: auto;
-	}
+	display: flex;
+	flex-direction: column;
 
 	.boxHeader {
 		height: 30px;
@@ -21,7 +16,6 @@
 		width: 100%;
 		align-items: center;
 		font-weight: bold;
-		display: flex;
 		justify-content: space-between;
 		.backWrap {
 			height: 100%;
@@ -39,9 +33,14 @@
 			margin-right: 20px;
 			cursor: pointer;
 		}
+
+		.reserve {
+			margin-right: 15px;
+		}
 	}
 	.headerBoundary {
 		display: flex;
+		width: 100%;
 	}
 }
 

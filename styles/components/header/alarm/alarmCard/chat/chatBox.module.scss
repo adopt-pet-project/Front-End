@@ -1,0 +1,29 @@
+.line {
+	display: flex;
+	width: 100%;
+	margin-bottom: 10px;
+	justify-content: left;
+	.chatBox {
+		max-width: 270px;
+		background: lightgrey;
+		padding: 10px;
+		margin-bottom: 10px;
+		word-break: normal;
+		overflow-wrap: break-word;
+		border-radius: 8px;
+	}
+	.chatImage {
+		width: 250px;
+		border-radius: 8px;
+	}
+
+	.text {
+	}
+	.image {
+	}
+	.location {
+	}
+}
+.my {
+	justify-content: right;
+}
