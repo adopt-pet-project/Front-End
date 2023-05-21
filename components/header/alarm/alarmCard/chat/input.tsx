@@ -20,6 +20,7 @@ function Input() {
 			<textarea
 				onKeyUp={e => {
 					if (
+						e.shiftKey === false &&
 						e.code === 'Enter' &&
 						e.currentTarget.value !== '\n' &&
 						e.currentTarget.value !== ''
@@ -28,11 +29,11 @@ function Input() {
 						setChatData(prev => [
 							...prev,
 							{
-								id: 5,
-								type: 'text',
-								chatContents: '분양 받으시려면 여기로 오세욘',
-								date: '2023. 5. 7 16:40',
-								checked: false,
+								id: 4,
+								type: 'location',
+								chatContents: {x: '37.55467', y: '126.970609'},
+								date: '2023. 5. 7 16:38',
+								checked: true,
 								isMy: true,
 							},
 						]);
