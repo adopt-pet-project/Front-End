@@ -57,25 +57,23 @@ export default function Article({article}: {article: Adopt}) {
 							</div>
 						)}
 					</div>
-					<span className={styles.species}>{article.species}</span>
+					<span
+						className={styles.species}
+					>{`${article.species} · ${article.publishedAt}`}</span>
 				</div>
 				<div className={styles.metadata}>
-					<span>{`${article.address} · ${article.publishedAt}`}</span>
+					<span>{article.address}</span>
 					<ul className={styles.dataList}>
 						<li>
 							<img
-								style={{marginTop: '2px', padding: '2px'}}
+								style={{padding: '2px'}}
 								src="/icon/star.svg"
 								alt="bookmark"
 							/>
 							<span>{article.bookmark}</span>
 						</li>
 						<li>
-							<img
-								style={{marginTop: '2px'}}
-								src="/icon/comment.svg"
-								alt="chat"
-							/>
+							<img src="/icon/comment.svg" alt="chat" />
 							<span>{article.chat}</span>
 						</li>
 					</ul>

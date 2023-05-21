@@ -35,15 +35,11 @@ export default function Article({article}: {article: any}) {
 					<span>{`${article.author} · ${article.publishedAt}`}</span>
 					<ul className={styles.dataList}>
 						<li>
-							<img style={{marginTop: '2px'}} src="/icon/view.svg" alt="view" />
+							<img src="/icon/view.svg" alt="view" />
 							<span>{article.view}</span>
 						</li>
 						<li>
-							<img
-								style={{marginTop: '2px'}}
-								src="/icon/comment.svg"
-								alt="comment"
-							/>
+							<img src="/icon/comment.svg" alt="comment" />
 							<span>{article.comment}</span>
 						</li>
 						<li>
