@@ -3,6 +3,7 @@ import Aside from '../aside/aside';
 import Header from '../header/header';
 import {RecoilRoot, useRecoilState} from 'recoil';
 import {QueryClient, QueryClientProvider} from 'react-query';
+import ModalWrap from './modalWrap';
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ export default function Layout({children}: {children: ReactElement}) {
 						</div>
 					</main>
 				</div>
+				<ModalWrap />
 			</RecoilRoot>
 		</QueryClientProvider>
 	);

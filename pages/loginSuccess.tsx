@@ -11,15 +11,18 @@ export default function LoginSuccess() {
 		if (!router.isReady) return;
 
 		const accessToken = router.query.accessToken as string;
+		const email = router.query.email as string;
+		const provider = router.query.email as string;
 		if (accessToken) {
 			window.localStorage.setItem('accessToken', accessToken);
-		} else {
+		} else if (email && provider) {
 			setRegister({
 				email: router.query.email as string,
 				provider: router.query.provider as string,
 			});
 		}
 		close();
+		window.open('/', '_self');
 	}, [router.isReady]);
 	return <></>;
 }
