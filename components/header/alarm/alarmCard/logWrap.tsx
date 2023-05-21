@@ -4,7 +4,7 @@ import NoteList from './note/noteList';
 import {useRecoilState} from 'recoil';
 import {AalarmboxCtg, AnoteLog, AwriteNote} from '@/utils/recoil/recoilStore';
 import WriteNote from './note/writeNote';
-import ChatLog from './chat/chatLog';
+import ChatMain from './chat/chatMain';
 
 function LogWrap() {
 	const [on, setOn] = useState(false);
@@ -17,7 +17,7 @@ function LogWrap() {
 	}, []);
 	return (
 		<>
-			<div className={`${styles.noteLog} ${on ? styles.on : null}`}>
+			<div className={`${styles.logWrap} ${on ? styles.on : null}`}>
 				<div className={styles.boxHeader}>
 					<div className={styles.backWrap}>
 						<img
@@ -43,11 +43,11 @@ function LogWrap() {
 							alt="쪽지 보내기"
 						/>
 					) : (
-						<div>예약성사</div>
+						<div className={styles.reserve}>예약하기</div>
 					)}
 				</div>
 				<hr className={styles.headerBoundary} />
-				{currentCtg === 1 ? <NoteList /> : <ChatLog />}
+				{currentCtg === 1 ? <NoteList /> : <ChatMain />}
 			</div>
 			{isWriteNote ? <WriteNote /> : null}
 		</>
