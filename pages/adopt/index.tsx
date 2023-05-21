@@ -45,6 +45,7 @@ export default function Adopt({
 export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	let response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/adopt`);
 	let result = await response.json();
+
 	return result.status
 		? {
 				redirect: {

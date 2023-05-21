@@ -8,12 +8,14 @@
 }
 
 .title {
+	white-space: nowrap;
+	text-overflow: ellipsis;
 	position: absolute;
 	display: inline-block;
 	top: 0;
 	left: 0;
 	width: auto;
-	max-width: calc(100% - 40px);
+	max-width: calc(100% - 100px);
 	user-select: none;
 	font-size: 24px;
 	font-weight: bold;

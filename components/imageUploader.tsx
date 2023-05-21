@@ -120,7 +120,6 @@ export default function ImageUploader({
 				myFile.isUploaded = true;
 				myFile.imageId = result.imageNo;
 				myFile.serverSrc = result.imageUrl;
-				console.log(result);
 			} else {
 				updateState();
 				throw new Error('이미지 업로드 실패');
