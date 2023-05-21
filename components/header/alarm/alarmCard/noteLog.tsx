@@ -2,11 +2,13 @@ import React, {useEffect, useState} from 'react';
 import styles from '@/styles/components/header/alarm/alarmCard/noteLog.module.scss';
 import NoteCard from './noteCard';
 import {useRecoilState} from 'recoil';
-import {AnoteLog} from '@/utils/recoil/recoilStore';
+import {AnoteLog, AwriteNote} from '@/utils/recoil/recoilStore';
 
 function NoteLog() {
 	const [on, setOn] = useState(false);
 	const [isLogOn, setIsLogOn] = useRecoilState(AnoteLog);
+	const [isWriteNote, setIsWriteNote] = useRecoilState(AwriteNote);
+
 	const [garaData, setGaraData] = useState([
 		{
 			id: 3,
@@ -43,6 +45,9 @@ function NoteLog() {
 					<span>{isLogOn.name}</span>
 				</div>
 				<img
+					onClick={() => {
+						setIsWriteNote(true);
+					}}
 					className={styles.writeNote}
 					src="/icon/send.svg"
 					alt="쪽지 보내기"

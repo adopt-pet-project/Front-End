@@ -81,4 +81,9 @@ export const AnoteLog = atom({
 	default: {id: 2, on: false, name: ''},
 });
 
+export const AwriteNote = atom({
+	key: `writeNote/${v1()}`,
+	default: false,
+});
+
 export default {};
