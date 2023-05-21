@@ -3,24 +3,28 @@
 	padding: 16px;
 	border-bottom: 1px solid var(--gray);
 	display: flex;
-}
 
-.thumbnail,
-.title,
-.context,
-.author,
-.dataList {
-	background-color: var(--gray);
-}
+	background-image: linear-gradient(
+			90deg,
+			transparent,
+			rgba(255, 255, 255, 0.5) 35%,
+			rgba(255, 255, 255, 0.5) 65%,
+			transparent
+		),
+		linear-gradient(var(--gray) 24px, transparent 0),
+		linear-gradient(var(--gray) 18px, transparent 0),
+		linear-gradient(var(--gray) 20px, transparent 0),
+		linear-gradient(var(--gray) 20px, transparent 0);
+	background-size: 30%, calc(70% - 124px), calc(100% - 140px), 120px, 80px;
+	background-position: -60% 0, 124px 16px, 124px 44px, 124px 88px,
+		right 16px top 88px;
+	animation: desktopLoading 1.5s linear infinite;
 
-.title,
-.context,
-.author,
-.dataList {
-	border-radius: 4px;
+	background-repeat: no-repeat;
 }
 
 .thumbnail {
+	background: var(--middlegray);
 	width: 92px;
 	min-width: 92px;
 	height: 92px;
@@ -28,55 +32,26 @@
 	border-radius: 8px;
 }
 
-.preview {
-	display: flex;
-	width: inherit;
-	flex-direction: column;
+@keyframes desktopLoading {
+	to {
+		background-position: 160% 0, 124px 16px, 124px 44px, 124px 88px,
+			right 16px top 88px;
+	}
 }
-
-.title {
-	height: 24px;
-	margin: 2px 0 2px 0;
-	width: 100%;
-	max-width: 180px;
-}
-
-.context {
-	margin-top: 2px;
-	height: 18px;
-}
-
-.description {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	flex-grow: 1;
-}
-
-.metadata {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.author,
-.dataList {
-	height: 20px;
-	margin-bottom: 2px;
-}
-
-.author {
-	width: 90px;
-}
-
-.dataList {
-	width: 100px;
+@keyframes mobileLoading {
+	to {
+		background-position: 160% 0, 116px 12px, 116px 42px, 116px 84px,
+			right 12px top 84px;
+	}
 }
 
 @media screen and (max-width: 768px) {
 	.container {
 		padding: 12px;
+		background-size: 50%, calc(70% - 116px), calc(100% - 128px), 120px, 70px;
+		background-position: 0 0, 116px 12px, 116px 42px, 116px 84px,
+			right 12px top 84px;
+		animation: mobileLoading 1.5s infinite;
 	}
 
 	.thumbnail {
