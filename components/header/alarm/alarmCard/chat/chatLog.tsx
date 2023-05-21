@@ -57,6 +57,14 @@ function ChatLog() {
 			checked: false,
 			isMy: true,
 		},
+		{
+			id: 5,
+			type: 'text',
+			chatContents: '분양 받으시려면 여기로 오세욘',
+			date: '2023. 5. 7 16:40',
+			checked: false,
+			isMy: true,
+		},
 	]);
 	useEffect(() => {
 		setOn(true);

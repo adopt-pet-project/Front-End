@@ -86,4 +86,9 @@ export const AwriteNote = atom({
 	default: false,
 });
 
+export const AisLogin = atom({
+	key: `login/${v1()}`,
+	default: true,
+});
+
 export default {};
