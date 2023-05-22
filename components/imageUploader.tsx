@@ -35,10 +35,6 @@ export default function ImageUploader({
 		if (serverImageList.length !== 0) {
 			localImageList.current = serverImageList;
 		}
-
-		if (!window.localStorage.getItem('accessToken')) {
-			router.back();
-		}
 	}, []);
 
 	async function changeImageInput(e: BaseSyntheticEvent) {

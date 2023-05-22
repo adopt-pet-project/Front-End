@@ -39,6 +39,7 @@ export default function CoordsInput() {
 		if (!latitudeRef.current?.value && !longitudeRef.current?.value) {
 			latitudeRef.current!.value = '37.55467';
 			longitudeRef.current!.value = '126.970609';
+			addressRef.current!.value = '서울특별시 중구';
 		}
 
 		const mapOption = {

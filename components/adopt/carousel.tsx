@@ -126,7 +126,6 @@ export default function Carousel({
 			};
 		}
 	}
-
 	return (
 		<div className={styles.container} ref={containerRef}>
 			<div

@@ -1,4 +1,4 @@
-import {BaseSyntheticEvent, ReactElement, useState} from 'react';
+import {BaseSyntheticEvent, ReactElement, useEffect, useState} from 'react';
 import Header from '@/components/new/header';
 import Layout from '@/components/layout/layout';
 import ImageUploader from '@/components/imageUploader';
@@ -6,17 +6,76 @@ import styles from '@/styles/pages/adopt/new.module.scss';
 import {GetServerSideProps} from 'next';
 import AnimalInput from '@/components/adopt/animalInput';
 import CoordsInput from '@/components/adopt/coordsInput';
+import {useRouter} from 'next/router';
 
 export default function New({query}: {query: {type: string}}) {
 	const [serverImageList, setServerImageList] = useState<MyFile[]>([]);
+	const router = useRouter();
 
-	function onSubmit(e: BaseSyntheticEvent) {
+	useEffect(() => {
+		if (!window.localStorage.getItem('accessToken')) {
+			router.back();
+		}
+
+		if (!router.query.type) {
+			alert('잘못된 접근입니다.');
+			router.back();
+		}
+	});
+
+	async function onSubmit(e: BaseSyntheticEvent) {
 		e.preventDefault();
 
-		// 게시글 작성 로직
-		console.log(e.target.title.value);
-		console.log(e.target.context.value);
-		console.log(serverImageList);
+		const type = router.query.type as string;
+
+		const empty: string[] = [];
+
+		const keyBind = {
+			title: '제목',
+			content: '본문',
+			kind: '대분류',
+			name: '동물 이름',
+			gender: '동물 성별',
+			age: '동물 나이',
+			species: '동물 품종',
+			latitude: '위도',
+			longitude: '경도',
+			address: '주소',
+			image: '동물 사진',
+		};
+
+		const body = {
+			title: e.target.title.value,
+			content: e.target.context.value,
+			kind: type,
+			name: e.target.name.value,
+			gender: e.target.gender.value,
+			age: e.target.age.value,
+			species: e.target.species.value,
+			latitude: e.target.latitude.value,
+			longitude: e.target.longitude.value,
+			address: e.target.address.value,
+			image: serverImageList,
+		};
+
+		Object.keys(body).forEach((key: string) => {
+			const bodyKey = key as AdoptPostBodyKey;
+			if (!body[bodyKey]) empty.push(keyBind[bodyKey]);
+		});
+
+		if (empty.length !== 0) {
+			alert(`다음 항목이 입력되지 않음\n${empty.join(', ')}`);
+		}
+
+		let response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/adopt`, {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: window.localStorage.getItem('accessToken') as string,
+			},
+			method: 'POST',
+			body: JSON.stringify(body),
+		});
+		console.log(await response.json());
 	}
 
 	return (
