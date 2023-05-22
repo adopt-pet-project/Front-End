@@ -19,6 +19,8 @@
 .commentInputContainer {
 	border-radius: 0 0 8px 8px;
 	position: sticky;
+	display: flex;
+	flex-direction: column;
 	padding: 12px;
 	border-top: 1px solid var(--black);
 	bottom: 0;
@@ -40,6 +42,24 @@
 }
 
 .commentInput {
+	display: flex;
+	width: 100%;
+}
+
+.commentTarget {
+	font-size: 14px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	user-select: none;
+	margin-bottom: 12px;
+
+	img {
+		cursor: pointer;
+	}
+}
+
+.input {
 	flex-grow: 1;
 	margin-right: 12px;
 	border: none;

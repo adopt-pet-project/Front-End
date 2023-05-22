@@ -1,6 +1,14 @@
 import styles from '@/styles/components/board/comments.module.scss';
 
-export default function Comments({comments}: {comments: any}) {
+export default function Comments({
+	parentId,
+	comments,
+	setTarget,
+}: {
+	parentId: number | null;
+	comments: any;
+	setTarget: Function;
+}) {
 	return (
 		<>
 			{comments.map((comment: any) => {
@@ -18,7 +26,9 @@ export default function Comments({comments}: {comments: any}) {
 										src={comment.profile}
 										alt={`${comment.profile} profile`}
 									/>
-									<span>{comment.author}</span>
+									<span>
+										{comment.username} {parentId}
+									</span>
 								</div>
 								<div className={styles.action}>
 									<button>수정</button>
@@ -29,11 +39,15 @@ export default function Comments({comments}: {comments: any}) {
 							<div className={styles.middle}>{comment.context}</div>
 							<div className={styles.lower}>
 								<span>{comment.publishedAt}</span>
-								<button>답글 작성</button>
+								<button onClick={() => {}}>답글 작성</button>
 							</div>
 						</div>
 						{comment.type === 'comment' && (
-							<Comments comments={comment.commments} />
+							<Comments
+								parentId={comment.id}
+								setTarget={() => {}}
+								comments={comment.commments}
+							/>
 						)}
 					</div>
 				);
