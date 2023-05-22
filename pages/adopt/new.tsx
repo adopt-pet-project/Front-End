@@ -49,13 +49,13 @@ export default function New({query}: {query: {type: string}}) {
 			content: e.target.context.value,
 			kind: type,
 			name: e.target.name.value,
-			gender: e.target.gender.value,
+			gender: e.target.gender.value === '',
 			age: e.target.age.value,
 			species: e.target.species.value,
-			latitude: e.target.latitude.value,
-			longitude: e.target.longitude.value,
+			latitude: Number(e.target.latitude.value),
+			longitude: Number(e.target.longitude.value),
 			address: e.target.address.value,
-			image: serverImageList,
+			image: [{imgNo: 3, imgUrl: '/test/3'}],
 		};
 
 		Object.keys(body).forEach((key: string) => {

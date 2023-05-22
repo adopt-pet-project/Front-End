@@ -27,8 +27,12 @@ export default function Adopt({
 			<Header query={query} path={'adopt'} />
 			<OrderBy orderList={orderList} currentOrder={filter} orderType="filter" />
 			<section className="body">
-				{firstPage.map((article: any) => {
-					return <Article key={article.id} article={article} />;
+				{firstPage.map((article: Adopt) => {
+					return (
+						article.status != 9 && (
+							<Article key={article.id} article={article} />
+						)
+					);
 				})}
 				{firstPage.length === 10 && (
 					<Paging
@@ -49,13 +53,11 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	const keyword = query.q;
 	const option = query.option || '0';
 
-	URL += keyword ? `&keyword=${keyword}&option=${option}` : '';
+	URL += keyword ? `&keyword=${keyword}&option=${Number(option)}` : '';
 	URL += filter ? `&filter=${filter}` : '';
 
 	let response = await fetch(`${URL}`);
 	let result = await response.json();
-
-	console.log(URL);
 
 	return result.status
 		? {

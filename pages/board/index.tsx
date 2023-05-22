@@ -51,7 +51,7 @@ export default function Board({order, query}: {order: string; query: string}) {
 
 export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	let result = await (
-		await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community`)
+		await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article`)
 	).json();
 
 	console.log(result);

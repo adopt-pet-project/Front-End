@@ -9,7 +9,6 @@ import {
 } from 'react';
 import styles from '@/styles/components/imageUploader.module.scss';
 import {useRouter} from 'next/router';
-import useDepsOnlyEffect from '@/utils/hooks/useDepsOnlyEffect';
 
 export default function ImageUploader({
 	serverImageList,
@@ -22,19 +21,16 @@ export default function ImageUploader({
 	const [, setLocalImageUploadState] = useState<boolean[]>([]);
 	const localImageList = useRef<MyFile[]>([]);
 	const inputRef = useRef<HTMLInputElement>(null);
-	let type: string;
-
-	useDepsOnlyEffect(() => {
-		if (router.asPath.includes('adopt')) type = 'adopt';
-		else if (router.asPath.includes('board')) type = 'community';
-		else if (router.asPath.includes('register')) type = 'profile';
-	}, [router.isReady]);
+	const type = useRef<string>('profile');
 
 	useEffect(() => {
 		// Modify 시 serverImageList 를 LocalImageList로 불러와 사용
 		if (serverImageList.length !== 0) {
 			localImageList.current = serverImageList;
 		}
+
+		if (router.asPath.includes('adopt')) type.current = 'adopt';
+		else if (router.asPath.includes('board')) type.current = 'community';
 	}, []);
 
 	async function changeImageInput(e: BaseSyntheticEvent) {
@@ -95,31 +91,32 @@ export default function ImageUploader({
 			if (!myFile.localFile) {
 				throw new Error('Missing files');
 			}
-			formData.append('imageFile', myFile.localFile);
-			formData.append('type', type);
+			formData.append('file', myFile.localFile);
+			formData.append('type', type.current);
 			let response = await fetch(
 				`${process.env.NEXT_PUBLIC_SERVER_URL}/api/image`,
 				{
 					method: 'POST',
 					headers: {
 						Authorization: window.localStorage.getItem('accessToken') as string,
-						'Content-Type': 'multipart/form-data',
 					},
 					body: formData,
 				},
 			);
 
-			let result: ImageUploadResponse = await response.json();
-			if (result.imageNo) {
+			let result = await response.json();
+			if (result.status === 200) {
 				myFile.isUploaded = true;
-				myFile.imageId = result.imageNo;
-				myFile.serverSrc = result.imageUrl;
+				myFile.imageId = result.data.id;
+				myFile.serverSrc = result.data.url;
 			} else {
 				throw new Error('이미지 업로드 실패');
 			}
 		} catch (e) {
 			alert(e);
 			deleteImage(myFile.localFile?.name);
+		} finally {
+			updateState();
 		}
 	}
 

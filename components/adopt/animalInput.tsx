@@ -16,9 +16,8 @@ export default function AnimalInput() {
 			<li>
 				<label htmlFor="gender">성별</label>
 				<select name="gender" id="gender">
-					<option value="모름">모름</option>
-					<option value="남">남</option>
-					<option value="여">여</option>
+					<option value="MAN">남</option>
+					<option value="WOMAN">여</option>
 				</select>
 			</li>
 			<li>

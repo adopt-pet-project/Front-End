@@ -55,7 +55,7 @@ export default function Search({currentPath}: {currentPath: string}) {
 				pathname: currentPath,
 				query: {
 					q: inputRef.current?.value,
-					option: currentOption,
+					option: Number(currentOption) + 1,
 					...type,
 				},
 			});
