@@ -19,9 +19,7 @@ export default function ImageUploader({
 	setServerImageList: Dispatch<SetStateAction<MyFile[]>>;
 }) {
 	const router = useRouter();
-	const [localImageUploadState, setLocalImageUploadState] = useState<boolean[]>(
-		[],
-	);
+	const [, setLocalImageUploadState] = useState<boolean[]>([]);
 	const localImageList = useRef<MyFile[]>([]);
 	const inputRef = useRef<HTMLInputElement>(null);
 	let type: string;
@@ -81,6 +79,9 @@ export default function ImageUploader({
 	function deleteImage(fileName: string | undefined) {
 		if (!fileName) return;
 		localImageList.current = localImageList.current.filter((myFile: MyFile) => {
+			if (myFile.localFile?.name == fileName) {
+				window.URL.revokeObjectURL(myFile.localSrc as string);
+			}
 			return myFile.localFile?.name != fileName;
 		});
 
@@ -100,7 +101,6 @@ export default function ImageUploader({
 			}
 			formData.append('imageFile', myFile.localFile);
 			formData.append('type', type);
-
 			let response = await fetch(
 				`${process.env.NEXT_PUBLIC_SERVER_URL}/api/image`,
 				{
@@ -123,7 +123,7 @@ export default function ImageUploader({
 			}
 		} catch (e) {
 			alert(e);
-			deleteImage((myFile.localFile as File).name);
+			deleteImage(myFile.localFile?.name);
 		}
 	}
 

@@ -79,7 +79,7 @@ const dummyComments = [
 	},
 ];
 
-export default function View() {
+export default function View({}) {
 	return (
 		<section className="body">
 			<div>
@@ -105,14 +105,15 @@ export default function View() {
 	);
 }
 
-export const getServerSideProps: GetServerSideProps = async ({
-	req,
-	res,
-	resolvedUrl,
-	query,
-}) => {
-	// let result = await (await fetch('http://3.36.132.160/hello')).text();
-	// 게시글 상세 로직. 이때 comment도 같이 받아옴
+export const getServerSideProps: GetServerSideProps = async ({query}) => {
+	const id = query.id;
+
+	let result = await (
+		await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article/${id}`)
+	).json();
+
+	console.log(result);
+
 	return {
 		props: {},
 	};

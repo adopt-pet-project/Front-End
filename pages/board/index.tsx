@@ -25,15 +25,15 @@ for (let i = 0; i < 9; i++) {
 }
 
 const orderList: Order[] = [
-	{order: 'recent', orderText: '최신순', href: '/board?order=recent'},
-	{order: 'popular', orderText: '인기순', href: '/board?order=popular'},
+	{order: '', orderText: '최신순'},
+	{order: 'popular', orderText: '인기순'},
 ];
 
 export default function Board({order, query}: {order: string; query: string}) {
 	return (
 		<>
 			<Header query={query} path={'board'} />
-			{!query && <OrderBy orderList={orderList} currentOrder={order} />}
+			<OrderBy orderList={orderList} currentOrder={order} orderType="order" />
 			<section className="body">
 				{!query && <Banner />}
 				{DummyData.map((article: any) => {
@@ -51,13 +51,13 @@ export default function Board({order, query}: {order: string; query: string}) {
 
 export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	let result = await (
-		await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article`)
+		await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community`)
 	).json();
 
 	console.log(result);
 
 	return {
-		props: {order: query.order || 'recent', query: query.q || ''},
+		props: {order: query.order || '', query: query.q || ''},
 	};
 };
 
