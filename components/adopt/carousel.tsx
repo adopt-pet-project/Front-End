@@ -36,7 +36,6 @@ export default function Carousel({
 	const touchMove = useCallback(
 		(e: TouchEvent) => {
 			if (!imagesRef.current || preventScroll.current) return;
-			e.preventDefault();
 			imagesRef.current.style.transform = `translateX(${
 				-1 * page
 			}00%) translate(${
