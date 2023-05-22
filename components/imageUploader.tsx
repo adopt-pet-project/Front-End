@@ -2,6 +2,7 @@ import {
 	BaseSyntheticEvent,
 	Dispatch,
 	SetStateAction,
+	useCallback,
 	useEffect,
 	useRef,
 	useState,
@@ -42,7 +43,7 @@ export default function ImageUploader({
 		}
 	}, []);
 
-	function changeImageInput(e: BaseSyntheticEvent) {
+	async function changeImageInput(e: BaseSyntheticEvent) {
 		let prevLength = localImageList.current.length;
 		let fileList: File[] = [
 			...localImageList.current.map((myFile: MyFile) => myFile.localFile),
@@ -72,29 +73,26 @@ export default function ImageUploader({
 		localImageList.current = newLocalImageList;
 		updateState();
 
-		newLocalImageList.map((myFile: MyFile, index: number) => {
-			if (index >= prevLength) {
-				uploadImage(myFile, index);
-			}
+		for (let i = prevLength; i < newLocalImageList.length; i++) {
+			await uploadImage(newLocalImageList[i]);
+		}
+	}
+
+	function deleteImage(fileName: string | undefined) {
+		if (!fileName) return;
+		localImageList.current = localImageList.current.filter((myFile: MyFile) => {
+			return myFile.localFile?.name != fileName;
 		});
+
+		setLocalImageUploadState(
+			localImageList.current.map((myFile: MyFile) => {
+				return myFile.isUploaded;
+			}),
+		);
+		setServerImageList(localImageList.current);
 	}
 
-	function deleteImage(index: number) {
-		localImageList.current = [
-			...localImageList.current.slice(0, index),
-			...localImageList.current.slice(index + 1, localImageList.current.length),
-		];
-		setLocalImageUploadState([
-			...localImageUploadState.slice(0, index),
-			...localImageUploadState.slice(index + 1, localImageUploadState.length),
-		]);
-		setServerImageList([
-			...serverImageList.slice(0, index),
-			...serverImageList.slice(index + 1, serverImageList.length),
-		]);
-	}
-
-	async function uploadImage(myFile: MyFile, index: number) {
+	async function uploadImage(myFile: MyFile) {
 		try {
 			let formData = new FormData();
 			if (!myFile.localFile) {
@@ -121,14 +119,11 @@ export default function ImageUploader({
 				myFile.imageId = result.imageNo;
 				myFile.serverSrc = result.imageUrl;
 			} else {
-				updateState();
 				throw new Error('이미지 업로드 실패');
 			}
 		} catch (e) {
 			alert(e);
-			deleteImage(index);
-		} finally {
-			updateState();
+			deleteImage((myFile.localFile as File).name);
 		}
 	}
 
@@ -153,7 +148,7 @@ export default function ImageUploader({
 						<div key={myFile.localSrc} className={styles.previewContainer}>
 							<img
 								onClick={() => {
-									deleteImage(index);
+									deleteImage(myFile.localFile?.name);
 								}}
 								className={styles.preview}
 								src={myFile.localSrc}
