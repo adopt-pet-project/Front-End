@@ -25,7 +25,7 @@ export default function New() {
 		e.preventDefault();
 
 		let response = await fetch(
-			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/`,
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article`,
 			{
 				method: 'POST',
 				headers: {
@@ -33,21 +33,28 @@ export default function New() {
 					'Content-Type': 'Application/json',
 				},
 				body: JSON.stringify({
-					categoryNo: 0,
+					categoryId: 1,
 					title: e.target.title.value,
-					content: e.target.context.value,
-					visible: 'Y',
-					image: serverImageList.map((myFile: MyFile) => {
-						return {
-							imageNo: myFile.imageId,
-							imageUrl: myFile.serverSrc,
-						};
-					}),
+					context: e.target.context.value,
+					imageList: [
+						...serverImageList.map((myFile: MyFile) => {
+							return {
+								id: myFile.imageId,
+								url: myFile.serverSrc,
+							};
+						}),
+					],
 				}),
 			},
 		);
 
-		console.log(await response.json());
+		let result = await response.json();
+		if (result.status === 200) {
+			router.push('/board');
+		} else {
+			alert(result.error);
+			router.push('/board');
+		}
 	}
 
 	return (

@@ -6,7 +6,7 @@ import SearchFilter from './searchFilter';
 
 export default function Search({currentPath}: {currentPath: string}) {
 	const [isActive, setIsActive] = useState<boolean>(false);
-	const [currentFilter, setCurrentFilter] = useState<number>(0);
+	const [currentOption, setCurrentOption] = useState<number>(0);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const router = useRouter();
@@ -45,7 +45,20 @@ export default function Search({currentPath}: {currentPath: string}) {
 
 	function search() {
 		if (inputRef.current?.value !== '') {
-			router.push(`/${currentPath}?q=${inputRef.current?.value}`);
+			let type;
+			type =
+				currentPath === 'board'
+					? {order: router.query.order}
+					: {filter: router.query.filter};
+
+			router.push({
+				pathname: currentPath,
+				query: {
+					q: inputRef.current?.value,
+					option: Number(currentOption) + 1,
+					...type,
+				},
+			});
 			if (inputRef.current) inputRef.current.value = '';
 			inputRef.current?.blur();
 		}
@@ -70,8 +83,8 @@ export default function Search({currentPath}: {currentPath: string}) {
 				onKeyUp={enterSearch}
 			/>
 			<SearchFilter
-				currentFilter={currentFilter}
-				setCurrentFilter={setCurrentFilter}
+				currentFilter={currentOption}
+				setCurrentFilter={setCurrentOption}
 				currentPath={currentPath}
 			/>
 		</div>

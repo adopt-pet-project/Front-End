@@ -2,13 +2,13 @@ import {
 	BaseSyntheticEvent,
 	Dispatch,
 	SetStateAction,
+	useCallback,
 	useEffect,
 	useRef,
 	useState,
 } from 'react';
 import styles from '@/styles/components/imageUploader.module.scss';
 import {useRouter} from 'next/router';
-import useDepsOnlyEffect from '@/utils/hooks/useDepsOnlyEffect';
 
 export default function ImageUploader({
 	serverImageList,
@@ -18,18 +18,10 @@ export default function ImageUploader({
 	setServerImageList: Dispatch<SetStateAction<MyFile[]>>;
 }) {
 	const router = useRouter();
-	const [localImageUploadState, setLocalImageUploadState] = useState<boolean[]>(
-		[],
-	);
+	const [, setLocalImageUploadState] = useState<boolean[]>([]);
 	const localImageList = useRef<MyFile[]>([]);
 	const inputRef = useRef<HTMLInputElement>(null);
-	let type: string;
-
-	useDepsOnlyEffect(() => {
-		if (router.asPath.includes('adopt')) type = 'adopt';
-		else if (router.asPath.includes('board')) type = 'community';
-		else if (router.asPath.includes('register')) type = 'profile';
-	}, [router.isReady]);
+	const type = useRef<string>('profile');
 
 	useEffect(() => {
 		// Modify 시 serverImageList 를 LocalImageList로 불러와 사용
@@ -37,12 +29,11 @@ export default function ImageUploader({
 			localImageList.current = serverImageList;
 		}
 
-		if (!window.localStorage.getItem('accessToken')) {
-			router.back();
-		}
+		if (router.asPath.includes('adopt')) type.current = 'adopt';
+		else if (router.asPath.includes('board')) type.current = 'community';
 	}, []);
 
-	function changeImageInput(e: BaseSyntheticEvent) {
+	async function changeImageInput(e: BaseSyntheticEvent) {
 		let prevLength = localImageList.current.length;
 		let fileList: File[] = [
 			...localImageList.current.map((myFile: MyFile) => myFile.localFile),
@@ -72,61 +63,58 @@ export default function ImageUploader({
 		localImageList.current = newLocalImageList;
 		updateState();
 
-		newLocalImageList.map((myFile: MyFile, index: number) => {
-			if (index >= prevLength) {
-				uploadImage(myFile, index);
+		for (let i = prevLength; i < newLocalImageList.length; i++) {
+			await uploadImage(newLocalImageList[i]);
+		}
+	}
+
+	function deleteImage(fileName: string | undefined) {
+		if (!fileName) return;
+		localImageList.current = localImageList.current.filter((myFile: MyFile) => {
+			if (myFile.localFile?.name == fileName) {
+				window.URL.revokeObjectURL(myFile.localSrc as string);
 			}
+			return myFile.localFile?.name != fileName;
 		});
+
+		setLocalImageUploadState(
+			localImageList.current.map((myFile: MyFile) => {
+				return myFile.isUploaded;
+			}),
+		);
+		setServerImageList(localImageList.current);
 	}
 
-	function deleteImage(index: number) {
-		localImageList.current = [
-			...localImageList.current.slice(0, index),
-			...localImageList.current.slice(index + 1, localImageList.current.length),
-		];
-		setLocalImageUploadState([
-			...localImageUploadState.slice(0, index),
-			...localImageUploadState.slice(index + 1, localImageUploadState.length),
-		]);
-		setServerImageList([
-			...serverImageList.slice(0, index),
-			...serverImageList.slice(index + 1, serverImageList.length),
-		]);
-	}
-
-	async function uploadImage(myFile: MyFile, index: number) {
+	async function uploadImage(myFile: MyFile) {
 		try {
 			let formData = new FormData();
 			if (!myFile.localFile) {
 				throw new Error('Missing files');
 			}
-			formData.append('imageFile', myFile.localFile);
-			formData.append('type', type);
-
+			formData.append('file', myFile.localFile);
+			formData.append('type', type.current);
 			let response = await fetch(
 				`${process.env.NEXT_PUBLIC_SERVER_URL}/api/image`,
 				{
 					method: 'POST',
 					headers: {
 						Authorization: window.localStorage.getItem('accessToken') as string,
-						'Content-Type': 'multipart/form-data',
 					},
 					body: formData,
 				},
 			);
 
-			let result: ImageUploadResponse = await response.json();
-			if (result.imageNo) {
+			let result = await response.json();
+			if (result.status === 200) {
 				myFile.isUploaded = true;
-				myFile.imageId = result.imageNo;
-				myFile.serverSrc = result.imageUrl;
+				myFile.imageId = result.data.id;
+				myFile.serverSrc = result.data.url;
 			} else {
-				updateState();
 				throw new Error('이미지 업로드 실패');
 			}
 		} catch (e) {
 			alert(e);
-			deleteImage(index);
+			deleteImage(myFile.localFile?.name);
 		} finally {
 			updateState();
 		}
@@ -153,7 +141,7 @@ export default function ImageUploader({
 						<div key={myFile.localSrc} className={styles.previewContainer}>
 							<img
 								onClick={() => {
-									deleteImage(index);
+									deleteImage(myFile.localFile?.name);
 								}}
 								className={styles.preview}
 								src={myFile.localSrc}

@@ -52,3 +52,16 @@ interface AdoptDetail {
 	author: AdoptAuthor;
 	mine: boolean;
 }
+
+type AdoptPostBodyKey =
+	| 'title'
+	| 'content'
+	| 'kind'
+	| 'name'
+	| 'gender'
+	| 'age'
+	| 'species'
+	| 'latitude'
+	| 'longitude'
+	| 'address'
+	| 'image';

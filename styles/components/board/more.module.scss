@@ -10,15 +10,31 @@
 }
 
 .menu {
+	user-select: none;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	border-radius: 4px;
 	width: 96px;
-	height: 60px;
 	background-color: var(--white);
 	position: absolute;
 	top: 75px;
 	right: 16px;
 	border: 1px solid var(--gray);
 	box-shadow: var(--boxShadow);
+}
+
+.option {
+	cursor: pointer;
+	text-align: center;
+	border-radius: 4px;
+	width: calc(100% - 12px);
+	margin: 6px;
+	padding: 6px;
+
+	&:hover {
+		background-color: var(--gray);
+	}
 }
 
 @media screen and (max-width: 768px) {

@@ -36,13 +36,19 @@ export default function CoordsInput() {
 	}
 
 	function loadMap() {
+		if (!latitudeRef.current?.value && !longitudeRef.current?.value) {
+			latitudeRef.current!.value = '37.55467';
+			longitudeRef.current!.value = '126.970609';
+			addressRef.current!.value = '서울특별시 중구';
+		}
+
 		const mapOption = {
-			center: new window.kakao.maps.LatLng(37.55467, 126.970609),
+			center: new window.kakao.maps.LatLng(
+				latitudeRef.current!.value,
+				longitudeRef.current!.value,
+			),
 			level: 6,
 		};
-
-		latitudeRef.current!.value = '37.55467';
-		longitudeRef.current!.value = '126.970609';
 
 		map = new window.kakao.maps.Map(mapRef.current, mapOption);
 		marker = new window.kakao.maps.Marker({

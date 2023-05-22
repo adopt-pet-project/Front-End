@@ -35,7 +35,7 @@ export default function SetAdoptType() {
 					alignItems: 'center',
 				}}
 			>
-				<span style={{fontWeight: 'bold'}}>카테고리를 선택 해 주세요.</span>
+				<span style={{fontWeight: 'bold'}}>대분류를 선택해 주세요.</span>
 
 				<ul
 					className={styles.selector}
