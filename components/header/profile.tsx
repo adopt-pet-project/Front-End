@@ -3,6 +3,8 @@ import Login from './login';
 import ProfileLoginTrue from './profileLoginTrue';
 import {useRouter} from 'next/router';
 import styles from '@/styles/components/header/profile.module.scss';
+import {useRecoilState} from 'recoil';
+import {AisLogin} from '@/utils/recoil/recoilStore';
 
 export default function Profile({
 	containerRef,
@@ -10,12 +12,12 @@ export default function Profile({
 	containerRef: RefObject<HTMLDivElement>;
 }) {
 	const [isModalActive, setIsModalActive] = useState<boolean>(false);
-	const [isLogin, setIsLogin] = useState(false);
+	const [isLogin, setIsLogin] = useRecoilState(AisLogin);
 	const router = useRouter();
 
-	useEffect(() => {
-		setIsLogin(Boolean(window.localStorage.getItem('accessToken')));
-	});
+	// useEffect(() => {
+	// 	setIsLogin(Boolean(window.localStorage.getItem('accessToken')));
+	// });
 
 	useEffect(() => {
 		window.addEventListener('fadeLogin', onClickLogin);

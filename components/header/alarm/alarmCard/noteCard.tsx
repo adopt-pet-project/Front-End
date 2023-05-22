@@ -1,25 +1,13 @@
 import React from 'react';
 import styles from '@/styles/components/header/alarm/alarmCard/noteCard.module.scss';
 
-function NoteCard({
-	onClick,
-	data,
-	setIsLogOn,
-}: {
-	onClick: () => void;
-	data: Notedata;
-	setIsLogOn: React.Dispatch<
-		React.SetStateAction<{
-			id: number;
-			on: boolean;
-			name: string;
-		}>
-	>;
-}) {
+function NoteCard({data, onClick}: {data: Notedata; onClick?: () => void}) {
 	return (
 		<div
 			onClick={() => {
-				onClick();
+				if (onClick) {
+					onClick();
+				}
 			}}
 			className={styles.cardWrap}
 		>

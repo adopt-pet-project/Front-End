@@ -1,0 +1,33 @@
+.inputLine {
+	position: relative;
+	left: 0;
+	height: auto;
+	background: grey;
+	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+
+	.inputWrap {
+		padding: 5px;
+		display: flex;
+		width: 100%;
+		align-items: center;
+		.icon {
+			height: 25px;
+			margin: 0 5px;
+			cursor: pointer;
+		}
+		textarea {
+			max-height: 400px;
+			outline: none;
+			font-size: 18px;
+			resize: none;
+			flex-grow: 1;
+			background: none;
+			border: none;
+			background: lightgrey;
+			border-radius: 8px;
+			padding: 5px 10px;
+		}
+	}
+}

@@ -2,11 +2,16 @@ import React, {MouseEvent, useEffect, useRef} from 'react';
 import styles from '@/styles/components/header/profileBox.module.scss';
 import {useRouter} from 'next/router';
 import {useRecoilState} from 'recoil';
-import {AisProfileBoxOn} from '@/utils/recoil/recoilStore';
+import {
+	AisLogin,
+	AisProfileBoxOn,
+	AwriteNote,
+} from '@/utils/recoil/recoilStore';
 
 function ProfileBox() {
 	const router = useRouter();
 	const profileBoxRef = useRef<HTMLDivElement>(null);
+	const [isLogin, setIsLogin] = useRecoilState(AisLogin);
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
 	const findHaveParent = (
 		node: HTMLElement,
@@ -114,6 +119,16 @@ function ProfileBox() {
 				className={styles.myNav}
 			>
 				활동 내역
+			</div>
+			<div
+				onClick={() => {
+					setIsProfileBoxOn(false);
+					setIsLogin(false);
+					router.push('/');
+				}}
+				className={styles.myNav}
+			>
+				로그아웃
 			</div>
 		</div>
 	);
