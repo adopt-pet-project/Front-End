@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import styles from '@/styles/components/header/alarm/alarmCard/logWrap.module.scss';
-import NoteList from './note/noteList';
 import {useRecoilState} from 'recoil';
 import {AalarmboxCtg, AnoteLog, AwriteNote} from '@/utils/recoil/recoilStore';
 import WriteNote from './note/writeNote';
-import ChatMain from './chat/chatMain';
+import NoteList from './note/noteList';
+import styles from '@/styles/components/header/alarm/alarmCard/logWrap.module.scss';
 
 function LogWrap() {
 	const [on, setOn] = useState(false);
@@ -47,7 +46,7 @@ function LogWrap() {
 					)}
 				</div>
 				<hr className={styles.headerBoundary} />
-				{currentCtg === 1 ? <NoteList /> : <ChatMain />}
+				{currentCtg === 1 ? <NoteList /> : null}
 			</div>
 			{isWriteNote ? <WriteNote /> : null}
 		</>

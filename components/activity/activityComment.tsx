@@ -1,5 +1,5 @@
-import styles from '@/styles/components/activity/activityComment.module.scss';
 import {useRouter} from 'next/router';
+import styles from '@/styles/components/activity/activityComment.module.scss';
 
 function ActivityComment({article}: {article: any}) {
 	const {id, docId, title, comment, publishedAt} = article;

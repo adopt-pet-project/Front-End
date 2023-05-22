@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from '@/styles/components/activity/activityCategory.module.scss';
 import {useRecoilState} from 'recoil';
 import {AisComment} from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/activity/activityCategory.module.scss';
 
 function ActivityCtg() {
 	const [isComment, setIsComment] = useRecoilState(AisComment);

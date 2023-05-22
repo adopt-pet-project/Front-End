@@ -1,8 +1,8 @@
-import styles from '@/styles/components/activity/activityCardList.module.scss';
-import ActivityCard from './activityCard';
-import ActivityComment from './activityComment';
 import {useRecoilState} from 'recoil';
 import {AisComment} from '@/utils/recoil/recoilStore';
+import ActivityCard from './activityCard';
+import ActivityComment from './activityComment';
+import styles from '@/styles/components/activity/activityCardList.module.scss';
 
 function ActivityCardList() {
 	const DummyDataDoc: any[] = [];

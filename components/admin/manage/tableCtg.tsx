@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import styles from '@/styles/components/admin/manage/tableCtg.module.scss';
+import React from 'react';
 import {useRecoilState} from 'recoil';
 import {AcurrentTable} from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/admin/manage/tableCtg.module.scss';
 
 function TableCtg() {
 	const [currentTable, setCurrentTable] = useRecoilState(AcurrentTable);

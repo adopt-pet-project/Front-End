@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from '@/styles/components/header/alarm/alarmCard/note/writeNote.module.scss';
 import {useRecoilState} from 'recoil';
 import {AwriteNote} from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/header/alarm/alarmCard/note/writeNote.module.scss';
 
 function WriteNote() {
 	const [isWriteNote, setIsWriteNote] = useRecoilState(AwriteNote);

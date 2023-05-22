@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from '@/styles/components/myPage/myAdopt/myAdoptModal.module.scss';
 import {useRecoilState} from 'recoil';
 import {AmyAdoptModal} from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/myPage/myAdopt/myAdoptModal.module.scss';
 
 function MyAdoptModal() {
 	const [myAdoptModal, setMyAdoptModal] = useRecoilState(AmyAdoptModal);

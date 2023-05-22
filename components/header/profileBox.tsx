@@ -1,22 +1,22 @@
-import React, {MouseEvent, useEffect, useRef} from 'react';
-import styles from '@/styles/components/header/profileBox.module.scss';
-import {useRouter} from 'next/router';
 import {useRecoilState} from 'recoil';
+import {useRouter} from 'next/router';
+import {useEffect, useRef} from 'react';
 import {
 	AisLogin,
 	AisProfileBoxOn,
 	AwriteNote,
 } from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/header/profileBox.module.scss';
 
 function ProfileBox() {
 	const router = useRouter();
 	const profileBoxRef = useRef<HTMLDivElement>(null);
 	const [isLogin, setIsLogin] = useRecoilState(AisLogin);
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
-	const findHaveParent = (
+	function findHaveParent(
 		node: HTMLElement,
 		target: HTMLElement,
-	): boolean | HTMLElement => {
+	): boolean | HTMLElement {
 		if (node === target) {
 			return true;
 		} else {
@@ -25,7 +25,7 @@ function ProfileBox() {
 			}
 			return findHaveParent(node.parentElement as HTMLElement, target);
 		}
-	};
+	}
 	const handleCloseProfile = (e: MouseEvent) => {
 		const target = e.target as HTMLElement;
 		if (
@@ -68,7 +68,7 @@ function ProfileBox() {
 					alt=""
 				/>
 				<div>
-					<div className={styles.name}>닉네임</div>
+					<div className={styles.name}>잠자는오리</div>
 					<div className={styles.address}>경상남도 창원시</div>
 					<div className={styles.activity}>
 						<span
@@ -126,7 +126,7 @@ function ProfileBox() {
 					setIsLogin(false);
 					router.push('/');
 				}}
-				className={styles.myNav}
+				className={`${styles.myNav} ${styles.logout}`}
 			>
 				로그아웃
 			</div>

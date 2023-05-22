@@ -1,10 +1,10 @@
-import styles from '@/styles/components/header/alarm/alarmBox.module.scss';
-import AlarmCtg from './alarmCtg';
 import {useEffect, useRef, useState} from 'react';
-import CardListWrap from './alarmCard/cardListWrap';
 import {useRecoilState} from 'recoil';
 import {AisAlarmBoxOn, AnoteLog, AwriteNote} from '@/utils/recoil/recoilStore';
 import LogWrap from './alarmCard/logWrap';
+import AlarmCtg from './alarmCtg';
+import CardListWrap from './alarmCard/cardListWrap';
+import styles from '@/styles/components/header/alarm/alarmBox.module.scss';
 
 function AlarmBox({
 	alarmData,

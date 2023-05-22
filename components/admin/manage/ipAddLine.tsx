@@ -1,5 +1,5 @@
-import styles from '@/styles/components/admin/manage/ipAddLine.module.scss';
 import React from 'react';
+import styles from '@/styles/components/admin/manage/ipAddLine.module.scss';
 
 function IpAddLine() {
 	return (

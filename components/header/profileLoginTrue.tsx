@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
-import styles from '@/styles/components/header/profileLoginTrue.module.scss';
-import ProfileBox from './profileBox';
-import AlarmBox from './alarm/alarmBox';
 import {useRecoilState} from 'recoil';
 import {AisAlarmBoxOn, AisProfileBoxOn} from '@/utils/recoil/recoilStore';
+import ProfileBox from './profileBox';
+import AlarmBox from './alarm/alarmBox';
+import styles from '@/styles/components/header/profileLoginTrue.module.scss';
 
 function ProfileLoginTrue() {
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);

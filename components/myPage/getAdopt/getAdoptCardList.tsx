@@ -1,9 +1,8 @@
 import React from 'react';
-import styles from '@/styles/components/myPage/getAdopt/getAdoptCardList.module.scss';
-
-import GetAdoptCard from './getAdoptCard';
 import {useRecoilState} from 'recoil';
 import {AgetAdoptBoardType} from '@/utils/recoil/recoilStore';
+import GetAdoptCard from './getAdoptCard';
+import styles from '@/styles/components/myPage/getAdopt/getAdoptCardList.module.scss';
 
 function getAdoptCardList() {
 	const DummyData: any[] = [];

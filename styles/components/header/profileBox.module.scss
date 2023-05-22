@@ -2,13 +2,14 @@
 	box-shadow: var(--boxShadow);
 	border-radius: 8px;
 	margin: 0px;
-	width: 450px;
-	height: 404px;
+	width: 330px;
+	height: 340px;
 	position: absolute;
 	top: 66px;
 	right: 60px;
-	background: rgb(226, 226, 226);
+	background: rgb(255, 255, 255);
 	border: 1px solid rgb(201, 201, 201);
+	padding: 5px;
 	.boxHeader {
 		height: 30px;
 		display: none;
@@ -28,19 +29,19 @@
 	.profileCard {
 		display: flex;
 		border-radius: 8px;
-
+		margin-bottom: 3px;
 		background: rgb(53, 53, 53);
 		padding: 10px;
 		.profileImgWrap {
-			width: 100px;
-			height: 100px;
+			width: 80px;
+			height: 80px;
 			background: white;
 			border-radius: 50%;
 			margin-right: 10px;
 		}
 		.name {
-			margin: 10px 0;
-			font-size: 25px;
+			margin: 3px 0;
+			font-size: 22px;
 			color: white;
 		}
 		.address {
@@ -64,17 +65,17 @@
 		display: flex;
 		align-items: center;
 		height: 30px;
-		font-size: 25px;
-		padding: 28px 10px;
+		font-size: 21px;
+		padding: 22px 10px;
 		border-bottom: 1px solid lightgrey;
 		cursor: pointer;
 		&:hover {
-			background: rgb(182, 180, 179);
+			background: rgb(221, 221, 221);
 		}
 	}
-	:nth-last-child(1) {
-		border-bottom-left-radius: 8px;
-		border-bottom-right-radius: 8px;
+
+	.logout {
+		color: rgb(255, 122, 122);
 	}
 }
 

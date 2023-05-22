@@ -1,6 +1,6 @@
-import styles from '@/styles/components/admin/manage/boardLine.module.scss';
-import {AmodalType, AmodalWrap} from '@/utils/recoil/recoilStore';
 import {useRecoilState} from 'recoil';
+import {AmodalType, AmodalWrap} from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/admin/manage/boardLine.module.scss';
 
 function BlockBoardLine({lineData}: {lineData: Boardblock}) {
 	const {id, state, userId, userName, times, blockDate, reason} = lineData;

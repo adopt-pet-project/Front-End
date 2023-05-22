@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import styles from '@/styles/components/header/alarm/alarmCard/note/noteList.module.scss';
-import NoteCard from '../noteCard';
 import {useRecoilState} from 'recoil';
 import {AnoteLog} from '@/utils/recoil/recoilStore';
+import NoteCard from '../noteCard';
+import styles from '@/styles/components/header/alarm/alarmCard/note/noteList.module.scss';
 
 function NoteList() {
 	const [isLogOn, setIsLogOn] = useRecoilState(AnoteLog);

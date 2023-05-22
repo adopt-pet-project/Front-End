@@ -1,7 +1,7 @@
-import styles from '@/styles/components/admin/manage/ipBlockBoard.module.scss';
 import {useState} from 'react';
 import IpBlockBoardLine from './ipBlockBoardLine';
 import IpAddLine from './ipAddLine';
+import styles from '@/styles/components/admin/manage/ipBlockBoard.module.scss';
 
 function IpBlockBoard() {
 	const [ipList, setIpList] = useState<Boardipblock[]>([

@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from '@/styles/components/header/alarm/alarmCtg.module.scss';
 import {useRecoilState} from 'recoil';
 import {AalarmboxCtg} from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/header/alarm/alarmCtg.module.scss';
 
 function AlarmCtg() {
 	const nStyle = {

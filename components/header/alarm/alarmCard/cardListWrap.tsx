@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import styles from '@/styles/components/header/alarm/alarmCard/cardListWrap.module.scss';
+import {useRecoilState} from 'recoil';
+import {AalarmboxCtg, AnoteLog} from '@/utils/recoil/recoilStore';
 import AlarmCard from './alarmCard';
 import NoteCard from './noteCard';
 import ChatCard from './chatCard';
-import LogWrap from './logWrap';
-import {useRecoilState} from 'recoil';
-import {AalarmboxCtg, AnoteLog} from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/header/alarm/alarmCard/cardListWrap.module.scss';
 
 function CardListWrap({
 	alarmData,
@@ -34,19 +33,7 @@ function CardListWrap({
 								data={data}
 							/>
 					  ))
-					: chatData.map((data, i) => (
-							<ChatCard
-								onClick={() => {
-									setIsLogOn(prev => ({
-										...prev,
-										on: true,
-										name: `${data.name}ㆍ${data.docTitle}`,
-									}));
-								}}
-								key={i}
-								data={data}
-							/>
-					  ))}
+					: chatData.map((data, i) => <ChatCard key={i} data={data} />)}
 			</ul>
 		</>
 	);

@@ -1,10 +1,10 @@
 import {RefObject, useEffect, useState} from 'react';
-import Login from './login';
-import ProfileLoginTrue from './profileLoginTrue';
 import {useRouter} from 'next/router';
-import styles from '@/styles/components/header/profile.module.scss';
 import {useRecoilState} from 'recoil';
 import {AisLogin} from '@/utils/recoil/recoilStore';
+import ProfileLoginTrue from './profileLoginTrue';
+import Login from './login';
+import styles from '@/styles/components/header/profile.module.scss';
 
 export default function Profile({
 	containerRef,

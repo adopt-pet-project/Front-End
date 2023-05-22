@@ -1,11 +1,17 @@
 import React from 'react';
+import {useRouter} from 'next/router';
+import {useRecoilState} from 'recoil';
+import {AisAlarmBoxOn} from '@/utils/recoil/recoilStore';
 import styles from '@/styles/components/header/alarm/alarmCard/chatCard.module.scss';
 
-function ChatCard({data, onClick}: {data: Chatdata; onClick: () => void}) {
+function ChatCard({data}: {data: Chatdata}) {
+	const router = useRouter();
+	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
 	return (
 		<div
 			onClick={() => {
-				onClick();
+				router.push('/chat/11');
+				setIsAlarmBoxOn(false);
 			}}
 			className={styles.cardWrap}
 		>
