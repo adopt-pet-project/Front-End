@@ -15,7 +15,7 @@ export default function CoordsInput() {
 		if (window.kakao) {
 			window.kakao.maps.load(loadMap);
 		}
-	}, []);
+	});
 
 	function setPosition(latLng: any) {
 		map.setCenter(latLng);
@@ -36,8 +36,10 @@ export default function CoordsInput() {
 	}
 
 	function loadMap() {
-		latitudeRef.current!.value = '37.55467';
-		longitudeRef.current!.value = '126.970609';
+		if (!latitudeRef.current?.value && !longitudeRef.current?.value) {
+			latitudeRef.current!.value = '37.55467';
+			longitudeRef.current!.value = '126.970609';
+		}
 
 		const mapOption = {
 			center: new window.kakao.maps.LatLng(
