@@ -1,12 +1,13 @@
 .cardWrap {
+	position: relative;
 	border-radius: 8px;
-	background: #f3f3f3;
+	background: #f7f7f7;
 	margin-bottom: 5px;
 	padding: 5px;
 	padding-right: 15px;
 	cursor: pointer;
 	&:hover {
-		background: #eaeaea;
+		background: #efefef;
 	}
 	.explane {
 		margin-left: 3px;
@@ -19,4 +20,12 @@
 	.alarmAnnounce {
 		margin: 3px;
 	}
+}
+
+.checked::before {
+	position: absolute;
+	border-left: 2px solid rgb(255, 59, 59);
+	content: '';
+	height: calc(100% - 8px);
+	left: 0;
 }

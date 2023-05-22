@@ -3,21 +3,15 @@ interface Alarmdata {
 	type: 'announcement' | 'documentHot' | 'comment' | 'recomment' | 'mention';
 	date: string;
 	contents: string;
+	checked: boolean;
 }
 
-interface Notedata {
-	id: number;
+interface Alarmnotedata extends Alarmdata {
+	type: 'note';
 	name: string;
-	contents: string;
-	date: string;
 }
 
-interface Chatdata {
-	chatId: number;
-	docId: number;
+interface Alarmchatdata extends Alarmdata {
+	type: 'chat';
 	name: string;
-	docTitle: string;
-	content: string;
-	date: string;
-	stack: number;
 }

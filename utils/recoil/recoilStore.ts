@@ -91,4 +91,8 @@ export const AisLogin = atom({
 	default: true,
 });
 
+export const AcurrentMyPageCtg = atom<0 | 1 | 2>({
+	key: `myPageCtg/${v1()}`,
+	default: 0,
+});
 export default {};

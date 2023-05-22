@@ -2,15 +2,14 @@
 	box-shadow: var(--boxShadow);
 	border-radius: 8px;
 	margin: 0px;
-	width: 450px;
-	display: flex;
+	width: 340px;
 	flex-direction: column;
-	height: min(calc(100vh - 100px), 600px);
+	height: min(calc(100vh - 100px), 405px);
 	overflow-y: auto;
 	overflow-x: hidden;
 	position: absolute;
 	top: 66px;
-	right: 90px;
+	right: 35px;
 	background: rgb(255, 255, 255);
 	border: 1px solid rgb(201, 201, 201);
 	display: flex;
@@ -20,7 +19,7 @@
 		background: white;
 		padding: 0 12px;
 		height: var(--header-height);
-		display: flex;
+		display: none;
 		width: 100%;
 		box-shadow: rgb(0 0 0 / 10%) 0px -1px 0px 0px inset;
 		align-items: center;
@@ -43,15 +42,9 @@
 			align-items: center;
 		}
 	}
-	.innerWrap {
-		overflow-y: auto;
-		margin-top: 60px;
-		padding: 12px;
-		flex-grow: 1;
-	}
 }
 
-@media screen and (max-width: 528px) {
+@media screen and (max-width: 768px) {
 	.box {
 		border-radius: 0px;
 		border: none;
@@ -60,6 +53,35 @@
 		left: 0px;
 		top: 0px;
 
+		.profileCard {
+			display: flex;
+			height: 120px;
+			.profileImgWrap {
+				width: 100px;
+				height: 100px;
+			}
+			.name {
+				margin: 10px 0 20px 0;
+				font-size: 25px;
+				color: white;
+			}
+			.address {
+				color: white;
+			}
+			.activity {
+				color: white;
+				:first-child {
+					font-size: 15px;
+				}
+				span {
+					font-size: 12px;
+					margin-right: 10px;
+				}
+				.acts {
+					display: inline;
+				}
+			}
+		}
 		.boxHeader {
 			position: fixed;
 			display: flex;
