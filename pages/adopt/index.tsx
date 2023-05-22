@@ -22,6 +22,7 @@ export default function Adopt({
 	query: string;
 	firstPage: Adopt[];
 }) {
+	console.log(firstPage);
 	return (
 		<>
 			<Header query={query} path={'adopt'} />

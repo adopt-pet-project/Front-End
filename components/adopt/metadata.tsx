@@ -9,7 +9,7 @@ export default function Metadata({metadata}: {metadata: AdoptMetadata}) {
 			</li>
 			<li>
 				<span className={styles.dataName}>성별</span>
-				<span>{metadata.gender}</span>
+				<span>{`${metadata.gender === 'MAN' ? '남' : '여'}`}</span>
 			</li>
 			<li>
 				<span className={styles.dataName}>나이</span>

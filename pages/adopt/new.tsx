@@ -49,13 +49,17 @@ export default function New({query}: {query: {type: string}}) {
 			content: e.target.context.value,
 			kind: type,
 			name: e.target.name.value,
-			gender: e.target.gender.value === '',
+			gender: e.target.gender.value,
 			age: e.target.age.value,
 			species: e.target.species.value,
 			latitude: Number(e.target.latitude.value),
 			longitude: Number(e.target.longitude.value),
 			address: e.target.address.value,
-			image: [{imgNo: 3, imgUrl: '/test/3'}],
+			image: [
+				...serverImageList.map((myFile: MyFile) => {
+					return {imgNo: myFile.imageId, imageUrl: myFile.serverSrc};
+				}),
+			],
 		};
 
 		Object.keys(body).forEach((key: string) => {
@@ -75,7 +79,14 @@ export default function New({query}: {query: {type: string}}) {
 			method: 'POST',
 			body: JSON.stringify(body),
 		});
-		console.log(await response.json());
+		let result = await response.json();
+
+		if (result.status === 200) {
+			router.push('/adopt');
+		} else {
+			alert(result.error);
+			router.push('/adopt');
+		}
 	}
 
 	return (
