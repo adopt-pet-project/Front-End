@@ -12,6 +12,14 @@ export default function Comments({
 	return (
 		<>
 			{comments.map((comment: any) => {
+				function getCommentTarget() {
+					setTarget({
+						commentId: parentId != null ? parentId : comment.id,
+						authorId: comment.authorId,
+						username: comment.username,
+					});
+				}
+
 				return (
 					<div key={comment.id}>
 						<div
@@ -39,13 +47,13 @@ export default function Comments({
 							<div className={styles.middle}>{comment.context}</div>
 							<div className={styles.lower}>
 								<span>{comment.publishedAt}</span>
-								<button onClick={() => {}}>답글 작성</button>
+								<button onClick={getCommentTarget}>답글 작성</button>
 							</div>
 						</div>
 						{comment.type === 'comment' && (
 							<Comments
 								parentId={comment.id}
-								setTarget={() => {}}
+								setTarget={setTarget}
 								comments={comment.commments}
 							/>
 						)}

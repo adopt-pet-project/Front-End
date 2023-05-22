@@ -21,7 +21,7 @@
 	position: sticky;
 	display: flex;
 	flex-direction: column;
-	padding: 12px;
+	padding: 12px 0;
 	border-top: 1px solid var(--black);
 	bottom: 0;
 	background-color: var(--white);
@@ -42,11 +42,15 @@
 }
 
 .commentInput {
+	padding: 0 12px;
 	display: flex;
 	width: 100%;
 }
 
 .commentTarget {
+	border-bottom: 1px solid var(--gray);
+
+	padding: 0 12px 12px 12px;
 	font-size: 14px;
 	display: flex;
 	justify-content: space-between;
@@ -74,9 +78,5 @@
 
 	.commentContainer {
 		padding: 0 12px 12px 12px;
-	}
-
-	.commentInputContainer {
-		padding: 12px;
 	}
 }

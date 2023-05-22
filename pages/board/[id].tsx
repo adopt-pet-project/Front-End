@@ -85,7 +85,6 @@ const dummyComments = [
 
 export default function View() {
 	const [target, setTarget] = useState<CommentTarget | null>(null);
-	console.log(target);
 	return (
 		<section className="body">
 			<div>
