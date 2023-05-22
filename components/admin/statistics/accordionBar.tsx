@@ -1,11 +1,32 @@
 import React, {useEffect, useState} from 'react';
-import styles from '@/styles/components/admin/statistics/accordionBar.module.scss';
 import Graph from './graph';
+import styles from '@/styles/components/admin/statistics/accordionBar.module.scss';
 
 function AccordionBar() {
 	const [isUserGraph, setIsUserGraph] = useState(false);
 	const [isAdoptGraph, setIsAdoptGraph] = useState(false);
 	const [isContentGraph, setIsContentGraph] = useState(false);
+
+	useEffect(() => {
+		if (isUserGraph === true) {
+			setIsAdoptGraph(false);
+			setIsContentGraph(false);
+		}
+	}, [isUserGraph]);
+
+	useEffect(() => {
+		if (isAdoptGraph === true) {
+			setIsUserGraph(false);
+			setIsContentGraph(false);
+		}
+	}, [isAdoptGraph]);
+
+	useEffect(() => {
+		if (isContentGraph === true) {
+			setIsAdoptGraph(false);
+			setIsUserGraph(false);
+		}
+	}, [isContentGraph]);
 
 	const userData = {
 		labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -84,28 +105,6 @@ function AccordionBar() {
 			},
 		],
 	};
-
-	useEffect(() => {
-		if (isUserGraph === true) {
-			setIsAdoptGraph(false);
-			setIsContentGraph(false);
-		}
-	}, [isUserGraph]);
-
-	useEffect(() => {
-		if (isAdoptGraph === true) {
-			setIsUserGraph(false);
-			setIsContentGraph(false);
-		}
-	}, [isAdoptGraph]);
-
-	useEffect(() => {
-		if (isContentGraph === true) {
-			setIsAdoptGraph(false);
-			setIsUserGraph(false);
-		}
-	}, [isContentGraph]);
-
 	return (
 		<section className="body">
 			<ul className={styles.AccordionUl}>

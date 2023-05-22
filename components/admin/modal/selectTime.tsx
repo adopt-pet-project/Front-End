@@ -1,11 +1,11 @@
-import styles from '@/styles/components/admin/modal/selectTime.module.scss';
-import Slider from './slider';
 import {useRecoilState} from 'recoil';
 import {
 	AisSelectTime,
 	AmodalWrap,
 	AselectedTime,
 } from '@/utils/recoil/recoilStore';
+import Slider from './slider';
+import styles from '@/styles/components/admin/modal/selectTime.module.scss';
 function SelectTime({option}: {option: '차단' | '제한'}) {
 	const [selectedTime, setSelectedTime] = useRecoilState(AselectedTime);
 	const [isSelectTime, setIsSelectTime] = useRecoilState(AisSelectTime);

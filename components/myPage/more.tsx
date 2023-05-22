@@ -1,20 +1,10 @@
 import React, {useEffect} from 'react';
-import styles from '@/styles/components/myPage/more.module.scss';
 import {useRecoilState} from 'recoil';
 import {AmyAdoptModal} from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/myPage/more.module.scss';
 
 function More({type, mID}: {type: string; mID: number}) {
 	const [myAdoptModal, setMyAdoptModal] = useRecoilState(AmyAdoptModal);
-
-	const handleCloseModal = (e: any) => {
-		setMyAdoptModal({
-			modalID: mID,
-			type: 'myAdopt',
-			isOn: false,
-			x: e.clientX - 215 - 280,
-			y: e.clientY - 40,
-		});
-	};
 
 	useEffect(() => {
 		window.addEventListener('click', handleCloseModal);
@@ -22,6 +12,16 @@ function More({type, mID}: {type: string; mID: number}) {
 			window.removeEventListener('click', handleCloseModal);
 		};
 	}, []);
+
+	function handleCloseModal(e: any) {
+		setMyAdoptModal({
+			modalID: mID,
+			type: 'myAdopt',
+			isOn: false,
+			x: e.clientX - 215 - 280,
+			y: e.clientY - 40,
+		});
+	}
 
 	return (
 		<>

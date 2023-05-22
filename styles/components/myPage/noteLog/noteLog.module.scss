@@ -1,0 +1,10 @@
+.noteLog {
+	width: 100%;
+	padding: 16px;
+}
+
+@media screen and (max-width: 768px) {
+	.noteLog {
+		padding: 12px;
+	}
+}

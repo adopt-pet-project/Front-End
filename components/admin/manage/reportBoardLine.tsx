@@ -1,6 +1,6 @@
-import styles from '@/styles/components/admin/manage/boardLine.module.scss';
-import {AmodalType, AmodalWrap} from '@/utils/recoil/recoilStore';
 import {useRecoilState} from 'recoil';
+import {AmodalType, AmodalWrap} from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/admin/manage/boardLine.module.scss';
 
 function BoardReportLine({lineData}: {lineData: Boardreport}) {
 	const {
@@ -16,6 +16,7 @@ function BoardReportLine({lineData}: {lineData: Boardreport}) {
 
 	const [modalType, setModalType] = useRecoilState(AmodalType);
 	const [isModalWrap, setIsModalWrap] = useRecoilState(AmodalWrap);
+
 	return (
 		<li>
 			<span>{state}</span>
