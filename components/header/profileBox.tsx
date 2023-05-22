@@ -71,14 +71,15 @@ function ProfileBox() {
 					<div className={styles.name}>잠자는오리</div>
 					<div className={styles.address}>경상남도 창원시</div>
 					<div className={styles.activity}>
-						<span
+						<div
 							onClick={() => {
 								setIsProfileBoxOn(false);
 								router.push('/activity');
 							}}
+							className={styles.acts}
 						>
 							활동내역
-						</span>
+						</div>
 						<span>게시글 7</span>
 						<span>댓글 22</span>
 					</div>

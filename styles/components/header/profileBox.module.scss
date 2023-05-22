@@ -17,7 +17,7 @@
 		justify-content: right;
 		.closeBtn {
 			cursor: pointer;
-			margin-right: 20px;
+			margin-right: 0px;
 			height: 100%;
 			font-size: 60px;
 		}
@@ -58,6 +58,10 @@
 					text-decoration: underline;
 				}
 			}
+			.acts {
+				display: inline;
+				margin-right: 10px;
+			}
 		}
 	}
 
@@ -79,7 +83,7 @@
 	}
 }
 
-@media screen and (max-width: 528px) {
+@media screen and (max-width: 768px) {
 	.box {
 		padding: 16px;
 		border-radius: 0px;
@@ -91,13 +95,13 @@
 
 		.profileCard {
 			display: flex;
-			height: 180px;
+			height: 120px;
 			.profileImgWrap {
-				width: 160px;
-				height: 160px;
+				width: 100px;
+				height: 100px;
 			}
 			.name {
-				margin: 20px 0 50px 0;
+				margin: 10px 0 20px 0;
 				font-size: 25px;
 				color: white;
 			}
@@ -112,6 +116,9 @@
 				span {
 					font-size: 12px;
 					margin-right: 10px;
+				}
+				.acts {
+					display: inline;
 				}
 			}
 		}

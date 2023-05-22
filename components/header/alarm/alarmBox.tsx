@@ -1,9 +1,9 @@
 import {useEffect, useRef, useState} from 'react';
 import {useRecoilState} from 'recoil';
 import {AisAlarmBoxOn, AnoteLog, AwriteNote} from '@/utils/recoil/recoilStore';
+import CardListWrap from './alarmCard/cardListWrap';
 import LogWrap from './alarmCard/logWrap';
 import AlarmCtg from './alarmCtg';
-import CardListWrap from './alarmCard/cardListWrap';
 import styles from '@/styles/components/header/alarm/alarmBox.module.scss';
 
 function AlarmBox({
@@ -62,22 +62,24 @@ function AlarmBox({
 			<div className={styles.boxHeader}>
 				<img
 					className={styles.closeBtn}
-					src="/icon/close.svg"
+					src="/icon/left.svg"
 					onClick={() => {
 						setIsAlarmBoxOn(false);
 					}}
-					width={30}
-					height={30}
+					width={36}
+					height={36}
 					alt=""
 				/>
+				<span>알람</span>
 			</div>
-			<hr className={styles.headerBoundary} />
-			<AlarmCtg />
-			<CardListWrap
-				alarmData={alarmData}
-				noteData={noteData}
-				chatData={chatData}
-			/>
+			<div className={styles.innerWrap}>
+				<AlarmCtg />
+				<CardListWrap
+					alarmData={alarmData}
+					noteData={noteData}
+					chatData={chatData}
+				/>
+			</div>
 			{isLogOn.on ? <LogWrap /> : null}
 		</div>
 	);

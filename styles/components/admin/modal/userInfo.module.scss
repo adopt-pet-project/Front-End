@@ -7,6 +7,8 @@
 	background: var(--white);
 	border: 1px solid rgb(201, 201, 201);
 	box-shadow: var(--boxShadow);
+	transition: var(--transition);
+	animation: 0.3s ease-in-out fadeInDesktop;
 
 	img {
 		width: 140px;
@@ -35,5 +37,16 @@
 				font-size: 14px;
 			}
 		}
+	}
+}
+@keyframes fadeInDesktop {
+	0% {
+		opacity: 0;
+		transform: translate3d(0px, 50px, 0px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translate3d(0px, 0px, 0px);
 	}
 }
