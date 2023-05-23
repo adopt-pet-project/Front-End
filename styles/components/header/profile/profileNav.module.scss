@@ -1,0 +1,31 @@
+.innerWrap {
+	overflow-y: auto;
+	margin-top: 0px;
+	padding: 12px;
+	flex-grow: 1;
+}
+.myNav {
+	display: flex;
+	align-items: center;
+	height: 30px;
+	font-size: 21px;
+	padding: 22px 10px;
+	border-bottom: 1px solid lightgrey;
+	cursor: pointer;
+	&:hover {
+		background: rgb(221, 221, 221);
+	}
+}
+
+.logout {
+	color: rgb(255, 122, 122);
+}
+
+@media screen and (max-width: 768px) {
+	.innerWrap {
+		overflow-y: auto;
+		margin-top: 60px;
+		padding: 12px;
+		flex-grow: 1;
+	}
+}

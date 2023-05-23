@@ -1,6 +1,6 @@
-import styles from '@/styles/components/admin/manage/boardLine.module.scss';
 import {AmodalType, AmodalWrap} from '@/utils/recoil/recoilStore';
 import {useRecoilState} from 'recoil';
+import styles from '@/styles/components/admin/manage/boardLine.module.scss';
 
 function BoardUserLine({lineData}: {lineData: Boarduser}) {
 	const {id, name, sanctions, joinDate, ip, state} = lineData;

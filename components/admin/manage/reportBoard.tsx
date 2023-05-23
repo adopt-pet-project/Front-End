@@ -1,6 +1,6 @@
-import styles from '@/styles/components/admin/manage/reportBoard.module.scss';
-import BoardReportLine from './reportBoardLine';
 import {useState} from 'react';
+import BoardReportLine from './reportBoardLine';
+import styles from '@/styles/components/admin/manage/reportBoard.module.scss';
 
 function ReportBoard() {
 	const [reportList, setReportList] = useState<Boardreport[]>([

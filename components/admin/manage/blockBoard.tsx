@@ -1,6 +1,6 @@
-import styles from '@/styles/components/admin/manage/blockBoard.module.scss';
 import {useState} from 'react';
 import BlockBoardLine from './blockBoardLine';
+import styles from '@/styles/components/admin/manage/blockBoard.module.scss';
 
 function BlockBoard() {
 	const [reportList, setReportList] = useState<Boardblock[]>([

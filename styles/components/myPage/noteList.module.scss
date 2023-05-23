@@ -1,0 +1,12 @@
+.noteList {
+	padding: 16px;
+	overflow-y: auto;
+	margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+	.noteList {
+		padding: 12px;
+		padding-top: 0;
+	}
+}

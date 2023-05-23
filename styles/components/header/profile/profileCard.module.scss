@@ -1,0 +1,43 @@
+.profileWrap {
+	background: rgb(53, 53, 53);
+	padding: 10px;
+	border-radius: 8px;
+	margin-bottom: 5px;
+	.profileCard {
+		display: flex;
+		border-radius: 8px;
+		margin-bottom: 8px;
+
+		.profileImgWrap {
+			width: 80px;
+			height: 80px;
+			background: white;
+			border-radius: 50%;
+			margin-right: 10px;
+		}
+		.name {
+			margin: 3px 0;
+			font-size: 22px;
+			color: white;
+		}
+		.address {
+			color: white;
+		}
+		.activity {
+			color: white;
+			span {
+				margin-right: 10px;
+			}
+			:first-child {
+				cursor: pointer;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+			.acts {
+				display: inline;
+				margin-right: 10px;
+			}
+		}
+	}
+}

@@ -4,22 +4,17 @@
 	background: var(--white);
 	padding: 16px;
 	border-radius: 8px;
+	height: 182px;
 
 	.imgWrap {
 		position: relative;
 		display: flex;
-		margin-right: 30px;
+		margin-right: 20px;
 		.profileImg {
 			border-radius: 50%;
 			border: 1px solid black;
-			width: 200px;
-			height: 200px;
-		}
-		@media screen and (max-width: 768px) {
-			.profileImg {
-				width: 150px;
-				height: 150px;
-			}
+			width: 150px;
+			height: 150px;
 		}
 
 		.hoverWrap {
@@ -35,17 +30,18 @@
 			&:hover {
 				background: rgba(0, 0, 0, 0.3);
 			}
+			.imageBtn {
+				position: absolute;
+				width: 100%;
+				text-align: center;
+				border-radius: 50%;
+				font-size: 20px;
+				font-weight: bold;
+				color: white;
+				background: rgba(0, 0, 0, 0.3);
+			}
 		}
-		.imageBtn {
-			position: absolute;
-			width: 200px;
-			text-align: center;
-			border-radius: 50%;
-			font-size: 20px;
-			font-weight: bold;
-			color: white;
-			background: rgba(0, 0, 0, 0.3);
-		}
+
 		.fileInput {
 			display: none;
 			position: absolute;
@@ -53,11 +49,22 @@
 	}
 
 	.profileInfo {
+		.name {
+			font-size: 22px;
+		}
 		input {
-			font-size: 25px;
+			display: flex;
+			font-size: 22px;
+			width: 300px;
+			font-weight: bold;
+			outline: none;
+			padding: 0;
+			border: none;
+			border-radius: 8px;
+			background: rgba(149, 149, 149, 0.1);
 		}
 		position: relative;
-		flex: 1;
+		flex-grow: 1;
 		> button {
 			position: absolute;
 			right: 0px;
@@ -74,12 +81,6 @@
 			background: rgb(168, 255, 37);
 			&:hover {
 				background: rgb(149, 235, 20);
-			}
-		}
-
-		@media screen and (max-width: 768px) {
-			.saveBtn {
-				font-size: 15px;
 			}
 		}
 	}
@@ -100,6 +101,24 @@
 		font-size: 16px;
 		&:hover {
 			background: #ce4141;
+		}
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.profileWrap {
+		height: 182px;
+		.profileImg {
+			width: 80px;
+			height: 80px;
+		}
+		.saveBtn {
+			font-size: 15px;
+		}
+		.profileInfo {
+			input {
+				width: 150px;
+			}
 		}
 	}
 }

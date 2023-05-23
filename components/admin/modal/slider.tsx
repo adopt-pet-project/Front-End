@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import styles from '@/styles/components/admin/modal/selectTime.module.scss';
 import {useRecoilState} from 'recoil';
 import {AselectedTime} from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/admin/modal/selectTime.module.scss';
 
 function Slider() {
 	const [ballPosition, setBallPosition] = useState<number>(0);

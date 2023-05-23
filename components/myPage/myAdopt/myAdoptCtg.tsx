@@ -1,17 +1,19 @@
-import styles from '@/styles/components/myPage/myAdopt/myAdoptCtg.module.scss';
-import {AmyAdoptBoardType, AmyAdoptModal} from '@/utils/recoil/recoilStore';
 import {useEffect, useRef, useState} from 'react';
 import {useRecoilState} from 'recoil';
+import {AmyAdoptBoardType, AmyAdoptModal} from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/myPage/myAdopt/myAdoptCtg.module.scss';
 
 function MyAdoptCtg() {
-	const ctgRef = useRef<HTMLDivElement>(null);
 	const [myAdoptModal, setMyAdoptModal] = useRecoilState(AmyAdoptModal);
 	const [currentBtn, setCurrentBtn] = useState<0 | 1 | 2 | 3>(0);
 	const [myAdoptBoardType, setMyAdoptBoardType] =
 		useRecoilState(AmyAdoptBoardType);
+	const ctgRef = useRef<HTMLDivElement>(null);
+
 	useEffect(() => {
 		setMyAdoptModal(prev => ({...prev, isOn: false}));
 	}, [myAdoptBoardType]);
+
 	return (
 		<>
 			<div ref={ctgRef} className={styles.myAdoptCtg}>
