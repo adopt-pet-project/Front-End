@@ -12,18 +12,19 @@ export default function ChatInput() {
 	const keyboardHeight = useRef<number>(0);
 
 	function detectKeyboardHeight() {
-		if (
-			initViewport.current?.width === window.innerWidth &&
-			initViewport.current.height - window.innerHeight > 50 &&
-			initViewport.current.height - window.innerHeight < 200
-		) {
-			// resize 시 width 가 동일하면서도 height 가 50 ~ 200 사이 변화하면 키보드 높이로 취급하자.
-			keyboardHeight.current = initViewport.current.height - window.innerHeight;
-		} else {
-			// 일반적인 resize 라면 initViewport 갱신해 keyboard height 가 설정되는것을 방지
-			initViewport.current!.height = window.innerHeight;
-		}
-		setCurrentMenuType(currentMenuType + 1);
+		// if (
+		// 	initViewport.current?.width === window.innerWidth &&
+		// 	initViewport.current.height - window.innerHeight > 50 &&
+		// 	initViewport.current.height - window.innerHeight < 200
+		// ) {
+		// 	// resize 시 width 가 동일하면서도 height 가 50 ~ 200 사이 변화하면 키보드 높이로 취급하자.
+		// 	keyboardHeight.current = initViewport.current.height - window.innerHeight;
+		// } else {
+		// 	// 일반적인 resize 라면 initViewport 갱신해 keyboard height 가 설정되는것을 방지
+		// 	initViewport.current!.height = window.innerHeight;
+		// }
+		keyboardHeight.current = window.innerHeight;
+		setCurrentMenuType(Date.now());
 	}
 
 	useEffect(() => {
