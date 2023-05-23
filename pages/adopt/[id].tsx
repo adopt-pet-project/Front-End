@@ -10,7 +10,6 @@ import Position from '@/components/adopt/coords';
 import styles from '@/styles/pages/adopt/view.module.scss';
 
 export default function View({article}: {article: AdoptDetail}) {
-	console.log(article);
 	return (
 		<section className="body">
 			<div>
@@ -35,23 +34,18 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/adopt/${query.id}`;
 	let response = await fetch(`${URL}`);
 	let result = await response.json();
-	// return result.status
-	// 	? {
-	// 			redirect: {
-	// 				permanent: false,
-	// 				destination: '/404',
-	// 			},
-	// 	  }
-	// 	: {
-	// 			props: {
-	// 				article: result,
-	// 			},
-	// 	  };
-	return {
-		props: {
-			article: result,
-		},
-	};
+	return result.status
+		? {
+				redirect: {
+					permanent: false,
+					destination: '/404',
+				},
+		  }
+		: {
+				props: {
+					article: result,
+				},
+		  };
 };
 
 View.getLayout = function getLayout(page: ReactElement) {

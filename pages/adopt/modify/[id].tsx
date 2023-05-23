@@ -1,33 +1,72 @@
-import {BaseSyntheticEvent, ReactElement, useEffect, useState} from 'react';
-import Header from '@/components/new/header';
+import {
+	BaseSyntheticEvent,
+	ReactElement,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
+import {GetServerSideProps} from 'next';
+import {useRouter} from 'next/router';
 import Layout from '@/components/layout/layout';
 import ImageUploader from '@/components/imageUploader';
-import styles from '@/styles/pages/adopt/new.module.scss';
-import {GetServerSideProps} from 'next';
 import AnimalInput from '@/components/adopt/animalInput';
 import CoordsInput from '@/components/adopt/coordsInput';
-import {useRouter} from 'next/router';
+import Header from '@/components/new/modifyHeader';
+import useDepsOnlyEffect from '@/utils/hooks/useDepsOnlyEffect';
+import styles from '@/styles/pages/adopt/new.module.scss';
 
-export default function New({query}: {query: {type: string}}) {
+export default function Modify({query}: {query: {id: string}}) {
 	const [serverImageList, setServerImageList] = useState<MyFile[]>([]);
+	const [coords, setCoords] = useState<AdoptCoords>();
+	const formRef = useRef<HTMLFormElement>(null);
+	const type = useRef<string>('');
 	const router = useRouter();
 
 	useEffect(() => {
 		if (!window.localStorage.getItem('accessToken')) {
 			router.back();
 		}
-
-		if (!router.query.type) {
-			alert('잘못된 접근입니다.');
-			router.back();
-		}
 	});
+
+	useDepsOnlyEffect(() => {
+		async function setInputValue() {
+			let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/adopt/${
+				query.id as string
+			}`;
+			let response = await fetch(`${URL}`, {
+				headers: {
+					Authorization: window.localStorage.getItem('accessToken') as string,
+				},
+			});
+			let result: AdoptDetail = await response.json();
+
+			if (!result.mine) {
+				alert('잘못된 접근입니다.');
+				router.back();
+			}
+			if (formRef.current) {
+				(formRef.current.title as any).value = result.header.title;
+				(formRef.current.context as any).value = result.context.context;
+				(formRef.current.name as any).value = result.metadata.name;
+				(formRef.current.gender as any).value = result.metadata.gender;
+				(formRef.current.age as any).value = result.metadata.age;
+				(formRef.current.species as any).value = result.metadata.species;
+				(formRef.current.species as any).value = result.metadata.species;
+
+				setCoords({
+					latitude: result.coords.latitude,
+					longitude: result.coords.longitude,
+					address: result.coords.address,
+				});
+			}
+			console.log(result);
+		}
+
+		setInputValue();
+	}, [router.isReady]);
 
 	async function onSubmit(e: BaseSyntheticEvent) {
 		e.preventDefault();
-
-		const type = router.query.type as string;
-
 		const empty: string[] = [];
 
 		const keyBind = {
@@ -47,7 +86,7 @@ export default function New({query}: {query: {type: string}}) {
 		const body = {
 			title: e.target.title.value,
 			content: e.target.context.value,
-			kind: type,
+			kind: type.current || '강아지',
 			name: e.target.name.value,
 			gender: e.target.gender.value,
 			age: e.target.age.value,
@@ -73,18 +112,21 @@ export default function New({query}: {query: {type: string}}) {
 			alert(`다음 항목이 입력되지 않음\n${empty.join(', ')}`);
 		}
 
-		let response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/adopt`, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: window.localStorage.getItem('accessToken') as string,
+		let response = await fetch(
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/adopt/${query.id as string}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: window.localStorage.getItem('accessToken') as string,
+				},
+				method: 'PATCH',
+				body: JSON.stringify(body),
 			},
-			method: 'POST',
-			body: JSON.stringify(body),
-		});
+		);
 		let result = await response.json();
 
 		if (result.status === 200) {
-			router.push('/adopt');
+			router.push(`/adopt/${router.query.id}`);
 		} else {
 			alert(result.error);
 			router.push('/adopt');
@@ -93,14 +135,19 @@ export default function New({query}: {query: {type: string}}) {
 
 	return (
 		<section className="body" style={{zIndex: '101'}}>
-			<form className={styles.form} onSubmit={onSubmit} method="POST">
+			<form
+				className={styles.form}
+				ref={formRef}
+				onSubmit={onSubmit}
+				method="POST"
+			>
 				<Header type="분양글" />
 				<ImageUploader
 					serverImageList={serverImageList}
 					setServerImageList={setServerImageList}
 				/>
 				<AnimalInput />
-				<CoordsInput />
+				{coords && <CoordsInput coords={coords} />}
 				<span className={styles.contextTitle}>글 작성</span>
 				<input
 					className={styles.title}
@@ -120,10 +167,12 @@ export default function New({query}: {query: {type: string}}) {
 
 export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	return {
-		props: {query},
+		props: {
+			query,
+		},
 	};
 };
 
-New.getLayout = function getLayout(page: ReactElement) {
+Modify.getLayout = function getLayout(page: ReactElement) {
 	return <Layout>{page}</Layout>;
 };

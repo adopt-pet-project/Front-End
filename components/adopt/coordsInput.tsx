@@ -2,7 +2,7 @@ import {BaseSyntheticEvent, useEffect, useRef} from 'react';
 import Script from 'next/script';
 import styles from '@/styles/components/adopt/coordsInput.module.scss';
 
-export default function CoordsInput() {
+export default function CoordsInput({coords}: {coords?: AdoptCoords}) {
 	const mapRef = useRef<HTMLDivElement>(null);
 	const latitudeRef = useRef<HTMLInputElement>(null);
 	const longitudeRef = useRef<HTMLInputElement>(null);
@@ -37,9 +37,10 @@ export default function CoordsInput() {
 
 	function loadMap() {
 		if (!latitudeRef.current?.value && !longitudeRef.current?.value) {
-			latitudeRef.current!.value = '37.55467';
-			longitudeRef.current!.value = '126.970609';
-			addressRef.current!.value = '서울특별시 중구';
+			latitudeRef.current!.value = coords?.latitude.toString() || '37.55467';
+			longitudeRef.current!.value =
+				coords?.longitude.toString() || '126.970609';
+			addressRef.current!.value = coords?.address || '서울특별시 중구';
 		}
 
 		const mapOption = {
