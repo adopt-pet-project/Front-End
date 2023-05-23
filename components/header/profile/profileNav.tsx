@@ -3,7 +3,7 @@ import {useRouter} from 'next/router';
 import {useRecoilState} from 'recoil';
 import {AisLogin, AisProfileBoxOn} from '@/utils/recoil/recoilStore';
 import ProfileCard from './profileCard';
-import styles from '@/styles/components/header/profile/ProfileNav.module.scss';
+import styles from '@/styles/components/header/profile/profileNav.module.scss';
 
 function ProfileNav() {
 	const router = useRouter();
