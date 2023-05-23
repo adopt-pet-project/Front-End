@@ -2,7 +2,7 @@ import Link from 'next/link';
 import styles from '@/styles/components/aside/footer.module.scss';
 
 const footerLinkItem: Link[] = [
-	{text: '이용약관', href: '/'},
+	{text: '이용약관', href: '/tos'},
 	{text: '개인정보처리방침', href: '/policy'},
 	{text: '문의', href: '/'},
 ];
