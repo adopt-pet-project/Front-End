@@ -6,8 +6,12 @@ import styles from '@/styles/components/header/alarm/alarmBox.module.scss';
 
 function AlarmBox({
 	alarmData,
+	setAlarmData,
 }: {
 	alarmData: (Alarmdata | Alarmnotedata | Alarmchatdata)[];
+	setAlarmData: React.Dispatch<
+		React.SetStateAction<(Alarmdata | Alarmnotedata | Alarmchatdata)[]>
+	>;
 }) {
 	const alarmBoxRef = useRef<HTMLDivElement>(null);
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
@@ -45,6 +49,10 @@ function AlarmBox({
 		};
 	}, []);
 
+	useEffect(() => {
+		console.log(alarmData);
+	}, [alarmData]);
+
 	return (
 		<div ref={alarmBoxRef} className={styles.box}>
 			<div className={styles.boxHeader}>
@@ -61,7 +69,32 @@ function AlarmBox({
 					/>
 					<span>알람</span>
 				</div>
-				<div className={styles.delRead}>읽은 알람 삭제</div>
+				<div
+					onClick={() => {
+						let delay = 0;
+						alarmData.map((data, i) => {
+							delay += 70;
+							if (data && data.checked) {
+								setTimeout(() => {
+									setAlarmData(prev => {
+										let result = [...prev];
+										result[i].del = true;
+
+										return result;
+									});
+									if (i === alarmData.length - 1) {
+										setTimeout(() => {
+											setAlarmData(prev => prev.filter(datas => !datas.del));
+										}, 100);
+									}
+								}, delay);
+							}
+						});
+					}}
+					className={styles.delRead}
+				>
+					읽은 알람 삭제
+				</div>
 			</div>
 			<div className={styles.innerWrap}>
 				<CardListWrap alarmData={alarmData} />

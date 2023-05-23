@@ -18,6 +18,7 @@ function ProfileLoginTrue() {
 			date: '2023. 5. 1',
 			contents: '개인정보 처리 방침 변경 사항에 대해서 안내드립니다.',
 			checked: false,
+			del: false,
 		},
 		{
 			id: 13,
@@ -25,6 +26,7 @@ function ProfileLoginTrue() {
 			date: '2023. 5. 2',
 			contents: '축하합니다. 회원님의 게시글이 HOT글에 선정되었습니다.',
 			checked: true,
+			del: false,
 		},
 		{
 			id: 15,
@@ -32,6 +34,7 @@ function ProfileLoginTrue() {
 			date: '2023. 5. 1',
 			contents: '그건 좀;',
 			checked: true,
+			del: false,
 		},
 		{
 			id: 17,
@@ -39,6 +42,7 @@ function ProfileLoginTrue() {
 			date: '2023. 5. 4',
 			contents: '어쩌라고',
 			checked: false,
+			del: false,
 		},
 		{
 			id: 4,
@@ -46,6 +50,7 @@ function ProfileLoginTrue() {
 			date: '2023. 5. 1',
 			contents: '엄;',
 			checked: true,
+			del: false,
 		},
 		{
 			id: 7,
@@ -54,6 +59,7 @@ function ProfileLoginTrue() {
 			contents: '왜 연락을 안받니',
 			date: '2022.10.11',
 			checked: false,
+			del: false,
 		},
 
 		{
@@ -63,6 +69,7 @@ function ProfileLoginTrue() {
 			contents: '혹시 댕댕이 예방접종 받았나요...?',
 			date: '2023. 5. 1',
 			checked: true,
+			del: false,
 		},
 	]);
 
@@ -104,7 +111,9 @@ function ProfileLoginTrue() {
 			</div>
 			{isProfileBoxOn ? <ProfileBox /> : null}
 
-			{isAlarmBoxOn ? <AlarmBox alarmData={alarmData} /> : null}
+			{isAlarmBoxOn ? (
+				<AlarmBox alarmData={alarmData} setAlarmData={setAlarmData} />
+			) : null}
 		</div>
 	);
 }

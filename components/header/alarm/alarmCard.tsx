@@ -5,8 +5,8 @@ function AlarmCard({data}: {data: Alarmdata | Alarmnotedata | Alarmchatdata}) {
 	return (
 		<div
 			className={`${styles.cardWrap} ${
-				data.checked === true ? styles.checked : null
-			}`}
+				data.checked === false ? styles.checked : null
+			} ${data.del ? styles.del : null}`}
 		>
 			<div className={styles.alarmType}>
 				{data.type === 'announcement' ? (

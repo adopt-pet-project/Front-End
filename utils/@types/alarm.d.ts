@@ -4,6 +4,7 @@ interface Alarmdata {
 	date: string;
 	contents: string;
 	checked: boolean;
+	del: boolean;
 }
 
 interface Alarmnotedata extends Alarmdata {
