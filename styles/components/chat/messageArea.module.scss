@@ -1,0 +1,12 @@
+.container {
+	border: 1px solid #000;
+	flex-grow: 1;
+	margin: 16px;
+	min-height: 300px;
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		margin: 12px;
+	}
+}

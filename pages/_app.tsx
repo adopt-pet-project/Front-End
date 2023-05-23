@@ -19,7 +19,7 @@ type AppPropsWithLayout = AppProps & {
 NProgress.configure({
 	showSpinner: false,
 	minimum: 0.25,
-	speed: 750,
+	speed: 500,
 });
 
 Router.events.on('routeChangeStart', () => {

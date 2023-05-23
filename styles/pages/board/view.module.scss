@@ -12,14 +12,16 @@
 }
 
 .commentContainer {
-	padding: 0 16px 16px 16px;
+	padding: 0 16px;
 	border-top: 1px solid var(--gray);
 }
 
 .commentInputContainer {
 	border-radius: 0 0 8px 8px;
 	position: sticky;
-	padding: 12px;
+	display: flex;
+	flex-direction: column;
+	padding: 12px 0;
 	border-top: 1px solid var(--black);
 	bottom: 0;
 	background-color: var(--white);
@@ -40,6 +42,27 @@
 }
 
 .commentInput {
+	padding: 0 12px;
+	display: flex;
+	width: 100%;
+}
+
+.commentTarget {
+	border-bottom: 1px solid var(--gray);
+	padding: 0 12px 12px 12px;
+	font-size: 14px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	user-select: none;
+	margin-bottom: 12px;
+
+	img {
+		cursor: pointer;
+	}
+}
+
+.input {
 	flex-grow: 1;
 	margin-right: 12px;
 	border: none;
@@ -53,10 +76,6 @@
 	}
 
 	.commentContainer {
-		padding: 0 12px 12px 12px;
-	}
-
-	.commentInputContainer {
-		padding: 12px;
+		padding: 0 12px;
 	}
 }

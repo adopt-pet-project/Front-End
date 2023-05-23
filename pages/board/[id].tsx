@@ -1,12 +1,12 @@
 import {GetServerSideProps} from 'next';
-import {ReactElement} from 'react';
+import {ReactElement, useState} from 'react';
 import Link from 'next/link';
 import Layout from '@/components/layout/layout';
 import Comments from '@/components/board/comments';
-import styles from '@/styles/pages/board/view.module.scss';
 import Header from '@/components/board/header';
 import Context from '@/components/board/context';
 import Option from '@/components/board/option';
+import styles from '@/styles/pages/board/view.module.scss';
 
 const dummyData = {
 	id: 2,
@@ -37,7 +37,8 @@ const dummyComments = [
 	{
 		type: 'comment',
 		id: 1,
-		author: '홍길동',
+		authorId: 15,
+		username: '홍길동',
 		context: 'ㅋㅋ 그러게 조심좀 하시지',
 		profile:
 			'https://mblogthumb-phinf.pstatic.net/MjAxNjExMjJfMjEx/MDAxNDc5NzQ0MDAzOTQy.-ax_EfCGWODogkXHIuDpovF5XHfaYi_s8EtRVWEjYXQg.R4kQWRtNC7pNxF03-aKWylWpGoRgE7vGDeagJm7Sgk0g.PNG.outdoor-interlaken/%EC%8A%A4%EC%9C%84%EC%8A%A4_%EC%97%AC%ED%96%89%ED%95%98%EA%B8%B0_%EC%A2%8B%EC%9D%80_%EA%B3%84%EC%A0%88_christofs70.png?type=w800',
@@ -47,7 +48,8 @@ const dummyComments = [
 			{
 				type: 'reply',
 				id: 2,
-				author: '김철수',
+				authorId: 15,
+				username: '홍길동',
 				context: 'ㅠㅠ',
 				profile:
 					'https://mblogthumb-phinf.pstatic.net/MjAxNjExMjJfMjEx/MDAxNDc5NzQ0MDAzOTQy.-ax_EfCGWODogkXHIuDpovF5XHfaYi_s8EtRVWEjYXQg.R4kQWRtNC7pNxF03-aKWylWpGoRgE7vGDeagJm7Sgk0g.PNG.outdoor-interlaken/%EC%8A%A4%EC%9C%84%EC%8A%A4_%EC%97%AC%ED%96%89%ED%95%98%EA%B8%B0_%EC%A2%8B%EC%9D%80_%EA%B3%84%EC%A0%88_christofs70.png?type=w800',
@@ -57,7 +59,8 @@ const dummyComments = [
 			{
 				type: 'reply',
 				id: 3,
-				author: '김철수',
+				authorId: 16,
+				username: '양의지',
 				context: 'ㅠㅠ',
 				profile:
 					'https://mblogthumb-phinf.pstatic.net/MjAxNjExMjJfMjEx/MDAxNDc5NzQ0MDAzOTQy.-ax_EfCGWODogkXHIuDpovF5XHfaYi_s8EtRVWEjYXQg.R4kQWRtNC7pNxF03-aKWylWpGoRgE7vGDeagJm7Sgk0g.PNG.outdoor-interlaken/%EC%8A%A4%EC%9C%84%EC%8A%A4_%EC%97%AC%ED%96%89%ED%95%98%EA%B8%B0_%EC%A2%8B%EC%9D%80_%EA%B3%84%EC%A0%88_christofs70.png?type=w800',
@@ -68,7 +71,8 @@ const dummyComments = [
 	},
 	{
 		id: 4,
-		author: '홍길동',
+		authorId: 15,
+		username: '김성태',
 		type: 'comment',
 		context: 'ㅋㅋ 그러게 조심좀 하시지',
 		profile:
@@ -79,7 +83,8 @@ const dummyComments = [
 	},
 ];
 
-export default function View({}) {
+export default function View() {
+	const [target, setTarget] = useState<CommentTarget | null>(null);
 	return (
 		<section className="body">
 			<div>
@@ -90,16 +95,36 @@ export default function View({}) {
 					목록으로
 				</Link>
 				<div className={styles.commentContainer}>
-					<Comments comments={dummyComments} />
+					<Comments
+						parentId={null}
+						setTarget={setTarget}
+						comments={dummyComments}
+					/>
 				</div>
 			</div>
 			<div className={styles.commentInputContainer}>
-				<input
-					placeholder="댓글을 작성하세요."
-					className={styles.commentInput}
-					type="text"
-				/>
-				<button>작성</button>
+				{target && (
+					<div className={styles.commentTarget}>
+						<span>{target.username}에게 댓글</span>
+						<img
+							src="/icon/close.svg"
+							width={20}
+							height={20}
+							alt="close"
+							onClick={() => {
+								setTarget(null);
+							}}
+						/>
+					</div>
+				)}
+				<div className={styles.commentInput}>
+					<input
+						placeholder="댓글을 작성하세요."
+						className={styles.input}
+						type="text"
+					/>
+					<button>작성</button>
+				</div>
 			</div>
 		</section>
 	);
