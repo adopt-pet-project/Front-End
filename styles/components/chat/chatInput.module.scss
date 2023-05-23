@@ -25,10 +25,36 @@
 	}
 
 	.menu {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		padding: 0;
 		width: 100%;
-		height: 100px;
-		border: 1px solid #000;
-		margin-top: 16px;
+		height: 234px;
+		margin: 16px 0 0 0;
+		list-style-type: none;
+
+		li {
+			cursor: pointer;
+			margin: 12px;
+			user-select: none;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			font-weight: bold;
+			.icon {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				border-radius: 50%;
+				width: 50px;
+				height: 50px;
+				background-color: var(--gray);
+				margin-bottom: 8px;
+			}
+		}
 	}
 }
 
@@ -36,7 +62,8 @@
 	.container {
 		margin: 0 12px 12px 12px;
 		.menu {
-			margin-top: 12px;
+			height: 238px;
+			margin: 12px 0 0 0;
 		}
 	}
 }
