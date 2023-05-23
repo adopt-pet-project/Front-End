@@ -1,9 +1,8 @@
-import Link from 'next/link';
+import {useRouter} from 'next/router';
+import {useRecoilState} from 'recoil';
+import {AmodalWrap, AmodalType} from '@/utils/recoil/recoilStore';
 import Search from './search/search';
 import styles from '@/styles/components/header.module.scss';
-import {AmodalWrap, AmodalType} from '@/utils/recoil/recoilStore';
-import {useRecoilState} from 'recoil';
-import {useRouter} from 'next/router';
 
 export default function Header({query, path}: {query: string; path: string}) {
 	const type = path === 'board' ? '게시판' : '분양';
