@@ -1,0 +1,54 @@
+.contents {
+	padding: 16px;
+	.li {
+		word-break: keep-all;
+		word-wrap: break-word;
+	}
+	li > ol[data-list-style-type='ko'] > li:nth-child(1)::marker {
+		content: '가. ';
+	}
+	ol[data-list-style-type='ko'] > li:nth-child(2)::marker {
+		content: '나. ';
+	}
+	ol[data-list-style-type='ko'] > li:nth-child(3)::marker {
+		content: '다. ';
+	}
+	ol[data-list-style-type='ko'] > li:nth-child(4)::marker {
+		content: '라. ';
+	}
+	ol[data-list-style-type='ko'] > li:nth-child(5)::marker {
+		content: '마. ';
+	}
+	ol[data-list-style-type='ko'] > li:nth-child(6)::marker {
+		content: '바. ';
+	}
+	ol[data-list-style-type='ko'] > li:nth-child(7)::marker {
+		content: '사. ';
+	}
+	ol[data-list-style-type='ko'] > li:nth-child(8)::marker {
+		content: '아. ';
+	}
+	ol[data-list-style-type='ko'] > li:nth-child(9)::marker {
+		content: '자. ';
+	}
+	ol[data-list-style-type='ko'] > li:nth-child(10)::marker {
+		content: '차. ';
+	}
+	ol[data-list-style-type='ko'] > li:nth-child(11)::marker {
+		content: '카. ';
+	}
+	ol[data-list-style-type='ko'] > li:nth-child(12)::marker {
+		content: '타. ';
+	}
+	ol[data-list-style-type='ko'] > li:nth-child(13)::marker {
+		content: '파. ';
+	}
+	ol[data-list-style-type='ko'] > li:nth-child(14)::marker {
+		content: '하. ';
+	}
+}
+@media screen and (max-width: 768px) {
+	.contents {
+		padding: 12px;
+	}
+}
