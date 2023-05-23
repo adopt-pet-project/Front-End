@@ -1,11 +1,4 @@
-import {
-	BaseSyntheticEvent,
-	ReactElement,
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
-} from 'react';
+import {ReactElement, useEffect, useRef, useState} from 'react';
 import {useRouter} from 'next/router';
 import Layout from '@/components/layout/layout';
 import useDepsOnlyEffect from '@/utils/hooks/useDepsOnlyEffect';
@@ -78,7 +71,7 @@ export default function Register() {
 		if (result.status !== 200) {
 			alert(`회원가입에 실패했습니다.\
 			사유 : {result.response}`);
-			// router.push('/');
+			router.push('/');
 		}
 	}
 

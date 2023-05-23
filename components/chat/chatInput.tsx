@@ -1,99 +1,155 @@
 import styles from '@/styles/components/chat/chatInput.module.scss';
+import Script from 'next/script';
 import {BaseSyntheticEvent, useEffect, useRef, useState} from 'react';
 
 export default function ChatInput() {
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-	const [currentMenuType, setCurrentMenuType] = useState<number>(0);
-
-	// const keyboardHeight = useRef<number>(180);
+	const [isMapOpen, setIsMapOpen] = useState<boolean>(false);
+	const mapRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 
-	const initViewport = useRef<Viewport>();
-	const keyboardHeight = useRef<number>(0);
-
-	function detectKeyboardHeight() {
-		// if (
-		// 	initViewport.current?.width === window.innerWidth &&
-		// 	initViewport.current.height - window.innerHeight > 50 &&
-		// 	initViewport.current.height - window.innerHeight < 200
-		// ) {
-		// 	// resize 시 width 가 동일하면서도 height 가 50 ~ 200 사이 변화하면 키보드 높이로 취급하자.
-		// 	keyboardHeight.current = initViewport.current.height - window.innerHeight;
-		// } else {
-		// 	// 일반적인 resize 라면 initViewport 갱신해 keyboard height 가 설정되는것을 방지
-		// 	initViewport.current!.height = window.innerHeight;
-		// }
-		keyboardHeight.current = window.innerHeight;
-		setCurrentMenuType(Date.now());
-	}
+	let map: any;
+	let marker: any;
 
 	useEffect(() => {
-		initViewport.current = {
-			width: window.innerWidth,
-			height: window.innerHeight,
-		};
+		if (window.kakao) window.kakao.maps.load(loadMap);
+	});
 
-		window.addEventListener('resize', detectKeyboardHeight);
-
-		return () => {
-			window.removeEventListener('resize', detectKeyboardHeight);
-		};
-	}, []);
-
-	function onClickOpen() {
-		if (inputRef.current) inputRef.current.blur();
-		setIsMenuOpen(true);
-	}
-
-	function onClickClose() {
-		setIsMenuOpen(false);
+	function onClickMenu() {
+		if (!isMenuOpen) {
+			if (inputRef.current) inputRef.current.blur();
+			setIsMenuOpen(true);
+		} else {
+			inputRef.current!.value = '';
+			setIsMapOpen(false);
+			setIsMenuOpen(false);
+		}
 	}
 
 	function onFocusInput(e: BaseSyntheticEvent) {
 		setIsMenuOpen(false);
 	}
 
-	function onClickSend() {}
+	function onClickSend() {
+		if (inputRef.current && inputRef.current.value) {
+			// Send
+			console.log(inputRef.current?.value);
+			setIsMapOpen(false);
+			setIsMenuOpen(false);
+			inputRef.current!.value = '';
+		}
+	}
+
+	function changeImageInput(e: BaseSyntheticEvent) {
+		const regExp = /(.*?)\.(jpg|jpeg|png|bmp|gif)$/;
+		const file: File = e.currentTarget.files[0];
+
+		if (file.name.match(regExp)) {
+			// set inputRef value to BASE64 Encoding Image
+			onClickSend();
+			setIsMenuOpen(false);
+		} else {
+			alert(`허용되지 않은 확장자입니다.\n${file.name.split('.')[1]}`);
+		}
+	}
+
+	function loadMap() {
+		const mapOption = {
+			center: new window.kakao.maps.LatLng(37.55467, 126.970609),
+			level: 6,
+		};
+
+		map = new window.kakao.maps.Map(mapRef.current, mapOption);
+		marker = new window.kakao.maps.Marker({
+			position: map.getCenter(),
+		});
+		marker.setMap(map);
+
+		window.kakao.maps.event.addListener(
+			map,
+			'click',
+			function (mouseEvent: any) {
+				let latlng = mouseEvent.latLng;
+				map.setCenter(latlng);
+				marker.setPosition(latlng);
+				inputRef.current!.value = `${latlng.Ma} ${latlng.La}`;
+			},
+		);
+	}
 
 	return (
-		<div className={styles.container}>
-			for moblie keyboard height test, innerHeight : {keyboardHeight.current}
-			<div className={styles.chatInput}>
-				{isMenuOpen ? (
+		<>
+			<Script
+				type="text/javascript"
+				src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`}
+			/>
+			<form className={styles.container}>
+				<div className={styles.chatInput}>
 					<img
 						style={{
-							transform: 'rotate(45deg)',
+							transform: `${isMenuOpen ? 'rotate(45deg)' : 'rotate(0deg)'}`,
 						}}
 						src="/icon/plus.svg"
-						width={20}
-						height={20}
-						alt="close"
-						onClick={onClickClose}
+						width={22}
+						height={22}
+						alt="menu"
+						onClick={onClickMenu}
 					/>
-				) : (
+					<input
+						className={`${isMenuOpen ? styles.hidden : ''}`}
+						type="text"
+						placeholder="메시지를 입력하세요."
+						ref={inputRef}
+						onFocus={onFocusInput}
+					/>
 					<img
-						src="/icon/plus.svg"
-						width={20}
-						height={20}
-						alt="open"
-						onClick={onClickOpen}
+						src="/icon/send.svg"
+						width={24}
+						height={24}
+						alt="send"
+						onClick={onClickSend}
 					/>
+				</div>
+				<div
+					className={`${styles.map} ${isMapOpen ? '' : styles.hidden}`}
+					ref={mapRef}
+				/>
+				{isMenuOpen && (
+					<ul className={styles.menu}>
+						<li>
+							<label htmlFor="image">
+								<div className={styles.icon}>
+									<img
+										src="/icon/picture.svg"
+										alt="picture"
+										width={28}
+										height={28}
+									/>
+								</div>
+								사진
+							</label>
+							<input
+								onChange={changeImageInput}
+								type="file"
+								name="image"
+								accept="image/*"
+								id="image"
+							/>
+						</li>
+						<li onClick={() => setIsMapOpen(true)}>
+							<div className={styles.icon}>
+								<img
+									src="/icon/location.svg"
+									alt="location"
+									width={24}
+									height={24}
+								/>
+							</div>
+							위치
+						</li>
+					</ul>
 				)}
-				<input
-					type="text"
-					placeholder="메시지를 입력하세요."
-					ref={inputRef}
-					onFocus={onFocusInput}
-				/>
-				<img
-					src="/icon/send.svg"
-					width={24}
-					height={24}
-					alt="send"
-					onClick={onClickSend}
-				/>
-			</div>
-			{isMenuOpen && <div className={styles.menu}></div>}
-		</div>
+			</form>
+		</>
 	);
 }

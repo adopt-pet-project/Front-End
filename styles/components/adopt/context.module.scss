@@ -4,8 +4,21 @@
 }
 
 .info {
+	user-select: none;
 	display: flex;
 	justify-content: space-between;
+}
+
+.modify,
+.delete {
+	margin: 0;
+	padding: 0;
+	border: none;
+	outline: none;
+	text-decoration: none;
+	background-color: transparent;
+	font-size: 16px;
+	color: var(--black);
 }
 
 @media screen and (max-width: 768px) {
