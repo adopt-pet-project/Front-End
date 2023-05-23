@@ -34,9 +34,7 @@ export default function Comments({
 										src={comment.profile}
 										alt={`${comment.profile} profile`}
 									/>
-									<span>
-										{comment.username} {parentId}
-									</span>
+									<span>{comment.username}</span>
 								</div>
 								<div className={styles.action}>
 									<button>수정</button>

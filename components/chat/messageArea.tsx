@@ -1,3 +1,5 @@
+import styles from '@/styles/components/chat/messageArea.module.scss';
+
 export default function MessageArea() {
-	return <></>;
+	return <div className={styles.container}></div>;
 }

@@ -12,7 +12,7 @@
 }
 
 .commentContainer {
-	padding: 0 16px 16px 16px;
+	padding: 0 16px;
 	border-top: 1px solid var(--gray);
 }
 
@@ -49,7 +49,6 @@
 
 .commentTarget {
 	border-bottom: 1px solid var(--gray);
-
 	padding: 0 12px 12px 12px;
 	font-size: 14px;
 	display: flex;
@@ -77,6 +76,6 @@
 	}
 
 	.commentContainer {
-		padding: 0 12px 12px 12px;
+		padding: 0 12px;
 	}
 }
