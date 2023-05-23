@@ -1,6 +1,5 @@
 .box {
 	box-shadow: var(--boxShadow);
-	padding: 10px;
 	border-radius: 8px;
 	margin: 0px;
 	width: 450px;
@@ -11,31 +10,44 @@
 	overflow-x: hidden;
 	position: absolute;
 	top: 66px;
-	right: 80px;
+	right: 90px;
 	background: rgb(255, 255, 255);
 	border: 1px solid rgb(201, 201, 201);
 	display: flex;
 	flex-direction: column;
 	.boxHeader {
-		height: 30px;
-		display: none;
+		position: absolute;
+		background: white;
+		padding: 0 12px;
+		height: var(--header-height);
+		display: flex;
 		width: 100%;
-		justify-content: right;
+		box-shadow: rgb(0 0 0 / 10%) 0px -1px 0px 0px inset;
+		align-items: center;
+		font-weight: bold;
+		justify-content: space-between;
 		.closeBtn {
+			display: none;
 			cursor: pointer;
-			margin-right: 20px;
+			margin-right: 10px;
 			height: 100%;
 			font-size: 60px;
 		}
-	}
-	.headerBoundary {
-		display: none;
-	}
-}
 
-@media screen and (max-width: 768px) {
-	.box {
-		padding: 16px;
+		.delRead {
+			cursor: pointer;
+		}
+
+		.backWrap {
+			display: flex;
+			align-items: center;
+		}
+	}
+	.innerWrap {
+		overflow-y: auto;
+		margin-top: 60px;
+		padding: 12px;
+		flex-grow: 1;
 	}
 }
 
@@ -49,10 +61,15 @@
 		top: 0px;
 
 		.boxHeader {
+			position: fixed;
 			display: flex;
-		}
-		.headerBoundary {
-			display: block;
+			.closeBtn {
+				display: block;
+				cursor: pointer;
+				margin-right: 10px;
+				height: 100%;
+				font-size: 60px;
+			}
 		}
 	}
 }

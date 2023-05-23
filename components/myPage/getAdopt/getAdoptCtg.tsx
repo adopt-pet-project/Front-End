@@ -1,7 +1,7 @@
-import styles from '@/styles/components/myPage/getAdopt/getAdoptCtg.module.scss';
-import {AgetAdoptBoardType} from '@/utils/recoil/recoilStore';
 import {useEffect, useRef, useState} from 'react';
 import {useRecoilState} from 'recoil';
+import {AgetAdoptBoardType} from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/myPage/getAdopt/getAdoptCtg.module.scss';
 
 function GetAdoptCtg() {
 	const ctgRef = useRef<HTMLDivElement>(null);

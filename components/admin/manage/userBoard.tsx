@@ -1,6 +1,6 @@
-import styles from '@/styles/components/admin/manage/userBoard.module.scss';
 import BoardUserLine from './userBoardLine';
 import {useState} from 'react';
+import styles from '@/styles/components/admin/manage/userBoard.module.scss';
 
 function UserBoard() {
 	const [userList, setUserList] = useState<Boarduser[]>([

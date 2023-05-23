@@ -1,6 +1,7 @@
-import styles from '@/styles/components/admin/adminCategory.module.scss';
 import {useRecoilState} from 'recoil';
 import {AisStatistic} from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/admin/adminCategory.module.scss';
+
 function AdminCategory() {
 	// false 통계, true 관리
 	const [isStatistic, setIsStatistic] = useRecoilState(AisStatistic);

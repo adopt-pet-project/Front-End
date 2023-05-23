@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import styles from '@/styles/components/admin/modal/checkReport.module.scss';
-import {AisSelectTime, AmodalWrap} from '@/utils/recoil/recoilStore';
 import {useRecoilState} from 'recoil';
+import {AisSelectTime, AmodalWrap} from '@/utils/recoil/recoilStore';
 import SelectTime from './selectTime';
+import styles from '@/styles/components/admin/modal/checkReport.module.scss';
 
 function CheckReport() {
 	const [isSelectTime, setIsSelectTime] = useRecoilState(AisSelectTime);

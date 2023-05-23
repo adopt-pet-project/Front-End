@@ -1,6 +1,6 @@
 import {RefObject, useEffect, useState} from 'react';
-import styles from '@/styles/components/header/menu.module.scss';
 import {useRouter} from 'next/router';
+import styles from '@/styles/components/header/menu.module.scss';
 
 export default function Menu({
 	asideRef,

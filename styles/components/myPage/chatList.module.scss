@@ -1,0 +1,12 @@
+.chatList {
+	padding: 16px;
+	overflow-y: auto;
+	margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+	.chatList {
+		padding: 12px;
+		padding-top: 0;
+	}
+}

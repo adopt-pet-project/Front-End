@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import styles from '@/styles/components/activity/activityCard.module.scss';
 import {useRouter} from 'next/router';
+import styles from '@/styles/components/activity/activityCard.module.scss';
 
 function ActivityCard({article}: {article: any}) {
 	const router = useRouter();

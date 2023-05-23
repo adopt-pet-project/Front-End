@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import styles from '@/styles/components/myPage/getAdopt/getAdoptCard.module.scss';
 import {useRouter} from 'next/router';
+import styles from '@/styles/components/myPage/getAdopt/getAdoptCard.module.scss';
 
 function MyPageCard({article, boardType}: {article: any; boardType: string}) {
 	const router = useRouter();

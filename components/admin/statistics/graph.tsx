@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import styles from '@/styles/components/admin/statistics/graph.module.scss';
+
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -11,6 +11,7 @@ import {
 	Legend,
 } from 'chart.js';
 import {Line} from 'react-chartjs-2';
+import styles from '@/styles/components/admin/statistics/graph.module.scss';
 
 ChartJS.register(
 	CategoryScale,
@@ -22,7 +23,7 @@ ChartJS.register(
 	Legend,
 );
 
-function StatisticsGraph({
+function Graph({
 	data,
 }: {
 	data: {
@@ -39,6 +40,11 @@ function StatisticsGraph({
 		'일간',
 	);
 	const [on, setOn] = useState(false);
+
+	useEffect(() => {
+		setOn(true);
+	}, []);
+
 	const options = {
 		responsive: true,
 		plugins: {
@@ -51,10 +57,6 @@ function StatisticsGraph({
 			},
 		},
 	};
-
-	useEffect(() => {
-		setOn(true);
-	}, []);
 	return (
 		<div className={`${styles.graphWrap} ${on ? styles.on : null}`}>
 			<Line data={data} options={options} />
@@ -88,4 +90,4 @@ function StatisticsGraph({
 	);
 }
 
-export default StatisticsGraph;
+export default Graph;

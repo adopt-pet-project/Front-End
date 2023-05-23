@@ -1,0 +1,15 @@
+.myPageCtg {
+	font-size: 20px;
+	display: flex;
+	width: 100%;
+	padding: 10px 12px;
+	span {
+		margin-right: 20px;
+		cursor: pointer;
+	}
+}
+
+.on {
+	font-weight: bold;
+	color: var(--skyblue);
+}

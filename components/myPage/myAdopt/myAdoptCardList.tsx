@@ -1,10 +1,9 @@
 import React from 'react';
-import styles from '@/styles/components/myPage/myAdopt/myAdoptCardList.module.scss';
-
-import MyAdoptCard from './myAdoptCard';
 import {useRecoilState} from 'recoil';
 import {AmyAdoptBoardType, AmyAdoptModal} from '@/utils/recoil/recoilStore';
 import MyAdoptModal from './myAdoptModal';
+import MyAdoptCard from './myAdoptCard';
+import styles from '@/styles/components/myPage/myAdopt/myAdoptCardList.module.scss';
 
 function MyAdoptCardList() {
 	const DummyData: any[] = [];
