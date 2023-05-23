@@ -23,6 +23,7 @@ export default function ChatInput() {
 			// 일반적인 resize 라면 initViewport 갱신해 keyboard height 가 설정되는것을 방지
 			initViewport.current!.height = window.innerHeight;
 		}
+		setCurrentMenuType(currentMenuType + 1);
 	}
 
 	useEffect(() => {
