@@ -1,12 +1,12 @@
 import {BaseSyntheticEvent, ReactElement, useEffect, useState} from 'react';
+import {useRouter} from 'next/router';
+import {GetServerSideProps} from 'next';
 import Header from '@/components/new/header';
 import Layout from '@/components/layout/layout';
 import ImageUploader from '@/components/imageUploader';
-import styles from '@/styles/pages/adopt/new.module.scss';
-import {GetServerSideProps} from 'next';
 import AnimalInput from '@/components/adopt/animalInput';
 import CoordsInput from '@/components/adopt/coordsInput';
-import {useRouter} from 'next/router';
+import styles from '@/styles/pages/adopt/new.module.scss';
 
 export default function New({query}: {query: {type: string}}) {
 	const [serverImageList, setServerImageList] = useState<MyFile[]>([]);
@@ -57,12 +57,10 @@ export default function New({query}: {query: {type: string}}) {
 			address: e.target.address.value,
 			image: [
 				...serverImageList.map((myFile: MyFile) => {
-					return {imgNo: myFile.imageId, imageUrl: myFile.serverSrc};
+					return {imgNo: myFile.imageId, imgUrl: myFile.serverSrc};
 				}),
 			],
 		};
-
-		console.log(body);
 
 		Object.keys(body).forEach((key: string) => {
 			const bodyKey = key as AdoptPostBodyKey;
@@ -71,6 +69,7 @@ export default function New({query}: {query: {type: string}}) {
 
 		if (empty.length !== 0) {
 			alert(`다음 항목이 입력되지 않음\n${empty.join(', ')}`);
+			return;
 		}
 
 		let response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/adopt`, {
@@ -82,7 +81,6 @@ export default function New({query}: {query: {type: string}}) {
 			body: JSON.stringify(body),
 		});
 		let result = await response.json();
-
 		if (result.status === 200) {
 			router.push('/adopt');
 		} else {

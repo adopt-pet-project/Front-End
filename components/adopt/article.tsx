@@ -1,6 +1,7 @@
 import {useRouter} from 'next/router';
 import Image from 'next/image';
 import styles from '@/styles/components/adopt/article.module.scss';
+import {convertDate} from '@/utils/functions/convertDate';
 
 const status = [
 	{

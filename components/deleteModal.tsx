@@ -1,4 +1,4 @@
-import {useRef} from 'react';
+import {useEffect, useRef} from 'react';
 import {useRouter} from 'next/router';
 import {useRecoilState} from 'recoil';
 import {AmodalWrap} from '@/utils/recoil/recoilStore';
@@ -8,19 +8,20 @@ import useDepsOnlyEffect from '@/utils/hooks/useDepsOnlyEffect';
 export default function DeleteModal() {
 	const [modalRef] = useRecoilState(AmodalWrap);
 	const router = useRouter();
-	router.push('');
 
 	const type = useRef<string>();
 	const id = useRef<number>();
 
-	useDepsOnlyEffect(() => {
+	useEffect(() => {
 		type.current = router.asPath.split('/')[1];
 		id.current = Number(router.query.id);
-	}, [router.isReady]);
+	});
 
 	async function onClickApply() {
 		let response = await fetch(
-			`${process.env.NEXT_PUBLIC_SERVER_URL}/${type.current}/${id.current}`,
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/${
+				type.current === 'board' ? 'community/article' : 'adopt'
+			}/${id.current}`,
 			{
 				headers: {Authorization: localStorage.getItem('accessToken') as string},
 				method: 'DELETE',
@@ -31,7 +32,8 @@ export default function DeleteModal() {
 		if (result.status === 200) {
 			router.push(`/${type.current}`);
 		} else {
-			router.push('');
+			alert(`삭제 실패\n사유:${result.error}`);
+			router.push(`/${type.current}`);
 		}
 	}
 

@@ -26,45 +26,46 @@ export default function ImageUploader({
 	useEffect(() => {
 		// Modify 시 serverImageList 를 LocalImageList로 불러와 사용
 		if (serverImageList.length !== 0) {
+			console.log(serverImageList);
 			localImageList.current = serverImageList;
+			updateState();
 		}
 
 		if (router.asPath.includes('adopt')) type.current = 'adopt';
 		else if (router.asPath.includes('board')) type.current = 'community';
-	}, []);
+	}, [serverImageList]);
 
 	async function changeImageInput(e: BaseSyntheticEvent) {
 		let prevLength = localImageList.current.length;
-		let fileList: File[] = [
-			...localImageList.current.map((myFile: MyFile) => myFile.localFile),
-			...e.currentTarget.files,
-		];
-		e.currentTarget.value = '';
 
-		if (fileList.length > 8) {
-			alert('최대 8개까지만 선택이 가능합니다.');
-		}
-
-		fileList = fileList
+		const fileList: MyFile[] = [...e.currentTarget.files]
 			.filter((file: File) => {
 				const regExp = /(.*?)\.(jpg|jpeg|png|bmp|gif)$/;
 				return file.name.match(regExp) != null;
 			})
-			.filter((file: File, index: number) => index < 8);
-
-		const newLocalImageList: MyFile[] = [...localImageList.current];
-		for (let i = prevLength; i < fileList.length; i++) {
-			newLocalImageList.push({
-				localFile: fileList[i],
-				isUploaded: false,
-				localSrc: URL.createObjectURL(fileList[i]),
+			.map((file: File) => {
+				return {
+					localFile: file,
+					isUploaded: false,
+					localSrc: URL.createObjectURL(file),
+				};
 			});
+
+		let newImageList: MyFile[] = [...localImageList.current, ...fileList];
+		e.currentTarget.value = '';
+
+		if (newImageList.length > 8) {
+			alert('최대 8개까지만 선택이 가능합니다.');
 		}
-		localImageList.current = newLocalImageList;
+		newImageList = newImageList.filter(
+			(myFile: MyFile, index: number) => index < 8,
+		);
+
+		localImageList.current = newImageList;
 		updateState();
 
-		for (let i = prevLength; i < newLocalImageList.length; i++) {
-			await uploadImage(newLocalImageList[i]);
+		for (let i = prevLength; i < newImageList.length; i++) {
+			await uploadImage(newImageList[i]);
 		}
 	}
 
@@ -136,7 +137,7 @@ export default function ImageUploader({
 					<img src="/icon/picture.svg" alt="add image icon" />
 					<span>{localImageList.current.length} / 8</span>
 				</label>
-				{localImageList.current.map((myFile: MyFile, index: number) => {
+				{localImageList.current.map((myFile: MyFile) => {
 					return (
 						<div key={myFile.localSrc} className={styles.previewContainer}>
 							<img
@@ -144,7 +145,7 @@ export default function ImageUploader({
 									deleteImage(myFile.localFile?.name);
 								}}
 								className={styles.preview}
-								src={myFile.localSrc}
+								src={myFile.localSrc || myFile.serverSrc}
 							/>
 							{!myFile.isUploaded && (
 								<div className={styles.loading}>업로드 중</div>

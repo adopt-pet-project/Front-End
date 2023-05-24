@@ -1,12 +1,21 @@
-import {BaseSyntheticEvent, ReactElement, useEffect, useState} from 'react';
-import Header from '@/components/new/header';
+import {
+	BaseSyntheticEvent,
+	ReactElement,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
+import {useRouter} from 'next/router';
 import Layout from '@/components/layout/layout';
 import ImageUploader from '@/components/imageUploader';
+import Header from '@/components/new/modifyHeader';
+import useDepsOnlyEffect from '@/utils/hooks/useDepsOnlyEffect';
 import styles from '@/styles/pages/board/new.module.scss';
-import {useRouter} from 'next/router';
+import {GetServerSideProps} from 'next';
 
-export default function New() {
+export default function Modify({query}: {query: {id: string}}) {
 	const [serverImageList, setServerImageList] = useState<MyFile[]>([]);
+	const formRef = useRef<HTMLFormElement>(null);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -14,6 +23,29 @@ export default function New() {
 			router.back();
 		}
 	});
+
+	useDepsOnlyEffect(() => {
+		async function setInputValue() {
+			let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/community/article/${
+				query.id as string
+			}`;
+			let response = await fetch(`${URL}`, {
+				headers: {
+					Authorization: window.localStorage.getItem('accessToken') as string,
+				},
+			});
+			let result = await response.json();
+			if (!result.mine) {
+				alert('잘못된 접근입니다.');
+				router.back();
+			}
+			if (formRef.current) {
+				(formRef.current.title as any).value = result.header.title;
+				(formRef.current.context as any).value = result.context.context;
+			}
+		}
+		setInputValue();
+	}, [router.isReady]);
 
 	async function onSubmit(e: BaseSyntheticEvent) {
 		e.preventDefault();
@@ -53,7 +85,7 @@ export default function New() {
 
 	return (
 		<section className="body" style={{zIndex: '101'}}>
-			<form className={styles.form} onSubmit={onSubmit}>
+			<form className={styles.form} ref={formRef} onSubmit={onSubmit}>
 				<Header type="게시글" />
 				<ImageUploader
 					serverImageList={serverImageList}
@@ -76,6 +108,14 @@ export default function New() {
 	);
 }
 
-New.getLayout = function getLayout(page: ReactElement) {
+export const getServerSideProps: GetServerSideProps = async ({query}) => {
+	return {
+		props: {
+			query,
+		},
+	};
+};
+
+Modify.getLayout = function getLayout(page: ReactElement) {
 	return <Layout>{page}</Layout>;
 };

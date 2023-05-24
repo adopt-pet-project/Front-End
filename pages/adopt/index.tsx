@@ -5,6 +5,7 @@ import Header from '@/components/header';
 import OrderBy from '@/components/orderby';
 import Article from '@/components/adopt/article';
 import Paging from '@/components/adopt/paging';
+import {convertDate} from '@/utils/functions/convertDate';
 
 const orderList: Order[] = [
 	{order: '', orderText: '전체'},
@@ -14,15 +15,16 @@ const orderList: Order[] = [
 ];
 
 export default function Adopt({
+	param,
 	filter,
 	query,
 	firstPage,
 }: {
+	param: any;
 	filter: string;
 	query: string;
 	firstPage: Adopt[];
 }) {
-	console.log(firstPage);
 	return (
 		<>
 			<Header query={query} path={'adopt'} />
@@ -38,8 +40,7 @@ export default function Adopt({
 				{firstPage.length === 10 && (
 					<Paging
 						lastArticleId={firstPage[firstPage.length - 1].id}
-						query={filter}
-						order={filter}
+						param={param}
 					/>
 				)}
 			</section>
@@ -54,11 +55,16 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	const keyword = query.q;
 	const option = query.option || '0';
 
-	URL += keyword ? `&keyword=${keyword}&option=${Number(option)}` : '';
-	URL += filter ? `&filter=${filter}` : '';
+	const filterBind = {dog: '강아지', cat: '고양이', etc: '기타'};
 
+	URL += keyword ? `&keyword=${keyword}&option=${Number(option)}` : '';
+	URL += filter ? `&filter=${filterBind[filter as 'dog' | 'cat' | 'etc']}` : '';
 	let response = await fetch(`${URL}`);
 	let result = await response.json();
+
+	result.forEach((article: any) => {
+		article.publishedAt = convertDate(article.publishedAt);
+	});
 
 	return result.status
 		? {
@@ -71,6 +77,7 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 				props: {
 					filter: query.filter || '',
 					query: query.q || '',
+					param: query,
 					firstPage: result,
 				},
 		  };

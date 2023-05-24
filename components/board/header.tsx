@@ -8,7 +8,7 @@ export default function Header({header}: {header: any}) {
 			<div style={{display: 'flex', justifyContent: 'space-between'}}>
 				<div className={styles.authorInfo}>
 					<img className={styles.profile} src={header.profile} alt="profile" />
-					<span className={styles.author}>{header.author}</span>
+					<span className={styles.author}>{header.username}</span>
 				</div>
 				<More />
 			</div>

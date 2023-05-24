@@ -14,7 +14,9 @@ export default function Context({context}: {context: any}) {
 					);
 				})}
 			</div>
-			{context.image.length > 0 && <Images image={context.image}></Images>}
+			{context.imageList.length > 0 && (
+				<Images image={context.imageList}></Images>
+			)}
 		</>
 	);
 }

@@ -12,8 +12,8 @@ export default function Article({article}: {article: any}) {
 				if (article.id != null) router.push(`/board/${article.id}`);
 			}}
 		>
-			{article.thumb && article.thumb === 'null' ? (
-				<div className={styles.dummyThumbnails} />
+			{article.thumbnail && article.thumbnail === 'NONE' ? (
+				<></>
 			) : (
 				<Image
 					width={92}
@@ -21,8 +21,8 @@ export default function Article({article}: {article: any}) {
 					quality={75}
 					loading="lazy"
 					className={styles.thumbnail}
-					src={article.thumb}
-					alt={`${article.title} thumbnail`}
+					src={article.thumbnail}
+					alt={`${article.title}`}
 				/>
 			)}
 
