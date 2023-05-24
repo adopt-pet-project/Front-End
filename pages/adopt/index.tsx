@@ -31,11 +31,7 @@ export default function Adopt({
 			<OrderBy orderList={orderList} currentOrder={filter} orderType="filter" />
 			<section className="body">
 				{firstPage.map((article: Adopt) => {
-					return (
-						article.status != 9 && (
-							<Article key={article.id} article={article} />
-						)
-					);
+					return <Article key={article.id} article={article} />;
 				})}
 				{firstPage.length === 10 && (
 					<Paging
@@ -61,11 +57,6 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	URL += filter ? `&filter=${filterBind[filter as 'dog' | 'cat' | 'etc']}` : '';
 	let response = await fetch(`${URL}`);
 	let result = await response.json();
-	console.log(result);
-	result.forEach((article: any) => {
-		article.publishedAt = convertDate(article.publishedAt);
-	});
-
 	result.forEach((article: any) => {
 		article.publishedAt = convertDate(article.publishedAt);
 	});
