@@ -61,7 +61,7 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	URL += filter ? `&filter=${filterBind[filter as 'dog' | 'cat' | 'etc']}` : '';
 	let response = await fetch(`${URL}`);
 	let result = await response.json();
-
+	console.log(result);
 	result.forEach((article: any) => {
 		article.publishedAt = convertDate(article.publishedAt);
 	});

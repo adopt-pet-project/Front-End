@@ -1,5 +1,5 @@
 export function convertDate(serverMills: number): string {
-	const TIME_DIFFERENCE = 32400; // GMT between SEOUL as seconds
+	const TIME_DIFFERENCE = new Date().getTimezoneOffset() * 60;
 	const SECOND_RANGE = 60;
 	const MINUTE_RANGE = SECOND_RANGE * 60;
 	const HOUR_RANGE = MINUTE_RANGE * 24;
@@ -7,7 +7,7 @@ export function convertDate(serverMills: number): string {
 	const WEEK_RANGE = DAY_RANGE * 4;
 	const MONTH_RANGE = WEEK_RANGE * 52;
 
-	let timeGap = Math.floor((Date.now() - serverMills) / 1000) - TIME_DIFFERENCE;
+	let timeGap = Math.floor((Date.now() - serverMills) / 1000) + TIME_DIFFERENCE;
 
 	let result = '';
 

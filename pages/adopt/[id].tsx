@@ -1,5 +1,5 @@
 import {GetServerSideProps} from 'next';
-import {ReactElement} from 'react';
+import {ReactElement, useEffect, useState} from 'react';
 import Layout from '@/components/layout/layout';
 import Carousel from '@/components/adopt/carousel';
 import Header from '@/components/adopt/header';
@@ -7,8 +7,8 @@ import Metadata from '@/components/adopt/metadata';
 import Context from '@/components/adopt/context';
 import Author from '@/components/adopt/author';
 import Position from '@/components/adopt/coords';
-import styles from '@/styles/pages/adopt/view.module.scss';
 import {toDate} from '@/utils/functions/toDate';
+import Inquiry from '@/components/adopt/inquiry';
 
 export default function View({
 	article,
@@ -17,6 +17,25 @@ export default function View({
 	article: AdoptDetail;
 	id: number;
 }) {
+	const [isMine, setIsMine] = useState<boolean>(false);
+
+	useEffect(() => {
+		async function fetchMine() {
+			let response = await fetch(
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/adopt/${id}`,
+				{
+					headers: {
+						Authorization: window.localStorage.getItem('accessToken') as string,
+					},
+				},
+			);
+			let result = await response.json();
+			setIsMine(result.mine);
+		}
+
+		if (window.localStorage.getItem('accessToken') as string) fetchMine();
+	}, []);
+
 	return (
 		<section className="body">
 			<div>
@@ -26,13 +45,10 @@ export default function View({
 				<Header header={article.header} />
 				<Author author={article.author} />
 				<Metadata metadata={article.metadata} />
-				<Context id={id} context={article.context} />
+				<Context mine={isMine} id={id} context={article.context} />
 				<Position coords={article.coords} />
 			</div>
-			<div className={styles.inquiry}>
-				<button>관심목록에 추가</button>
-				<button>문의하기</button>
-			</div>
+			<Inquiry mine={isMine} />
 		</section>
 	);
 }

@@ -1,41 +1,24 @@
-import styles from '@/styles/components/adopt/context.module.scss';
-import {AmodalType, AmodalWrap} from '@/utils/recoil/recoilStore';
-import Link from 'next/link';
 import {useEffect, useState} from 'react';
+import Link from 'next/link';
 import {useRecoilState} from 'recoil';
+import {AmodalType, AmodalWrap} from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/adopt/context.module.scss';
 
 export default function Context({
 	context,
 	id,
+	mine,
 }: {
 	context: AdoptContext;
 	id: number;
+	mine: boolean;
 }) {
-	const [isMine, setIsMine] = useState<Boolean>(false);
 	const [modalRef, setModalRef] = useRecoilState(AmodalWrap);
 	const [modalType, setModalType] = useRecoilState(AmodalType);
 
 	useEffect(() => {
 		setModalType('deleteModal');
 	});
-
-	useEffect(() => {
-		async function fetchMine() {
-			let response = await fetch(
-				`${process.env.NEXT_PUBLIC_SERVER_URL}/adopt/${id}`,
-				{
-					headers: {
-						Authorization: window.localStorage.getItem('accessToken') as string,
-					},
-				},
-			);
-			let result = await response.json();
-			setIsMine(result.mine);
-		}
-
-		if (window.localStorage.getItem('accessToken') as string) fetchMine();
-	}, []);
-
 	return (
 		<div className={styles.container}>
 			<div style={{minHeight: '200px'}}>
@@ -54,7 +37,7 @@ export default function Context({
 					{' · '}
 					<span>연락 {context.chat}</span>
 				</div>
-				{isMine && (
+				{mine && (
 					<div>
 						<Link
 							className={styles.modify}

@@ -37,9 +37,9 @@ export default function SetAddress({
 							.slice(0, 2)
 							.join(' ');
 					}
+					userInfo.current.address = addressRef.current?.value as string;
 				},
 			);
-			userInfo.current.address = addressRef.current?.value as string;
 			setIsAddressSetted(true);
 			setIsReady(true);
 		});
