@@ -1,8 +1,6 @@
-import {useEffect, useState} from 'react';
-import Link from 'next/link';
-import {useRecoilState} from 'recoil';
-import {AmodalType, AmodalWrap} from '@/utils/recoil/recoilStore';
 import styles from '@/styles/components/adopt/context.module.scss';
+import {AmodalType, AmodalWrap} from '@/utils/recoil/recoilStore';
+import Link from 'next/link';
 
 export default function Context({
 	context,
@@ -19,6 +17,7 @@ export default function Context({
 	useEffect(() => {
 		setModalType('deleteModal');
 	});
+
 	return (
 		<div className={styles.container}>
 			<div style={{minHeight: '200px'}}>

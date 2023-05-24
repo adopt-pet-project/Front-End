@@ -7,8 +7,8 @@ export function convertDate(serverMills: number): string {
 	const WEEK_RANGE = DAY_RANGE * 4;
 	const MONTH_RANGE = WEEK_RANGE * 52;
 
-	let timeGap = Math.floor((Date.now() - serverMills) / 1000) + TIME_DIFFERENCE;
 
+	let timeGap = Math.floor((Date.now() - serverMills) / 1000) + TIME_DIFFERENCE;
 	let result = '';
 
 	if (timeGap < SECOND_RANGE) {
