@@ -23,6 +23,7 @@ export default function Home() {
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {
+	console.log(context);
 	return {
 		props: {},
 	};
