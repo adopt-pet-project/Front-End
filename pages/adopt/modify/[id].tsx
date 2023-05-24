@@ -59,7 +59,6 @@ export default function Modify({query}: {query: {id: string}}) {
 					address: result.coords.address,
 				});
 			}
-			console.log(result);
 		}
 
 		setInputValue();
@@ -100,8 +99,6 @@ export default function Modify({query}: {query: {id: string}}) {
 				}),
 			],
 		};
-
-		console.log(body);
 
 		Object.keys(body).forEach((key: string) => {
 			const bodyKey = key as AdoptPostBodyKey;

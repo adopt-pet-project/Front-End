@@ -44,7 +44,7 @@ interface AdoptAuthor {
 
 interface AdoptDetail {
 	id: number;
-	imageList: ImageUploadResponse[];
+	imageList: ImageUploadResponse2[];
 	coords: AdoptCoords;
 	header: AdoptHeader;
 	metadata: AdoptMetadata;

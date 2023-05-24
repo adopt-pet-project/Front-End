@@ -2,6 +2,7 @@ import {BaseSyntheticEvent, useEffect, useRef, useState} from 'react';
 import Article from './article';
 import ArticleSkeleton from '../articleSkeleton';
 import styles from '@/styles/components/adopt/paging.module.scss';
+import {convertDate} from '@/utils/functions/convertDate';
 
 const moreData = {
 	title: '강인한 허스키 분양해요',
@@ -10,52 +11,63 @@ const moreData = {
 	bookmark: 1,
 	chat: 1,
 	publishedAt: 16236247457,
-	thumbnail: '/image8',
+	thumbnail:
+		'https://project-adopt-bucket.s3.ap-northeast-2.amazonaws.com/other/cat.jpeg',
 	species: '시베리안 허스키',
 	status: 0,
 };
 
-const DummyData: any[] = [];
-
-for (let i = 0; i < 9; i++) {
-	DummyData.push({
-		id: i,
-		title: '타이틀',
-		address: '경기도 광주',
-		context: '본문',
-		bookmark: 3,
-		chat: 6,
-		publishedAt: 162746346,
-		thumbnail:
-			'https://mblogthumb-phinf.pstatic.net/MjAxNjExMjJfMjEx/MDAxNDc5NzQ0MDAzOTQy.-ax_EfCGWODogkXHIuDpovF5XHfaYi_s8EtRVWEjYXQg.R4kQWRtNC7pNxF03-aKWylWpGoRgE7vGDeagJm7Sgk0g.PNG.outdoor-interlaken/%EC%8A%A4%EC%9C%84%EC%8A%A4_%EC%97%AC%ED%96%89%ED%95%98%EA%B8%B0_%EC%A2%8B%EC%9D%80_%EA%B3%84%EC%A0%88_christofs70.png?type=w800',
-		status: 0,
-	});
-}
-
 export default function Paging({
 	lastArticleId,
-	order,
-	query,
+	param,
 }: {
 	lastArticleId: any;
-	order: string;
-	query: string;
+	param: any;
 }) {
 	const [lazyLoadArticle, setLazyLoadArticle] = useState<any>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [hasMore, setHasMore] = useState<boolean>(true);
 	const lastestLastArticleId = useRef<any>();
+
+	const skeleton = [];
+
+	for (let i = 0; i < 10; i++) {
+		skeleton.push(<ArticleSkeleton key={i} />);
+	}
 
 	useEffect(() => {
 		lastestLastArticleId.current = lastArticleId;
 	}, []);
 
-	function loadArticle(e: BaseSyntheticEvent) {
+	useEffect(() => {
+		setLazyLoadArticle([]);
+		setHasMore(true);
+		setIsLoading(false);
+	}, [lastArticleId]);
+
+	async function loadArticle(e: BaseSyntheticEvent) {
 		setIsLoading(true);
-		setTimeout(() => {
-			setLazyLoadArticle([...lazyLoadArticle, ...DummyData]);
-			setIsLoading(false);
-			// lastestLastArticleId 갱신
-		}, 10000000);
+		let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/adopt?saleNo=${lastArticleId}`;
+
+		const filter = param.filter;
+		const keyword = param.q;
+		const option = param.option || '0';
+
+		const filterBind = {dog: '강아지', cat: '고양이', etc: '기타'};
+
+		URL += keyword ? `&keyword=${keyword}&option=${Number(option)}` : '';
+		URL += filter
+			? `&filter=${filterBind[filter as 'dog' | 'cat' | 'etc']}`
+			: '';
+		let response = await fetch(URL);
+		let result = await response.json();
+		result.forEach((article: any) => {
+			article.publishedAt = convertDate(article.publishedAt);
+		});
+
+		setHasMore(result.length === 10);
+		setLazyLoadArticle([...lazyLoadArticle, ...result]);
+		setIsLoading(false);
 	}
 
 	return (
@@ -63,13 +75,15 @@ export default function Paging({
 			{lazyLoadArticle.map((article: any) => {
 				return <Article key={article.id} article={article} />;
 			})}
-			{isLoading && new Array(10).fill(<ArticleSkeleton />)}
-			<div className={styles.more} onClick={loadArticle}>
-				<span className={styles.text}>더보기</span>
-				<div style={{filter: 'blur(5px)'}}>
-					<Article article={moreData} />
+			{isLoading && skeleton}
+			{hasMore && !isLoading && (
+				<div className={styles.more} onClick={loadArticle}>
+					<span className={styles.text}>더보기</span>
+					<div style={{filter: 'blur(5px)'}}>
+						<Article article={moreData} />
+					</div>
 				</div>
-			</div>
+			)}
 		</>
 	);
 }

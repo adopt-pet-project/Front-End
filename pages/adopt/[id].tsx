@@ -8,8 +8,15 @@ import Context from '@/components/adopt/context';
 import Author from '@/components/adopt/author';
 import Position from '@/components/adopt/coords';
 import styles from '@/styles/pages/adopt/view.module.scss';
+import {toDate} from '@/utils/functions/toDate';
 
-export default function View({article}: {article: AdoptDetail}) {
+export default function View({
+	article,
+	id,
+}: {
+	article: AdoptDetail;
+	id: number;
+}) {
 	return (
 		<section className="body">
 			<div>
@@ -19,7 +26,7 @@ export default function View({article}: {article: AdoptDetail}) {
 				<Header header={article.header} />
 				<Author author={article.author} />
 				<Metadata metadata={article.metadata} />
-				<Context context={article.context} />
+				<Context id={id} context={article.context} />
 				<Position coords={article.coords} />
 			</div>
 			<div className={styles.inquiry}>
@@ -34,6 +41,8 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/adopt/${query.id}`;
 	let response = await fetch(`${URL}`);
 	let result = await response.json();
+	result.header.publishedAt = toDate(result.header.publishedAt);
+
 	return result.status
 		? {
 				redirect: {
@@ -43,6 +52,7 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 		  }
 		: {
 				props: {
+					id: query.id,
 					article: result,
 				},
 		  };

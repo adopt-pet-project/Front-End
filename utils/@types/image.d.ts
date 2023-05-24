@@ -6,7 +6,11 @@ interface MyFile {
 	imageId?: number;
 }
 
-interface ImageUploadResponse {
+interface ImageUploadResponse1 {
 	imageNo: number;
 	imageUrl: string;
+}
+interface ImageUploadResponse2 {
+	imgNo: number;
+	imgUrl: string;
 }

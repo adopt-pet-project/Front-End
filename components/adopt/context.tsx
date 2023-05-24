@@ -1,13 +1,17 @@
 import styles from '@/styles/components/adopt/context.module.scss';
 import {AmodalType, AmodalWrap} from '@/utils/recoil/recoilStore';
 import Link from 'next/link';
-import {useRouter} from 'next/router';
 import {useEffect, useState} from 'react';
 import {useRecoilState} from 'recoil';
 
-export default function Context({context}: {context: AdoptContext}) {
+export default function Context({
+	context,
+	id,
+}: {
+	context: AdoptContext;
+	id: number;
+}) {
 	const [isMine, setIsMine] = useState<Boolean>(false);
-
 	const [modalRef, setModalRef] = useRecoilState(AmodalWrap);
 	const [modalType, setModalType] = useRecoilState(AmodalType);
 
@@ -15,11 +19,10 @@ export default function Context({context}: {context: AdoptContext}) {
 		setModalType('deleteModal');
 	});
 
-	const router = useRouter();
 	useEffect(() => {
 		async function fetchMine() {
 			let response = await fetch(
-				`${process.env.NEXT_PUBLIC_SERVER_URL}/adopt/${router.query.id}`,
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/adopt/${id}`,
 				{
 					headers: {
 						Authorization: window.localStorage.getItem('accessToken') as string,
@@ -29,6 +32,7 @@ export default function Context({context}: {context: AdoptContext}) {
 			let result = await response.json();
 			setIsMine(result.mine);
 		}
+
 		if (window.localStorage.getItem('accessToken') as string) fetchMine();
 	}, []);
 
@@ -54,7 +58,7 @@ export default function Context({context}: {context: AdoptContext}) {
 					<div>
 						<Link
 							className={styles.modify}
-							href={`/adopt/modify/${router.query.id}`}
+							href={{pathname: '/adopt/modify/[id]', query: {id: id}}}
 						>
 							수정
 						</Link>

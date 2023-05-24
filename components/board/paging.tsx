@@ -1,7 +1,7 @@
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import Article from './article';
-import styles from '@/styles/components/board/paging.module.scss';
 import ArticleSkeleton from '../articleSkeleton';
+import styles from '@/styles/components/board/paging.module.scss';
 
 const moreData = {
 	id: null,
@@ -12,44 +12,45 @@ const moreData = {
 	comment: 5,
 	like: 5,
 	publishedAt: '50분 전',
-	thumb: 'null',
+	thumbnail: 'NONE',
 };
 
-const DummyData: any[] = [];
-
-for (let i = 0; i < 9; i++) {
-	DummyData.push({
-		id: i,
-		title: '타이틀',
-		context: '본문',
-		author: '김성태',
-		view: 3,
-		comment: 6,
-		like: 2,
-		publishedAt: '글쓴시간',
-		thumb:
-			'https://mblogthumb-phinf.pstatic.net/MjAxNjExMjJfMjEx/MDAxNDc5NzQ0MDAzOTQy.-ax_EfCGWODogkXHIuDpovF5XHfaYi_s8EtRVWEjYXQg.R4kQWRtNC7pNxF03-aKWylWpGoRgE7vGDeagJm7Sgk0g.PNG.outdoor-interlaken/%EC%8A%A4%EC%9C%84%EC%8A%A4_%EC%97%AC%ED%96%89%ED%95%98%EA%B8%B0_%EC%A2%8B%EC%9D%80_%EA%B3%84%EC%A0%88_christofs70.png?type=w800',
-	});
-}
-
-export default function Paging({
-	lastArticleId,
-	order,
-	query,
-}: {
-	lastArticleId: any;
-	order: string;
-	query: string;
-}) {
+export default function Paging({param}: {param: any}) {
 	const [lazyLoadArticle, setLazyLoadArticle] = useState<any>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [hasMore, setHasMore] = useState<boolean>(true);
+	const currentPage = useRef<number>(2);
 
-	function loadArticle() {
+	const skeleton = [];
+
+	useEffect(() => {
+		currentPage.current = 2;
+		setIsLoading(false);
+		setLazyLoadArticle([]);
+		setHasMore(true);
+	}, [param]);
+
+	for (let i = 0; i < 10; i++) {
+		skeleton.push(<ArticleSkeleton key={i} />);
+	}
+
+	async function loadArticle() {
 		setIsLoading(true);
-		setTimeout(() => {
-			setLazyLoadArticle([...lazyLoadArticle, ...DummyData]);
-			setIsLoading(false);
-		}, 1000);
+
+		let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/community/list/${
+			param.order || 'recent'
+		}?page=${currentPage.current}`;
+
+		const keyword = param.q;
+		const option = param.option || '0';
+
+		URL += keyword ? `&keyword=${keyword}&option=${Number(option)}` : '';
+		let response = await fetch(URL);
+		let result = await response.json();
+		currentPage.current += 1;
+		setHasMore(result.list.length === 10);
+		setLazyLoadArticle([...lazyLoadArticle, ...result.list]);
+		setIsLoading(false);
 	}
 
 	return (
@@ -57,13 +58,15 @@ export default function Paging({
 			{lazyLoadArticle.map((article: any) => {
 				return <Article key={article.id} article={article} />;
 			})}
-			{isLoading && new Array(10).fill(<ArticleSkeleton />)}
-			<div className={styles.more} onClick={loadArticle}>
-				<span className={styles.text}>더보기</span>
-				<div style={{filter: 'blur(5px)'}}>
-					<Article article={moreData} />
+			{isLoading && skeleton}
+			{hasMore && !isLoading && (
+				<div className={styles.more} onClick={loadArticle}>
+					<span className={styles.text}>더보기</span>
+					<div style={{filter: 'blur(5px)'}}>
+						<Article article={moreData} />
+					</div>
 				</div>
-			</div>
+			)}
 		</>
 	);
 }

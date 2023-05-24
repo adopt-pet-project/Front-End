@@ -4,10 +4,9 @@ import styles from '@/styles/components/adopt/carousel.module.scss';
 export default function Carousel({
 	imageList,
 }: {
-	imageList: ImageUploadResponse[];
+	imageList: ImageUploadResponse2[];
 }) {
 	const [page, setPage] = useState<number>(1);
-
 	const preventScroll = useRef<boolean>(false);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const mobileDragArea = useRef<HTMLDivElement>(null);
@@ -19,11 +18,10 @@ export default function Carousel({
 	const regExp = /[^a-z,(]+[^px]/g;
 
 	const carouselImageList = [
-		imageList[imageList.length - 1].imageUrl,
-		...imageList.map((img: ImageUploadResponse) => img.imageUrl),
-		imageList[0].imageUrl,
+		imageList[imageList.length - 1].imgUrl,
+		...imageList.map((image: ImageUploadResponse2) => image.imgUrl),
+		imageList[0].imgUrl,
 	];
-
 	const touchStart = useCallback(
 		(e: TouchEvent) => {
 			if (!imagesRef.current || preventScroll.current) return;
@@ -133,8 +131,14 @@ export default function Carousel({
 				ref={imagesRef}
 				style={{transform: `translateX(${-1 * page}00%)`}}
 			>
-				{carouselImageList.map((imageSrc: string) => {
-					return <img key={imageSrc} className={styles.image} src={imageSrc} />;
+				{carouselImageList.map((imageSrc: string, index: number) => {
+					return (
+						<img
+							key={imageSrc + index}
+							className={styles.image}
+							src={imageSrc}
+						/>
+					);
 				})}
 			</div>
 
