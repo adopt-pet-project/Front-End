@@ -1,14 +1,15 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {useRecoilState} from 'recoil';
+import {useQuery} from 'react-query';
 import {AisAlarmBoxOn, AisProfileBoxOn} from '@/utils/recoil/recoilStore';
 import ProfileBox from './profile/profileBox';
 import AlarmBox from './alarm/alarmBox';
 import styles from '@/styles/components/header/profileLoginTrue.module.scss';
 
 function ProfileLoginTrue() {
+	const accessToken = window.localStorage.getItem('accessToken');
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
-
 	const [alarmData, setAlarmData] = useState<
 		(Alarmdata | Alarmnotedata | Alarmchatdata)[]
 	>([
@@ -72,6 +73,23 @@ function ProfileLoginTrue() {
 			del: false,
 		},
 	]);
+
+	const {status, error, data} = useQuery<any>(
+		['readMyInfo'],
+		() => {
+			return fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`, {
+				method: 'GET',
+				headers: {
+					Authorization: `${accessToken}`,
+				},
+			})
+				.then(response => response.json())
+				.then(data => {
+					console.log(data);
+				});
+		},
+		{retry: 0},
+	);
 
 	return (
 		<div className={styles.profileLoginWrap}>

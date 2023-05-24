@@ -93,7 +93,7 @@ export const AwriteNote = atom({
 
 export const AisLogin = atom({
 	key: `login/${v1()}`,
-	default: true,
+	default: false,
 });
 
 export const AcurrentMyPageCtg = atom<0 | 1 | 2>({
