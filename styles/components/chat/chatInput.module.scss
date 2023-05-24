@@ -6,11 +6,15 @@
 
 .container {
 	position: relative;
-	margin: 0 16px 16px 16px;
+	padding: 16px 8px;
+	border-top: 1px solid var(--gray);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
+	position: sticky;
+	bottom: 0;
+	background: var(--white);
 
 	.chatInput {
 		height: 25.6px;
@@ -90,7 +94,7 @@
 
 @media screen and (max-width: 768px) {
 	.container {
-		margin: 0 12px 12px 12px;
+		padding: 12px 8px;
 		.menu {
 			height: 238px;
 			margin: 12px 0 0 0;
