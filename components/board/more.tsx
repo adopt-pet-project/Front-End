@@ -78,16 +78,18 @@ export default function More() {
 
 	return (
 		<>
-			<div
-				className={styles.container}
-				ref={containerRef}
-				onClick={e => {
-					e.stopPropagation();
-					setIsActive(!isActive);
-				}}
-			>
-				<img src="/icon/more.svg" />
-			</div>
+			{isMine === 1 && (
+				<div
+					className={styles.container}
+					ref={containerRef}
+					onClick={e => {
+						e.stopPropagation();
+						setIsActive(!isActive);
+					}}
+				>
+					<img src="/icon/more.svg" />
+				</div>
+			)}
 			{isActive && (
 				<div ref={menuRef} className={styles.menu} onClick={onClickItem}>
 					{option[isMine].map((opt: string) => {
