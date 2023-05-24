@@ -1,16 +1,25 @@
-import styles from '@/styles/components/board/more.module.scss';
-import {headers} from 'next/dist/client/components/headers';
+import {BaseSyntheticEvent, useEffect, useRef, useState} from 'react';
 import {useRouter} from 'next/router';
-import {useEffect, useRef, useState} from 'react';
+import {useRecoilState} from 'recoil';
+import {AmodalWrap, AmodalType} from '@/utils/recoil/recoilStore';
+import styles from '@/styles/components/board/more.module.scss';
 
 const option = [['쪽지'], ['수정', '삭제']];
 
 export default function More() {
 	const [isActive, setIsActive] = useState<boolean>(false);
 	const [isMine, setIsMine] = useState<number>(0);
+
+	const [modalRef, setModalRef] = useRecoilState(AmodalWrap);
+	const [modalType, setModalType] = useRecoilState(AmodalType);
+
 	const containerRef = useRef<HTMLDivElement>(null);
 	const menuRef = useRef<HTMLDivElement>(null);
 	const router = useRouter();
+
+	useEffect(() => {
+		setModalType('deleteModal');
+	});
 
 	useEffect(() => {
 		function onClickOutside(e: MouseEvent) {
@@ -52,6 +61,21 @@ export default function More() {
 		fetchMine();
 	}, []);
 
+	function onClickItem(e: BaseSyntheticEvent) {
+		switch (e.target.innerText) {
+			case '수정':
+				router.push(`/board/modify/${router.query.id}`);
+				return;
+			case '삭제':
+				modalRef!.current!.style.display = 'flex';
+				return;
+			case '쪽지':
+				return;
+			default:
+				return;
+		}
+	}
+
 	return (
 		<>
 			<div
@@ -65,7 +89,7 @@ export default function More() {
 				<img src="/icon/more.svg" />
 			</div>
 			{isActive && (
-				<div ref={menuRef} className={styles.menu}>
+				<div ref={menuRef} className={styles.menu} onClick={onClickItem}>
 					{option[isMine].map((opt: string) => {
 						return (
 							<span key={opt} className={styles.option}>

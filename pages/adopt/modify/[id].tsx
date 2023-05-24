@@ -51,7 +51,16 @@ export default function Modify({query}: {query: {id: string}}) {
 				(formRef.current.gender as any).value = result.metadata.gender;
 				(formRef.current.age as any).value = result.metadata.age;
 				(formRef.current.species as any).value = result.metadata.species;
-				(formRef.current.species as any).value = result.metadata.species;
+
+				setServerImageList([
+					...result.imageList.map((image: ImageUploadResponse2) => {
+						return {
+							isUploaded: true,
+							serverSrc: image.imgUrl,
+							imageId: image.imgNo,
+						};
+					}),
+				]);
 
 				setCoords({
 					latitude: result.coords.latitude,
@@ -95,11 +104,11 @@ export default function Modify({query}: {query: {id: string}}) {
 			address: e.target.address.value,
 			image: [
 				...serverImageList.map((myFile: MyFile) => {
-					return {imgNo: myFile.imageId, imageUrl: myFile.serverSrc};
+					return {imgNo: myFile.imageId, imgUrl: myFile.serverSrc};
 				}),
 			],
 		};
-
+		console.log(body);
 		Object.keys(body).forEach((key: string) => {
 			const bodyKey = key as AdoptPostBodyKey;
 			if (!body[bodyKey]) empty.push(keyBind[bodyKey]);

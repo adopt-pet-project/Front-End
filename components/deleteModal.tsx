@@ -19,7 +19,9 @@ export default function DeleteModal() {
 
 	async function onClickApply() {
 		let response = await fetch(
-			`${process.env.NEXT_PUBLIC_SERVER_URL}/${type.current}/${id.current}`,
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/${
+				type.current === 'board' ? 'community/article' : 'adopt'
+			}/${id.current}`,
 			{
 				headers: {Authorization: localStorage.getItem('accessToken') as string},
 				method: 'DELETE',
