@@ -1,6 +1,8 @@
-import styles from '@/styles/components/adopt/context.module.scss';
+import {useEffect} from 'react';
+import {useRecoilState} from 'recoil';
 import {AmodalType, AmodalWrap} from '@/utils/recoil/recoilStore';
 import Link from 'next/link';
+import styles from '@/styles/components/adopt/context.module.scss';
 
 export default function Context({
 	context,
