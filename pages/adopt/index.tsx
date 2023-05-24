@@ -66,6 +66,10 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 		article.publishedAt = convertDate(article.publishedAt);
 	});
 
+	result.forEach((article: any) => {
+		article.publishedAt = convertDate(article.publishedAt);
+	});
+
 	return result.status
 		? {
 				redirect: {
