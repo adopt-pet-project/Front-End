@@ -22,6 +22,8 @@ export default function setProfile({
 	}, []);
 
 	function changeImageInput(e: BaseSyntheticEvent) {
+		setIsReady(false);
+
 		const newProfileImage: MyFile = {
 			localFile: e.currentTarget.files[0],
 			localSrc: URL.createObjectURL(e.currentTarget.files[0]),
@@ -30,9 +32,51 @@ export default function setProfile({
 		setProfileImage(newProfileImage);
 
 		// 이미지 업로드 로직
-		setTimeout(() => {
-			setProfileImage({...newProfileImage, isUploaded: true});
-		}, 50000);
+		uploadImage(newProfileImage);
+	}
+
+	async function uploadImage(myFile: MyFile) {
+		try {
+			let formData = new FormData();
+			if (!myFile.localFile) {
+				throw new Error('Missing files');
+			}
+			formData.append('file', myFile.localFile);
+			formData.append('type', 'profile');
+
+			const register = window.localStorage.getItem('register');
+			if (register != null) {
+				let email = JSON.parse(register).email;
+				formData.append('email', email);
+			}
+			let response = await fetch(
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/api/image`,
+				{
+					method: 'POST',
+					body: formData,
+				},
+			);
+
+			let result = await response.json();
+			console.log(result);
+			if (result.status === 200) {
+				myFile.isUploaded = true;
+				myFile.imageId = result.data.id;
+				myFile.serverSrc = result.data.url;
+				setProfileImage({...myFile, isUploaded: true});
+				userInfo.current = {
+					...userInfo.current,
+					imgNo: result.data.id,
+					imgUrl: result.data.url,
+				};
+				setIsReady(true);
+			} else {
+				throw new Error('이미지 업로드 실패');
+			}
+		} catch (e) {
+			alert(e);
+			setProfileImage(undefined);
+		}
 	}
 
 	return (

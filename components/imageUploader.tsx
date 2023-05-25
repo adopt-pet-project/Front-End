@@ -26,7 +26,6 @@ export default function ImageUploader({
 	useEffect(() => {
 		// Modify 시 serverImageList 를 LocalImageList로 불러와 사용
 		if (serverImageList.length !== 0) {
-			console.log(serverImageList);
 			localImageList.current = serverImageList;
 			updateState();
 		}

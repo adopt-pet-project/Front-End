@@ -8,7 +8,8 @@ interface Register {
 	provider: string;
 	nickname: string;
 	address: string;
-	profile?: string;
+	imgNo?: string;
+	imgUrl?: string;
 }
 
 interface userInfo {
