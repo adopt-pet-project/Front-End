@@ -74,22 +74,22 @@ function ProfileLoginTrue() {
 		},
 	]);
 
-	const {status, error, data} = useQuery<any>(
-		['readMyInfo'],
-		() => {
-			return fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`, {
-				method: 'GET',
-				headers: {
-					Authorization: `${accessToken}`,
-				},
-			})
-				.then(response => response.json())
-				.then(data => {
-					console.log(data);
-				});
-		},
-		{retry: 0},
-	);
+	// const {status, error, data} = useQuery<any>(
+	// 	['readMyInfo'],
+	// 	() => {
+	// 		return fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`, {
+	// 			method: 'GET',
+	// 			headers: {
+	// 				Authorization: `${accessToken}`,
+	// 			},
+	// 		})
+	// 			.then(response => response.json())
+	// 			.then(data => {
+	// 				console.log(data);
+	// 			});
+	// 	},
+	// 	{retry: 0},
+	// );
 
 	return (
 		<div className={styles.profileLoginWrap}>

@@ -72,6 +72,9 @@ export default function Register() {
 			사유 : ${result.error}`);
 
 			router.push('/');
+		} else {
+			alert(`회원가입 성공`);
+			router.push('/');
 		}
 	}
 
