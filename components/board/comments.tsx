@@ -2,16 +2,19 @@ import styles from '@/styles/components/board/comments.module.scss';
 
 export default function Comments({
 	parentId,
-	comments,
+	commentList,
 	setTarget,
 }: {
 	parentId: number | null;
-	comments: any;
+	commentList: any;
 	setTarget: Function;
 }) {
 	return (
 		<>
-			{comments.map((comment: any) => {
+			{commentList.length === 0 && (
+				<div className={styles.empty}>댓글을 작성 해 보세요.</div>
+			)}
+			{commentList.map((comment: any) => {
 				function getCommentTarget() {
 					setTarget({
 						commentId: parentId != null ? parentId : comment.id,
@@ -21,7 +24,7 @@ export default function Comments({
 				}
 
 				return (
-					<div key={comment.id}>
+					<div className={styles.container} key={comment.id}>
 						<div
 							className={`${styles.comment} ${
 								comment.type === 'reply' ? styles.reply : ''
@@ -52,7 +55,7 @@ export default function Comments({
 							<Comments
 								parentId={comment.id}
 								setTarget={setTarget}
-								comments={comment.commments}
+								commentList={comment.commments}
 							/>
 						)}
 					</div>

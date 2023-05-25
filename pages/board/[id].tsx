@@ -1,71 +1,81 @@
 import {GetServerSideProps} from 'next';
-import {ReactElement, useState} from 'react';
+import {ReactElement, useEffect, useRef, useState} from 'react';
 import Link from 'next/link';
 import Layout from '@/components/layout/layout';
 import Comments from '@/components/board/comments';
 import Header from '@/components/board/header';
 import Context from '@/components/board/context';
 import Option from '@/components/board/option';
-import styles from '@/styles/pages/board/view.module.scss';
 import {toDate} from '@/utils/functions/toDate';
+import {useRouter} from 'next/router';
+import styles from '@/styles/pages/board/view.module.scss';
 
-const dummyComments = [
-	{
-		type: 'comment',
-		id: 1,
-		authorId: 15,
-		username: '홍길동',
-		context: 'ㅋㅋ 그러게 조심좀 하시지',
-		profile:
-			'https://mblogthumb-phinf.pstatic.net/MjAxNjExMjJfMjEx/MDAxNDc5NzQ0MDAzOTQy.-ax_EfCGWODogkXHIuDpovF5XHfaYi_s8EtRVWEjYXQg.R4kQWRtNC7pNxF03-aKWylWpGoRgE7vGDeagJm7Sgk0g.PNG.outdoor-interlaken/%EC%8A%A4%EC%9C%84%EC%8A%A4_%EC%97%AC%ED%96%89%ED%95%98%EA%B8%B0_%EC%A2%8B%EC%9D%80_%EA%B3%84%EC%A0%88_christofs70.png?type=w800',
-		publishedAt: '2023.05.11 19:27',
-		like: 3,
-		commments: [
-			{
-				type: 'reply',
-				id: 2,
-				authorId: 15,
-				username: '홍길동',
-				context: 'ㅠㅠ',
-				profile:
-					'https://mblogthumb-phinf.pstatic.net/MjAxNjExMjJfMjEx/MDAxNDc5NzQ0MDAzOTQy.-ax_EfCGWODogkXHIuDpovF5XHfaYi_s8EtRVWEjYXQg.R4kQWRtNC7pNxF03-aKWylWpGoRgE7vGDeagJm7Sgk0g.PNG.outdoor-interlaken/%EC%8A%A4%EC%9C%84%EC%8A%A4_%EC%97%AC%ED%96%89%ED%95%98%EA%B8%B0_%EC%A2%8B%EC%9D%80_%EA%B3%84%EC%A0%88_christofs70.png?type=w800',
-				publishedAt: '2023.05.11 19:29',
-				like: 5,
-			},
-			{
-				type: 'reply',
-				id: 3,
-				authorId: 16,
-				username: '양의지',
-				context: 'ㅠㅠ',
-				profile:
-					'https://mblogthumb-phinf.pstatic.net/MjAxNjExMjJfMjEx/MDAxNDc5NzQ0MDAzOTQy.-ax_EfCGWODogkXHIuDpovF5XHfaYi_s8EtRVWEjYXQg.R4kQWRtNC7pNxF03-aKWylWpGoRgE7vGDeagJm7Sgk0g.PNG.outdoor-interlaken/%EC%8A%A4%EC%9C%84%EC%8A%A4_%EC%97%AC%ED%96%89%ED%95%98%EA%B8%B0_%EC%A2%8B%EC%9D%80_%EA%B3%84%EC%A0%88_christofs70.png?type=w800',
-				publishedAt: '2023.05.11 19:29',
-				like: 5,
-			},
-		],
-	},
-	{
-		id: 4,
-		authorId: 15,
-		username: '김성태',
-		type: 'comment',
-		context: 'ㅋㅋ 그러게 조심좀 하시지',
-		profile:
-			'https://mblogthumb-phinf.pstatic.net/MjAxNjExMjJfMjEx/MDAxNDc5NzQ0MDAzOTQy.-ax_EfCGWODogkXHIuDpovF5XHfaYi_s8EtRVWEjYXQg.R4kQWRtNC7pNxF03-aKWylWpGoRgE7vGDeagJm7Sgk0g.PNG.outdoor-interlaken/%EC%8A%A4%EC%9C%84%EC%8A%A4_%EC%97%AC%ED%96%89%ED%95%98%EA%B8%B0_%EC%A2%8B%EC%9D%80_%EA%B3%84%EC%A0%88_christofs70.png?type=w800',
-		publishedAt: '2023.05.11 19:27',
-		like: 3,
-		commments: [],
-	},
-];
-
-export default function View({adopt}: {adopt: any}) {
+export default function View({board, id}: {board: BoardDetail; id: string}) {
+	const router = useRouter();
 	const [target, setTarget] = useState<CommentTarget | null>(null);
+	const commentRef = useRef<HTMLInputElement>(null);
+
+	const [commentList, setCommentList] = useState<any>([]);
+
+	useEffect(() => {
+		async function fetchCommentList() {
+			let response = await fetch(
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment/${id}`,
+			);
+
+			let result = await response.json();
+			console.log(result);
+		}
+
+		fetchCommentList();
+	}, []);
+
+	async function onClickWriteComment() {
+		if (!window.localStorage.getItem('accessToken')) {
+			dispatchEvent(new Event('fadeLogin'));
+			return;
+		}
+
+		if (!target) {
+			let response = await fetch(
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment`,
+				{
+					headers: {
+						Authorization: window.localStorage.getItem('accessToken') as string,
+					},
+					method: 'POST',
+					body: JSON.stringify({
+						boardId: id,
+						context: commentRef.current?.value,
+					}),
+				},
+			);
+
+			let result = await response.json();
+
+			if (result.status === 200) {
+				router.push('/board');
+			} else if (result.status === 401) {
+				router.push(`/refreshToken`);
+			} else {
+				alert(`error code : ${result.status}`);
+				router.push('/board');
+			}
+
+			// console.log(result);
+			// console.log({
+			// 	boardId: id,
+			// 	context: commentRef.current?.value,
+			// });
+			// console.log(window.localStorage.getItem('accessToken') as string);
+		}
+	}
+
 	return (
 		<section className="body">
-			<div>
-				<Header header={adopt.header} />
-				<Context context={adopt.context} />
+			<div style={{display: 'flex', flexGrow: '1', flexDirection: 'column'}}>
+				<Header header={board.header} />
+				<Context context={board.context} />
 				<Option />
 				<Link className={styles.return} href={'/board'}>
 					목록으로
@@ -74,7 +84,7 @@ export default function View({adopt}: {adopt: any}) {
 					<Comments
 						parentId={null}
 						setTarget={setTarget}
-						comments={dummyComments}
+						commentList={commentList}
 					/>
 				</div>
 			</div>
@@ -96,10 +106,11 @@ export default function View({adopt}: {adopt: any}) {
 				<div className={styles.commentInput}>
 					<input
 						placeholder="댓글을 작성하세요."
+						ref={commentRef}
 						className={styles.input}
 						type="text"
 					/>
-					<button>작성</button>
+					<button onClick={onClickWriteComment}>작성</button>
 				</div>
 			</div>
 		</section>
@@ -113,12 +124,23 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 		await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article/${id}`)
 	).json();
 
+	if (result.status)
+		return {
+			redirect: {
+				permanent: false,
+				destination: '/404',
+			},
+		};
+
 	result.header.publishedAt = toDate(
 		new Date(result.header.publishedAt).getTime(),
 	);
 
+	if (result.header.username == null) {
+		result.header.username = '탈퇴한 사용자';
+	}
 	return {
-		props: {adopt: result},
+		props: {board: result, id},
 	};
 };
 

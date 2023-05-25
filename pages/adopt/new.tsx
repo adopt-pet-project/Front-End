@@ -84,7 +84,7 @@ export default function New({query}: {query: {type: string}}) {
 		if (result.status === 200) {
 			router.push('/adopt');
 		} else if (result.status === 401) {
-			router.push(`/refreshToken?redirect=${router.asPath}`);
+			router.push(`/refreshToken`);
 		} else {
 			alert(result.error);
 			router.push('/adopt');
