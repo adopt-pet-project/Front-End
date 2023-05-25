@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {ReactElement, useEffect} from 'react';
 import {useRouter} from 'next/router';
 
 export default function RefreshToken() {
@@ -28,3 +28,7 @@ export default function RefreshToken() {
 	}, []);
 	return <></>;
 }
+
+RefreshToken.getLayout = function getLayout(page: ReactElement) {
+	return <div>{page}</div>;
+};
