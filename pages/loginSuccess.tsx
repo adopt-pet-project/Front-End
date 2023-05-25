@@ -7,8 +7,6 @@ export default function LoginSuccess() {
 	const setRegister = useRegister();
 
 	useEffect(() => {
-		if (!router.isReady) return;
-
 		const accessToken = router.query.accessToken as string;
 		const email = router.query.email as string;
 		const provider = router.query.email as string;
