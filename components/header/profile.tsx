@@ -13,7 +13,6 @@ export default function Profile({
 }) {
 	const [isModalActive, setIsModalActive] = useState<boolean>(false);
 	const [isLogin, setIsLogin] = useRecoilState(AisLogin);
-	const router = useRouter();
 
 	useEffect(() => {
 		setIsLogin(Boolean(window.localStorage.getItem('accessToken')));

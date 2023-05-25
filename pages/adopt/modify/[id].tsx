@@ -108,7 +108,6 @@ export default function Modify({query}: {query: {id: string}}) {
 				}),
 			],
 		};
-		console.log(body);
 		Object.keys(body).forEach((key: string) => {
 			const bodyKey = key as AdoptPostBodyKey;
 			if (!body[bodyKey]) empty.push(keyBind[bodyKey]);
@@ -133,6 +132,8 @@ export default function Modify({query}: {query: {id: string}}) {
 
 		if (result.status === 200) {
 			router.push(`/adopt/${router.query.id}`);
+		} else if (result.status === 401) {
+			router.push(`/refreshToken?redirect=${router.asPath}`);
 		} else {
 			alert(result.error);
 			router.push('/adopt');

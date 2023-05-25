@@ -18,6 +18,11 @@ export default function New() {
 	async function onSubmit(e: BaseSyntheticEvent) {
 		e.preventDefault();
 
+		if (e.target.title.value == '' || e.target.context.value == '') {
+			alert('제목과 본문은 필수 입력사항입니다.');
+			return;
+		}
+
 		let response = await fetch(
 			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article`,
 			{
@@ -45,6 +50,8 @@ export default function New() {
 		let result = await response.json();
 		if (result.status === 200) {
 			router.push('/board');
+		} else if (result.status === 401) {
+			router.push(`/refreshToken?redirect=${router.asPath}`);
 		} else {
 			alert(result.error);
 			router.push('/board');
