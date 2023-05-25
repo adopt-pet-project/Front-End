@@ -8,7 +8,7 @@ import ModalWrap from './modalWrap';
 const queryClient = new QueryClient();
 
 export default function Layout({children}: {children: ReactElement}) {
-	const asideRef: ForwardedRef<HTMLDivElement> = useRef<HTMLDivElement>(null);
+	const asideRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 	const containerRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
 	return (
