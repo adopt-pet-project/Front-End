@@ -40,7 +40,7 @@ export default function Board({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({query}) => {
-	const order = query.order === 'like' || 'recent';
+	const order = query.order === 'like' ? 'like' : 'recent';
 
 	let result = await (
 		await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community/list/${order}`)
