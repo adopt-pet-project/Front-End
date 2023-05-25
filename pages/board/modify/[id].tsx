@@ -42,6 +42,15 @@ export default function Modify({query}: {query: {id: string}}) {
 			if (formRef.current) {
 				(formRef.current.title as any).value = result.header.title;
 				(formRef.current.context as any).value = result.context.context;
+				setServerImageList([
+					...result.context.imageList.map((image: ImageUploadResponse1) => {
+						return {
+							isUploaded: true,
+							serverSrc: image.imageUrl,
+							imageId: image.imageNo,
+						};
+					}),
+				]);
 			}
 		}
 		setInputValue();
