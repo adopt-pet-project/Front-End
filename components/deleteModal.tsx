@@ -27,10 +27,12 @@ export default function DeleteModal() {
 				method: 'DELETE',
 			},
 		);
-		modalRef!.current!.style.display = 'none';
+		if (modalRef && modalRef.current!) modalRef.current.style.display = 'none';
 		let result = await response.json();
 		if (result.status === 200) {
 			router.push(`/${type.current}`);
+		} else if (result.status === 401) {
+			router.push(`/refreshToken?redirect=${router.asPath}`);
 		} else {
 			alert(`삭제 실패\n사유:${result.error}`);
 			router.push(`/${type.current}`);

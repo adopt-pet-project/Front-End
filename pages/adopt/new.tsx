@@ -83,6 +83,8 @@ export default function New({query}: {query: {type: string}}) {
 		let result = await response.json();
 		if (result.status === 200) {
 			router.push('/adopt');
+		} else if (result.status === 401) {
+			router.push(`/refreshToken?redirect=${router.asPath}`);
 		} else {
 			alert(result.error);
 			router.push('/adopt');

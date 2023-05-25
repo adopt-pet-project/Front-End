@@ -86,6 +86,8 @@ export default function Modify({query}: {query: {id: string}}) {
 		let result = await response.json();
 		if (result.status === 200) {
 			router.push('/board');
+		} else if (result.status === 401) {
+			router.push(`/refreshToken?redirect=${router.asPath}`);
 		} else {
 			alert(result.error);
 			router.push('/board');

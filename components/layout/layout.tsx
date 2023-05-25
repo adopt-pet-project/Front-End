@@ -1,4 +1,4 @@
-import {ReactElement, RefObject, useRef} from 'react';
+import {ForwardedRef, ReactElement, RefObject, useRef} from 'react';
 import {RecoilRoot, useRecoilState} from 'recoil';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import Aside from '../aside/aside';
@@ -8,7 +8,7 @@ import ModalWrap from './modalWrap';
 const queryClient = new QueryClient();
 
 export default function Layout({children}: {children: ReactElement}) {
-	const asideRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+	const asideRef: ForwardedRef<HTMLDivElement> = useRef<HTMLDivElement>(null);
 	const containerRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
 	return (
@@ -23,7 +23,7 @@ export default function Layout({children}: {children: ReactElement}) {
 						</div>
 					</main>
 				</div>
-				<ModalWrap />
+				{containerRef.current && <ModalWrap />}
 			</RecoilRoot>
 		</QueryClientProvider>
 	);

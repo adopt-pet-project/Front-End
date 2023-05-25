@@ -52,9 +52,12 @@ export default function More() {
 				},
 			);
 			let result = await response.json();
-
-			if (!result.status) {
+			if (result.status == null) {
 				setIsMine(result.mine ? 1 : 0);
+			} else if (result.status === 401) {
+				router.push(`/refreshToken?redirect=${router.asPath}`);
+			} else {
+				alert(`${result.error}`);
 			}
 		}
 		if (window.localStorage.getItem('accessToken')) fetchMine();

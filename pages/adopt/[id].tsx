@@ -9,6 +9,7 @@ import Author from '@/components/adopt/author';
 import Position from '@/components/adopt/coords';
 import {toDate} from '@/utils/functions/toDate';
 import Inquiry from '@/components/adopt/inquiry';
+import {useRouter} from 'next/router';
 
 export default function View({
 	article,
@@ -18,6 +19,7 @@ export default function View({
 	id: number;
 }) {
 	const [isMine, setIsMine] = useState<boolean>(false);
+	const router = useRouter();
 
 	useEffect(() => {
 		async function fetchMine() {
@@ -30,7 +32,12 @@ export default function View({
 				},
 			);
 			let result = await response.json();
-			setIsMine(result.mine);
+
+			if (result.status === 401) {
+				router.push(`/refreshToken?redirect=${router.asPath}`);
+			} else {
+				setIsMine(result.mine);
+			}
 		}
 
 		if (window.localStorage.getItem('accessToken') as string) fetchMine();
