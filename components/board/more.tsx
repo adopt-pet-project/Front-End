@@ -43,22 +43,21 @@ export default function More() {
 	useEffect(() => {
 		async function fetchMine() {
 			const id = router.query.id;
-			let result = await (
-				await fetch(
-					`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article/${id}`,
-					{
-						headers: {
-							Authorization: window.localStorage.getItem(
-								'accessToken',
-							) as string,
-						},
+			let response = await fetch(
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article/${id}`,
+				{
+					headers: {
+						Authorization: window.localStorage.getItem('accessToken') as string,
 					},
-				)
-			).json();
-			setIsMine(result.mine ? 1 : 0);
-		}
+				},
+			);
+			let result = await response.json();
 
-		fetchMine();
+			if (!result.status) {
+				setIsMine(result.mine ? 1 : 0);
+			}
+		}
+		if (window.localStorage.getItem('accessToken')) fetchMine();
 	}, []);
 
 	function onClickItem(e: BaseSyntheticEvent) {

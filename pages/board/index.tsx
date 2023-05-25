@@ -50,6 +50,12 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 		article.publishedAt = convertDate(new Date(article.publishedAt).getTime());
 	});
 
+	result.hot.publishedAt = convertDate(
+		new Date(result.hot.publishedAt).getTime(),
+	);
+	result.weekly.publishedAt = convertDate(
+		new Date(result.weekly.publishedAt).getTime(),
+	);
 	return {
 		props: {
 			order: query.order || 'recent',
