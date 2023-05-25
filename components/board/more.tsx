@@ -18,10 +18,6 @@ export default function More() {
 	const router = useRouter();
 
 	useEffect(() => {
-		setModalType('deleteModal');
-	});
-
-	useEffect(() => {
 		function onClickOutside(e: MouseEvent) {
 			if (
 				menuRef.current &&
@@ -69,6 +65,7 @@ export default function More() {
 				router.push(`/board/modify/${router.query.id}`);
 				return;
 			case '삭제':
+				setModalType('deleteModal');
 				modalRef!.current!.style.display = 'flex';
 				return;
 			case '쪽지':

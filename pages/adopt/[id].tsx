@@ -34,7 +34,7 @@ export default function View({
 			let result = await response.json();
 
 			if (result.status === 401) {
-				router.push(`/refreshToken?redirect=${router.asPath}`);
+				router.push(`/refreshToken`);
 			} else {
 				setIsMine(result.mine);
 			}
@@ -64,7 +64,9 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/adopt/${query.id}`;
 	let response = await fetch(`${URL}`);
 	let result = await response.json();
-	result.header.publishedAt = toDate(result.header.publishedAt);
+
+	if (!result.status)
+		result.header.publishedAt = toDate(result.header.publishedAt);
 
 	return result.status
 		? {

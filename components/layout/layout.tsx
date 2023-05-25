@@ -23,7 +23,7 @@ export default function Layout({children}: {children: ReactElement}) {
 						</div>
 					</main>
 				</div>
-				{containerRef.current && <ModalWrap />}
+				<ModalWrap />
 			</RecoilRoot>
 		</QueryClientProvider>
 	);

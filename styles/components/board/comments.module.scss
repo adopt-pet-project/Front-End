@@ -1,9 +1,20 @@
+.container {
+	width: 100%;
+}
+
 .comment {
 	border-bottom: 1px solid var(--gray);
 }
 
 .reply {
 	padding-left: 40px;
+}
+
+.empty {
+	margin: 16px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .upper,

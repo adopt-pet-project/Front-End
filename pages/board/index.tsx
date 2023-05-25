@@ -22,7 +22,7 @@ export default function Board({
 	order: string;
 	query: string;
 	param: any;
-	firstPage: any;
+	firstPage: BoardFirstPage;
 }) {
 	return (
 		<>
@@ -30,7 +30,7 @@ export default function Board({
 			<OrderBy orderList={orderList} currentOrder={order} orderType="order" />
 			<section className="body">
 				{!query && <Banner hot={firstPage.hot} weekly={firstPage.weekly} />}
-				{firstPage.list.map((article: any) => {
+				{firstPage.list.map((article: Board) => {
 					return <Article key={article.id} article={article} />;
 				})}
 				<Paging param={param} />
@@ -48,6 +48,7 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 
 	result.list.forEach((article: any) => {
 		article.publishedAt = convertDate(new Date(article.publishedAt).getTime());
+		if (article.author == null) article.author = '탈퇴한 사용자';
 	});
 
 	result.hot.publishedAt = convertDate(
