@@ -6,6 +6,7 @@ import OrderBy from '@/components/orderby';
 import Header from '@/components/header';
 import Banner from '@/components/board/banner';
 import Paging from '@/components/board/paging';
+import {convertDate} from '@/utils/functions/convertDate';
 
 const orderList: Order[] = [
 	{order: 'recent', orderText: '최신순'},
@@ -44,6 +45,10 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	let result = await (
 		await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community/list/${order}`)
 	).json();
+
+	result.list.forEach((article: any) => {
+		article.publishedAt = convertDate(new Date(article.publishedAt).getTime());
+	});
 
 	return {
 		props: {

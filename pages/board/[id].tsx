@@ -7,6 +7,7 @@ import Header from '@/components/board/header';
 import Context from '@/components/board/context';
 import Option from '@/components/board/option';
 import styles from '@/styles/pages/board/view.module.scss';
+import {toDate} from '@/utils/functions/toDate';
 
 const dummyComments = [
 	{
@@ -111,6 +112,10 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	let result = await (
 		await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article/${id}`)
 	).json();
+
+	result.header.publishedAt = toDate(
+		new Date(result.header.publishedAt).getTime(),
+	);
 
 	return {
 		props: {adopt: result},

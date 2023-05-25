@@ -1,12 +1,12 @@
 import styles from '@/styles/components/board/images.module.scss';
 
-export default function Images({image}: {image: string[]}) {
+export default function Images({image}: {image: ImageUploadResponse1[]}) {
 	return (
 		<ul className={styles.container}>
-			{image.map((src: string, index: number) => {
+			{image.map((img: ImageUploadResponse1, index: number) => {
 				return (
 					<li key={index}>
-						<img src={src} alt={`post picture ${index}`} />
+						<img src={img.imageUrl} alt={`image ${img.imageNo}`} />
 					</li>
 				);
 			})}
