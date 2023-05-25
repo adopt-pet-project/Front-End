@@ -74,23 +74,22 @@ function ProfileLoginTrue() {
 		},
 	]);
 
-	// const {status, error, data} = useQuery<any>(
-	// 	['readMyInfo'],
-	// 	() => {
-	// 		return fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`, {
-	// 			method: 'GET',
-	// 			headers: {
-	// 				Authorization: `${accessToken}`,
-	// 			},
-	// 		})
-	// 			.then(response => response.json())
-	// 			.then(data => {
-	// 				console.log(data);
-	// 			});
-	// 	},
-	// 	{retry: 0},
-	// );
-
+	const userInfo = useQuery<Userinfo>(
+		['readMyInfo'],
+		async () => {
+			return await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`, {
+				method: 'GET',
+				headers: {
+					Authorization: `${accessToken}`,
+				},
+			})
+				.then(response => response.json())
+				.then(data => {
+					return data;
+				});
+		},
+		{retry: 0},
+	);
 	return (
 		<div className={styles.profileLoginWrap}>
 			<div
@@ -103,7 +102,7 @@ function ProfileLoginTrue() {
 				<img
 					style={{pointerEvents: 'none'}}
 					className={styles.img}
-					src="/icon/alarm.svg"
+					src={'/icon/alarm.svg'}
 					width={30}
 					height={30}
 					alt="alarm icon"
@@ -121,9 +120,9 @@ function ProfileLoginTrue() {
 				<img
 					style={{pointerEvents: 'none'}}
 					className={styles.img}
-					src="/icon/person.svg"
-					width={30}
-					height={30}
+					src={`${userInfo.data ? userInfo.data.profile : '/icon/person.svg'}`}
+					width={40}
+					height={40}
 					alt="profile icon"
 				/>
 			</div>

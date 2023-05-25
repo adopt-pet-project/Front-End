@@ -4,22 +4,42 @@ import {useRouter} from 'next/router';
 import {AisProfileBoxOn} from '@/utils/recoil/recoilStore';
 import styles from '@/styles/components/header/profile/profileCard.module.scss';
 import ChatNoteBox from './chatNoteBox';
+import {useQuery} from 'react-query';
 
 function ProfileCard() {
+	const accessToken = window.localStorage.getItem('accessToken');
+
 	const router = useRouter();
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
+
+	const userInfo = useQuery<Userinfo>(
+		['readMyInfo'],
+		async () => {
+			return await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member/1`, {
+				method: 'GET',
+				headers: {
+					Authorization: `${accessToken}`,
+				},
+			})
+				.then(response => response.json())
+				.then(data => {
+					return data;
+				});
+		},
+		{retry: 0},
+	);
 
 	return (
 		<div className={styles.profileWrap}>
 			<div className={styles.profileCard}>
 				<img
 					className={styles.profileImgWrap}
-					src="https://mblogthumb-phinf.pstatic.net/MjAxNjExMjJfMjEx/MDAxNDc5NzQ0MDAzOTQy.-ax_EfCGWODogkXHIuDpovF5XHfaYi_s8EtRVWEjYXQg.R4kQWRtNC7pNxF03-aKWylWpGoRgE7vGDeagJm7Sgk0g.PNG.outdoor-interlaken/%EC%8A%A4%EC%9C%84%EC%8A%A4_%EC%97%AC%ED%96%89%ED%95%98%EA%B8%B0_%EC%A2%8B%EC%9D%80_%EA%B3%84%EC%A0%88_christofs70.png?type=w800"
+					src={userInfo.data?.profile}
 					alt=""
 				/>
 				<div>
-					<div className={styles.name}>잠자는오리</div>
-					<div className={styles.address}>경상남도 창원시</div>
+					<div className={styles.name}>{userInfo.data?.name}</div>
+					<div className={styles.address}>{userInfo.data?.location}</div>
 					<div className={styles.activity}>
 						<div
 							onClick={() => {
@@ -30,8 +50,8 @@ function ProfileCard() {
 						>
 							활동내역
 						</div>
-						<span>게시글 7</span>
-						<span>댓글 22</span>
+						<span>게시글 {userInfo.data?.activity.document}</span>
+						<span>댓글 {userInfo.data?.activity.comment}</span>
 					</div>
 				</div>
 			</div>

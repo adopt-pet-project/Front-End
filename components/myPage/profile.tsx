@@ -1,19 +1,41 @@
 import {useEffect, useRef, useState} from 'react';
 import styles from '@/styles/components/myPage/profile.module.scss';
+import {useQuery} from 'react-query';
+
 function Profile() {
 	const dummyImg =
 		'https://mblogthumb-phinf.pstatic.net/MjAxNjExMjJfMjEx/MDAxNDc5NzQ0MDAzOTQy.-ax_EfCGWODogkXHIuDpovF5XHfaYi_s8EtRVWEjYXQg.R4kQWRtNC7pNxF03-aKWylWpGoRgE7vGDeagJm7Sgk0g.PNG.outdoor-interlaken/%EC%8A%A4%EC%9C%84%EC%8A%A4_%EC%97%AC%ED%96%89%ED%95%98%EA%B8%B0_%EC%A2%8B%EC%9D%80_%EA%B3%84%EC%A0%88_christofs70.png?type=w800';
 
 	const [isModify, setIsModify] = useState(false);
-	const [name, setName] = useState('John Doe');
-	const [newName, setNewName] = useState('John Doe');
+	const [name, setName] = useState('');
+	const [newName, setNewName] = useState('');
 	const [currentImg, setCurrentImg] = useState(dummyImg);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const inputImgRef = useRef<HTMLInputElement>(null);
+	const [token, setToken] = useState(
+		typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '',
+	);
 
-	useEffect(() => {
-		setName(name);
-	}, []);
+	const userInfo = useQuery<Userinfo>(
+		['readMyInfo'],
+		async () => {
+			return await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member/1`, {
+				method: 'GET',
+				headers: {
+					Authorization: `${token}`,
+				},
+			})
+				.then(response => response.json())
+				.then(data => {
+					setName(data.name);
+					setNewName(data.name);
+					setCurrentImg(data.profile);
+					return data;
+				});
+		},
+		{retry: 0},
+	);
+
 	useEffect(() => {
 		inputRef.current?.focus();
 	}, [isModify]);
@@ -82,10 +104,10 @@ function Profile() {
 								}}
 							/>
 						) : (
-							`${name}`
+							`${userInfo.data?.name}`
 						)}
 					</h1>
-					<p>경상남도 창원시</p>
+					<p>{userInfo.data?.location}</p>
 					<p></p>
 					<button className={styles.saveBtn}>저장</button>
 				</div>
