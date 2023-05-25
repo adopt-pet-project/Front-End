@@ -64,6 +64,7 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/adopt/${query.id}`;
 	let response = await fetch(`${URL}`);
 	let result = await response.json();
+
 	if (!result.status)
 		result.header.publishedAt = toDate(result.header.publishedAt);
 

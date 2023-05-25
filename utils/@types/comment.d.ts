@@ -1,7 +1,8 @@
 interface CommentTarget {
 	commentId: number;
 	authorId: number;
-	username: string;
+	author: string;
+	modify: boolean;
 }
 
 interface Board {

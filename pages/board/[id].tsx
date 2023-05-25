@@ -17,16 +17,24 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 
 	const [commentList, setCommentList] = useState<any>([]);
 
-	useEffect(() => {
-		async function fetchCommentList() {
-			let response = await fetch(
-				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment/${id}`,
-			);
+	async function fetchCommentList() {
+		let response = await fetch(
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment/${id}`,
+		);
 
-			let result = await response.json();
-			console.log(result);
+		let result = await response.json();
+
+		if (result.status) {
+			alert(`error code : ${result.status}`);
+			router.push(`/board/${id}`);
+		} else if (result.status === 401) {
+			router.push(`/refreshToken`);
 		}
+		console.log(result);
+		setCommentList(result);
+	}
 
+	useEffect(() => {
 		fetchCommentList();
 	}, []);
 
@@ -36,11 +44,17 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 			return;
 		}
 
+		if (!commentRef.current?.value) {
+			alert('댓글 내용을 입력하세요');
+			return;
+		}
+
 		if (!target) {
 			let response = await fetch(
 				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment`,
 				{
 					headers: {
+						'Content-Type': 'application/json',
 						Authorization: window.localStorage.getItem('accessToken') as string,
 					},
 					method: 'POST',
@@ -50,24 +64,103 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 					}),
 				},
 			);
-
 			let result = await response.json();
+			setInputValue('');
 
 			if (result.status === 200) {
-				router.push('/board');
+				fetchCommentList();
 			} else if (result.status === 401) {
 				router.push(`/refreshToken`);
 			} else {
 				alert(`error code : ${result.status}`);
-				router.push('/board');
+				router.push(`/board/${id}`);
 			}
+		} else if (!target.modify) {
+			let response = await fetch(
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment`,
+				{
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: window.localStorage.getItem('accessToken') as string,
+					},
+					method: 'POST',
+					body: JSON.stringify({
+						parentId: target.commentId,
+						boardId: id,
+						context: commentRef.current?.value,
+					}),
+				},
+			);
+			console.log({
+				parentId: target.commentId,
+				boardId: id,
+				context: commentRef.current?.value,
+			});
+			let result = await response.json();
+			setInputValue('');
+			setTarget(null);
 
-			// console.log(result);
-			// console.log({
-			// 	boardId: id,
-			// 	context: commentRef.current?.value,
-			// });
-			// console.log(window.localStorage.getItem('accessToken') as string);
+			if (result.status === 200) {
+				fetchCommentList();
+			} else if (result.status === 401) {
+				router.push(`/refreshToken`);
+			} else {
+				alert(`error code : ${result.status}`);
+				router.push(`/board/${id}`);
+			}
+		} else if (target.modify) {
+			let response = await fetch(
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment`,
+				{
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: window.localStorage.getItem('accessToken') as string,
+					},
+					method: 'PATCH',
+					body: JSON.stringify({
+						id: target.commentId,
+						context: commentRef.current?.value,
+					}),
+				},
+			);
+
+			let result = await response.json();
+			setInputValue('');
+			setTarget(null);
+
+			if (result.status === 200) {
+				fetchCommentList();
+			} else if (result.status === 401) {
+				router.push(`/refreshToken`);
+			} else {
+				alert(`error code : ${result.status}`);
+				router.push(`/board/${id}`);
+			}
+		}
+	}
+
+	function setInputValue(value: string) {
+		if (commentRef.current) commentRef.current.value = value;
+	}
+
+	async function deleteComment(id: number) {
+		let response = await fetch(
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment/${id}`,
+			{
+				headers: {
+					Authorization: window.localStorage.getItem('accessToken') as string,
+				},
+				method: 'DELETE',
+			},
+		);
+
+		let result = await response.json();
+
+		if (result.status === 200) {
+			alert('댓글이 삭제되었습니다.');
+			fetchCommentList();
+		} else {
+			alert('삭제에 실패했습니다.');
 		}
 	}
 
@@ -85,13 +178,19 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 						parentId={null}
 						setTarget={setTarget}
 						commentList={commentList}
+						setInputValue={setInputValue}
+						deleteComment={deleteComment}
 					/>
 				</div>
 			</div>
 			<div className={styles.commentInputContainer}>
 				{target && (
 					<div className={styles.commentTarget}>
-						<span>{target.username}에게 댓글</span>
+						<span>
+							{target.modify
+								? '내 댓글 수정'
+								: `${target.author}에게 답글 작성`}
+						</span>
 						<img
 							src="/icon/close.svg"
 							width={20}
