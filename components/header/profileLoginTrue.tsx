@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useRecoilState} from 'recoil';
-import {useQuery} from 'react-query';
 import {AisAlarmBoxOn, AisProfileBoxOn} from '@/utils/recoil/recoilStore';
 import ProfileBox from './profile/profileBox';
 import AlarmBox from './alarm/alarmBox';
@@ -93,8 +92,14 @@ function ProfileLoginTrue() {
 				},
 			});
 			const result = await response.json();
-			result.status == 401 ? console.log(401) : setUserInfo(await result.data);
+			result.status == 500
+				? console.log('오류발생')
+				: result.status == 401
+				? console.log('무효한 토큰')
+				: setUserInfo(await result.data);
 		}
+
+		getMyInfo();
 	}, []);
 
 	return (
