@@ -1,4 +1,4 @@
-import {ReactElement, RefObject, useRef} from 'react';
+import {ForwardedRef, ReactElement, RefObject, useRef} from 'react';
 import {RecoilRoot, useRecoilState} from 'recoil';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import Aside from '../aside/aside';

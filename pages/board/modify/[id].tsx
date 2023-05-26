@@ -60,9 +60,11 @@ export default function Modify({query}: {query: {id: string}}) {
 		e.preventDefault();
 
 		let response = await fetch(
-			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article`,
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article/${
+				query.id as string
+			}`,
 			{
-				method: 'POST',
+				method: 'PATCH',
 				headers: {
 					Authorization: window.localStorage.getItem('accessToken') as string,
 					'Content-Type': 'Application/json',
@@ -86,8 +88,10 @@ export default function Modify({query}: {query: {id: string}}) {
 		let result = await response.json();
 		if (result.status === 200) {
 			router.push('/board');
+		} else if (result.status === 401) {
+			router.push(`/refreshToken`);
 		} else {
-			alert(result.error);
+			alert(`error code : ${result.status}`);
 			router.push('/board');
 		}
 	}

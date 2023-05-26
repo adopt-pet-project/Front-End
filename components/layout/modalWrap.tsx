@@ -12,6 +12,7 @@ function ModalWrap() {
 	useEffect(() => {
 		setModalRef(modalWrapRef);
 	}, []);
+
 	return (
 		<div
 			style={{display: 'none'}}

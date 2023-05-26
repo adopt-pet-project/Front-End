@@ -3,7 +3,6 @@ import {useRouter} from 'next/router';
 import {useRecoilState} from 'recoil';
 import {AmodalWrap} from '@/utils/recoil/recoilStore';
 import styles from '@/styles/components/deleteModal.module.scss';
-import useDepsOnlyEffect from '@/utils/hooks/useDepsOnlyEffect';
 
 export default function DeleteModal() {
 	const [modalRef] = useRecoilState(AmodalWrap);
@@ -27,10 +26,12 @@ export default function DeleteModal() {
 				method: 'DELETE',
 			},
 		);
-		modalRef!.current!.style.display = 'none';
+		if (modalRef && modalRef.current!) modalRef.current.style.display = 'none';
 		let result = await response.json();
 		if (result.status === 200) {
 			router.push(`/${type.current}`);
+		} else if (result.status === 401) {
+			router.push(`/refreshToken?redirect=${router.asPath}`);
 		} else {
 			alert(`삭제 실패\n사유:${result.error}`);
 			router.push(`/${type.current}`);
@@ -44,7 +45,7 @@ export default function DeleteModal() {
 			}}
 			className={styles.container}
 		>
-			<span>삭제하시겠습니까?</span>
+			<span>글을 삭제하시겠습니까?</span>
 			<button onClick={onClickApply} className={styles.button}>
 				확인
 			</button>

@@ -18,10 +18,6 @@ export default function More() {
 	const router = useRouter();
 
 	useEffect(() => {
-		setModalType('deleteModal');
-	});
-
-	useEffect(() => {
 		function onClickOutside(e: MouseEvent) {
 			if (
 				menuRef.current &&
@@ -43,22 +39,24 @@ export default function More() {
 	useEffect(() => {
 		async function fetchMine() {
 			const id = router.query.id;
-			let result = await (
-				await fetch(
-					`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article/${id}`,
-					{
-						headers: {
-							Authorization: window.localStorage.getItem(
-								'accessToken',
-							) as string,
-						},
+			let response = await fetch(
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article/${id}`,
+				{
+					headers: {
+						Authorization: window.localStorage.getItem('accessToken') as string,
 					},
-				)
-			).json();
-			setIsMine(result.mine ? 1 : 0);
+				},
+			);
+			let result = await response.json();
+			if (result.status == null) {
+				setIsMine(result.mine ? 1 : 0);
+			} else if (result.status === 401) {
+				router.push(`/refreshToken?redirect=${router.asPath}`);
+			} else {
+				alert(`${result.error}`);
+			}
 		}
-
-		fetchMine();
+		if (window.localStorage.getItem('accessToken')) fetchMine();
 	}, []);
 
 	function onClickItem(e: BaseSyntheticEvent) {
@@ -67,6 +65,7 @@ export default function More() {
 				router.push(`/board/modify/${router.query.id}`);
 				return;
 			case '삭제':
+				setModalType('deleteModal');
 				modalRef!.current!.style.display = 'flex';
 				return;
 			case '쪽지':
