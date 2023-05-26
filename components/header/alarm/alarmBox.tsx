@@ -8,9 +8,9 @@ function AlarmBox({
 	alarmData,
 	setAlarmData,
 }: {
-	alarmData: (Alarmdata | Alarmnotedata | Alarmchatdata)[];
+	alarmData: (Alarmdata | Alarmdataname)[];
 	setAlarmData: React.Dispatch<
-		React.SetStateAction<(Alarmdata | Alarmnotedata | Alarmchatdata)[]>
+		React.SetStateAction<(Alarmdata | Alarmdataname)[]>
 	>;
 }) {
 	const alarmBoxRef = useRef<HTMLDivElement>(null);
