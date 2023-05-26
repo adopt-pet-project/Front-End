@@ -93,7 +93,7 @@ function ProfileLoginTrue() {
 			})
 				.then(response => response.json())
 				.then(data => {
-					setUserInfo(data);
+					setUserInfo(data.data);
 				});
 		}
 
@@ -131,7 +131,7 @@ function ProfileLoginTrue() {
 				<img
 					style={{pointerEvents: 'none'}}
 					className={styles.img}
-					src={`${userInfo.data ? userInfo.data.profile : '/icon/person.svg'}`}
+					src={`${userInfo ? userInfo.profile : '/icon/person.svg'}`}
 					width={40}
 					height={40}
 					alt="profile icon"
