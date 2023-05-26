@@ -51,12 +51,15 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 		if (article.author == null) article.author = '탈퇴한 사용자';
 	});
 
-	result.hot.publishedAt = convertDate(
-		new Date(result.hot.publishedAt).getTime(),
-	);
-	result.weekly.publishedAt = convertDate(
-		new Date(result.weekly.publishedAt).getTime(),
-	);
+	if (result.hot)
+		result.hot.publishedAt = convertDate(
+			new Date(result.hot.publishedAt).getTime(),
+		);
+	if (result.weekly)
+		result.weekly.publishedAt = convertDate(
+			new Date(result.weekly.publishedAt).getTime(),
+		);
+
 	return {
 		props: {
 			order: query.order || 'recent',

@@ -6,30 +6,34 @@ export default function Banner({hot, weekly}: {hot: Board; weekly: Board}) {
 
 	return (
 		<div className={styles.banner}>
-			<div
-				className={styles.weekly}
-				onClick={() => {
-					router.push(`/board/${weekly.id}`);
-				}}
-			>
-				<div className={styles.hot} style={{backgroundColor: 'var(--red)'}}>
-					Weekly
+			{weekly && (
+				<div
+					className={styles.weekly}
+					onClick={() => {
+						router.push(`/board/${weekly.id}`);
+					}}
+				>
+					<div className={styles.hot} style={{backgroundColor: 'var(--red)'}}>
+						Weekly
+					</div>
+					<span className={styles.bannerTitle}>{weekly.title}</span>
+					<span className={styles.bannerTime}>{weekly.publishedAt}</span>
 				</div>
-				<span className={styles.bannerTitle}>{weekly.title}</span>
-				<span className={styles.bannerTime}>{weekly.publishedAt}</span>
-			</div>
-			<div
-				className={styles.trending}
-				onClick={() => {
-					router.push(`/board/${hot.id}`);
-				}}
-			>
-				<div className={styles.hot} style={{backgroundColor: 'var(--black)'}}>
-					Trending
+			)}
+			{hot && (
+				<div
+					className={styles.trending}
+					onClick={() => {
+						router.push(`/board/${hot.id}`);
+					}}
+				>
+					<div className={styles.hot} style={{backgroundColor: 'var(--black)'}}>
+						Trending
+					</div>
+					<span className={styles.bannerTitle}>{hot.title}</span>
+					<span className={styles.bannerTime}>{weekly.publishedAt}</span>
 				</div>
-				<span className={styles.bannerTitle}>{hot.title}</span>
-				<span className={styles.bannerTime}>{weekly.publishedAt}</span>
-			</div>
+			)}
 		</div>
 	);
 }
