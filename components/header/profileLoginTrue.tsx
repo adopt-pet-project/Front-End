@@ -13,7 +13,6 @@ function ProfileLoginTrue() {
 	const [alarmData, setAlarmData] = useState<(Alarmdata | Alarmdataname)[]>([
 		{
 			id: 2,
-
 			type: 'announcement',
 			refid: 3,
 			date: '2023. 5. 1',
