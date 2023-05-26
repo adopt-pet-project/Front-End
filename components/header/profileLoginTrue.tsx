@@ -10,28 +10,31 @@ function ProfileLoginTrue() {
 	const accessToken = window.localStorage.getItem('accessToken');
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
-	const [alarmData, setAlarmData] = useState<
-		(Alarmdata | Alarmnotedata | Alarmchatdata)[]
-	>([
+	const [alarmData, setAlarmData] = useState<(Alarmdata | Alarmdataname)[]>([
 		{
 			id: 2,
+
 			type: 'announcement',
+			refid: 3,
 			date: '2023. 5. 1',
-			contents: '개인정보 처리 방침 변경 사항에 대해서 안내드립니다.',
+			contents: '개인정보 처리 방침이 변경되었습니다.',
 			checked: false,
 			del: false,
 		},
 		{
 			id: 13,
 			type: 'documentHot',
+			refid: 4,
 			date: '2023. 5. 2',
-			contents: '축하합니다. 회원님의 게시글이 HOT글에 선정되었습니다.',
+			contents: '',
 			checked: true,
 			del: false,
 		},
 		{
 			id: 15,
 			type: 'comment',
+			refid: 5,
+			name: '성익현',
 			date: '2023. 5. 1',
 			contents: '그건 좀;',
 			checked: true,
@@ -40,22 +43,17 @@ function ProfileLoginTrue() {
 		{
 			id: 17,
 			type: 'recomment',
+			refid: 6,
+			name: '성익현',
 			date: '2023. 5. 4',
 			contents: '어쩌라고',
 			checked: false,
 			del: false,
 		},
 		{
-			id: 4,
-			type: 'mention',
-			date: '2023. 5. 1',
-			contents: '엄;',
-			checked: true,
-			del: false,
-		},
-		{
 			id: 7,
 			type: 'note',
+			refid: 8,
 			name: '민지',
 			contents: '왜 연락을 안받니',
 			date: '2022.10.11',
@@ -66,6 +64,7 @@ function ProfileLoginTrue() {
 		{
 			id: 4,
 			type: 'chat',
+			refid: 9,
 			name: '홍길동',
 			contents: '혹시 댕댕이 예방접종 받았나요...?',
 			date: '2023. 5. 1',
