@@ -10,6 +10,17 @@ function ProfileLoginTrue() {
 	const accessToken = window.localStorage.getItem('accessToken');
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
+	const [userInfo, setUserInfo] = useState<Userinfo>({
+		id: 0,
+		profile: 'string',
+		name: 'string',
+		location: 'string',
+		activity: {
+			document: 0,
+			comment: 0,
+			sanction: 0,
+		},
+	});
 	const [alarmData, setAlarmData] = useState<(Alarmdata | Alarmdataname)[]>([
 		{
 			id: 2,
@@ -82,7 +93,7 @@ function ProfileLoginTrue() {
 			})
 				.then(response => response.json())
 				.then(data => {
-					return data;
+					setUserInfo(data.data);
 				});
 		}
 
@@ -120,7 +131,7 @@ function ProfileLoginTrue() {
 				<img
 					style={{pointerEvents: 'none'}}
 					className={styles.img}
-					src={`${userInfo.data ? userInfo.data.profile : '/icon/person.svg'}`}
+					src={`${userInfo ? userInfo.profile : '/icon/person.svg'}`}
 					width={40}
 					height={40}
 					alt="profile icon"
