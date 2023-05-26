@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useRecoilState} from 'recoil';
 import {useQuery} from 'react-query';
 import {AisAlarmBoxOn, AisProfileBoxOn} from '@/utils/recoil/recoilStore';
@@ -72,10 +72,9 @@ function ProfileLoginTrue() {
 		},
 	]);
 
-	const userInfo = useQuery<Userinfo>(
-		['readMyInfo'],
-		async () => {
-			return await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`, {
+	useEffect(() => {
+		async function fetchMyInfo() {
+			await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`, {
 				method: 'GET',
 				headers: {
 					Authorization: `${accessToken}`,
@@ -85,9 +84,12 @@ function ProfileLoginTrue() {
 				.then(data => {
 					return data;
 				});
-		},
-		{retry: 0},
-	);
+		}
+
+		const myInfo = fetchMyInfo();
+		console.log(myInfo);
+	}, []);
+
 	return (
 		<div className={styles.profileLoginWrap}>
 			<div
