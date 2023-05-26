@@ -93,6 +93,7 @@ function ProfileLoginTrue() {
 			})
 				.then(response => response.json())
 				.then(data => {
+					console.log(data);
 					setUserInfo(data.data);
 				});
 		}
