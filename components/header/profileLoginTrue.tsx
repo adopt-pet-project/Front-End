@@ -84,22 +84,17 @@ function ProfileLoginTrue() {
 	]);
 
 	useEffect(() => {
-		async function fetchMyInfo() {
-			await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`, {
+		async function getMyInfo() {
+			let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`;
+			let response = await fetch(`${URL}`, {
 				method: 'GET',
 				headers: {
 					Authorization: `${accessToken}`,
 				},
-			})
-				.then(response => response.json())
-				.then(data => {
-					console.log(data);
-					setUserInfo(data.data);
-				});
+			});
+			const result = await response.json();
+			result.status == 401 ? console.log(401) : setUserInfo(await result.data);
 		}
-
-		const myInfo = fetchMyInfo();
-		console.log(myInfo);
 	}, []);
 
 	return (
