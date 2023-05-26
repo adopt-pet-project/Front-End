@@ -12,29 +12,36 @@ function Profile() {
 	const [currentImg, setCurrentImg] = useState(dummyImg);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const inputImgRef = useRef<HTMLInputElement>(null);
-	const [token, setToken] = useState(
+	const [accessToken, setAccessToken] = useState(
 		typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '',
 	);
+	const [userInfo, setUserInfo] = useState<Userinfo>({
+		id: 0,
+		profile: 'string',
+		name: 'string',
+		location: 'string',
+		activity: {
+			document: 0,
+			comment: 0,
+			sanction: 0,
+		},
+	});
 
-	const userInfo = useQuery<Userinfo>(
-		['readMyInfo'],
-		async () => {
-			return await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member/1`, {
+	useEffect(() => {
+		async function fetchMyInfo() {
+			await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`, {
 				method: 'GET',
 				headers: {
-					Authorization: `${token}`,
+					Authorization: `${accessToken}`,
 				},
 			})
 				.then(response => response.json())
 				.then(data => {
-					setName(data.name);
-					setNewName(data.name);
-					setCurrentImg(data.profile);
-					return data;
+					data.status === 401 ? console.log(401) : setUserInfo(data.data);
 				});
-		},
-		{retry: 0},
-	);
+		}
+		fetchMyInfo();
+	}, []);
 
 	useEffect(() => {
 		inputRef.current?.focus();
@@ -104,10 +111,10 @@ function Profile() {
 								}}
 							/>
 						) : (
-							`${userInfo.data?.name}`
+							`${userInfo.name}`
 						)}
 					</h1>
-					<p>{userInfo.data?.location}</p>
+					<p>{userInfo.location}</p>
 					<p></p>
 					<button className={styles.saveBtn}>저장</button>
 				</div>
