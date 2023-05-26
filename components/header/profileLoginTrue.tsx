@@ -102,8 +102,8 @@ function ProfileLoginTrue() {
 					style={{pointerEvents: 'none'}}
 					className={styles.img}
 					src={'/icon/alarm.svg'}
-					width={30}
-					height={30}
+					width={25}
+					height={25}
 					alt="alarm icon"
 				/>
 				<div style={{pointerEvents: 'none'}} className={styles.alarmD}></div>
