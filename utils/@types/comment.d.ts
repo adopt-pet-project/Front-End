@@ -5,20 +5,17 @@ interface CommentTarget {
 	modify: boolean;
 }
 
-interface Board {
-	title: string;
-	thumbnail: string;
+interface Comment {
+	type: number;
+	mine: boolean;
 	id: number;
-	context: string;
 	author: string;
-	view: number;
-	comment: number;
-	like: number;
+	authorId: number;
+	context: string;
+	profile: string;
 	publishedAt: string;
-}
-
-interface BoardFirstPage {
-	hot: Board;
-	weekly: Board;
-	list: Board[];
+	like: number;
+	deleteStatus: number;
+	blindStatus: number;
+	comments: Comment[];
 }

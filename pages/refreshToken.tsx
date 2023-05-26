@@ -1,4 +1,4 @@
-import {ReactElement, useEffect} from 'react';
+import {useEffect} from 'react';
 import {useRouter} from 'next/router';
 
 export default function RefreshToken() {
@@ -18,17 +18,26 @@ export default function RefreshToken() {
 			} else {
 				window.localStorage.removeItem('accessToken');
 			}
-			router.back();
 		}
+
+		function changeStorage() {
+			alert('test');
+			// router.push('');
+		}
+
+		window.addEventListener('storage', changeStorage);
+
 		const token = window.localStorage.getItem('accessToken');
 		if (token) refresh(token);
 		else {
-			router.back();
 		}
+		return () => {
+			window.removeEventListener('storage', changeStorage);
+		};
 	}, []);
 	return <></>;
 }
 
-RefreshToken.getLayout = function getLayout(page: ReactElement) {
-	return <div>{page}</div>;
+RefreshToken.getLayout = function getLayout() {
+	return <div></div>;
 };

@@ -18,25 +18,130 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 	const [commentList, setCommentList] = useState<any>([]);
 
 	async function fetchCommentList() {
-		let response = await fetch(
-			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment/${id}`,
-		);
+		let response;
+		if (!window.localStorage.getItem('accessToken')) {
+			response = await fetch(
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment/${id}`,
+			);
+		} else {
+			try {
+				response = await fetch(
+					`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment/${id}`,
+					{
+						headers: {
+							Authorization: window.localStorage.getItem(
+								'accessToken',
+							) as string,
+						},
+					},
+				);
+			} catch (e) {
+				alert(e);
+			}
+		}
 
-		let result = await response.json();
-
+		let result = await (response as Response).json();
 		if (result.status) {
 			alert(`error code : ${result.status}`);
 			router.push(`/board/${id}`);
 		} else if (result.status === 401) {
 			router.push(`/refreshToken`);
 		}
-		console.log(result);
+
 		setCommentList(result);
 	}
 
 	useEffect(() => {
 		fetchCommentList();
 	}, []);
+
+	async function postComment() {
+		let response = await fetch(
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: window.localStorage.getItem('accessToken') as string,
+				},
+				method: 'POST',
+				body: JSON.stringify({
+					boardId: id,
+					context: commentRef.current?.value,
+				}),
+			},
+		);
+		let result = await response.json();
+		setInputValue('');
+
+		if (result.status === 200) {
+			fetchCommentList();
+		} else if (result.status === 401) {
+			router.push(`/refreshToken`);
+		} else {
+			alert(`error code : ${result.status}`);
+			router.push(`/board/${id}`);
+		}
+	}
+
+	async function postReply(targetId: number) {
+		let response = await fetch(
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: window.localStorage.getItem('accessToken') as string,
+				},
+				method: 'POST',
+				body: JSON.stringify({
+					boardId: id,
+					parentId: targetId,
+					context: commentRef.current?.value,
+				}),
+			},
+		);
+		let result = await response.json();
+		setInputValue('');
+		setTarget(null);
+
+		if (result.status === 200) {
+			fetchCommentList();
+		} else if (result.status === 401) {
+			router.push(`/refreshToken`);
+		} else {
+			alert(`error code : ${result.status}`);
+			router.push(`/board/${id}`);
+		}
+	}
+
+	async function modifyComment(targetId: number) {
+		let response = await fetch(
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: window.localStorage.getItem('accessToken') as string,
+				},
+				method: 'PATCH',
+				body: JSON.stringify({
+					id: targetId,
+					context: commentRef.current?.value,
+				}),
+			},
+		);
+
+		let result = await response.json();
+		setInputValue('');
+		setTarget(null);
+
+		if (result.status === 200) {
+			fetchCommentList();
+		} else if (result.status === 401) {
+			router.push(`/refreshToken`);
+		} else {
+			alert(`error code : ${result.status}`);
+			router.push(`/board/${id}`);
+		}
+	}
 
 	async function onClickWriteComment() {
 		if (!window.localStorage.getItem('accessToken')) {
@@ -50,92 +155,11 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 		}
 
 		if (!target) {
-			let response = await fetch(
-				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment`,
-				{
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: window.localStorage.getItem('accessToken') as string,
-					},
-					method: 'POST',
-					body: JSON.stringify({
-						boardId: id,
-						context: commentRef.current?.value,
-					}),
-				},
-			);
-			let result = await response.json();
-			setInputValue('');
-
-			if (result.status === 200) {
-				fetchCommentList();
-			} else if (result.status === 401) {
-				router.push(`/refreshToken`);
-			} else {
-				alert(`error code : ${result.status}`);
-				router.push(`/board/${id}`);
-			}
+			postComment();
 		} else if (!target.modify) {
-			let response = await fetch(
-				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment`,
-				{
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: window.localStorage.getItem('accessToken') as string,
-					},
-					method: 'POST',
-					body: JSON.stringify({
-						parentId: target.commentId,
-						boardId: id,
-						context: commentRef.current?.value,
-					}),
-				},
-			);
-			console.log({
-				parentId: target.commentId,
-				boardId: id,
-				context: commentRef.current?.value,
-			});
-			let result = await response.json();
-			setInputValue('');
-			setTarget(null);
-
-			if (result.status === 200) {
-				fetchCommentList();
-			} else if (result.status === 401) {
-				router.push(`/refreshToken`);
-			} else {
-				alert(`error code : ${result.status}`);
-				router.push(`/board/${id}`);
-			}
+			postReply(target.commentId);
 		} else if (target.modify) {
-			let response = await fetch(
-				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment`,
-				{
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: window.localStorage.getItem('accessToken') as string,
-					},
-					method: 'PATCH',
-					body: JSON.stringify({
-						id: target.commentId,
-						context: commentRef.current?.value,
-					}),
-				},
-			);
-
-			let result = await response.json();
-			setInputValue('');
-			setTarget(null);
-
-			if (result.status === 200) {
-				fetchCommentList();
-			} else if (result.status === 401) {
-				router.push(`/refreshToken`);
-			} else {
-				alert(`error code : ${result.status}`);
-				router.push(`/board/${id}`);
-			}
+			modifyComment(target.commentId);
 		}
 	}
 
@@ -159,8 +183,11 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 		if (result.status === 200) {
 			alert('댓글이 삭제되었습니다.');
 			fetchCommentList();
+		} else if (result.status === 401) {
+			router.push(`/refreshToken`);
 		} else {
-			alert('삭제에 실패했습니다.');
+			alert(`error code : ${result.status}`);
+			router.push(`/board/${id}`);
 		}
 	}
 
@@ -178,6 +205,7 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 						parentId={null}
 						setTarget={setTarget}
 						commentList={commentList}
+						setCommentList={setCommentList}
 						setInputValue={setInputValue}
 						deleteComment={deleteComment}
 					/>
