@@ -1,18 +1,14 @@
 interface Alarmdata {
 	id: number;
-	type: 'announcement' | 'documentHot' | 'comment' | 'recomment' | 'mention';
+	type: 'announcement' | 'documentHot';
+	refid: number;
 	date: string;
 	contents: string;
 	checked: boolean;
 	del: boolean;
 }
 
-interface Alarmnotedata extends Alarmdata {
-	type: 'note';
-	name: string;
-}
-
-interface Alarmchatdata extends Alarmdata {
-	type: 'chat';
+interface Alarmdataname extends Alarmdata {
+	type: 'comment' | 'recomment' | 'chat' | 'note';
 	name: string;
 }

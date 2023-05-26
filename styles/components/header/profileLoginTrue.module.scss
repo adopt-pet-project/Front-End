@@ -24,9 +24,11 @@
 		align-items: center;
 		width: 40px;
 		height: 40px;
-		border: 1px solid black;
 		border-radius: 50%;
 		margin-left: 20px;
 		cursor: pointer;
+		.img {
+			border-radius: 50%;
+		}
 	}
 }

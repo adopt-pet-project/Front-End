@@ -1,7 +1,11 @@
 import React from 'react';
 import {useRouter} from 'next/router';
 import {useRecoilState} from 'recoil';
-import {AisLogin, AisProfileBoxOn} from '@/utils/recoil/recoilStore';
+import {
+	AcurrentMyPageCtg,
+	AisLogin,
+	AisProfileBoxOn,
+} from '@/utils/recoil/recoilStore';
 import ProfileCard from './profileCard';
 import styles from '@/styles/components/header/profile/profileNav.module.scss';
 
@@ -9,12 +13,14 @@ function ProfileNav() {
 	const router = useRouter();
 	const [isLogin, setIsLogin] = useRecoilState(AisLogin);
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
+	const [myPageCtg, setMyPageCtg] = useRecoilState(AcurrentMyPageCtg);
 	return (
 		<div className={styles.innerWrap}>
 			<ProfileCard />
 			<div
 				onClick={() => {
 					setIsProfileBoxOn(false);
+					setMyPageCtg(0);
 					router.push('/myPage');
 				}}
 				className={styles.myNav}
