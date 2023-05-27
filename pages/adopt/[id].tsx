@@ -55,7 +55,12 @@ export default function View({
 				<Context mine={isMine} id={id} context={article.context} />
 				<Position coords={article.coords} />
 			</div>
-			<Inquiry chat={article.context.chat} mine={isMine} />
+			<Inquiry
+				authorId={article.author.id}
+				id={article.id}
+				chat={article.context.chat}
+				mine={isMine}
+			/>
 		</section>
 	);
 }

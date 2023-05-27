@@ -7,10 +7,12 @@ import ImageUploader from '@/components/imageUploader';
 import AnimalInput from '@/components/adopt/animalInput';
 import CoordsInput from '@/components/adopt/coordsInput';
 import styles from '@/styles/pages/adopt/new.module.scss';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
 
 export default function New({query}: {query: {type: string}}) {
 	const [serverImageList, setServerImageList] = useState<MyFile[]>([]);
 	const router = useRouter();
+	const refresh = useRefreshToken();
 
 	useEffect(() => {
 		if (!window.localStorage.getItem('accessToken')) {
@@ -84,7 +86,8 @@ export default function New({query}: {query: {type: string}}) {
 		if (result.status === 200) {
 			router.push('/adopt');
 		} else if (result.status === 401) {
-			router.push(`/refreshToken`);
+			refresh();
+			alert('다시 시도해 주세요.');
 		} else {
 			alert(result.error);
 			router.push('/adopt');

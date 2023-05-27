@@ -1,12 +1,28 @@
 import styles from '@/styles/components/chat/chatInput.module.scss';
+import {CompatClient, IMessage} from '@stomp/stompjs';
+import {useRouter} from 'next/router';
 import Script from 'next/script';
-import {BaseSyntheticEvent, useEffect, useRef, useState} from 'react';
+import {
+	BaseSyntheticEvent,
+	MutableRefObject,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 
-export default function ChatInput() {
+export default function ChatInput({
+	client,
+	id,
+}: {
+	client: MutableRefObject<CompatClient | undefined>;
+	id: number;
+}) {
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 	const [isMapOpen, setIsMapOpen] = useState<boolean>(false);
 	const mapRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
+
+	const router = useRouter();
 
 	let map: any;
 	let marker: any;
@@ -31,12 +47,30 @@ export default function ChatInput() {
 	}
 
 	function onClickSend() {
-		if (inputRef.current && inputRef.current.value) {
-			// Send
-			console.log(inputRef.current?.value);
-			setIsMapOpen(false);
-			setIsMenuOpen(false);
-			inputRef.current!.value = '';
+		if (
+			inputRef.current &&
+			inputRef.current.value &&
+			client.current &&
+			client.current
+		) {
+			try {
+				client.current.send(
+					'/publish/message',
+					{Authorization: window.localStorage.getItem('accessToken')},
+					JSON.stringify({
+						chatNo: id,
+						contentType: 'text',
+						content: inputRef.current.value,
+					}),
+				);
+			} catch (e) {
+				alert(e);
+				router.push(router.asPath);
+			} finally {
+				setIsMapOpen(false);
+				setIsMenuOpen(false);
+				inputRef.current!.value = '';
+			}
 		}
 	}
 
