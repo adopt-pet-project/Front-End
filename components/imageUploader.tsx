@@ -6,9 +6,9 @@ import {
 	useRef,
 	useState,
 } from 'react';
-import styles from '@/styles/components/imageUploader.module.scss';
 import {useRouter} from 'next/router';
 import useRefreshToken from '@/utils/hooks/useRefreshToken';
+import styles from '@/styles/components/imageUploader.module.scss';
 
 export default function ImageUploader({
 	serverImageList,

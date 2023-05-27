@@ -1,5 +1,5 @@
-import styles from '@/styles/components/board/context.module.scss';
 import Images from './images';
+import styles from '@/styles/components/board/context.module.scss';
 
 export default function Context({context}: {context: any}) {
 	return (

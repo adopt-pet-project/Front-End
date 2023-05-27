@@ -1,5 +1,5 @@
-import styles from '@/styles/components/register/setAddress.module.scss';
 import Script from 'next/script';
+import styles from '@/styles/components/register/setAddress.module.scss';
 import {
 	Dispatch,
 	MutableRefObject,

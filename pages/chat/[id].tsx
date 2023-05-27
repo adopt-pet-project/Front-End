@@ -1,5 +1,7 @@
 import {GetServerSideProps} from 'next';
 import {ReactElement, useEffect, useRef, useState} from 'react';
+import {CompatClient, IMessage, Stomp} from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 import ChatInput from '@/components/chat/chatInput';
 import AdoptInfo from '@/components/chat/adoptInfo';
 import Header from '@/components/chat/header';
@@ -62,6 +64,58 @@ export default function Chat({query}: {query: any}) {
 		);
 	}, []);
 
+export default function Chat({query}: {query: any}) {
+	const client = useRef<CompatClient>();
+
+	const [message, setMessage] = useState<Chat[]>([]);
+	const [newMessage, setNewMessage] = useState<Chat[]>([]);
+
+	function onConnect() {
+		if (client.current) {
+			client.current.subscribe(
+				`/subscribe/public/${query.id}`,
+				(message: IMessage) => {
+					console.log(message);
+				},
+			);
+		}
+	}
+	function onError() {
+		alert('error');
+	}
+
+	useEffect(() => {
+		async function fetchMessage() {
+			let response = await fetch(
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/chatroom/${query.id}`,
+				{
+					headers: {
+						Authorization: window.localStorage.getItem('accessToken') as string,
+					},
+				},
+			);
+
+			let result = await response.json();
+			if (!result.status) setMessage(result);
+			console.log(result);
+		}
+
+		if (window.localStorage.getItem('accessToken')) fetchMessage();
+	}, []);
+
+	useEffect(() => {
+		client.current = Stomp.over(() => {
+			return new SockJS('https://ez-tour.org/chat');
+		});
+
+		client.current.connect(
+			{
+				Authorization: window.localStorage.getItem('accessToken') as string,
+			},
+			onConnect,
+			onError,
+		);
+	}, []);
 	return (
 		<>
 			<AdoptInfo />

@@ -1,5 +1,5 @@
-import styles from '@/styles/components/board/comments.module.scss';
 import {toDate} from '@/utils/functions/toDate';
+import styles from '@/styles/components/board/comments.module.scss';
 
 export default function Comments({
 	parentId,

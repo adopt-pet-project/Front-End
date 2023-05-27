@@ -1,5 +1,5 @@
-import styles from '@/styles/components/board/header.module.scss';
 import More from './more';
+import styles from '@/styles/components/board/header.module.scss';
 
 export default function Header({header}: {header: any}) {
 	return (
