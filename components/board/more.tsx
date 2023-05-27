@@ -2,6 +2,7 @@ import {BaseSyntheticEvent, useEffect, useRef, useState} from 'react';
 import {useRouter} from 'next/router';
 import {useRecoilState} from 'recoil';
 import {AmodalWrap, AmodalType} from '@/utils/recoil/recoilStore';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
 import styles from '@/styles/components/board/more.module.scss';
 
 const option = [['쪽지'], ['수정', '삭제']];
@@ -16,6 +17,8 @@ export default function More() {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const menuRef = useRef<HTMLDivElement>(null);
 	const router = useRouter();
+
+	const refresh = useRefreshToken();
 
 	useEffect(() => {
 		function onClickOutside(e: MouseEvent) {
@@ -51,9 +54,9 @@ export default function More() {
 			if (result.status == null) {
 				setIsMine(result.mine ? 1 : 0);
 			} else if (result.status === 401) {
-				router.push(`/refreshToken?redirect=${router.asPath}`);
+				// refresh();
 			} else {
-				alert(`${result.error}`);
+				alert('오류가 발생했습니다.');
 			}
 		}
 		if (window.localStorage.getItem('accessToken')) fetchMine();

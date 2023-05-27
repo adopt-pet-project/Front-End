@@ -9,13 +9,15 @@ import Option from '@/components/board/option';
 import {toDate} from '@/utils/functions/toDate';
 import {useRouter} from 'next/router';
 import styles from '@/styles/pages/board/view.module.scss';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
 
 export default function View({board, id}: {board: BoardDetail; id: string}) {
-	const router = useRouter();
 	const [target, setTarget] = useState<CommentTarget | null>(null);
 	const commentRef = useRef<HTMLInputElement>(null);
-
 	const [commentList, setCommentList] = useState<any>([]);
+
+	const router = useRouter();
+	const refresh = useRefreshToken();
 
 	async function fetchCommentList() {
 		let response;
@@ -24,31 +26,26 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment/${id}`,
 			);
 		} else {
-			try {
-				response = await fetch(
-					`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment/${id}`,
-					{
-						headers: {
-							Authorization: window.localStorage.getItem(
-								'accessToken',
-							) as string,
-						},
+			response = await fetch(
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/comment/${id}`,
+				{
+					headers: {
+						Authorization: window.localStorage.getItem('accessToken') as string,
 					},
-				);
-			} catch (e) {
-				alert(e);
-			}
+				},
+			);
 		}
 
 		let result = await (response as Response).json();
-		if (result.status) {
-			alert(`error code : ${result.status}`);
+		if (result.status === 401) {
+			refresh();
 			router.push(`/board/${id}`);
-		} else if (result.status === 401) {
-			router.push(`/refreshToken`);
+		} else if (result.status === 500) {
+			alert(`error code : ${result}`);
+			router.push(`/board/${id}`);
+		} else {
+			setCommentList(result);
 		}
-
-		setCommentList(result);
 	}
 
 	useEffect(() => {
@@ -76,7 +73,8 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 		if (result.status === 200) {
 			fetchCommentList();
 		} else if (result.status === 401) {
-			router.push(`/refreshToken`);
+			refresh();
+			alert('다시 시도해 주세요.');
 		} else {
 			alert(`error code : ${result.status}`);
 			router.push(`/board/${id}`);
@@ -106,7 +104,8 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 		if (result.status === 200) {
 			fetchCommentList();
 		} else if (result.status === 401) {
-			router.push(`/refreshToken`);
+			refresh();
+			alert('다시 시도해 주세요.');
 		} else {
 			alert(`error code : ${result.status}`);
 			router.push(`/board/${id}`);
@@ -136,7 +135,8 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 		if (result.status === 200) {
 			fetchCommentList();
 		} else if (result.status === 401) {
-			router.push(`/refreshToken`);
+			refresh();
+			alert('다시 시도해 주세요.');
 		} else {
 			alert(`error code : ${result.status}`);
 			router.push(`/board/${id}`);
@@ -184,7 +184,8 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 			alert('댓글이 삭제되었습니다.');
 			fetchCommentList();
 		} else if (result.status === 401) {
-			router.push(`/refreshToken`);
+			refresh();
+			alert('다시 시도해 주세요.');
 		} else {
 			alert(`error code : ${result.status}`);
 			router.push(`/board/${id}`);

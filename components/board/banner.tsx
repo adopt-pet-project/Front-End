@@ -1,5 +1,5 @@
-import styles from '@/styles/components/board/banner.module.scss';
 import {useRouter} from 'next/router';
+import styles from '@/styles/components/board/banner.module.scss';
 
 export default function Banner({hot, weekly}: {hot: Board; weekly: Board}) {
 	const router = useRouter();

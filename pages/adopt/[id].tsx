@@ -1,5 +1,6 @@
 import {GetServerSideProps} from 'next';
 import {ReactElement, useEffect, useState} from 'react';
+import {useRouter} from 'next/router';
 import Layout from '@/components/layout/layout';
 import Carousel from '@/components/adopt/carousel';
 import Header from '@/components/adopt/header';
@@ -7,9 +8,8 @@ import Metadata from '@/components/adopt/metadata';
 import Context from '@/components/adopt/context';
 import Author from '@/components/adopt/author';
 import Position from '@/components/adopt/coords';
-import {toDate} from '@/utils/functions/toDate';
 import Inquiry from '@/components/adopt/inquiry';
-import {useRouter} from 'next/router';
+import {toDate} from '@/utils/functions/toDate';
 
 export default function View({
 	article,
@@ -55,7 +55,12 @@ export default function View({
 				<Context mine={isMine} id={id} context={article.context} />
 				<Position coords={article.coords} />
 			</div>
-			<Inquiry chat={article.context.chat} mine={isMine} />
+			<Inquiry
+				authorId={article.author.id}
+				id={article.id}
+				chat={article.context.chat}
+				mine={isMine}
+			/>
 		</section>
 	);
 }

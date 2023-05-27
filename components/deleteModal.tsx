@@ -3,6 +3,7 @@ import {useRouter} from 'next/router';
 import {useRecoilState} from 'recoil';
 import {AmodalWrap} from '@/utils/recoil/recoilStore';
 import styles from '@/styles/components/deleteModal.module.scss';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
 
 export default function DeleteModal() {
 	const [modalRef] = useRecoilState(AmodalWrap);
@@ -10,6 +11,8 @@ export default function DeleteModal() {
 
 	const type = useRef<string>();
 	const id = useRef<number>();
+
+	const refresh = useRefreshToken();
 
 	useEffect(() => {
 		type.current = router.asPath.split('/')[1];
@@ -31,7 +34,8 @@ export default function DeleteModal() {
 		if (result.status === 200) {
 			router.push(`/${type.current}`);
 		} else if (result.status === 401) {
-			router.push(`/refreshToken?redirect=${router.asPath}`);
+			refresh();
+			alert(`다시 시도해 주세요.`);
 		} else {
 			alert(`삭제 실패\n사유:${result.error}`);
 			router.push(`/${type.current}`);

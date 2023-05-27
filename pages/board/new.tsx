@@ -2,12 +2,14 @@ import {BaseSyntheticEvent, ReactElement, useEffect, useState} from 'react';
 import Header from '@/components/new/header';
 import Layout from '@/components/layout/layout';
 import ImageUploader from '@/components/imageUploader';
-import styles from '@/styles/pages/board/new.module.scss';
 import {useRouter} from 'next/router';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
+import styles from '@/styles/pages/board/new.module.scss';
 
 export default function New() {
 	const [serverImageList, setServerImageList] = useState<MyFile[]>([]);
 	const router = useRouter();
+	const refresh = useRefreshToken();
 
 	useEffect(() => {
 		if (!window.localStorage.getItem('accessToken')) {
@@ -51,7 +53,8 @@ export default function New() {
 		if (result.status === 200) {
 			router.push('/board');
 		} else if (result.status === 401) {
-			router.push(`/refreshToken?redirect=${router.asPath}`);
+			refresh();
+			alert('다시 시도해 주세요.');
 		} else {
 			alert(result.error);
 			router.push('/board');

@@ -1,6 +1,6 @@
-import styles from '@/styles/components/order.module.scss';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
+import styles from '@/styles/components/order.module.scss';
 
 export default function OrderBy({
 	currentOrder,

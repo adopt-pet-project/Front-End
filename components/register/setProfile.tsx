@@ -1,4 +1,3 @@
-import styles from '@/styles/components/register/setProfile.module.scss';
 import {
 	BaseSyntheticEvent,
 	Dispatch,
@@ -7,6 +6,7 @@ import {
 	useEffect,
 	useState,
 } from 'react';
+import styles from '@/styles/components/register/setProfile.module.scss';
 
 export default function setProfile({
 	userInfo,

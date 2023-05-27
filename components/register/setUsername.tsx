@@ -1,4 +1,3 @@
-import styles from '@/styles/components/register/setUsername.module.scss';
 import {
 	BaseSyntheticEvent,
 	Dispatch,
@@ -7,6 +6,7 @@ import {
 	useRef,
 	useState,
 } from 'react';
+import styles from '@/styles/components/register/setUsername.module.scss';
 
 export default function SetUsername({
 	userInfo,
