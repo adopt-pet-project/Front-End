@@ -30,6 +30,11 @@ export default function Inquiry({
 	}
 
 	async function makeChat() {
+		if (!window.localStorage.getItem('accessToken')) {
+			dispatchEvent(new Event('fadeLogin'));
+			return;
+		}
+
 		let myChat = await fetchAdoptChatList();
 		if (myChat.length === 0) {
 			let response = await fetch(
@@ -53,7 +58,7 @@ export default function Inquiry({
 			}
 		} else {
 			let chatId = myChat[0].chatNo;
-			if (chatId) router.push(`/chat/${myChat.chatNo}`);
+			if (chatId != null) router.push(`/chat/${myChat[0].chatNo}`);
 		}
 	}
 
