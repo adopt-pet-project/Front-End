@@ -2,7 +2,6 @@ import {useEffect, useRef, useState} from 'react';
 import Article from './article';
 import ArticleSkeleton from '../articleSkeleton';
 import styles from '@/styles/components/board/paging.module.scss';
-import {toDate} from '@/utils/functions/toDate';
 import {convertDate} from '@/utils/functions/convertDate';
 
 const moreData = {

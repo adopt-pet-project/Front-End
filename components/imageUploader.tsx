@@ -2,13 +2,13 @@ import {
 	BaseSyntheticEvent,
 	Dispatch,
 	SetStateAction,
-	useCallback,
 	useEffect,
 	useRef,
 	useState,
 } from 'react';
 import styles from '@/styles/components/imageUploader.module.scss';
 import {useRouter} from 'next/router';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
 
 export default function ImageUploader({
 	serverImageList,
@@ -23,6 +23,7 @@ export default function ImageUploader({
 	const inputRef = useRef<HTMLInputElement>(null);
 	const type = useRef<string>('profile');
 	const isLoaded = useRef<boolean>(false);
+	const refresh = useRefreshToken();
 
 	useEffect(() => {
 		// Modify 시 serverImageList 를 LocalImageList로 불러와 사용
@@ -133,6 +134,9 @@ export default function ImageUploader({
 				myFile.isUploaded = true;
 				myFile.imageId = result.data.id;
 				myFile.serverSrc = result.data.url;
+			} else if (result.status === 401) {
+				refresh();
+				throw new Error('다시 시도해 주세요.');
 			} else {
 				throw new Error('이미지 업로드 실패');
 			}

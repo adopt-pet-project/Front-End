@@ -9,14 +9,15 @@ import {useRouter} from 'next/router';
 import Layout from '@/components/layout/layout';
 import ImageUploader from '@/components/imageUploader';
 import Header from '@/components/new/modifyHeader';
-import useDepsOnlyEffect from '@/utils/hooks/useDepsOnlyEffect';
-import styles from '@/styles/pages/board/new.module.scss';
 import {GetServerSideProps} from 'next';
+import styles from '@/styles/pages/board/new.module.scss';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
 
 export default function Modify({query}: {query: {id: string}}) {
 	const [serverImageList, setServerImageList] = useState<MyFile[]>([]);
 	const formRef = useRef<HTMLFormElement>(null);
 	const router = useRouter();
+	const refresh = useRefreshToken();
 
 	useEffect(() => {
 		if (!window.localStorage.getItem('accessToken')) {
@@ -89,7 +90,8 @@ export default function Modify({query}: {query: {id: string}}) {
 		if (result.status === 200) {
 			router.push('/board');
 		} else if (result.status === 401) {
-			router.push(`/refreshToken`);
+			refresh();
+			alert('다시 시도해 주세요.');
 		} else {
 			alert(`error code : ${result.status}`);
 			router.push('/board');

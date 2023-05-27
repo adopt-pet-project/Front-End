@@ -14,6 +14,7 @@ import CoordsInput from '@/components/adopt/coordsInput';
 import Header from '@/components/new/modifyHeader';
 import useDepsOnlyEffect from '@/utils/hooks/useDepsOnlyEffect';
 import styles from '@/styles/pages/adopt/new.module.scss';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
 
 export default function Modify({query}: {query: {id: string}}) {
 	const [serverImageList, setServerImageList] = useState<MyFile[]>([]);
@@ -21,6 +22,7 @@ export default function Modify({query}: {query: {id: string}}) {
 	const formRef = useRef<HTMLFormElement>(null);
 	const type = useRef<string>('');
 	const router = useRouter();
+	const refresh = useRefreshToken();
 
 	useEffect(() => {
 		if (!window.localStorage.getItem('accessToken')) {
@@ -133,7 +135,8 @@ export default function Modify({query}: {query: {id: string}}) {
 		if (result.status === 200) {
 			router.push(`/adopt/${router.query.id}`);
 		} else if (result.status === 401) {
-			router.push(`/refreshToken?redirect=${router.asPath}`);
+			refresh();
+			alert('다시 시도해 주세요.');
 		} else {
 			alert(result.error);
 			router.push('/adopt');
