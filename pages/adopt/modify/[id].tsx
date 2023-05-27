@@ -28,7 +28,7 @@ export default function Modify({query}: {query: {id: string}}) {
 		}
 	});
 
-	useDepsOnlyEffect(() => {
+	useEffect(() => {
 		async function setInputValue() {
 			let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/adopt/${
 				query.id as string
@@ -71,7 +71,7 @@ export default function Modify({query}: {query: {id: string}}) {
 		}
 
 		setInputValue();
-	}, [router.isReady]);
+	}, []);
 
 	async function onSubmit(e: BaseSyntheticEvent) {
 		e.preventDefault();

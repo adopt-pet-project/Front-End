@@ -2,6 +2,8 @@ import {useEffect, useRef, useState} from 'react';
 import Article from './article';
 import ArticleSkeleton from '../articleSkeleton';
 import styles from '@/styles/components/board/paging.module.scss';
+import {toDate} from '@/utils/functions/toDate';
+import {convertDate} from '@/utils/functions/convertDate';
 
 const moreData = {
 	id: null,
@@ -16,7 +18,7 @@ const moreData = {
 };
 
 export default function Paging({param}: {param: any}) {
-	const [lazyLoadArticle, setLazyLoadArticle] = useState<any>([]);
+	const [lazyLoadArticle, setLazyLoadArticle] = useState<Board[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [hasMore, setHasMore] = useState<boolean>(true);
 	const currentPage = useRef<number>(2);
@@ -47,6 +49,14 @@ export default function Paging({param}: {param: any}) {
 		URL += keyword ? `&keyword=${keyword}&option=${Number(option)}` : '';
 		let response = await fetch(URL);
 		let result = await response.json();
+
+		if (result.list.length != 0) {
+			result.list.forEach((article: Board) => {
+				article.publishedAt = convertDate(
+					new Date(article.publishedAt).getTime(),
+				);
+			});
+		}
 		currentPage.current += 1;
 		setHasMore(result.list.length === 10);
 		setLazyLoadArticle([...lazyLoadArticle, ...result.list]);
@@ -55,7 +65,7 @@ export default function Paging({param}: {param: any}) {
 
 	return (
 		<>
-			{lazyLoadArticle.map((article: any) => {
+			{lazyLoadArticle.map((article: Board) => {
 				return <Article key={article.id} article={article} />;
 			})}
 			{isLoading && skeleton}

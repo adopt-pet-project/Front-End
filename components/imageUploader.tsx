@@ -22,12 +22,18 @@ export default function ImageUploader({
 	const localImageList = useRef<MyFile[]>([]);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const type = useRef<string>('profile');
+	const isLoaded = useRef<boolean>(false);
 
 	useEffect(() => {
 		// Modify 시 serverImageList 를 LocalImageList로 불러와 사용
-		if (serverImageList.length !== 0) {
-			localImageList.current = serverImageList;
-			updateState();
+		if (serverImageList.length !== 0 && !isLoaded.current) {
+			localImageList.current = JSON.parse(JSON.stringify(serverImageList));
+			setLocalImageUploadState(
+				localImageList.current.map((myFile: MyFile) => {
+					return myFile.isUploaded;
+				}),
+			);
+			isLoaded.current = true;
 		}
 
 		if (router.asPath.includes('adopt')) type.current = 'adopt';
@@ -68,21 +74,39 @@ export default function ImageUploader({
 		}
 	}
 
-	function deleteImage(fileName: string | undefined) {
-		if (!fileName) return;
-		localImageList.current = localImageList.current.filter((myFile: MyFile) => {
-			if (myFile.localFile?.name == fileName) {
-				window.URL.revokeObjectURL(myFile.localSrc as string);
-			}
-			return myFile.localFile?.name != fileName;
-		});
+	function deleteImage(fileName?: string, imageId?: number) {
+		if (!fileName && !imageId) return;
 
-		setLocalImageUploadState(
-			localImageList.current.map((myFile: MyFile) => {
-				return myFile.isUploaded;
-			}),
-		);
-		setServerImageList(localImageList.current);
+		if (fileName) {
+			localImageList.current = localImageList.current.filter(
+				(myFile: MyFile) => {
+					if (myFile.localFile?.name == fileName) {
+						window.URL.revokeObjectURL(myFile.localSrc as string);
+					}
+					return myFile.localFile?.name != fileName;
+				},
+			);
+
+			setLocalImageUploadState(
+				localImageList.current.map((myFile: MyFile) => {
+					return myFile.isUploaded;
+				}),
+			);
+			setServerImageList(localImageList.current);
+		} else if (imageId) {
+			localImageList.current = localImageList.current.filter(
+				(myFile: MyFile) => {
+					return myFile.imageId != imageId;
+				},
+			);
+
+			setLocalImageUploadState(
+				localImageList.current.map((myFile: MyFile) => {
+					return myFile.isUploaded;
+				}),
+			);
+			setServerImageList(localImageList.current);
+		}
 	}
 
 	async function uploadImage(myFile: MyFile) {
@@ -138,10 +162,13 @@ export default function ImageUploader({
 				</label>
 				{localImageList.current.map((myFile: MyFile) => {
 					return (
-						<div key={myFile.localSrc} className={styles.previewContainer}>
+						<div
+							key={`${myFile.localSrc}  ${myFile.imageId}`}
+							className={styles.previewContainer}
+						>
 							<img
 								onClick={() => {
-									deleteImage(myFile.localFile?.name);
+									deleteImage(myFile.localFile?.name, myFile.imageId);
 								}}
 								className={styles.preview}
 								src={myFile.localSrc || myFile.serverSrc}

@@ -1,5 +1,4 @@
 import {RefObject, useEffect, useState} from 'react';
-import {useRouter} from 'next/router';
 import {useRecoilState} from 'recoil';
 import {AisLogin} from '@/utils/recoil/recoilStore';
 import ProfileLoginTrue from './profileLoginTrue';

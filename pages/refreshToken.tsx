@@ -21,8 +21,7 @@ export default function RefreshToken() {
 		}
 
 		function changeStorage() {
-			alert('test');
-			// router.push('');
+			// router.back();
 		}
 
 		window.addEventListener('storage', changeStorage);
@@ -30,6 +29,7 @@ export default function RefreshToken() {
 		const token = window.localStorage.getItem('accessToken');
 		if (token) refresh(token);
 		else {
+			router.back();
 		}
 		return () => {
 			window.removeEventListener('storage', changeStorage);
