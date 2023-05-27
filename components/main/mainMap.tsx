@@ -1,23 +1,17 @@
-import {
-	Map,
-	MapMarker,
-	MarkerClusterer,
-	useInjectKakaoMapApi,
-} from 'react-kakao-maps-sdk';
-
+import {Map, MapMarker} from 'react-kakao-maps-sdk';
+import {useRouter} from 'next/router';
 import styles from '@/styles/components/main/mainMap.module.scss';
 
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
+import Script from 'next/script';
 
 function MainMap() {
+	const router = useRouter();
 	const [filterCtg, setFilterCtg] = useState<'a' | 'd' | 'c' | 'o'>('a');
-	const {loading, error} = useInjectKakaoMapApi({
-		appkey: `${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}`,
-	});
 
 	const [mapMarkerData, setMapMarkerData] = useState([
 		{
-			id: 1,
+			id: 22,
 			name: '낑낑이',
 			age: 5,
 			type: 'd',
@@ -26,7 +20,7 @@ function MainMap() {
 			isModal: false,
 		},
 		{
-			id: 2,
+			id: 23,
 			name: '든든이',
 			age: 7,
 			type: 'd',
@@ -35,7 +29,7 @@ function MainMap() {
 			isModal: false,
 		},
 		{
-			id: 3,
+			id: 24,
 			name: '쫑쫑이',
 			age: 8,
 			type: 'c',
@@ -44,7 +38,7 @@ function MainMap() {
 			isModal: false,
 		},
 		{
-			id: 4,
+			id: 25,
 			name: '컹컹이',
 			age: 11,
 			type: 'c',
@@ -53,7 +47,7 @@ function MainMap() {
 			isModal: false,
 		},
 		{
-			id: 5,
+			id: 26,
 			name: '껌딱지',
 			age: 7,
 			type: 'o',
@@ -65,80 +59,87 @@ function MainMap() {
 
 	return (
 		<>
-			{!loading ? (
-				<Map
-					onClick={() => {
-						setMapMarkerData(prev => {
-							let result = [...prev];
-							return result.map(data => {
-								return {...data, isModal: false};
-							});
+			<Script
+				src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=services,clusterer&autoload=false`}
+				strategy="beforeInteractive"
+			/>
+			<Map
+				onClick={() => {
+					setMapMarkerData(prev => {
+						let result = [...prev];
+						return result.map(data => {
+							return {...data, isModal: false};
 						});
-					}}
-					center={{
-						// 지도의 중심좌표
-						lat: 37.450701,
-						lng: 126.770667,
-					}}
-					style={{
-						// 지도의 크기
-						width: '100%',
-						height: '100%',
-					}}
-					level={10} // 지도의 확대 레벨
-				>
-					{mapMarkerData
-						.filter((markerData, i) => {
-							if (filterCtg === 'a') return true;
-							else if (filterCtg === 'd') return markerData.type === 'd';
-							else if (filterCtg === 'c') return markerData.type === 'c';
-							else return markerData.type === 'o';
-						})
-						.map((markerData, i) => (
-							<MapMarker
-								onClick={() => {
-									if (markerData.isModal) {
-										setMapMarkerData(prev => {
-											let result = [...prev];
-											return result.map(data => {
-												return {...data, isModal: false};
-											});
+					});
+				}}
+				center={{
+					// 지도의 중심좌표
+					lat: 37.450701,
+					lng: 126.770667,
+				}}
+				style={{
+					// 지도의 크기
+					width: '100%',
+					height: '100%',
+				}}
+				level={10} // 지도의 확대 레벨
+			>
+				{mapMarkerData
+					.filter((markerData, i) => {
+						if (filterCtg === 'a') return true;
+						else if (filterCtg === 'd') return markerData.type === 'd';
+						else if (filterCtg === 'c') return markerData.type === 'c';
+						else return markerData.type === 'o';
+					})
+					.map((markerData, i) => (
+						<MapMarker
+							key={i}
+							onClick={() => {
+								if (markerData.isModal) {
+									setMapMarkerData(prev => {
+										let result = [...prev];
+										return result.map(data => {
+											return {...data, isModal: false};
 										});
-									} else {
-										setMapMarkerData(prev => {
-											let result = [...prev];
-											result = result.map(data => ({
-												...data,
-												isModal: false,
-											}));
-											return result.map(data => {
-												if (data.id === markerData.id)
-													return {...data, isModal: true};
-												else return data;
-											});
+									});
+								} else {
+									setMapMarkerData(prev => {
+										let result = [...prev];
+										result = result.map(data => ({
+											...data,
+											isModal: false,
+										}));
+										return result.map(data => {
+											if (data.id === markerData.id)
+												return {...data, isModal: true};
+											else return data;
 										});
-									}
-								}}
-								position={{lat: markerData.lat, lng: markerData.lng}}
-							>
-								{markerData.isModal ? (
-									<div className={styles.markerModal}>
-										<img
-											src="https://project-adopt-bucket.s3.ap-northeast-2.amazonaws.com/other/cat.jpeg"
-											alt=""
-										/>
-										<div className={styles.info}>
-											<div>{`${markerData.name}`}</div>
-											<div>{`${markerData.age}`}살</div>
-										</div>
+									});
+								}
+							}}
+							position={{lat: markerData.lat, lng: markerData.lng}}
+						>
+							{markerData.isModal ? (
+								<div
+									onClick={() => {
+										router.push(`./adopt/${markerData.id}`);
+									}}
+									className={styles.markerModal}
+								>
+									<img
+										src="https://project-adopt-bucket.s3.ap-northeast-2.amazonaws.com/other/cat.jpeg"
+										alt=""
+									/>
+									<div className={styles.info}>
+										<div>{`${markerData.name}`}</div>
+										<div>{`${markerData.age}`}살</div>
 									</div>
-								) : null}
-							</MapMarker>
-						))}
-				</Map>
-			) : (
-				<></>
-			)}
+								</div>
+							) : null}
+						</MapMarker>
+					))}
+			</Map>
+
 			<div className={styles.filterBtnWrap}>
 				<button
 					onClick={() => {

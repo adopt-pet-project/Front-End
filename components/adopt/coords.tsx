@@ -1,58 +1,57 @@
-import {useEffect, useRef, useState} from 'react';
-import Script from 'next/script';
+import {useEffect, useState} from 'react';
+import {Map, MapMarker, useInjectKakaoMapApi} from 'react-kakao-maps-sdk';
 import styles from '@/styles/components/adopt/coords.module.scss';
+import Script from 'next/script';
 
 export default function Position({coords}: {coords: AdoptCoords}) {
-	const mapRef = useRef<HTMLDivElement>(null);
 	const [address, setAddress] = useState<string>('');
+	console.log(coords);
+	useEffect(() => {
+		fetch(
+			`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${coords.longitude}&y=${coords.latitude}&input_coord=WGS84`,
+			{
+				method: 'GET',
+				headers: {
+					Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`,
+				},
+			},
+		)
+			.then(data => data.json())
+			.then(data => {
+				console.log(data);
+				setAddress(
+					data.documents[0].road_address
+						? data.documents[0].road_address.address_name
+						: data.documents[0].address.address_name,
+				);
+			});
+	}, []);
 
 	useEffect(() => {
-		if (window.kakao) {
-			window.kakao.maps.load(loadMap);
-		}
-	});
-
-	function loadMap() {
-		const mapOption = {
-			center: new window.kakao.maps.LatLng(coords.latitude, coords.longitude),
-			level: 3,
-		};
-
-		const map = new window.kakao.maps.Map(mapRef.current, mapOption);
-		const marker = new window.kakao.maps.Marker({
-			position: map.getCenter(),
-		});
-		marker.setMap(map);
-
-		const geocoder = new window.kakao.maps.services.Geocoder();
-
-		geocoder.coord2Address(
-			coords.longitude,
-			coords.latitude,
-			(result: any, status: any) => {
-				if (status === window.kakao.maps.services.Status.OK) {
-					setAddress(
-						result[0].road_address
-							? result[0].road_address.address_name
-							: result[0].address.address_name,
-					);
-				}
-			},
-		);
-	}
+		console.log(address);
+	}, [address]);
 
 	return (
 		<>
 			<Script
 				type="text/javascript"
 				src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`}
-				onLoad={() => {
-					window.kakao.maps.load(loadMap);
-				}}
-			/>
+				strategy="beforeInteractive"
+			></Script>
 			<div className={styles.container}>
 				<span className={styles.title}>분양 지역</span>
-				<div className={styles.map} ref={mapRef} />
+
+				<Map
+					center={{lat: coords.latitude, lng: coords.longitude}}
+					style={{
+						height: '300px',
+					}}
+					level={3}
+				>
+					<MapMarker
+						position={{lat: coords.latitude, lng: coords.longitude}}
+					></MapMarker>
+				</Map>
 				<span className={styles.address}>{address}</span>
 			</div>
 		</>
