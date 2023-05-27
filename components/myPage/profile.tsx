@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import {useRouter} from 'next/router';
 import styles from '@/styles/components/myPage/profile.module.scss';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
 
 function Profile() {
 	const router = useRouter();
@@ -16,6 +17,7 @@ function Profile() {
 	const [accessToken, setAccessToken] = useState(
 		typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '',
 	);
+	const refresh = useRefreshToken();
 	const [userInfo, setUserInfo] = useState<Userinfo>({
 		id: 0,
 		profile: 'string',
@@ -38,8 +40,7 @@ function Profile() {
 			})
 				.then(response => response.json())
 				.then(data => {
-					console.log(data);
-					data.status === 401 ? console.log(401) : setUserInfo(data);
+					data.status === 401 ? refresh() : setUserInfo(data);
 				});
 		}
 		fetchMyInfo();

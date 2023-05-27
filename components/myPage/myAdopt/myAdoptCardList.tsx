@@ -4,8 +4,10 @@ import {AmyAdoptBoardType, AmyAdoptModal} from '@/utils/recoil/recoilStore';
 import MyAdoptModal from './myAdoptModal';
 import MyAdoptCard from './myAdoptCard';
 import styles from '@/styles/components/myPage/myAdopt/myAdoptCardList.module.scss';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
 
 function MyAdoptCardList() {
+	const refresh = useRefreshToken();
 	const [myAdoptBoardType, setMyAdoptBoardType] =
 		useRecoilState(AmyAdoptBoardType);
 	const [myAdoptModal, setMyAdoptModal] = useRecoilState(AmyAdoptModal);
@@ -27,9 +29,7 @@ function MyAdoptCardList() {
 			)
 				.then(response => response.json())
 				.then(data => {
-					data.status === 401
-						? console.log('무효한 토큰')
-						: setMyAdoptData(data);
+					data.status === 401 ? refresh() : setMyAdoptData(data);
 					data.status === 500 ? alert('DB오류') : null;
 				});
 		}
