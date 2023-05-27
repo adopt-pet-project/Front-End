@@ -4,6 +4,7 @@ import {useRecoilState} from 'recoil';
 import {AmodalWrap} from '@/utils/recoil/recoilStore';
 import useRefreshToken from '@/utils/hooks/useRefreshToken';
 import styles from '@/styles/components/deleteModal.module.scss';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
 
 export default function DeleteModal() {
 	const [modalRef] = useRecoilState(AmodalWrap);

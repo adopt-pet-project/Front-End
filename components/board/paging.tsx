@@ -3,6 +3,7 @@ import Article from './article';
 import ArticleSkeleton from '../articleSkeleton';
 import {convertDate} from '@/utils/functions/convertDate';
 import styles from '@/styles/components/board/paging.module.scss';
+import {convertDate} from '@/utils/functions/convertDate';
 
 const moreData = {
 	id: null,
