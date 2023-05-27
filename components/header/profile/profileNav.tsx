@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useRouter} from 'next/router';
 import {useRecoilState} from 'recoil';
 import {
@@ -14,6 +14,25 @@ function ProfileNav() {
 	const [isLogin, setIsLogin] = useRecoilState(AisLogin);
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
 	const [myPageCtg, setMyPageCtg] = useRecoilState(AcurrentMyPageCtg);
+	const [accessToken, setAccessToken] = useState(
+		typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '',
+	);
+
+	async function logout() {
+		await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/token/logout`, {
+			method: 'POST',
+			headers: {
+				Authorization: `${accessToken}`,
+			},
+		})
+			.then(response => response.json())
+			.then(data => {
+				console.log(data);
+				localStorage.removeItem('accessToken');
+				setIsLogin(false);
+				router.push('/');
+			});
+	}
 	return (
 		<div className={styles.innerWrap}>
 			<ProfileCard />
@@ -56,9 +75,8 @@ function ProfileNav() {
 			</div>
 			<div
 				onClick={() => {
+					logout();
 					setIsProfileBoxOn(false);
-					setIsLogin(false);
-					router.push('/');
 				}}
 				className={`${styles.myNav} ${styles.logout}`}
 			>
