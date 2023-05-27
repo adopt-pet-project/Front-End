@@ -1,80 +1,61 @@
-import {BaseSyntheticEvent, useEffect, useRef} from 'react';
+import {BaseSyntheticEvent, useEffect, useRef, useState} from 'react';
+import {Map, MapMarker} from 'react-kakao-maps-sdk';
 import Script from 'next/script';
 import styles from '@/styles/components/adopt/coordsInput.module.scss';
 
 export default function CoordsInput({coords}: {coords?: AdoptCoords}) {
-	const mapRef = useRef<HTMLDivElement>(null);
-	const latitudeRef = useRef<HTMLInputElement>(null);
-	const longitudeRef = useRef<HTMLInputElement>(null);
-	const addressRef = useRef<HTMLInputElement>(null);
+	const mapStyle = {
+		//맵 css
+		height: '300px',
+		width: '100%',
+		backgroundColor: '#ececee',
+		borderRadius: '8px',
+	};
 
-	let map: any;
-	let marker: any;
-
-	useEffect(() => {
-		if (window.kakao) {
-			window.kakao.maps.load(loadMap);
-		}
+	//현재 지정된 포인트
+	const [currentPosition, setCurrentPosition] = useState({
+		lat: 37.55467,
+		lng: 126.970609,
 	});
+	const [address, setAddress] = useState('');
 
-	function setPosition(latLng: any) {
-		map.setCenter(latLng);
-		marker.setPosition(latLng);
-		latitudeRef.current!.value = latLng.Ma;
-		longitudeRef.current!.value = latLng.La;
-		const geocoder = new window.kakao.maps.services.Geocoder();
-		geocoder.coord2Address(latLng.La, latLng.Ma, (result: any, status: any) => {
-			if (
-				status === window.kakao.maps.services.Status.OK &&
-				addressRef.current
-			) {
-				addressRef.current.value = result[0].road_address
-					? result[0].road_address.address_name.split(' ').slice(0, 2).join(' ')
-					: result[0].address.address_name.split(' ').slice(0, 3).join(' ');
-			}
-		});
-	}
-
-	function loadMap() {
-		if (!latitudeRef.current?.value && !longitudeRef.current?.value) {
-			latitudeRef.current!.value = coords?.latitude.toString() || '37.55467';
-			longitudeRef.current!.value =
-				coords?.longitude.toString() || '126.970609';
-			addressRef.current!.value = coords?.address || '서울특별시 중구';
-		}
-
-		const mapOption = {
-			center: new window.kakao.maps.LatLng(
-				latitudeRef.current!.value,
-				longitudeRef.current!.value,
-			),
-			level: 6,
-		};
-
-		map = new window.kakao.maps.Map(mapRef.current, mapOption);
-		marker = new window.kakao.maps.Marker({
-			position: map.getCenter(),
-		});
-		marker.setMap(map);
-
-		window.kakao.maps.event.addListener(
-			map,
-			'click',
-			function (mouseEvent: any) {
-				let latlng = mouseEvent.latLng;
-				setPosition(latlng);
-			},
-		);
-	}
-
-	function setCurrentPosition(e: BaseSyntheticEvent) {
+	//버튼을 누를 시 현재 접속자 위치로 포지션 변경 → 안건들임
+	function setCurrentPositionByBtn(e: BaseSyntheticEvent) {
+		// 버튼
 		e.preventDefault();
 		navigator.geolocation.getCurrentPosition(position => {
 			let {latitude, longitude} = position.coords;
 			const coord = new window.kakao.maps.LatLng(latitude, longitude);
 
-			setPosition(coord);
+			setCurrentPosition(coord);
 		});
+	}
+
+	//좌표로 주소를 받는 rest api
+	function getAddressByCoords() {
+		fetch(
+			`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${currentPosition.lng}&y=${currentPosition.lat}&input_coord=WGS84`,
+			{
+				method: 'GET',
+				headers: {
+					Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`,
+				},
+			},
+		)
+			.then(data => data.json())
+			.then(data => {
+				setAddress(
+					data.documents[0].road_address
+						? data.documents[0].road_address.address_name
+								.split(' ')
+								.slice(0, 2)
+								.join(' ')
+						: data.documents[0].address.address_name
+								.split(' ')
+								.slice(0, 2)
+								.join(' '),
+				);
+			});
 	}
 
 	return (
@@ -82,19 +63,49 @@ export default function CoordsInput({coords}: {coords?: AdoptCoords}) {
 			<Script
 				type="text/javascript"
 				src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`}
-				onLoad={() => {
-					window.kakao.maps.load(loadMap);
-				}}
-			/>
+				strategy="beforeInteractive"
+			></Script>
+
 			<div className={styles.container}>
 				<div className={styles.header}>
 					<span>지역 설정</span>
-					<button onClick={setCurrentPosition}>현 위치로 지정</button>
+					<button onClick={setCurrentPositionByBtn}>현 위치로 지정</button>
 				</div>
-				<div className={styles.map} ref={mapRef} />
-				<input type="text" name="latitude" id="latitude" ref={latitudeRef} />
-				<input type="text" name="longitude" id="longitude" ref={longitudeRef} />
-				<input type="text" name="address" id="address" ref={addressRef} />
+				<Map
+					onClick={(_t, e) => {
+						getAddressByCoords();
+						setCurrentPosition({
+							lat: e.latLng.getLat(),
+							lng: e.latLng.getLng(),
+						});
+					}}
+					center={currentPosition}
+					style={mapStyle}
+					level={6}
+				>
+					<MapMarker position={currentPosition}></MapMarker>
+				</Map>
+				<input
+					type="text"
+					name="latitude"
+					id="latitude"
+					value={currentPosition.lat}
+					onChange={e => {}}
+				/>
+				<input
+					type="text"
+					name="longitude"
+					id="longitude"
+					value={currentPosition.lng}
+					onChange={e => {}}
+				/>
+				<input
+					type="text"
+					name="address"
+					id="address"
+					value={address}
+					onChange={e => {}}
+				/>
 			</div>
 		</>
 	);

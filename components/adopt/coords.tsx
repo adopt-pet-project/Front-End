@@ -27,10 +27,6 @@ export default function Position({coords}: {coords: AdoptCoords}) {
 			});
 	}, []);
 
-	useEffect(() => {
-		console.log(address);
-	}, [address]);
-
 	return (
 		<>
 			<Script
