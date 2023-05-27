@@ -12,7 +12,7 @@ interface Register {
 	imgUrl?: string;
 }
 
-interface userInfo {
+interface Userinfo {
 	id: number;
 	profile: string;
 	name: string;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '@/styles/components/header/alarm/alarmCard.module.scss';
 
-function AlarmCard({data}: {data: Alarmdata | Alarmnotedata | Alarmchatdata}) {
+function AlarmCard({data}: {data: Alarmdata | Alarmdataname}) {
 	return (
 		<div
 			className={`${styles.cardWrap} ${
@@ -17,8 +17,6 @@ function AlarmCard({data}: {data: Alarmdata | Alarmnotedata | Alarmchatdata}) {
 					<span style={{color: 'orange', fontWeight: 'bold'}}>댓글 알림</span>
 				) : data.type === 'recomment' ? (
 					<span style={{color: 'orange', fontWeight: 'bold'}}>답글 알림</span>
-				) : data.type === 'mention' ? (
-					<span style={{color: 'darkblue', fontWeight: 'bold'}}>멘션 알림</span>
 				) : data.type === 'chat' ? (
 					<span style={{color: 'blue', fontWeight: 'bold'}}>채팅 알림</span>
 				) : (
@@ -35,11 +33,9 @@ function AlarmCard({data}: {data: Alarmdata | Alarmnotedata | Alarmchatdata}) {
 						글에 선정되었습니다.
 					</>
 				) : data.type === 'comment' ? (
-					'성익현님이 회원님의 게시글에 댓글을 작성하였습니다.'
+					`${data.name}님이 회원님의 게시글에 댓글을 작성하였습니다.`
 				) : data.type === 'recomment' ? (
-					'성익현님이 회원님의 댓글에 답글을 작성하였습니다.'
-				) : data.type === 'mention' ? (
-					'성익현님이 회원님을 언급하였습니다.'
+					`${data.name}님이 회원님의 댓글에 답글을 작성하였습니다.`
 				) : data.type === 'chat' ? (
 					`${data.name}님으로부터 채팅이 도착하였습니다.`
 				) : data.type === 'note' ? (

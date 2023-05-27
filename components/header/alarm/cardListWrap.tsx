@@ -2,11 +2,7 @@ import React from 'react';
 import AlarmCard from './alarmCard';
 import styles from '@/styles/components/header/alarm/cardListWrap.module.scss';
 
-function CardListWrap({
-	alarmData,
-}: {
-	alarmData: (Alarmdata | Alarmnotedata | Alarmchatdata)[];
-}) {
+function CardListWrap({alarmData}: {alarmData: (Alarmdata | Alarmdataname)[]}) {
 	return (
 		<>
 			<ul className={styles.listWrap}>
