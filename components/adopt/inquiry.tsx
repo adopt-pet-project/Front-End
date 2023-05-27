@@ -1,5 +1,5 @@
-import styles from '@/styles/components/adopt/inquiry.module.scss';
 import {useRouter} from 'next/router';
+import styles from '@/styles/components/adopt/inquiry.module.scss';
 
 export default function Inquiry({
 	authorId,

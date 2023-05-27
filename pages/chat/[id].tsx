@@ -1,18 +1,17 @@
 import {GetServerSideProps} from 'next';
 import {ReactElement, useEffect, useRef, useState} from 'react';
+import {CompatClient, IMessage, Stomp} from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 import ChatInput from '@/components/chat/chatInput';
 import AdoptInfo from '@/components/chat/adoptInfo';
 import Header from '@/components/chat/header';
 import MessageArea from '@/components/chat/messageArea';
 import Layout from '@/components/layout/layout';
-import {CompatClient, IMessage, Stomp} from '@stomp/stompjs';
-import SockJS from 'sockjs-client';
 
 export default function Chat({query}: {query: any}) {
 	const client = useRef<CompatClient>();
 
 	const [message, setMessage] = useState<Chat[]>([]);
-
 	const [newMessage, setNewMessage] = useState<Chat[]>([]);
 
 	function onConnect() {

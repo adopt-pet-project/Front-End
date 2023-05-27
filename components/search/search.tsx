@@ -1,8 +1,8 @@
 import {useEffect, useRef, useState} from 'react';
 import {useRouter} from 'next/router';
-import styles from '@/styles/components/search/search.module.scss';
 import useDepsOnlyEffect from '@/utils/hooks/useDepsOnlyEffect';
 import SearchFilter from './searchFilter';
+import styles from '@/styles/components/search/search.module.scss';
 
 export default function Search({currentPath}: {currentPath: string}) {
 	const [isActive, setIsActive] = useState<boolean>(false);

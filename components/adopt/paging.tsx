@@ -1,8 +1,8 @@
 import {BaseSyntheticEvent, useEffect, useRef, useState} from 'react';
 import Article from './article';
 import ArticleSkeleton from '../articleSkeleton';
-import styles from '@/styles/components/adopt/paging.module.scss';
 import {convertDate} from '@/utils/functions/convertDate';
+import styles from '@/styles/components/adopt/paging.module.scss';
 
 const moreData = {
 	title: '강인한 허스키 분양해요',

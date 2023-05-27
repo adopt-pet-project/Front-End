@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
+import Link from 'next/link';
 import {useRecoilState} from 'recoil';
 import {AmodalType, AmodalWrap} from '@/utils/recoil/recoilStore';
-import Link from 'next/link';
 import styles from '@/styles/components/adopt/context.module.scss';
 
 export default function Context({

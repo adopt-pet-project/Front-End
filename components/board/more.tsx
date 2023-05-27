@@ -2,8 +2,8 @@ import {BaseSyntheticEvent, useEffect, useRef, useState} from 'react';
 import {useRouter} from 'next/router';
 import {useRecoilState} from 'recoil';
 import {AmodalWrap, AmodalType} from '@/utils/recoil/recoilStore';
-import styles from '@/styles/components/board/more.module.scss';
 import useRefreshToken from '@/utils/hooks/useRefreshToken';
+import styles from '@/styles/components/board/more.module.scss';
 
 const option = [['쪽지'], ['수정', '삭제']];
 
