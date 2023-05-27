@@ -38,7 +38,8 @@ function Profile() {
 			})
 				.then(response => response.json())
 				.then(data => {
-					data.status === 401 ? console.log(401) : setUserInfo(data.data);
+					console.log(data);
+					data.status === 401 ? console.log(401) : setUserInfo(data);
 				});
 		}
 		fetchMyInfo();
@@ -49,7 +50,7 @@ function Profile() {
 	}, [isModify]);
 
 	async function withdraw() {
-		async function fetchMyInfo() {
+		async function deleteInfo() {
 			await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member`, {
 				method: 'DELETE',
 				headers: {
@@ -61,6 +62,7 @@ function Profile() {
 					data.status === 200 ? alert('탈퇴 완료') : alert('오류 발생!');
 				});
 		}
+		deleteInfo();
 	}
 	return (
 		<>

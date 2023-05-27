@@ -28,6 +28,7 @@ function ProfileNav() {
 			.then(response => response.json())
 			.then(data => {
 				console.log(data);
+				localStorage.removeItem('accessToken');
 				setIsLogin(false);
 				router.push('/');
 			});
