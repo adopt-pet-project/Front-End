@@ -1,9 +1,12 @@
 import {BaseSyntheticEvent, useEffect, useRef, useState} from 'react';
-import {Map, MapMarker} from 'react-kakao-maps-sdk';
-import Script from 'next/script';
+import {Map, MapMarker, useInjectKakaoMapApi} from 'react-kakao-maps-sdk';
 import styles from '@/styles/components/adopt/coordsInput.module.scss';
 
 export default function CoordsInput({coords}: {coords?: AdoptCoords}) {
+	const {loading, error} = useInjectKakaoMapApi({
+		appkey: `${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}`,
+	});
+
 	const mapStyle = {
 		//맵 css
 		height: '300px',
@@ -60,31 +63,27 @@ export default function CoordsInput({coords}: {coords?: AdoptCoords}) {
 
 	return (
 		<>
-			<Script
-				type="text/javascript"
-				src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`}
-				strategy="beforeInteractive"
-			></Script>
-
 			<div className={styles.container}>
 				<div className={styles.header}>
 					<span>지역 설정</span>
 					<button onClick={setCurrentPositionByBtn}>현 위치로 지정</button>
 				</div>
-				<Map
-					onClick={(_t, e) => {
-						getAddressByCoords();
-						setCurrentPosition({
-							lat: e.latLng.getLat(),
-							lng: e.latLng.getLng(),
-						});
-					}}
-					center={currentPosition}
-					style={mapStyle}
-					level={6}
-				>
-					<MapMarker position={currentPosition}></MapMarker>
-				</Map>
+				{!loading ? (
+					<Map
+						onClick={(_t, e) => {
+							getAddressByCoords();
+							setCurrentPosition({
+								lat: e.latLng.getLat(),
+								lng: e.latLng.getLng(),
+							});
+						}}
+						center={currentPosition}
+						style={mapStyle}
+						level={6}
+					>
+						<MapMarker position={currentPosition}></MapMarker>
+					</Map>
+				) : null}
 				<input
 					type="text"
 					name="latitude"
