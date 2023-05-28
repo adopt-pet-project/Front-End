@@ -7,11 +7,19 @@ export default function MessageArea({message}: {message: Chat[]}) {
 	return (
 		<div className={styles.container}>
 			{message.map((chat: Chat, index: number) => {
-				const dateString =
-					index === 0 ||
-					message[index].dateString != message[index - 1].dateString
-						? `${chat.dateString} ${chat.timeString}`
-						: `${chat.timeString}`;
+				let dateString = '';
+
+				if (index === 0) {
+					dateString = `${chat.dateString} ${chat.timeString}`;
+				} else {
+					if (message[index].dateString != message[index - 1].dateString)
+						dateString += message[index].dateString;
+
+					if (dateString != '') dateString += ' ';
+
+					if (message[index].timeString != message[index - 1].timeString)
+						dateString += message[index].timeString;
+				}
 
 				return (
 					<div
