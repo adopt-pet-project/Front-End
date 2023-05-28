@@ -19,6 +19,7 @@ export default function ChatInput({
 }) {
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 	const [isMapOpen, setIsMapOpen] = useState<boolean>(false);
+	const type = useRef<'text' | 'picture' | 'coords'>('text');
 	const mapRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 
@@ -36,6 +37,7 @@ export default function ChatInput({
 			if (inputRef.current) inputRef.current.blur();
 			setIsMenuOpen(true);
 		} else {
+			type.current = 'text';
 			inputRef.current!.value = '';
 			setIsMapOpen(false);
 			setIsMenuOpen(false);
@@ -59,7 +61,7 @@ export default function ChatInput({
 					{Authorization: window.localStorage.getItem('accessToken')},
 					JSON.stringify({
 						chatNo: id,
-						contentType: 'text',
+						contentType: type.current,
 						content: inputRef.current.value,
 					}),
 				);
@@ -70,16 +72,22 @@ export default function ChatInput({
 				setIsMapOpen(false);
 				setIsMenuOpen(false);
 				inputRef.current!.value = '';
+				type.current = 'text';
 			}
 		}
 	}
 
 	function changeImageInput(e: BaseSyntheticEvent) {
+		type.current = 'picture';
 		const regExp = /(.*?)\.(jpg|jpeg|png|bmp|gif)$/;
 		const file: File = e.currentTarget.files[0];
 
 		if (file.name.match(regExp)) {
-			// set inputRef value to BASE64 Encoding Image
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onloadend = () => {
+				if (inputRef.current) inputRef.current.value = reader.result as string;
+			};
 			onClickSend();
 			setIsMenuOpen(false);
 		} else {
@@ -182,7 +190,12 @@ export default function ChatInput({
 								id="image"
 							/>
 						</li>
-						<li onClick={() => setIsMapOpen(true)}>
+						<li
+							onClick={() => {
+								setIsMapOpen(true);
+								type.current = 'coords';
+							}}
+						>
 							<div className={styles.icon}>
 								<img
 									src="/icon/location.svg"

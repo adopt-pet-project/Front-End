@@ -1,5 +1,6 @@
 interface Chat {
 	id: string;
+	contentType: 'text' | 'picture' | 'coords';
 	chatRoomNo: number;
 	senderNo: number;
 	senderName: string;

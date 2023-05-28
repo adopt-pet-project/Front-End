@@ -1,5 +1,5 @@
 .container {
-	margin: 16px 16px 0 16px;
+	margin: 16px;
 }
 
 .message {
@@ -38,7 +38,7 @@
 .textContainer {
 	display: flex;
 	align-items: flex-end;
-	height: 28px;
+	min-height: 28px;
 }
 
 .me {
@@ -56,8 +56,16 @@
 	flex-direction: row-reverse;
 }
 
+.multimedia {
+	margin: 0 4px;
+	width: 200px;
+	height: 200px;
+	border-radius: 8px;
+	background-color: var(--gray);
+}
+
 @media screen and (max-width: 768px) {
 	.container {
-		margin: 12px 12px 0 12px;
+		margin: 12px;
 	}
 }

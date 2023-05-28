@@ -15,7 +15,6 @@ import NewMessageArea from '@/components/chat/newMessageArea';
 
 export default function Chat({query}: {query: any}) {
 	const client = useRef<CompatClient>();
-
 	const [message, setMessage] = useState<Chat[]>([]);
 	const [flightMessage, setFlightMessage] = useState<FlightChat[]>([]);
 	const [adoptInfo, setAdoptInfo] = useState<AdoptDetail>();
