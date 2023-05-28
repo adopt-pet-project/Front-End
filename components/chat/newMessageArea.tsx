@@ -1,4 +1,4 @@
-import {Map, MapMarker, useInjectKakaoMapApi} from 'react-kakao-maps-sdk';
+import {Map, MapMarker} from 'react-kakao-maps-sdk';
 import styles from '@/styles/components/chat/messageArea.module.scss';
 
 const profile =
@@ -12,8 +12,6 @@ export default function NewMessageArea({
 	mine: boolean;
 	authorId: number;
 }) {
-	console.log(message);
-
 	return (
 		<div className={styles.container}>
 			{message.map((chat: Chat, index: number) => {

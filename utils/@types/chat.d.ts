@@ -18,3 +18,24 @@ interface FlightChat {
 	type: number | null;
 	content: string;
 }
+
+interface ChatParticipant {
+	username: string;
+	profile: string;
+}
+
+interface ChatLatestMessage {
+	context: string;
+	sendAt: number;
+}
+
+interface ChatList {
+	chatNo: number;
+	createMember: number;
+	joinMember: number;
+	saleNo: number;
+	regDate: number;
+	participant: ChatParticipant;
+	latestMessage: ChatLatestMessage;
+	unReadCount: number;
+}
