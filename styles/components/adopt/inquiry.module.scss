@@ -1,4 +1,6 @@
 .container {
+	max-height: 308.8px;
+	overflow-y: scroll;
 	z-index: 1;
 	border-radius: 0 0 8px 8px;
 	position: sticky;
@@ -22,4 +24,30 @@
 		height: 28px;
 		padding: 4px 14px;
 	}
+}
+
+.chatList {
+	cursor: pointer;
+	user-select: none;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.chat {
+	display: flex;
+	width: 100%;
+}
+
+.chatInfo {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+.strong,
+.lower {
+	font-size: 18px;
+	font-weight: bold;
 }

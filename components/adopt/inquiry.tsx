@@ -1,5 +1,8 @@
 import {useRouter} from 'next/router';
+import {useState} from 'react';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
 import styles from '@/styles/components/adopt/inquiry.module.scss';
+import {convertDate} from '@/utils/functions/convertDate';
 
 export default function Inquiry({
 	authorId,
@@ -12,6 +15,8 @@ export default function Inquiry({
 	chat: number;
 	mine: boolean;
 }) {
+	const [chatList, setChatList] = useState<ChatList[]>([]);
+	const refresh = useRefreshToken();
 	const router = useRouter();
 
 	async function fetchAdoptChatList() {
@@ -25,6 +30,14 @@ export default function Inquiry({
 		);
 
 		let result = await response.json();
+		if (result.status === 401) {
+			refresh();
+			alert('다시 시도하세요.');
+		} else if (!result.status) {
+			setChatList(result);
+		} else {
+			alert('오류 발생');
+		}
 		return result;
 	}
 
@@ -65,7 +78,41 @@ export default function Inquiry({
 		<div className={styles.container}>
 			{mine ? (
 				<>
-					<div>test</div>
+					{mine && chatList.length !== 0 && (
+						<div className={styles.chatList}>
+							{chatList
+								.filter((chat: ChatList) => chat.latestMessage != null)
+								.map((chat: ChatList) => {
+									return (
+										<div
+											key={chat.regDate}
+											className={styles.chat}
+											onClick={() => {
+												router.push(`/chat/${chat.chatNo}?adoptId=${id}`);
+											}}
+										>
+											<img
+												src={chat.participant.profile}
+												width={64}
+												height={64}
+												alt="profile"
+											/>
+											<div className={styles.chatInfo}>
+												<div className={styles.upper}>
+													<span className={styles.strong}>
+														{chat.participant.username}
+													</span>{' '}
+													<span>{convertDate(chat.latestMessage.sendAt)}</span>
+												</div>
+												<span className={styles.lower}>
+													{chat.latestMessage.context}
+												</span>
+											</div>
+										</div>
+									);
+								})}
+						</div>
+					)}
 					<div
 						style={{display: 'flex', width: '100%', justifyContent: 'flex-end'}}
 					>
