@@ -4,8 +4,10 @@ import {AisAlarmBoxOn, AisProfileBoxOn} from '@/utils/recoil/recoilStore';
 import ProfileBox from './profile/profileBox';
 import AlarmBox from './alarm/alarmBox';
 import styles from '@/styles/components/header/profileLoginTrue.module.scss';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
 
 function ProfileLoginTrue() {
+	const refresh = useRefreshToken();
 	const accessToken = window.localStorage.getItem('accessToken');
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
@@ -95,7 +97,7 @@ function ProfileLoginTrue() {
 			result.status == 500
 				? console.log('오류발생')
 				: result.status == 401
-				? console.log('무효한 토큰')
+				? refresh()
 				: setUserInfo(await result.data);
 		}
 

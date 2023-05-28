@@ -12,10 +12,12 @@
 }
 
 .map {
+	position: relative;
 	margin-top: 16px;
 	width: 100%;
-	border: 1px solid #000;
 	height: 500px;
+	border-radius: 5px;
+	overflow: hidden;
 }
 
 @media screen and (max-width: 768px) {
@@ -30,7 +32,6 @@
 	.map {
 		margin-top: 12px;
 		width: 100%;
-		border: 1px solid #000;
 		height: 500px;
 	}
 }

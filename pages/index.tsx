@@ -1,24 +1,30 @@
 import {GetServerSideProps} from 'next';
 import {ReactElement} from 'react';
+import MainMap from '@/components/main/mainMap';
 import styles from '@/styles/pages/index.module.scss';
 import Layout from '@/components/layout/layout';
+import Script from 'next/script';
 
 export default function Home() {
 	return (
-		<section className="body">
-			<article className={styles.article}>
-				<span className={styles.title}>한눈에 보기</span>
-				<div className={styles.map}></div>
-			</article>
-			<article className={styles.article}>
-				<span className={styles.title}>인기 게시글</span>
-				<div className={styles.map}></div>
-			</article>
-			<article className={`${styles.article} ${styles.lastArticle}`}>
-				<span className={styles.title}>핫한 분양글</span>
-				<div className={styles.map}></div>
-			</article>
-		</section>
+		<>
+			<section className="body">
+				<article className={styles.article}>
+					<span className={styles.title}>분양 지도로 보기</span>
+					<div className={styles.map}>
+						<MainMap />
+					</div>
+				</article>
+				<article className={styles.article}>
+					<span className={styles.title}>인기 게시글</span>
+					<div className={styles.map}></div>
+				</article>
+				<article className={`${styles.article} ${styles.lastArticle}`}>
+					<span className={styles.title}>핫한 분양글</span>
+					<div className={styles.map}></div>
+				</article>
+			</section>
+		</>
 	);
 }
 
