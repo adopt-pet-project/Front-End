@@ -8,16 +8,31 @@ const DummyData = {
 	address: '서울특별시 서초구',
 };
 
-export default function AdoptInfo() {
+export default function AdoptInfo({
+	adoptInfo,
+}: {
+	adoptInfo: AdoptDetail | undefined;
+}) {
 	return (
 		<div className={styles.container}>
-			<img src={DummyData.image} alt="animal image" width={64} height={64} />
-			<div className={styles.info}>
-				<span className={styles.title}>{DummyData.title}</span>
-				<span>
-					{DummyData.species} · {DummyData.address}
-				</span>
-			</div>
+			{adoptInfo && (
+				<>
+					{adoptInfo.imageList.length !== 0 && (
+						<img
+							src={adoptInfo.imageList[0].imgUrl}
+							alt="animal image"
+							width={64}
+							height={64}
+						/>
+					)}
+					<div className={styles.info}>
+						<span className={styles.title}>{adoptInfo.header.title}</span>
+						<span>
+							{adoptInfo.metadata.species} · {adoptInfo.coords.address}
+						</span>
+					</div>
+				</>
+			)}
 		</div>
 	);
 }

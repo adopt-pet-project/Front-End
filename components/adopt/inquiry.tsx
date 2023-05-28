@@ -16,7 +16,7 @@ export default function Inquiry({
 
 	async function fetchAdoptChatList() {
 		let response = await fetch(
-			`${process.env.NEXT_PUBLIC_SERVER_URL}/chatroom`,
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/chatroom?saleNo=${id}`,
 			{
 				headers: {
 					Authorization: window.localStorage.getItem('accessToken') as string,
@@ -25,7 +25,6 @@ export default function Inquiry({
 		);
 
 		let result = await response.json();
-
 		return result;
 	}
 
@@ -49,32 +48,35 @@ export default function Inquiry({
 				},
 			);
 			let result = await response.json();
-
 			if (result.status === 200) {
 				let newChat = await fetchAdoptChatList();
-				router.push(`/chat/${newChat.chatNo}`);
+				router.push(`/chat/${newChat[0].chatNo}?adoptId=${id}`);
 			} else {
 				alert(`Error Code ${result.status}`);
 			}
 		} else {
 			let chatId = myChat[0].chatNo;
-			if (chatId != null) router.push(`/chat/${myChat[0].chatNo}`);
+			if (chatId != null)
+				router.push(`/chat/${myChat[0].chatNo}?adoptId=${id}`);
 		}
 	}
 
 	return (
 		<div className={styles.container}>
 			{mine ? (
-				<div
-					style={{display: 'flex', width: '100%', justifyContent: 'flex-end'}}
-				>
-					<button onClick={fetchAdoptChatList}>받은 문의 {chat}</button>
-				</div>
-			) : (
 				<>
+					<div>test</div>
+					<div
+						style={{display: 'flex', width: '100%', justifyContent: 'flex-end'}}
+					>
+						<button onClick={fetchAdoptChatList}>받은 문의 {chat}</button>
+					</div>
+				</>
+			) : (
+				<div style={{display: 'flex', justifyContent: 'space-between'}}>
 					<button>관심목록에 추가</button>
 					<button onClick={makeChat}>문의하기</button>
-				</>
+				</div>
 			)}
 		</div>
 	);
