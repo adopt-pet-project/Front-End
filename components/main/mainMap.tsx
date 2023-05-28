@@ -2,61 +2,31 @@ import {Map, MapMarker} from 'react-kakao-maps-sdk';
 import {useRouter} from 'next/router';
 import styles from '@/styles/components/main/mainMap.module.scss';
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Script from 'next/script';
 
 function MainMap() {
 	const router = useRouter();
 	const [filterCtg, setFilterCtg] = useState<'a' | 'd' | 'c' | 'o'>('a');
 
-	const [mapMarkerData, setMapMarkerData] = useState([
-		{
-			id: 22,
-			name: '낑낑이',
-			age: 5,
-			type: 'd',
-			lat: 37.410701,
-			lng: 126.510667,
-			isModal: false,
-		},
-		{
-			id: 23,
-			name: '든든이',
-			age: 7,
-			type: 'd',
-			lat: 37.420701,
-			lng: 126.620667,
-			isModal: false,
-		},
-		{
-			id: 24,
-			name: '쫑쫑이',
-			age: 8,
-			type: 'c',
-			lat: 37.430701,
-			lng: 126.730667,
-			isModal: false,
-		},
-		{
-			id: 25,
-			name: '컹컹이',
-			age: 11,
-			type: 'c',
-			lat: 37.440701,
-			lng: 126.840667,
-			isModal: false,
-		},
-		{
-			id: 26,
-			name: '껌딱지',
-			age: 7,
-			type: 'o',
-			lat: 37.450701,
-			lng: 126.990667,
-			isModal: false,
-		},
-	]);
+	const [mapMarkerData, setMapMarkerData] = useState<Mapmarker[]>([]);
 
+	useEffect(() => {
+		async function fetchMapData() {
+			await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/adopt/render`, {
+				method: 'GET',
+			})
+				.then(response => response.json())
+				.then(data => {
+					setMapMarkerData(data);
+				});
+		}
+		fetchMapData();
+	}, []);
+
+	useEffect(() => {
+		console.log(mapMarkerData);
+	}, [mapMarkerData]);
 	return (
 		<>
 			<Script
@@ -87,9 +57,9 @@ function MainMap() {
 				{mapMarkerData
 					.filter((markerData, i) => {
 						if (filterCtg === 'a') return true;
-						else if (filterCtg === 'd') return markerData.type === 'd';
-						else if (filterCtg === 'c') return markerData.type === 'c';
-						else return markerData.type === 'o';
+						else if (filterCtg === 'd') return markerData.kind === '강아지';
+						else if (filterCtg === 'c') return markerData.kind === '고양이';
+						else return markerData.kind === '기타';
 					})
 					.map((markerData, i) => (
 						<MapMarker
@@ -117,7 +87,7 @@ function MainMap() {
 									});
 								}
 							}}
-							position={{lat: markerData.lat, lng: markerData.lng}}
+							position={{lat: markerData.latitude, lng: markerData.longitude}}
 						>
 							{markerData.isModal ? (
 								<div
@@ -132,7 +102,7 @@ function MainMap() {
 									/>
 									<div className={styles.info}>
 										<div>{`${markerData.name}`}</div>
-										<div>{`${markerData.age}`}살</div>
+										<div>{`${markerData.age}`}</div>
 									</div>
 								</div>
 							) : null}
