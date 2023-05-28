@@ -1,12 +1,9 @@
 function useRefreshToken() {
 	async function refreshToken(token: string) {
-		const response = await fetch(
-			`${process.env.NEXT_PUBLIC_SERVER_URL}/token/refresh`,
-			{
-				method: 'POST',
-				headers: {Authorization: token},
-			},
-		);
+		const response = await fetch(`https://ez-tour.org/token/refresh`, {
+			method: 'POST',
+			headers: {Authorization: token},
+		});
 		const result = await response.json();
 		if (result.status === 200) {
 			window.localStorage.setItem('accessToken', result.accessToken);

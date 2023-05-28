@@ -1,6 +1,5 @@
 import {GetServerSideProps} from 'next';
 import {ReactElement, useEffect, useState} from 'react';
-import {useRouter} from 'next/router';
 import Layout from '@/components/layout/layout';
 import Carousel from '@/components/adopt/carousel';
 import Header from '@/components/adopt/header';
@@ -10,6 +9,7 @@ import Author from '@/components/adopt/author';
 import Position from '@/components/adopt/coords';
 import Inquiry from '@/components/adopt/inquiry';
 import {toDate} from '@/utils/functions/toDate';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
 
 export default function View({
 	article,
@@ -19,7 +19,7 @@ export default function View({
 	id: number;
 }) {
 	const [isMine, setIsMine] = useState<boolean>(false);
-	const router = useRouter();
+	const refresh = useRefreshToken();
 
 	useEffect(() => {
 		async function fetchMine() {
@@ -34,7 +34,7 @@ export default function View({
 			let result = await response.json();
 
 			if (result.status === 401) {
-				router.push(`/refreshToken`);
+				refresh();
 			} else {
 				setIsMine(result.mine);
 			}

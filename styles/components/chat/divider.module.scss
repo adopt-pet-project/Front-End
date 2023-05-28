@@ -1,0 +1,34 @@
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 16px;
+
+	span {
+		user-select: none;
+		display: block;
+		background-color: var(--skyblue);
+		color: white;
+		padding: 4px 12px;
+		border-radius: 50px;
+	}
+}
+
+.leftLine,
+.rightLine {
+	flex-grow: 1;
+	background-color: var(--gray);
+	height: 2px;
+	margin: 0 16px;
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		margin-top: 12px;
+	}
+
+	.leftLine,
+	.rightLine {
+		margin: 0 12px;
+	}
+}

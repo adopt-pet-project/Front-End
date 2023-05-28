@@ -7,6 +7,7 @@
 	bottom: 0;
 	background-color: var(--white);
 	display: flex;
+	flex-direction: column;
 	justify-content: space-between;
 
 	button {

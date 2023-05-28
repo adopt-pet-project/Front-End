@@ -111,13 +111,24 @@ export default function ChatInput({
 		);
 	}
 
+	function handleKeyboard(e: React.KeyboardEvent<HTMLInputElement>) {
+		if (e.key === 'Enter') {
+			onClickSend();
+		}
+	}
+
 	return (
 		<>
 			<Script
 				type="text/javascript"
 				src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`}
 			/>
-			<form className={styles.container}>
+			<form
+				className={styles.container}
+				onSubmit={e => {
+					e.preventDefault();
+				}}
+			>
 				<div className={styles.chatInput}>
 					<img
 						style={{
@@ -134,6 +145,7 @@ export default function ChatInput({
 						type="text"
 						placeholder="메시지를 입력하세요."
 						ref={inputRef}
+						onKeyUp={handleKeyboard}
 						onFocus={onFocusInput}
 					/>
 					<img
