@@ -38,7 +38,7 @@
 .textContainer {
 	display: flex;
 	align-items: flex-end;
-	height: 28px;
+	min-height: 28px;
 }
 
 .me {
@@ -54,6 +54,14 @@
 
 .rowReverse {
 	flex-direction: row-reverse;
+}
+
+.multimedia {
+	margin: 0 4px;
+	width: 200px;
+	height: 200px;
+	border-radius: 8px;
+	background-color: var(--gray);
 }
 
 @media screen and (max-width: 768px) {
