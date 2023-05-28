@@ -40,15 +40,15 @@ function MainMap() {
 					}}
 					center={{
 						// 지도의 중심좌표
-						lat: 37.450701,
-						lng: 126.770667,
+						lat: 37.55186,
+						lng: 126.9515,
 					}}
 					style={{
 						// 지도의 크기
 						width: '100%',
 						height: '100%',
 					}}
-					level={10} // 지도의 확대 레벨
+					level={7} // 지도의 확대 레벨
 				>
 					{mapMarkerData
 						.filter((markerData, i) => {
