@@ -24,9 +24,6 @@ function MainMap() {
 		fetchMapData();
 	}, []);
 
-	useEffect(() => {
-		console.log(mapMarkerData);
-	}, [mapMarkerData]);
 	return (
 		<>
 			<Script
@@ -38,7 +35,7 @@ function MainMap() {
 					setMapMarkerData(prev => {
 						let result = [...prev];
 						return result.map(data => {
-							return {...data, isModal: false};
+							return {...data, modal: false};
 						});
 					});
 				}}
@@ -65,11 +62,11 @@ function MainMap() {
 						<MapMarker
 							key={i}
 							onClick={() => {
-								if (markerData.isModal) {
+								if (markerData.modal) {
 									setMapMarkerData(prev => {
 										let result = [...prev];
 										return result.map(data => {
-											return {...data, isModal: false};
+											return {...data, modal: false};
 										});
 									});
 								} else {
@@ -77,11 +74,11 @@ function MainMap() {
 										let result = [...prev];
 										result = result.map(data => ({
 											...data,
-											isModal: false,
+											modal: false,
 										}));
 										return result.map(data => {
 											if (data.id === markerData.id)
-												return {...data, isModal: true};
+												return {...data, modal: true};
 											else return data;
 										});
 									});
@@ -89,7 +86,7 @@ function MainMap() {
 							}}
 							position={{lat: markerData.latitude, lng: markerData.longitude}}
 						>
-							{markerData.isModal ? (
+							{markerData.modal ? (
 								<div
 									onClick={() => {
 										router.push(`./adopt/${markerData.id}`);

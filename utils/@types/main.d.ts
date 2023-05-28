@@ -6,5 +6,5 @@ interface Mapmarker {
 	latitude: number;
 	longitude: number;
 	thumbnail: string;
-	isModal: boolean;
+	modal: boolean;
 }
