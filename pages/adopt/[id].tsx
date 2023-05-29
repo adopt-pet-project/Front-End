@@ -10,6 +10,8 @@ import Position from '@/components/adopt/coords';
 import Inquiry from '@/components/adopt/inquiry';
 import {toDate} from '@/utils/functions/toDate';
 import useRefreshToken from '@/utils/hooks/useRefreshToken';
+import Link from 'next/link';
+import styles from '@/styles/pages/adopt/view.module.scss';
 
 export default function View({
 	article,
@@ -54,6 +56,9 @@ export default function View({
 				<Metadata metadata={article.metadata} />
 				<Context mine={isMine} id={id} context={article.context} />
 				<Position coords={article.coords} />
+				<Link className={styles.return} href={'/adopt'}>
+					돌아가기
+				</Link>
 			</div>
 			<Inquiry
 				authorId={article.author.id}
