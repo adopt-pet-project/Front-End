@@ -86,10 +86,12 @@ export default function ChatInput({
 			const reader = new FileReader();
 			reader.readAsDataURL(file);
 			reader.onloadend = () => {
-				if (inputRef.current) inputRef.current.value = reader.result as string;
+				if (inputRef.current) {
+					inputRef.current.value = reader.result as string;
+					onClickSend();
+					setIsMenuOpen(false);
+				}
 			};
-			onClickSend();
-			setIsMenuOpen(false);
 		} else {
 			alert(`허용되지 않은 확장자입니다.\n${file.name.split('.')[1]}`);
 		}
@@ -127,10 +129,6 @@ export default function ChatInput({
 
 	return (
 		<>
-			<Script
-				type="text/javascript"
-				src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`}
-			/>
 			<form
 				className={styles.container}
 				onSubmit={e => {

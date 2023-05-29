@@ -19,7 +19,7 @@ export default function MessageArea({message}: {message: Chat[]}) {
 						? chat.content.split(' ').map(Number)
 						: null;
 
-				if (index === message.length - 1) {
+				if (index !== 0 && index === message.length - 1) {
 					dateString = `${chat.timeString}`;
 				} else if (index === 0) {
 					dateString = `${chat.dateString} ${chat.timeString}`;
