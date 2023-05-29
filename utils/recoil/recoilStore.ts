@@ -115,4 +115,9 @@ export const AuserInfo = atom<Userinfo>({
 		},
 	},
 });
+
+export const AalarmData = atom<(Alarmdata | Alarmdataname)[]>({
+	key: `alarmData/${v1()}`,
+	default: [],
+});
 export default {};

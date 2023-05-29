@@ -1,9 +1,9 @@
 interface Alarmdata {
 	id: number;
 	type: 'announcement' | 'documentHot';
-	refid: number;
-	date: string;
-	contents: string;
+	url: number;
+	publishedAt: number[];
+	content: string;
 	checked: boolean;
 	del: boolean;
 }

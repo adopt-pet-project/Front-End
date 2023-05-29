@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useRecoilState} from 'recoil';
+import {EventSourcePolyfill} from 'event-source-polyfill';
 import {
+	AalarmData,
 	AisAlarmBoxOn,
 	AisProfileBoxOn,
 	AuserInfo,
@@ -15,71 +17,50 @@ function ProfileLoginTrue() {
 	const accessToken = window.localStorage.getItem('accessToken');
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
-
+	const [alarmData, setAlarmData] = useRecoilState(AalarmData);
 	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
-	const [alarmData, setAlarmData] = useState<(Alarmdata | Alarmdataname)[]>([
-		{
-			id: 2,
-			type: 'announcement',
-			refid: 3,
-			date: '2023. 5. 1',
-			contents: '개인정보 처리 방침이 변경되었습니다.',
-			checked: false,
-			del: false,
-		},
-		{
-			id: 13,
-			type: 'documentHot',
-			refid: 4,
-			date: '2023. 5. 2',
-			contents: '',
-			checked: true,
-			del: false,
-		},
-		{
-			id: 15,
-			type: 'comment',
-			refid: 5,
-			name: '성익현',
-			date: '2023. 5. 1',
-			contents: '그건 좀;',
-			checked: true,
-			del: false,
-		},
-		{
-			id: 17,
-			type: 'recomment',
-			refid: 6,
-			name: '성익현',
-			date: '2023. 5. 4',
-			contents: '어쩌라고',
-			checked: false,
-			del: false,
-		},
-		{
-			id: 7,
-			type: 'note',
-			refid: 8,
-			name: '민지',
-			contents: '왜 연락을 안받니',
-			date: '2022.10.11',
-			checked: false,
-			del: false,
-		},
-
-		{
-			id: 4,
-			type: 'chat',
-			refid: 9,
-			name: '홍길동',
-			contents: '혹시 댕댕이 예방접종 받았나요...?',
-			date: '2023. 5. 1',
-			checked: true,
-			del: false,
-		},
-	]);
 
 	useEffect(() => {
+		const eventSource = new EventSourcePolyfill(
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/notification/connect`,
+			{
+				headers: {
+					Authorization: `${accessToken}`,
+				},
+			},
+		);
+
+		eventSource.onopen = () => {
+			console.log('connected');
+		};
+
+		eventSource.addEventListener('sse', (e: any) => {
+			if (e.data.includes('EventStream Created')) {
+			} else {
+				setAlarmData(prev => {
+					const result = [...prev];
+					result.unshift(JSON.parse(e.data));
+					console.log(result);
+					return result;
+				});
+			}
+		});
+
+		eventSource.onerror = (e: any) => {
+			eventSource.close();
+
+			if (e.error) {
+				console.log('Error');
+			}
+
+			if (e.target.readyState === EventSource.CLOSED) {
+				console.log('closed');
+			}
+		};
+	}, []);
+
+	useEffect(() => {
+		// 유저 정보 조회
 		async function getMyInfo() {
 			let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`;
 			let response = await fetch(`${URL}`, {
@@ -96,8 +77,24 @@ function ProfileLoginTrue() {
 	}, []);
 
 	useEffect(() => {
-		console.log(userInfo);
-	}, [userInfo]);
+		// 회원 알림 전체 조회
+		async function getMyAlarm() {
+			let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/notification/all`;
+			let response = await fetch(`${URL}`, {
+				method: 'GET',
+				headers: {
+					Authorization: `${accessToken}`,
+				},
+			});
+			const result = await response.json();
+			if (result.status === 404) {
+				alert('해당 알림을 찾을 수 없습니다.');
+			}
+			setAlarmData(result);
+		}
+
+		getMyAlarm();
+	}, []);
 
 	return (
 		<div className={styles.profileLoginWrap}>
@@ -137,9 +134,7 @@ function ProfileLoginTrue() {
 			</div>
 			{isProfileBoxOn ? <ProfileBox /> : null}
 
-			{isAlarmBoxOn ? (
-				<AlarmBox alarmData={alarmData} setAlarmData={setAlarmData} />
-			) : null}
+			{isAlarmBoxOn ? <AlarmBox /> : null}
 		</div>
 	);
 }

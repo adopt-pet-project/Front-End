@@ -1,20 +1,14 @@
 import {useEffect, useRef, useState} from 'react';
 import {useRecoilState} from 'recoil';
-import {AisAlarmBoxOn} from '@/utils/recoil/recoilStore';
+import {AalarmData, AisAlarmBoxOn} from '@/utils/recoil/recoilStore';
 import CardListWrap from './cardListWrap';
 import styles from '@/styles/components/header/alarm/alarmBox.module.scss';
 
-function AlarmBox({
-	alarmData,
-	setAlarmData,
-}: {
-	alarmData: (Alarmdata | Alarmdataname)[];
-	setAlarmData: React.Dispatch<
-		React.SetStateAction<(Alarmdata | Alarmdataname)[]>
-	>;
-}) {
+function AlarmBox() {
 	const alarmBoxRef = useRef<HTMLDivElement>(null);
+	const accessToken = window.localStorage.getItem('accessToken');
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
+	const [alarmData, setAlarmData] = useRecoilState(AalarmData);
 	const findHaveParent = (
 		node: HTMLElement,
 		target: HTMLElement,
@@ -49,9 +43,18 @@ function AlarmBox({
 		};
 	}, []);
 
-	useEffect(() => {
-		console.log(alarmData);
-	}, [alarmData]);
+	async function deleteCheckedAlarm(delList: any) {
+		let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/notification`;
+		fetch(`${URL}`, {
+			method: 'DELETE',
+			headers: {
+				Authorization: `${accessToken}`,
+			},
+			body: JSON.stringify({
+				idList: delList,
+			}),
+		});
+	}
 
 	return (
 		<div ref={alarmBoxRef} className={styles.box}>
@@ -78,13 +81,24 @@ function AlarmBox({
 								setTimeout(() => {
 									setAlarmData(prev => {
 										let result = [...prev];
+										result[i] = {...prev[i]};
 										result[i].del = true;
 
 										return result;
 									});
 									if (i === alarmData.length - 1) {
+										let delList: any = [];
+
 										setTimeout(() => {
-											setAlarmData(prev => prev.filter(datas => !datas.del));
+											setAlarmData(prev =>
+												prev.filter(datas => {
+													if (datas.del) {
+														delList.push(datas.id);
+													}
+													return !datas.del;
+												}),
+											);
+											deleteCheckedAlarm(delList);
 										}, 100);
 									}
 								}, delay);
