@@ -86,7 +86,7 @@ function ProfileLoginTrue() {
 
 	useEffect(() => {
 		async function getMyInfo() {
-			let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`;
+			let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/member/1`;
 			let response = await fetch(`${URL}`, {
 				method: 'GET',
 				headers: {
