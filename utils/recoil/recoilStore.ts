@@ -100,4 +100,19 @@ export const AcurrentMyPageCtg = atom<0 | 1 | 2>({
 	key: `myPageCtg/${v1()}`,
 	default: 0,
 });
+
+export const AuserInfo = atom<Userinfo>({
+	key: `userInfo/${v1()}`,
+	default: {
+		id: 0,
+		profile: '',
+		name: '',
+		location: '',
+		activity: {
+			document: 0,
+			comment: 0,
+			sanction: 0,
+		},
+	},
+});
 export default {};

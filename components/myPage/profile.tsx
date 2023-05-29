@@ -2,53 +2,23 @@ import {useEffect, useRef, useState} from 'react';
 import {useRouter} from 'next/router';
 import styles from '@/styles/components/myPage/profile.module.scss';
 import useRefreshToken from '@/utils/hooks/useRefreshToken';
+import {useRecoilState} from 'recoil';
+import {AuserInfo} from '@/utils/recoil/recoilStore';
 
 function Profile() {
 	const router = useRouter();
-	const dummyImg =
-		'https://mblogthumb-phinf.pstatic.net/MjAxNjExMjJfMjEx/MDAxNDc5NzQ0MDAzOTQy.-ax_EfCGWODogkXHIuDpovF5XHfaYi_s8EtRVWEjYXQg.R4kQWRtNC7pNxF03-aKWylWpGoRgE7vGDeagJm7Sgk0g.PNG.outdoor-interlaken/%EC%8A%A4%EC%9C%84%EC%8A%A4_%EC%97%AC%ED%96%89%ED%95%98%EA%B8%B0_%EC%A2%8B%EC%9D%80_%EA%B3%84%EC%A0%88_christofs70.png?type=w800';
-
 	const [isModify, setIsModify] = useState(false);
 	const [name, setName] = useState('');
 	const [newName, setNewName] = useState('');
-	const [currentImg, setCurrentImg] = useState(dummyImg);
+
 	const inputRef = useRef<HTMLInputElement>(null);
 	const inputImgRef = useRef<HTMLInputElement>(null);
 	const [accessToken, setAccessToken] = useState(
 		typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '',
 	);
 	const refresh = useRefreshToken();
-	const [userInfo, setUserInfo] = useState<Userinfo>({
-		id: 0,
-		profile: 'string',
-		name: 'string',
-		location: 'string',
-		activity: {
-			document: 0,
-			comment: 0,
-			sanction: 0,
-		},
-	});
-
-	useEffect(() => {
-		async function fetchMyInfo() {
-			await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`, {
-				method: 'GET',
-				headers: {
-					Authorization: `${accessToken}`,
-				},
-			})
-				.then(response => response.json())
-				.then(data => {
-					data.status === 401 ? refresh() : setUserInfo(data);
-				});
-		}
-		fetchMyInfo();
-	}, []);
-
-	useEffect(() => {
-		inputRef.current?.focus();
-	}, [isModify]);
+	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
+	const [currentImg, setCurrentImg] = useState('');
 
 	async function withdraw() {
 		async function deleteInfo() {
@@ -65,6 +35,10 @@ function Profile() {
 		}
 		deleteInfo();
 	}
+
+	useEffect(() => {
+		setCurrentImg(userInfo.profile);
+	}, [userInfo]);
 	return (
 		<>
 			<div className={styles.profileWrap}>

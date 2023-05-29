@@ -7,6 +7,7 @@ import {Router} from 'next/router';
 import '@/styles/nprogress.css';
 import '@/styles/globals.css';
 import '@/public/fonts/font.css';
+import Script from 'next/script';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
 	getLayout?: (page: ReactElement) => ReactNode;
@@ -43,6 +44,10 @@ export default function App({Component, pageProps}: AppPropsWithLayout) {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
+			<Script
+				src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=services,clusterer&autoload=false`}
+				strategy="beforeInteractive"
+			/>
 
 			<Component {...pageProps} />
 		</>,

@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useRecoilState} from 'recoil';
-import {AisAlarmBoxOn, AisProfileBoxOn} from '@/utils/recoil/recoilStore';
+import {
+	AisAlarmBoxOn,
+	AisProfileBoxOn,
+	AuserInfo,
+} from '@/utils/recoil/recoilStore';
 import ProfileBox from './profile/profileBox';
 import AlarmBox from './alarm/alarmBox';
 import styles from '@/styles/components/header/profileLoginTrue.module.scss';
@@ -11,17 +15,8 @@ function ProfileLoginTrue() {
 	const accessToken = window.localStorage.getItem('accessToken');
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
-	const [userInfo, setUserInfo] = useState<Userinfo>({
-		id: 0,
-		profile: 'string',
-		name: 'string',
-		location: 'string',
-		activity: {
-			document: 0,
-			comment: 0,
-			sanction: 0,
-		},
-	});
+
+	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
 	const [alarmData, setAlarmData] = useState<(Alarmdata | Alarmdataname)[]>([
 		{
 			id: 2,
@@ -86,7 +81,7 @@ function ProfileLoginTrue() {
 
 	useEffect(() => {
 		async function getMyInfo() {
-			let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/member/1`;
+			let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`;
 			let response = await fetch(`${URL}`, {
 				method: 'GET',
 				headers: {
@@ -94,15 +89,15 @@ function ProfileLoginTrue() {
 				},
 			});
 			const result = await response.json();
-			result.status == 500
-				? console.log('오류발생')
-				: result.status == 401
-				? refresh()
-				: setUserInfo(await result.data);
+			setUserInfo(await result);
 		}
 
 		getMyInfo();
 	}, []);
+
+	useEffect(() => {
+		console.log(userInfo);
+	}, [userInfo]);
 
 	return (
 		<div className={styles.profileLoginWrap}>
