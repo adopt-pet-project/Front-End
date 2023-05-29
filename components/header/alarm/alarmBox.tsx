@@ -71,9 +71,10 @@ function AlarmBox() {
 	async function deleteCheckedAlarmAPI(delList: any) {
 		let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/notification`;
 		fetch(`${URL}`, {
-			method: 'DELETE',
+			method: 'POST',
 			headers: {
 				Authorization: `${accessToken}`,
+				'content-type': 'application/json',
 			},
 			body: JSON.stringify({
 				idList: delList,
