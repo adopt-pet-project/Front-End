@@ -1,6 +1,6 @@
 import {GetServerSideProps} from 'next';
 import {ReactElement, useEffect, useRef, useState} from 'react';
-import {CompatClient, IMessage, Stomp} from '@stomp/stompjs';
+import {CompatClient, IMessage, Stomp, StompSubscription} from '@stomp/stompjs';
 import {useRouter} from 'next/router';
 import SockJS from 'sockjs-client';
 import ChatInput from '@/components/chat/chatInput';
@@ -18,8 +18,9 @@ export default function Chat({query}: {query: any}) {
 	const [message, setMessage] = useState<Chat[]>([]);
 	const [flightMessage, setFlightMessage] = useState<FlightChat[]>([]);
 	const [adoptInfo, setAdoptInfo] = useState<AdoptDetail>();
-	const isMine = useRef<boolean>(false);
 	const [newMessage, setNewMessage] = useState<Chat[]>([]);
+	const subscribe = useRef<StompSubscription>();
+	const isMine = useRef<boolean>(false);
 	const newMessageRef = useRef<Chat[]>([]);
 	const router = useRouter();
 	const refresh = useRefreshToken();
@@ -52,9 +53,17 @@ export default function Chat({query}: {query: any}) {
 
 	function onConnect() {
 		if (client.current) {
-			client.current.subscribe(`/subscribe/public/${query.id}`, handleMessage, {
-				Authorization: window.localStorage.getItem('accessToken') as string,
-			});
+			client.current.onDisconnect = () => {
+				alert('연결이 끊어졌습니다.\n다시 시도해 주세요.');
+				router.back();
+			};
+			subscribe.current = client.current.subscribe(
+				`/subscribe/public/${query.id}`,
+				handleMessage,
+				{
+					Authorization: window.localStorage.getItem('accessToken') as string,
+				},
+			);
 		}
 	}
 
@@ -124,6 +133,7 @@ export default function Chat({query}: {query: any}) {
 
 		return () => {
 			console.log('disconnected');
+			subscribe.current?.unsubscribe();
 			client.current?.disconnect({
 				Authorization: window.localStorage.getItem('accessToken') as string,
 				chatRoomNo: query.id,

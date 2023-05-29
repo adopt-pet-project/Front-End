@@ -86,7 +86,7 @@ function ProfileLoginTrue() {
 
 	useEffect(() => {
 		async function getMyInfo() {
-			let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`;
+			let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/member/1`;
 			let response = await fetch(`${URL}`, {
 				method: 'GET',
 				headers: {
@@ -117,8 +117,8 @@ function ProfileLoginTrue() {
 					style={{pointerEvents: 'none'}}
 					className={styles.img}
 					src={'/icon/alarm.svg'}
-					width={25}
-					height={25}
+					width={24}
+					height={24}
 					alt="alarm icon"
 				/>
 				<div style={{pointerEvents: 'none'}} className={styles.alarmD}></div>
@@ -135,8 +135,8 @@ function ProfileLoginTrue() {
 					style={{pointerEvents: 'none'}}
 					className={styles.img}
 					src={`${userInfo ? userInfo.profile : '/icon/person.svg'}`}
-					width={40}
-					height={40}
+					width={36}
+					height={36}
 					alt="profile icon"
 				/>
 			</div>

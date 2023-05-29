@@ -37,7 +37,7 @@ export default function Carousel({
 			imagesRef.current.style.transform = `translateX(${
 				-1 * page
 			}00%) translate(${
-				dragAmount.current + (e.touches[0].pageX - beginX.current) * 1.25
+				dragAmount.current + (e.touches[0].pageX - beginX.current)
 			}px)`;
 		},
 		[imagesRef.current, preventScroll.current, page],
