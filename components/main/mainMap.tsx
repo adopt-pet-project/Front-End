@@ -88,10 +88,7 @@ function MainMap() {
 									}}
 									className={styles.markerModal}
 								>
-									<img
-										src="https://project-adopt-bucket.s3.ap-northeast-2.amazonaws.com/other/cat.jpeg"
-										alt=""
-									/>
+									<img src={`${markerData.thumbnail}`} alt="동물 사진" />
 									<div className={styles.info}>
 										<div>{`${markerData.name}`}</div>
 										<div>{`${markerData.age}`}</div>
