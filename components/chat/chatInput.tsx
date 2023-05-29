@@ -5,9 +5,8 @@ import {
 	useRef,
 	useState,
 } from 'react';
-import {CompatClient, IMessage} from '@stomp/stompjs';
+import {CompatClient} from '@stomp/stompjs';
 import {useRouter} from 'next/router';
-import Script from 'next/script';
 import styles from '@/styles/components/chat/chatInput.module.scss';
 
 export default function ChatInput({

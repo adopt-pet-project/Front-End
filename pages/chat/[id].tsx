@@ -14,11 +14,12 @@ import useRefreshToken from '@/utils/hooks/useRefreshToken';
 import NewMessageArea from '@/components/chat/newMessageArea';
 
 export default function Chat({query}: {query: any}) {
-	const client = useRef<CompatClient>();
+	const [isConnected, setIsConnected] = useState<boolean>(false);
 	const [message, setMessage] = useState<Chat[]>([]);
 	const [flightMessage, setFlightMessage] = useState<FlightChat[]>([]);
 	const [adoptInfo, setAdoptInfo] = useState<AdoptDetail>();
 	const [newMessage, setNewMessage] = useState<Chat[]>([]);
+	const client = useRef<CompatClient>();
 	const subscribe = useRef<StompSubscription>();
 	const isMine = useRef<boolean>(false);
 	const newMessageRef = useRef<Chat[]>([]);
@@ -64,6 +65,7 @@ export default function Chat({query}: {query: any}) {
 					Authorization: window.localStorage.getItem('accessToken') as string,
 				},
 			);
+			setIsConnected(true);
 		}
 	}
 
@@ -188,7 +190,9 @@ export default function Chat({query}: {query: any}) {
 						<FlightMessageArea message={flightMessage} />
 					)}
 				</div>
-				{client.current && <ChatInput client={client} id={Number(query.id)} />}
+				{client.current && isConnected && (
+					<ChatInput client={client} id={Number(query.id)} />
+				)}
 			</section>
 		</>
 	);
