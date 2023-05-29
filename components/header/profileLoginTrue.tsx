@@ -30,11 +30,7 @@ function ProfileLoginTrue() {
 			},
 		);
 
-		eventSource.onopen = () => {
-			console.log('connected');
-		};
-
-		eventSource.addEventListener('sse', (e: any) => {
+		function getAlarm(e: any) {
 			if (e.data.includes('EventStream Created')) {
 			} else {
 				setAlarmData(prev => {
@@ -44,11 +40,15 @@ function ProfileLoginTrue() {
 					return result;
 				});
 			}
-		});
+		}
+
+		eventSource.onopen = () => {
+			console.log('connected');
+		};
+
+		eventSource.addEventListener('sse', getAlarm);
 
 		eventSource.onerror = (e: any) => {
-			eventSource.close();
-
 			if (e.error) {
 				console.log('Error');
 			}
@@ -57,6 +57,8 @@ function ProfileLoginTrue() {
 				console.log('closed');
 			}
 		};
+
+		return eventSource.removeEventListener('sse', getAlarm);
 	}, []);
 
 	useEffect(() => {

@@ -35,15 +35,40 @@ function AlarmBox() {
 		} else setIsAlarmBoxOn(false);
 	};
 
-	useEffect(() => {
-		window.addEventListener<any>('click', handleCloseAlarm);
+	function deleteCheckedAlarm() {
+		let delay = 0;
+		alarmData.map((data, i) => {
+			delay += 70;
+			if (data && data.checked) {
+				setTimeout(() => {
+					setAlarmData(prev => {
+						let result = [...prev];
+						result[i] = {...prev[i]};
+						result[i].del = true;
 
-		return () => {
-			window.removeEventListener<any>('click', handleCloseAlarm);
-		};
-	}, []);
+						return result;
+					});
+					if (i === alarmData.length - 1) {
+						let delList: any = [];
 
-	async function deleteCheckedAlarm(delList: any) {
+						setTimeout(() => {
+							setAlarmData(prev =>
+								prev.filter(datas => {
+									if (datas.del) {
+										delList.push(datas.id);
+									}
+									return !datas.del;
+								}),
+							);
+							deleteCheckedAlarmAPI(delList);
+						}, 100);
+					}
+				}, delay);
+			}
+		});
+	}
+
+	async function deleteCheckedAlarmAPI(delList: any) {
 		let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/notification`;
 		fetch(`${URL}`, {
 			method: 'DELETE',
@@ -55,6 +80,14 @@ function AlarmBox() {
 			}),
 		});
 	}
+
+	useEffect(() => {
+		window.addEventListener<any>('click', handleCloseAlarm);
+
+		return () => {
+			window.removeEventListener<any>('click', handleCloseAlarm);
+		};
+	}, []);
 
 	return (
 		<div ref={alarmBoxRef} className={styles.box}>
@@ -74,36 +107,7 @@ function AlarmBox() {
 				</div>
 				<div
 					onClick={() => {
-						let delay = 0;
-						alarmData.map((data, i) => {
-							delay += 70;
-							if (data && data.checked) {
-								setTimeout(() => {
-									setAlarmData(prev => {
-										let result = [...prev];
-										result[i] = {...prev[i]};
-										result[i].del = true;
-
-										return result;
-									});
-									if (i === alarmData.length - 1) {
-										let delList: any = [];
-
-										setTimeout(() => {
-											setAlarmData(prev =>
-												prev.filter(datas => {
-													if (datas.del) {
-														delList.push(datas.id);
-													}
-													return !datas.del;
-												}),
-											);
-											deleteCheckedAlarm(delList);
-										}, 100);
-									}
-								}, delay);
-							}
-						});
+						deleteCheckedAlarm();
 					}}
 					className={styles.delRead}
 				>
