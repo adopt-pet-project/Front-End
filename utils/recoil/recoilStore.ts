@@ -120,4 +120,9 @@ export const AalarmData = atom<(Alarmdata | Alarmdataname)[]>({
 	key: `alarmData/${v1()}`,
 	default: [],
 });
+
+export const ArefetchAdoptList = atom<0 | 1>({
+	key: `refetch/${v1()}`,
+	default: 0,
+});
 export default {};
