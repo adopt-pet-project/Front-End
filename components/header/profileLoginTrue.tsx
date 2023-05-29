@@ -72,6 +72,7 @@ function ProfileLoginTrue() {
 				},
 			});
 			const result = await response.json();
+			if (result.status === 401) refresh();
 			setUserInfo(await result);
 		}
 
