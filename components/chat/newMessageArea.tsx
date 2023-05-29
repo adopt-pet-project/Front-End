@@ -48,7 +48,7 @@ export default function NewMessageArea({
 								chat.mine ? styles.rowReverse : ''
 							}`}
 						>
-							{chat.contentType === 'coords' && (
+							{chat.contentType === 'picture' && (
 								<div className={styles.multimedia}>
 									<img
 										style={{
@@ -62,7 +62,7 @@ export default function NewMessageArea({
 								</div>
 							)}
 
-							{chat.contentType === 'picture' && (
+							{chat.contentType === 'coords' && (
 								<div className={styles.multimedia}>
 									<Map
 										style={{
