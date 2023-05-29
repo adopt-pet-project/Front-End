@@ -1,20 +1,14 @@
 import {useEffect, useRef, useState} from 'react';
 import {useRecoilState} from 'recoil';
-import {AisAlarmBoxOn} from '@/utils/recoil/recoilStore';
+import {AalarmData, AisAlarmBoxOn} from '@/utils/recoil/recoilStore';
 import CardListWrap from './cardListWrap';
 import styles from '@/styles/components/header/alarm/alarmBox.module.scss';
 
-function AlarmBox({
-	alarmData,
-	setAlarmData,
-}: {
-	alarmData: (Alarmdata | Alarmdataname)[];
-	setAlarmData: React.Dispatch<
-		React.SetStateAction<(Alarmdata | Alarmdataname)[]>
-	>;
-}) {
+function AlarmBox() {
 	const alarmBoxRef = useRef<HTMLDivElement>(null);
+	const accessToken = window.localStorage.getItem('accessToken');
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
+	const [alarmData, setAlarmData] = useRecoilState(AalarmData);
 	const findHaveParent = (
 		node: HTMLElement,
 		target: HTMLElement,
@@ -41,6 +35,52 @@ function AlarmBox({
 		} else setIsAlarmBoxOn(false);
 	};
 
+	function deleteCheckedAlarm() {
+		let delay = 0;
+		alarmData.map((data, i) => {
+			delay += 70;
+			if (data && data.checked) {
+				setTimeout(() => {
+					setAlarmData(prev => {
+						let result = [...prev];
+						result[i] = {...prev[i]};
+						result[i].del = true;
+
+						return result;
+					});
+					if (i === alarmData.length - 1) {
+						let delList: any = [];
+
+						setTimeout(() => {
+							setAlarmData(prev =>
+								prev.filter(datas => {
+									if (datas.del) {
+										delList.push(datas.id);
+									}
+									return !datas.del;
+								}),
+							);
+							deleteCheckedAlarmAPI(delList);
+						}, 100);
+					}
+				}, delay);
+			}
+		});
+	}
+
+	async function deleteCheckedAlarmAPI(delList: any) {
+		let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/notification`;
+		fetch(`${URL}`, {
+			method: 'DELETE',
+			headers: {
+				Authorization: `${accessToken}`,
+			},
+			body: JSON.stringify({
+				idList: delList,
+			}),
+		});
+	}
+
 	useEffect(() => {
 		window.addEventListener<any>('click', handleCloseAlarm);
 
@@ -48,10 +88,6 @@ function AlarmBox({
 			window.removeEventListener<any>('click', handleCloseAlarm);
 		};
 	}, []);
-
-	useEffect(() => {
-		console.log(alarmData);
-	}, [alarmData]);
 
 	return (
 		<div ref={alarmBoxRef} className={styles.box}>
@@ -71,25 +107,7 @@ function AlarmBox({
 				</div>
 				<div
 					onClick={() => {
-						let delay = 0;
-						alarmData.map((data, i) => {
-							delay += 70;
-							if (data && data.checked) {
-								setTimeout(() => {
-									setAlarmData(prev => {
-										let result = [...prev];
-										result[i].del = true;
-
-										return result;
-									});
-									if (i === alarmData.length - 1) {
-										setTimeout(() => {
-											setAlarmData(prev => prev.filter(datas => !datas.del));
-										}, 100);
-									}
-								}, delay);
-							}
-						});
+						deleteCheckedAlarm();
 					}}
 					className={styles.delRead}
 				>

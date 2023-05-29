@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"@stomp/stompjs": "^7.0.0",
+		"@types/event-source-polyfill": "^1.0.1",
 		"@types/node": "18.16.3",
 		"@types/react": "18.2.5",
 		"@types/react-dom": "18.2.3",
@@ -18,6 +19,7 @@
 		"chart.js": "^4.3.0",
 		"eslint": "^8.39.0",
 		"eslint-config-next": "13.4.0",
+		"event-source-polyfill": "^1.0.31",
 		"next": "13.4.0",
 		"nprogress": "^0.2.0",
 		"react": "18.2.0",

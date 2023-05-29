@@ -8,8 +8,10 @@ import {
 } from '@/utils/recoil/recoilStore';
 import ProfileCard from './profileCard';
 import styles from '@/styles/components/header/profile/profileNav.module.scss';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
 
 function ProfileNav() {
+	const refresh = useRefreshToken();
 	const router = useRouter();
 	const [isLogin, setIsLogin] = useRecoilState(AisLogin);
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
