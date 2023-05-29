@@ -30,7 +30,12 @@ function ProfileLoginTrue() {
 			},
 		);
 
-		function getAlarm(e: any) {
+		eventSource.onopen = () => {
+			console.log('connected');
+		};
+
+		eventSource.addEventListener('sse', (e: any) => {
+			console.log(e.data);
 			if (e.data.includes('EventStream Created')) {
 			} else {
 				setAlarmData(prev => {
@@ -40,13 +45,7 @@ function ProfileLoginTrue() {
 					return result;
 				});
 			}
-		}
-
-		eventSource.onopen = () => {
-			console.log('connected');
-		};
-
-		eventSource.addEventListener('sse', getAlarm);
+		});
 
 		eventSource.onerror = (e: any) => {
 			if (e.error) {
@@ -57,8 +56,6 @@ function ProfileLoginTrue() {
 				console.log('closed');
 			}
 		};
-
-		return eventSource.removeEventListener('sse', getAlarm);
 	}, []);
 
 	useEffect(() => {
@@ -90,6 +87,7 @@ function ProfileLoginTrue() {
 				},
 			});
 			const result = await response.json();
+			console.log(result);
 			if (result.status === 404) {
 				alert('해당 알림을 찾을 수 없습니다.');
 			}

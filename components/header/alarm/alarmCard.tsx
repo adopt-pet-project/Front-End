@@ -9,6 +9,7 @@ function AlarmCard({data}: {data: Alarmdata | Alarmdataname}) {
 	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
 	const accessToken = window.localStorage.getItem('accessToken');
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
+	const [alarmData, setAlarmData] = useRecoilState(AalarmData);
 
 	function updateCheck() {
 		let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/notification/checked/${data.id}`;
@@ -23,6 +24,14 @@ function AlarmCard({data}: {data: Alarmdata | Alarmdataname}) {
 		<div
 			onClick={() => {
 				updateCheck();
+				setAlarmData(prev => {
+					let result = [...prev];
+					result = result.map((mapData, i) =>
+						mapData.id === data.id ? {...mapData, checked: true} : mapData,
+					);
+
+					return result;
+				});
 				setIsAlarmBoxOn(false);
 				router.push(`${data.url}`);
 			}}
