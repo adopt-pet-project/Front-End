@@ -12,12 +12,12 @@
 	justify-content: center;
 	margin: 0 40px;
 	.text {
+		word-break: break-word;
 		display: inline-block;
-		height: 28px;
 		background-color: var(--gray);
 		line-height: 28px;
 		border-radius: 8px;
-		margin: 0 4px;
+		margin: 2px 4px;
 		padding: 0 8px;
 	}
 
