@@ -114,7 +114,9 @@ function ProfileLoginTrue() {
 					height={24}
 					alt="alarm icon"
 				/>
-				<div style={{pointerEvents: 'none'}} className={styles.alarmD}></div>
+				{alarmData.length !== 0 ? (
+					<div style={{pointerEvents: 'none'}} className={styles.alarmD} />
+				) : null}
 			</div>
 
 			<div
