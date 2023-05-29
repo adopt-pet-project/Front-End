@@ -10,7 +10,7 @@ function MyAdoptCard({article, boardType}: {article: any; boardType: string}) {
 		<li
 			className={styles.card}
 			onClick={() => {
-				router.push('/board/11');
+				router.push(`/adopt/${article.id}`);
 			}}
 		>
 			{article.thumb && article.thumb === 'null' ? (

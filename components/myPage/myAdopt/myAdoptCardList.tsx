@@ -1,10 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useRecoilState} from 'recoil';
-import {AmyAdoptBoardType, AmyAdoptModal} from '@/utils/recoil/recoilStore';
+import {
+	AmyAdoptBoardType,
+	AmyAdoptModal,
+	ArefetchAdoptList,
+} from '@/utils/recoil/recoilStore';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
 import MyAdoptModal from './myAdoptModal';
 import MyAdoptCard from './myAdoptCard';
 import styles from '@/styles/components/myPage/myAdopt/myAdoptCardList.module.scss';
-import useRefreshToken from '@/utils/hooks/useRefreshToken';
 
 function MyAdoptCardList() {
 	const refresh = useRefreshToken();
@@ -14,6 +18,7 @@ function MyAdoptCardList() {
 	const [accessToken, setAccessToken] = useState(
 		typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '',
 	);
+	const [refetch, setRefetch] = useRecoilState(ArefetchAdoptList);
 	const [myAdoptData, setMyAdoptData] = useState<any[]>([]);
 
 	useEffect(() => {
@@ -34,7 +39,7 @@ function MyAdoptCardList() {
 				});
 		}
 		fetchMyInfo();
-	}, [myAdoptBoardType]);
+	}, [myAdoptBoardType, refetch]);
 
 	return (
 		<>
