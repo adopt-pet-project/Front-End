@@ -47,7 +47,7 @@ export default function Paging({
 
 	async function loadArticle(e: BaseSyntheticEvent) {
 		setIsLoading(true);
-		let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/adopt?saleNo=${lastArticleId}`;
+		let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/adopt?saleNo=${lastestLastArticleId.current}`;
 
 		const filter = param.filter;
 		const keyword = param.q;
@@ -65,6 +65,8 @@ export default function Paging({
 			article.publishedAt = convertDate(article.publishedAt);
 		});
 
+		if (result.length !== 0)
+			lastestLastArticleId.current = result[result.length - 1].id;
 		setHasMore(result.length === 10);
 		setLazyLoadArticle([...lazyLoadArticle, ...result]);
 		setIsLoading(false);
