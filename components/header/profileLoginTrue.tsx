@@ -11,6 +11,7 @@ import ProfileBox from './profile/profileBox';
 import AlarmBox from './alarm/alarmBox';
 import styles from '@/styles/components/header/profileLoginTrue.module.scss';
 import useRefreshToken from '@/utils/hooks/useRefreshToken';
+import {isJsxTagNameExpression} from 'typescript';
 
 function ProfileLoginTrue() {
 	const refresh = useRefreshToken();
@@ -18,6 +19,7 @@ function ProfileLoginTrue() {
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
 	const [alarmData, setAlarmData] = useRecoilState(AalarmData);
+	const [isNew, setIsNew] = useState(false);
 	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
 
 	useEffect(() => {
@@ -97,6 +99,16 @@ function ProfileLoginTrue() {
 		getMyAlarm();
 	}, []);
 
+	useEffect(() => {
+		setIsNew(() => {
+			let result = false;
+			alarmData.map((data, i) => {
+				if (!data.checked) result = true;
+			});
+			return result;
+		});
+	}, [alarmData]);
+
 	return (
 		<div className={styles.profileLoginWrap}>
 			<div
@@ -114,7 +126,7 @@ function ProfileLoginTrue() {
 					height={24}
 					alt="alarm icon"
 				/>
-				{alarmData.length !== 0 ? (
+				{isNew ? (
 					<div style={{pointerEvents: 'none'}} className={styles.alarmD} />
 				) : null}
 			</div>

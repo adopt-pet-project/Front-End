@@ -1,4 +1,4 @@
-import {Map, MapMarker, useInjectKakaoMapApi} from 'react-kakao-maps-sdk';
+import {Map, MapMarker} from 'react-kakao-maps-sdk';
 import {useRouter} from 'next/router';
 import styles from '@/styles/components/main/mainMap.module.scss';
 
