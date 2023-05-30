@@ -48,7 +48,6 @@ export default function Chat({query}: {query: any}) {
 						.padStart(2, '0')}:${DATE.getMinutes()
 						.toString()
 						.padStart(2, '0')}`;
-		console.log(body);
 		newMessageRef.current = [...newMessageRef.current, body];
 		setNewMessage(newMessageRef.current);
 	}
@@ -56,8 +55,14 @@ export default function Chat({query}: {query: any}) {
 	function onConnect() {
 		if (client.current) {
 			client.current.onDisconnect = () => {
-				alert('연결이 끊어졌습니다.\n다시 시도해 주세요.');
-				router.back();
+				fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/chatroom`, {
+					method: 'DELETE',
+					headers: {
+						Authorization: window.localStorage.getItem('accessToken') as string,
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({chatRoomNo: query.id, email: email.current}),
+				});
 			};
 			subscribe.current = client.current.subscribe(
 				`/subscribe/public/${query.id}`,
@@ -87,7 +92,7 @@ export default function Chat({query}: {query: any}) {
 
 			let result = await response.json();
 			if (!result.status) {
-				const msg: Chat[] = result.chatList;
+				const msg: Chat[] = result.chatList || [];
 				email.current = result.email;
 				msg.forEach((message: Chat) => {
 					const DATE = new Date(
@@ -111,7 +116,7 @@ export default function Chat({query}: {query: any}) {
 									.toString()
 									.padStart(2, '0')}`;
 				});
-				setMessage(result);
+				setMessage(msg);
 			}
 		}
 
@@ -120,7 +125,7 @@ export default function Chat({query}: {query: any}) {
 
 	useEffect(() => {
 		client.current = Stomp.over(() => {
-			return new SockJS('https://ez-tour.org/chat', null, {
+			return new SockJS(`${process.env.NEXT_PUBLIC_SERVER_URL}/chat`, null, {
 				transports: ['websocket', 'xhr-streaming', 'xhr-polling'],
 			});
 		});
@@ -139,13 +144,7 @@ export default function Chat({query}: {query: any}) {
 				Authorization: window.localStorage.getItem('accessToken') as string,
 				chatRoomNo: query.id,
 			});
-			fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/chatroom`, {
-				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({chatRoomNo: query.id, email}),
-			});
+			client.current?.disconnect();
 		};
 	}, []);
 
