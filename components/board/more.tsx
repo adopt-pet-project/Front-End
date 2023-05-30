@@ -5,7 +5,7 @@ import {AmodalWrap, AmodalType} from '@/utils/recoil/recoilStore';
 import useRefreshToken from '@/utils/hooks/useRefreshToken';
 import styles from '@/styles/components/board/more.module.scss';
 
-const option = [['쪽지'], ['수정', '삭제']];
+const option = ['수정', '삭제'];
 
 export default function More() {
 	const [isActive, setIsActive] = useState<boolean>(false);
@@ -54,7 +54,7 @@ export default function More() {
 			if (result.status == null) {
 				setIsMine(result.mine ? 1 : 0);
 			} else if (result.status === 401) {
-				// refresh();
+				refresh();
 			} else {
 				alert('오류가 발생했습니다.');
 			}
@@ -70,8 +70,6 @@ export default function More() {
 			case '삭제':
 				setModalType('deleteModal');
 				modalRef!.current!.style.display = 'flex';
-				return;
-			case '쪽지':
 				return;
 			default:
 				return;
@@ -94,7 +92,7 @@ export default function More() {
 			)}
 			{isActive && (
 				<div ref={menuRef} className={styles.menu} onClick={onClickItem}>
-					{option[isMine].map((opt: string) => {
+					{option.map((opt: string) => {
 						return (
 							<span key={opt} className={styles.option}>
 								{opt}

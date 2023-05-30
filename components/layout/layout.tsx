@@ -15,10 +15,6 @@ export default function Layout({children}: {children: ReactElement}) {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<RecoilRoot>
-				<Script
-					type="text/javascript"
-					src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`}
-				/>
 				<div className="layout">
 					<Header asideRef={asideRef} containerRef={containerRef} />
 					<Aside asideRef={asideRef} />
