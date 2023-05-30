@@ -41,6 +41,33 @@ export default function Inquiry({
 		return result;
 	}
 
+	async function addBookmark() {
+		if (!window.localStorage.getItem('accessToken')) {
+			dispatchEvent(new Event('fadeLogin'));
+			return;
+		}
+		let response = await fetch(
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/adopt/bookmark/${id}`,
+			{
+				method: 'POST',
+				headers: {
+					Authorization: window.localStorage.getItem('getItem') as string,
+				},
+			},
+		);
+
+		let result = await response.json();
+
+		if (result.status === 200) {
+			alert('추가되었습니다.');
+		} else if (result.status === 401) {
+			refresh();
+			alert('다시 시도하세요.');
+		} else {
+			alert(`error : ${result.status}`);
+		}
+	}
+
 	async function makeChat() {
 		if (!window.localStorage.getItem('accessToken')) {
 			dispatchEvent(new Event('fadeLogin'));
@@ -121,7 +148,7 @@ export default function Inquiry({
 				</>
 			) : (
 				<div style={{display: 'flex', justifyContent: 'space-between'}}>
-					<button>관심목록에 추가</button>
+					<button onClick={addBookmark}>관심목록에 추가</button>
 					<button onClick={makeChat}>문의하기</button>
 				</div>
 			)}

@@ -1,5 +1,6 @@
 import {toDate} from '@/utils/functions/toDate';
 import styles from '@/styles/components/board/comments.module.scss';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
 
 export default function Comments({
 	parentId,
@@ -18,6 +19,8 @@ export default function Comments({
 	setCommentList: Function;
 	entireCommentList?: Comment[];
 }) {
+	const refresh = useRefreshToken();
+
 	function setCommentTarget(
 		commentId: number,
 		authorId: number,
@@ -49,19 +52,69 @@ export default function Comments({
 		callback(context);
 	}
 
-	function likeComment(parentId: number | null, commentId: number) {
+	async function fetchLike(id: number, token: string) {
+		let returnValue = -1;
+		let response = await fetch(
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/heart`,
+			{
+				method: 'POST',
+				headers: {Authorization: token, 'Content-Type': 'application/json'},
+				body: JSON.stringify({target: 'comment', id: Number(id)}),
+			},
+		);
+
+		let result = await response.json();
+
+		if (result.status === 200) {
+			returnValue = result.data;
+		} else if (result.status === 401) {
+			refresh();
+			alert('다시 시도해 주세요.');
+		} else if (result.status === 404) {
+			alert('삭제된 글 또는 댓글 입니다.');
+		} else if (result.status === 409) {
+			let response = await fetch(
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/heart/comment/${id}`,
+				{
+					method: 'DELETE',
+					headers: {Authorization: token, 'Content-Type': 'application/json'},
+				},
+			);
+
+			let result = await response.json();
+			if (result.status === 200) {
+				returnValue = result.data;
+			} else if (result.status === 401) {
+				refresh();
+				alert('다시 시도해 주세요.');
+			} else if (result.status === 404) {
+				alert('삭제된 글 또는 댓글 입니다.');
+			}
+		}
+
+		return returnValue;
+	}
+
+	async function likeComment(parentId: number | null, commentId: number) {
+		const token = window.localStorage.getItem('accessToken');
+		if (!token) {
+			dispatchEvent(new Event('fadeLogin'));
+			return;
+		}
+
+		let newLikeCount: number;
 		if (parentId == null) {
-			// 추천 fetch
+			newLikeCount = await fetchLike(commentId, token);
 
 			let newCommentList: Comment[] = JSON.parse(JSON.stringify(commentList));
 
 			newCommentList.forEach((comment: Comment) => {
-				if (comment.id === commentId) comment.like += 1; // 추천수 갱신
+				if (comment.id === commentId) comment.like = newLikeCount;
 			});
 
 			setCommentList(newCommentList);
 		} else {
-			// 추천 fetch
+			newLikeCount = await fetchLike(commentId, token);
 
 			let newCommentList: Comment[] = JSON.parse(
 				JSON.stringify(entireCommentList),
@@ -70,7 +123,7 @@ export default function Comments({
 			newCommentList.forEach((comment: Comment) => {
 				if (comment.id === parentId) {
 					comment.comments.forEach((reply: Comment) => {
-						if (reply.id === commentId) reply.like += 1; // 추천수 갱신
+						if (reply.id === commentId) reply.like = newLikeCount;
 					});
 				}
 			});
