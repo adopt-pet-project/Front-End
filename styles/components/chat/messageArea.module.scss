@@ -33,6 +33,9 @@
 	.profile {
 		left: -40px;
 	}
+	.infoText {
+		align-items: flex-start;
+	}
 }
 
 .textContainer {
@@ -45,6 +48,9 @@
 	justify-content: flex-end;
 	.profile {
 		right: -40px;
+	}
+	.infoText {
+		align-items: flex-end;
 	}
 }
 
@@ -62,6 +68,16 @@
 	height: 200px;
 	border-radius: 8px;
 	background-color: var(--gray);
+}
+
+.read {
+	font-size: 10px;
+}
+
+.infoText {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
 }
 
 @media screen and (max-width: 768px) {

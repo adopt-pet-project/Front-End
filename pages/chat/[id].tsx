@@ -23,6 +23,7 @@ export default function Chat({query}: {query: any}) {
 	const subscribe = useRef<StompSubscription>();
 	const isMine = useRef<boolean>(false);
 	const newMessageRef = useRef<Chat[]>([]);
+	const email = useRef<string>('');
 	const router = useRouter();
 	const refresh = useRefreshToken();
 
@@ -47,7 +48,7 @@ export default function Chat({query}: {query: any}) {
 						.padStart(2, '0')}:${DATE.getMinutes()
 						.toString()
 						.padStart(2, '0')}`;
-
+		console.log(body);
 		newMessageRef.current = [...newMessageRef.current, body];
 		setNewMessage(newMessageRef.current);
 	}
@@ -86,8 +87,8 @@ export default function Chat({query}: {query: any}) {
 
 			let result = await response.json();
 			if (!result.status) {
-				const msg: Chat[] = result;
-
+				const msg: Chat[] = result.chatList;
+				email.current = result.email;
 				msg.forEach((message: Chat) => {
 					const DATE = new Date(
 						((message.sendDate || message.sendTime) as number) -
@@ -123,7 +124,6 @@ export default function Chat({query}: {query: any}) {
 				transports: ['websocket', 'xhr-streaming', 'xhr-polling'],
 			});
 		});
-
 		client.current.connect(
 			{
 				Authorization: window.localStorage.getItem('accessToken') as string,
@@ -135,10 +135,16 @@ export default function Chat({query}: {query: any}) {
 
 		return () => {
 			console.log('disconnected');
-			subscribe.current?.unsubscribe();
-			client.current?.disconnect({
+			subscribe.current?.unsubscribe({
 				Authorization: window.localStorage.getItem('accessToken') as string,
 				chatRoomNo: query.id,
+			});
+			fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/chatroom`, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({chatRoomNo: query.id, email}),
 			});
 		};
 	}, []);
