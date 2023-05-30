@@ -15,7 +15,7 @@ function ProfileCard() {
 	const userInfo = useQuery<Userinfo>(
 		['readMyInfo'],
 		async () => {
-			return await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member/1`, {
+			return await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`, {
 				method: 'GET',
 				headers: {
 					Authorization: `${accessToken}`,
