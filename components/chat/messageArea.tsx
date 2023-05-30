@@ -85,7 +85,7 @@ export default function MessageArea({message}: {message: Chat[]}) {
 								<span className={styles.text}>{chat.content}</span>
 							)}
 							<div className={styles.infoText}>
-								{chat.readCount === 0 && (
+								{chat.readCount === 0 && chat.mine && (
 									<span className={styles.read}>읽음</span>
 								)}
 								<span className={styles.time}>{dateString}</span>
