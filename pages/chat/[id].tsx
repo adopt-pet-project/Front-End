@@ -58,6 +58,7 @@ export default function Chat({query}: {query: any}) {
 				fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/chatroom`, {
 					method: 'DELETE',
 					headers: {
+						Authorization: window.localStorage.getItem('accessToken') as string,
 						'Content-Type': 'application/json',
 					},
 					body: JSON.stringify({chatRoomNo: query.id, email: email.current}),
