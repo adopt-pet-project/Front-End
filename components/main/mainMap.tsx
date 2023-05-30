@@ -102,6 +102,12 @@ function MainMap() {
 			<div className={styles.filterBtnWrap}>
 				<button
 					onClick={() => {
+						setMapMarkerData(prev => {
+							let result = [...prev];
+							return result.map(data => {
+								return {...data, modal: false};
+							});
+						});
 						setFilterCtg('a');
 					}}
 					className={styles.filterBtn}
@@ -110,6 +116,12 @@ function MainMap() {
 				</button>
 				<button
 					onClick={() => {
+						setMapMarkerData(prev => {
+							let result = [...prev];
+							return result.map(data => {
+								return {...data, modal: false};
+							});
+						});
 						setFilterCtg('d');
 					}}
 					className={styles.filterBtn}
@@ -118,6 +130,12 @@ function MainMap() {
 				</button>
 				<button
 					onClick={() => {
+						setMapMarkerData(prev => {
+							let result = [...prev];
+							return result.map(data => {
+								return {...data, modal: false};
+							});
+						});
 						setFilterCtg('c');
 					}}
 					className={styles.filterBtn}
@@ -126,6 +144,12 @@ function MainMap() {
 				</button>
 				<button
 					onClick={() => {
+						setMapMarkerData(prev => {
+							let result = [...prev];
+							return result.map(data => {
+								return {...data, modal: false};
+							});
+						});
 						setFilterCtg('o');
 					}}
 					className={styles.filterBtn}
