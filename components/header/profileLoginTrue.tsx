@@ -92,6 +92,7 @@ function ProfileLoginTrue() {
 			console.log(result);
 			if (result.status === 404) {
 				alert('해당 알림을 찾을 수 없습니다.');
+				setAlarmData([]);
 			}
 			setAlarmData(result);
 		}

@@ -9,7 +9,7 @@ function ActivityCard({article}: {article: any}) {
 		<li
 			className={styles.card}
 			onClick={() => {
-				router.push('/board/11');
+				router.push(`/board/${article.id}`);
 			}}
 		>
 			{article.thumb && article.thumb === 'null' ? (
@@ -21,7 +21,7 @@ function ActivityCard({article}: {article: any}) {
 					quality={75}
 					loading="lazy"
 					className={styles.thumbnail}
-					src={article.thumb}
+					src={article.thumbnail}
 					alt={`${article.title} thumbnail`}
 				/>
 			)}
@@ -32,14 +32,14 @@ function ActivityCard({article}: {article: any}) {
 						<span>{article.title}</span>
 					</div>
 
-					<span className={styles.context}>{article.context}</span>
+					<span className={styles.context}>{article.contents}</span>
 				</div>
 				<div className={styles.metadata}>
-					<span>{`${article.author} · ${article.publishedAt}`}</span>
+					<span>{`${article.publishedAt}`}</span>
 					<ul className={styles.dataList}>
 						<li>
 							<img style={{marginTop: '2px'}} src="/icon/view.svg" alt="view" />
-							<span>{article.view}</span>
+							<span>{article.views}</span>
 						</li>
 						<li>
 							<img
