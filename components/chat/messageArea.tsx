@@ -84,8 +84,12 @@ export default function MessageArea({message}: {message: Chat[]}) {
 							{chat.contentType === 'text' && (
 								<span className={styles.text}>{chat.content}</span>
 							)}
-
-							<span className={styles.time}>{dateString}</span>
+							<div className={styles.infoText}>
+								{chat.readCount === 0 && (
+									<span className={styles.read}>읽음</span>
+								)}
+								<span className={styles.time}>{dateString}</span>
+							</div>
 						</div>
 						{(index === 0 ||
 							message[index - 1].mine !== message[index].mine) && (

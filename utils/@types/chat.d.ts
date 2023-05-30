@@ -1,3 +1,8 @@
+interface ChatResponse {
+	memberNo: number;
+	chatList: Chat[];
+}
+
 interface Chat {
 	id: string;
 	contentType: 'text' | 'picture' | 'coords';

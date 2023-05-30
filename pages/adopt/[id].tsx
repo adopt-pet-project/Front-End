@@ -22,7 +22,6 @@ export default function View({
 }) {
 	const [isMine, setIsMine] = useState<boolean>(false);
 	const refresh = useRefreshToken();
-
 	useEffect(() => {
 		async function fetchMine() {
 			let response = await fetch(
@@ -61,6 +60,7 @@ export default function View({
 				</Link>
 			</div>
 			<Inquiry
+				status={article.header.status}
 				authorId={article.author.id}
 				id={article.id}
 				chat={article.context.chat}

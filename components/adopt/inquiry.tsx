@@ -5,11 +5,13 @@ import styles from '@/styles/components/adopt/inquiry.module.scss';
 import {convertDate} from '@/utils/functions/convertDate';
 
 export default function Inquiry({
+	status,
 	authorId,
 	id,
 	chat,
 	mine,
 }: {
+	status: number;
 	authorId: number;
 	id: number;
 	chat: number;
@@ -51,7 +53,7 @@ export default function Inquiry({
 			{
 				method: 'POST',
 				headers: {
-					Authorization: window.localStorage.getItem('getItem') as string,
+					Authorization: window.localStorage.getItem('accessToken') as string,
 				},
 			},
 		);
@@ -63,8 +65,8 @@ export default function Inquiry({
 		} else if (result.status === 401) {
 			refresh();
 			alert('다시 시도하세요.');
-		} else {
-			alert(`error : ${result.status}`);
+		} else if (result.status === 500) {
+			alert(`이미 추가된 상태입니다.`);
 		}
 	}
 
@@ -73,7 +75,6 @@ export default function Inquiry({
 			dispatchEvent(new Event('fadeLogin'));
 			return;
 		}
-
 		let myChat = await fetchAdoptChatList();
 		if (myChat.length === 0) {
 			let response = await fetch(
@@ -95,63 +96,72 @@ export default function Inquiry({
 				alert(`Error Code ${result.status}`);
 			}
 		} else {
-			let chatId = myChat[0].chatNo;
-			if (chatId != null)
+			if (myChat[0].chatNo != null)
 				router.push(`/chat/${myChat[0].chatNo}?adoptId=${id}`);
 		}
 	}
 
 	return (
-		<div className={styles.container}>
-			{mine ? (
-				<>
-					{mine && chatList.length !== 0 && (
-						<div className={styles.chatList}>
-							{chatList
-								.filter((chat: ChatList) => chat.latestMessage != null)
-								.map((chat: ChatList) => {
-									return (
-										<div
-											key={chat.regDate}
-											className={styles.chat}
-											onClick={() => {
-												router.push(`/chat/${chat.chatNo}?adoptId=${id}`);
-											}}
-										>
-											<img
-												src={chat.participant.profile}
-												width={64}
-												height={64}
-												alt="profile"
-											/>
-											<div className={styles.chatInfo}>
-												<div className={styles.upper}>
-													<span className={styles.strong}>
-														{chat.participant.username}
-													</span>{' '}
-													<span>{convertDate(chat.latestMessage.sendAt)}</span>
+		<>
+			{status === 0 && (
+				<div className={styles.container}>
+					{mine ? (
+						<>
+							{mine && chatList.length !== 0 && (
+								<div className={styles.chatList}>
+									{chatList
+										.filter((chat: ChatList) => chat.latestMessage != null)
+										.map((chat: ChatList) => {
+											return (
+												<div
+													key={chat.regDate}
+													className={styles.chat}
+													onClick={() => {
+														router.push(`/chat/${chat.chatNo}?adoptId=${id}`);
+													}}
+												>
+													<img
+														src={chat.participant.profile}
+														width={64}
+														height={64}
+														alt="profile"
+													/>
+													<div className={styles.chatInfo}>
+														<div className={styles.upper}>
+															<span className={styles.strong}>
+																{chat.participant.username}
+															</span>{' '}
+															<span>
+																{convertDate(chat.latestMessage.sendAt)}
+															</span>
+														</div>
+														<span className={styles.lower}>
+															{chat.latestMessage.context}
+														</span>
+													</div>
 												</div>
-												<span className={styles.lower}>
-													{chat.latestMessage.context}
-												</span>
-											</div>
-										</div>
-									);
-								})}
+											);
+										})}
+								</div>
+							)}
+							<div
+								style={{
+									display: 'flex',
+									width: '100%',
+									justifyContent: 'flex-end',
+								}}
+							>
+								<button onClick={fetchAdoptChatList}>받은 문의 {chat}</button>
+							</div>
+						</>
+					) : (
+						<div style={{display: 'flex', justifyContent: 'space-between'}}>
+							<button onClick={addBookmark}>관심목록에 추가</button>
+							<button onClick={makeChat}>문의하기</button>
 						</div>
 					)}
-					<div
-						style={{display: 'flex', width: '100%', justifyContent: 'flex-end'}}
-					>
-						<button onClick={fetchAdoptChatList}>받은 문의 {chat}</button>
-					</div>
-				</>
-			) : (
-				<div style={{display: 'flex', justifyContent: 'space-between'}}>
-					<button onClick={addBookmark}>관심목록에 추가</button>
-					<button onClick={makeChat}>문의하기</button>
 				</div>
 			)}
-		</div>
+		</>
 	);
 }
