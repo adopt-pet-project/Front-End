@@ -55,8 +55,13 @@ export default function Chat({query}: {query: any}) {
 	function onConnect() {
 		if (client.current) {
 			client.current.onDisconnect = () => {
-				alert('연결이 끊어졌습니다.\n다시 시도해 주세요.');
-				router.back();
+				fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/chatroom`, {
+					method: 'DELETE',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({chatRoomNo: query.id, email: email.current}),
+				});
 			};
 			subscribe.current = client.current.subscribe(
 				`/subscribe/public/${query.id}`,
@@ -138,14 +143,7 @@ export default function Chat({query}: {query: any}) {
 				Authorization: window.localStorage.getItem('accessToken') as string,
 				chatRoomNo: query.id,
 			});
-
-			fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/chatroom`, {
-				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({chatRoomNo: query.id, email: email.current}),
-			});
+			client.current?.disconnect();
 		};
 	}, []);
 
