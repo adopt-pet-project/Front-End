@@ -16,7 +16,6 @@ function Profile() {
 	const [accessToken, setAccessToken] = useState(
 		typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '',
 	);
-	const refresh = useRefreshToken();
 	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
 	const [currentImg, setCurrentImg] = useState('');
 

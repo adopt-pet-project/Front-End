@@ -9,6 +9,7 @@ import {
 import ProfileCard from './profileCard';
 import styles from '@/styles/components/header/profile/profileNav.module.scss';
 import useRefreshToken from '@/utils/hooks/useRefreshToken';
+import useFetch from '@/utils/hooks/useFetch';
 
 function ProfileNav() {
 	const refresh = useRefreshToken();
@@ -16,75 +17,63 @@ function ProfileNav() {
 	const [isLogin, setIsLogin] = useRecoilState(AisLogin);
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
 	const [myPageCtg, setMyPageCtg] = useRecoilState(AcurrentMyPageCtg);
-	const [accessToken, setAccessToken] = useState(
-		typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '',
-	);
+
+	const fetchLogout = useFetch('/token/logout', 'POST', true, () => {
+		localStorage.removeItem('accessToken');
+		setIsLogin(false);
+		router.push('/');
+	});
 
 	async function logout() {
-		await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/token/logout`, {
-			method: 'POST',
-			headers: {
-				Authorization: `${accessToken}`,
-			},
-		})
-			.then(response => response.json())
-			.then(data => {
-				console.log(data);
-				localStorage.removeItem('accessToken');
-				setIsLogin(false);
-				router.push('/');
-			});
+		await fetchLogout();
 	}
+
+	const navBtn = [
+		{
+			tag: '내 계정',
+			route: '/myPage',
+		},
+		{
+			tag: '분양 내역',
+			route: '/myPage/myAdopt',
+		},
+		{
+			tag: '분양 받기 내역',
+			route: '/myPage/getAdopt',
+		},
+		{
+			tag: '활동내역',
+			route: '/activity',
+		},
+	];
+
 	return (
-		<div className={styles.innerWrap}>
+		<nav className={styles.innerWrap}>
 			<ProfileCard />
-			<div
-				onClick={() => {
-					setIsProfileBoxOn(false);
-					setMyPageCtg(0);
-					router.push('/myPage');
-				}}
-				className={styles.myNav}
-			>
-				내 계정
-			</div>
-			<div
-				onClick={() => {
-					setIsProfileBoxOn(false);
-					router.push('/myPage/myAdopt');
-				}}
-				className={styles.myNav}
-			>
-				분양 내역
-			</div>
-			<div
-				onClick={() => {
-					setIsProfileBoxOn(false);
-					router.push('/myPage/getAdopt');
-				}}
-				className={styles.myNav}
-			>
-				분양 받기 내역
-			</div>
-			<div
-				onClick={() => {
-					setIsProfileBoxOn(false);
-					router.push('/activity');
-				}}
-				className={styles.myNav}
-			>
-				활동 내역
-			</div>
+			{navBtn.map((data, i) => (
+				<div
+					onClick={() => {
+						setMyPageCtg(0);
+						setIsProfileBoxOn(false);
+						router.push(`${data.route}`);
+					}}
+					className={`${styles.myNav}`}
+				>
+					{data.tag}
+				</div>
+			))}
+
 			<div
 				onClick={() => {
 					logout();
+					setMyPageCtg(0);
 					setIsProfileBoxOn(false);
 				}}
 				className={`${styles.myNav} ${styles.logout}`}
 			>
 				로그아웃
 			</div>
-		</div>
+		</nav>
 	);
 }
 
