@@ -27,8 +27,26 @@ export default function Chat({query}: {query: any}) {
 	const router = useRouter();
 	const refresh = useRefreshToken();
 
-	function handleMessage(message: IMessage) {
-		const body: Chat = JSON.parse(message.body);
+	function handleMessage(msg: IMessage) {
+		const body: Chat = JSON.parse(msg.body);
+
+		if (
+			body.readCount === 0 && body.senderNo === Number(adoptInfo?.author.id)
+				? isMine.current
+				: !isMine.current
+		) {
+			// 새 메시지 읽음여부 갱신 state 갱신은 뒤에서 같이 처리
+			newMessageRef.current = newMessageRef.current.map((chat: Chat) => {
+				return {...chat, readCount: 0};
+			});
+
+			// 기존 메시지 읽음여부 갱신
+			message.map((chat: Chat) => {
+				return {...chat, readCount: 0};
+			});
+
+			setMessage(message);
+		}
 
 		const DATE = new Date(
 			((body.sendDate || body.sendTime) as number) -
@@ -50,6 +68,15 @@ export default function Chat({query}: {query: any}) {
 						.padStart(2, '0')}`;
 		newMessageRef.current = [...newMessageRef.current, body];
 		setNewMessage(newMessageRef.current);
+
+		fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/chatroom/chat`, {
+			method: 'POST',
+			headers: {
+				Authorization: window.localStorage.getItem('accessToken') as string,
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(msg),
+		});
 	}
 
 	function onConnect() {
