@@ -42,7 +42,7 @@ export default function NewMessageArea({
 
 				return (
 					<div
-						key={chat.id}
+						key={chat.sendTime}
 						className={`${styles.message} ${
 							chat.mine ? styles.me : styles.opponent
 						}`}
