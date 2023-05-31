@@ -4,17 +4,12 @@ import {QueryClient, QueryClientProvider} from 'react-query';
 import Aside from '../aside/aside';
 import Header from '../header/header';
 import ModalWrap from './modalWrap';
-import {useInjectKakaoMapApi} from 'react-kakao-maps-sdk';
 
 const queryClient = new QueryClient();
 
 export default function Layout({children}: {children: ReactElement}) {
 	const asideRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 	const containerRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
-
-	useInjectKakaoMapApi({
-		appkey: `${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}`,
-	});
 
 	return (
 		<QueryClientProvider client={queryClient}>
