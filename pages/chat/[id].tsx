@@ -48,12 +48,18 @@ export default function Chat({query}: {query: any}) {
 			setMessage(message);
 		}
 
+		fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/chatroom/notification`, {
+			headers: {'Content-Type': 'application/json'},
+			method: 'POST',
+			body: JSON.stringify({...body, senderEmail: email}),
+		});
+
 		const DATE = new Date(
 			((body.sendDate || body.sendTime) as number) -
 				new Date().getTimezoneOffset() * 60 * 1000,
 		);
 
-		body.dateString = `${DATE.getMonth()
+		body.dateString = `${(DATE.getMonth() + 1)
 			.toString()
 			.padStart(2, '0')}/${DATE.getDate().toString().padStart(2, '0')}`;
 		body.timeString =
