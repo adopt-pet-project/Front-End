@@ -17,9 +17,14 @@ function AlarmBox() {
 	const checkedAlarmList = useRecoilValue(AcheckedAlarmList);
 	const [alarmRefetch, setAlarmRefetch] = useRecoilState(AalarmRefetch);
 
-	const fetchDeleteAlarmData = useFetch('/notification', 'POST', true, () => {
-		setAlarmRefetch(prev => (prev === 0 ? 1 : 0));
-	});
+	const [_, fetchDeleteAlarmData] = useFetch(
+		'/notification',
+		'POST',
+		true,
+		() => {
+			setAlarmRefetch(prev => (prev === 0 ? 1 : 0));
+		},
+	);
 
 	const findHaveParent = (
 		node: HTMLElement,

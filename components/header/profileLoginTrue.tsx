@@ -22,8 +22,8 @@ function ProfileLoginTrue() {
 	const [isNew, setIsNew] = useState(false);
 	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
 
-	const fetchUserInfo = useFetch('/member/0', 'GET', true, setUserInfo);
-	const fetchAlarmData = useFetch(
+	const [_1, fetchUserInfo] = useFetch('/member/0', 'GET', true, setUserInfo);
+	const [_2, fetchAlarmData] = useFetch(
 		'/notification/all',
 		'GET',
 		true,

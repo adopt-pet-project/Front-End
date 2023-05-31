@@ -15,7 +15,7 @@ function Profile() {
 	const inputImgRef = useRef<HTMLInputElement>(null);
 	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
 	const [currentImg, setCurrentImg] = useState('');
-	const withDraw = useFetch('/member', 'DELETE', true); //계정삭제
+	const [_, withDraw] = useFetch('/member', 'DELETE', true); //계정삭제
 
 	useEffect(() => {
 		setCurrentImg(userInfo.profile);

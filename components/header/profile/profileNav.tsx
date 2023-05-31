@@ -18,7 +18,7 @@ function ProfileNav() {
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
 	const [myPageCtg, setMyPageCtg] = useRecoilState(AcurrentMyPageCtg);
 
-	const fetchLogout = useFetch('/token/logout', 'POST', true, () => {
+	const [_, fetchLogout] = useFetch('/token/logout', 'POST', true, () => {
 		localStorage.removeItem('accessToken');
 		setIsLogin(false);
 		router.push('/');
@@ -52,6 +52,7 @@ function ProfileNav() {
 			<ProfileCard />
 			{navBtn.map((data, i) => (
 				<div
+					key={i}
 					onClick={() => {
 						setMyPageCtg(0);
 						setIsProfileBoxOn(false);

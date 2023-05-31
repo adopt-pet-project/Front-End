@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import useRefreshToken from './useRefreshToken';
 const refresh = useRefreshToken();
 
@@ -15,12 +15,16 @@ function useFetch<FetchReturnType, BT>(
 	method: 'GET' | 'POST' | 'PATCH' | 'DELETE',
 	token: boolean,
 	callback?: (fetchData: any) => any,
-) {
+): [string, (body?: any) => any] {
 	// 브라우저에서 토큰을 가져옴
-
+	const [status, setStatus] = useState<string>('');
 	const [accessToken, setAccessToken] = useState(
 		typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '',
 	);
+
+	useEffect(() => {
+		console.log(status);
+	}, [status]);
 
 	/**
 	 *
@@ -33,7 +37,7 @@ function useFetch<FetchReturnType, BT>(
 		let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}${endpoint}`;
 		//토큰 여부에 따라서 헤드에 토큰을 추가함
 		let response: Response | null = null;
-
+		setStatus('loading');
 		token
 			? (response = await fetch(`${URL}`, {
 					method: method,
@@ -50,6 +54,7 @@ function useFetch<FetchReturnType, BT>(
 
 		//fetch 이후 반납되는 데이터
 		result = await response.json();
+		if (await result) setStatus('end');
 		if (result) {
 			if (result.status === 401) {
 				refresh();
@@ -65,7 +70,7 @@ function useFetch<FetchReturnType, BT>(
 		callback ? callback(result) : null; // 패치 결과를 콜백에 인자로 전송함
 		return await result;
 	}
-	return fetchAPI;
+	return [status, fetchAPI];
 }
 
 export default useFetch;

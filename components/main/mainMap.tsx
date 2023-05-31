@@ -8,7 +8,7 @@ import useFetch from '@/utils/hooks/useFetch';
 function MainMap() {
 	const router = useRouter();
 	const [filterCtg, setFilterCtg] = useState<'a' | 'd' | 'c' | 'o'>('a');
-	const fetchMapData = useFetch('/adopt/render', 'GET', false, data => {
+	const [_, fetchMapData] = useFetch('/adopt/render', 'GET', false, data => {
 		setMapMarkerData(data);
 	});
 	const [mapMarkerData, setMapMarkerData] = useState<Mapmarker[]>([]);

@@ -17,7 +17,7 @@ function MyAdoptCardList() {
 		useRecoilState(AmyAdoptBoardType);
 	const [myAdoptModal, setMyAdoptModal] = useRecoilState(AmyAdoptModal);
 
-	const fetchMyAdopt = useFetch(
+	const [_, fetchMyAdopt] = useFetch(
 		`/mypage/adopt?status=${myAdoptBoardType}`,
 		'GET',
 		true,

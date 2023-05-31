@@ -7,7 +7,7 @@ import useFetch from '@/utils/hooks/useFetch';
 function MyAdoptModal() {
 	const [myAdoptModal, setMyAdoptModal] = useRecoilState(AmyAdoptModal);
 	const [refetch, setRefetch] = useRecoilState(ArefetchAdoptList);
-	const updateMyAdoptState = useFetch('/adopt', 'PATCH', true, () => {
+	const [_, updateMyAdoptState] = useFetch('/adopt', 'PATCH', true, () => {
 		setRefetch(prev => (prev === 0 ? 1 : 0));
 	});
 

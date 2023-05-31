@@ -10,7 +10,7 @@ function AlarmCard({data}: {data: Alarmdata | Alarmdataname}) {
 	const accessToken = window.localStorage.getItem('accessToken');
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
 	const [alarmData, setAlarmData] = useRecoilState(AalarmData);
-	const updateAlarmCheck = useFetch(
+	const [_, updateAlarmCheck] = useFetch(
 		`/notification/checked/${data.id}`,
 		'PATCH',
 		true,
