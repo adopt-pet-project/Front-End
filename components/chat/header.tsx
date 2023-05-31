@@ -14,7 +14,6 @@ export default function Header() {
 					router.back();
 				}}
 			/>
-			김성태
 			<button type="submit" className={styles.writeButton}>
 				나가기
 			</button>
