@@ -8,7 +8,6 @@ const refresh = useRefreshToken();
  * @param method 'GET' | 'POST' | 'PATCH' | 'DELETE' 메서드
  * @param token boolean 헤더에 토큰을 담을지 말지
  * @param callback REST결과를 받아서 실행할 콜백 함수 첫 번재 인자로 fetch결과를 받음
- * @param body POST, PATCH시 넣어 보낼 페이로드
  * @returns
  */
 function useFetch<FetchReturnType, BT>(
@@ -16,7 +15,6 @@ function useFetch<FetchReturnType, BT>(
 	method: 'GET' | 'POST' | 'PATCH' | 'DELETE',
 	token: boolean,
 	callback?: (fetchData: any) => any,
-	body?: BT,
 ) {
 	// 브라우저에서 토큰을 가져옴
 
@@ -24,7 +22,12 @@ function useFetch<FetchReturnType, BT>(
 		typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '',
 	);
 
-	async function fetchAPI() {
+	/**
+	 *
+	 * @param body 데이터 패칭 시 body에 들어갈 내용
+	 * @returns
+	 */
+	async function fetchAPI(body?: any) {
 		let result: RT<FetchReturnType> | null = null;
 		//fetch를 날릴 url
 		let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}${endpoint}`;
@@ -50,7 +53,7 @@ function useFetch<FetchReturnType, BT>(
 		if (result) {
 			if (result.status === 401) {
 				refresh();
-				fetchAPI(); // 토큰이 이상하면 페치 api를 다시 날림
+				fetchAPI(body); // 토큰이 이상하면 페치 api를 다시 날림
 				alert('다시 시도합니다.');
 			} else if (result.status === 404) {
 				alert('존재하지 않거나 삭제된 페이지');

@@ -3,23 +3,17 @@ import {useRouter} from 'next/router';
 import styles from '@/styles/components/main/mainMap.module.scss';
 
 import React, {useEffect, useState} from 'react';
+import useFetch from '@/utils/hooks/useFetch';
 
 function MainMap() {
 	const router = useRouter();
 	const [filterCtg, setFilterCtg] = useState<'a' | 'd' | 'c' | 'o'>('a');
-
+	const fetchMapData = useFetch('/adopt/render', 'GET', false, data => {
+		setMapMarkerData(data);
+	});
 	const [mapMarkerData, setMapMarkerData] = useState<Mapmarker[]>([]);
 
 	useEffect(() => {
-		async function fetchMapData() {
-			await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/adopt/render`, {
-				method: 'GET',
-			})
-				.then(response => response.json())
-				.then(data => {
-					setMapMarkerData(data);
-				});
-		}
 		fetchMapData();
 	}, []);
 

@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef} from 'react';
 import {useRecoilState, useRecoilValue} from 'recoil';
 import {
 	AalarmData,
@@ -12,21 +12,14 @@ import useFetch from '@/utils/hooks/useFetch';
 
 function AlarmBox() {
 	const alarmBoxRef = useRef<HTMLDivElement>(null);
-	const accessToken = window.localStorage.getItem('accessToken');
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
 	const [alarmData, setAlarmData] = useRecoilState(AalarmData);
 	const checkedAlarmList = useRecoilValue(AcheckedAlarmList);
 	const [alarmRefetch, setAlarmRefetch] = useRecoilState(AalarmRefetch);
 
-	const fetchDeleteAlarmData = useFetch(
-		'/notification',
-		'POST',
-		true,
-		() => {
-			setAlarmRefetch(prev => (prev === 0 ? 1 : 0));
-		},
-		{idList: checkedAlarmList},
-	);
+	const fetchDeleteAlarmData = useFetch('/notification', 'POST', true, () => {
+		setAlarmRefetch(prev => (prev === 0 ? 1 : 0));
+	});
 
 	const findHaveParent = (
 		node: HTMLElement,
@@ -79,7 +72,7 @@ function AlarmBox() {
 
 		setTimeout(() => {
 			console.log('end');
-			fetchDeleteAlarmData();
+			fetchDeleteAlarmData({idList: checkedAlarmList});
 		}, checkedAlarmList.length * 70);
 	}
 

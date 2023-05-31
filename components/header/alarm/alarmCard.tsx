@@ -3,27 +3,23 @@ import styles from '@/styles/components/header/alarm/alarmCard.module.scss';
 import {useRecoilState} from 'recoil';
 import {AalarmData, AisAlarmBoxOn, AuserInfo} from '@/utils/recoil/recoilStore';
 import {useRouter} from 'next/router';
+import useFetch from '@/utils/hooks/useFetch';
 
 function AlarmCard({data}: {data: Alarmdata | Alarmdataname}) {
 	const router = useRouter();
-	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
 	const accessToken = window.localStorage.getItem('accessToken');
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
 	const [alarmData, setAlarmData] = useRecoilState(AalarmData);
+	const updateAlarmCheck = useFetch(
+		`/notification/checked/${data.id}`,
+		'PATCH',
+		true,
+	);
 
-	function updateCheck() {
-		let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/notification/checked/${data.id}`;
-		fetch(`${URL}`, {
-			method: 'PATCH',
-			headers: {
-				Authorization: `${accessToken}`,
-			},
-		});
-	}
 	return (
 		<div
 			onClick={() => {
-				updateCheck();
+				updateAlarmCheck();
 				setAlarmData(prev => {
 					let result = [...prev];
 					result = result.map((mapData, i) =>

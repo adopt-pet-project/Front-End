@@ -9,36 +9,27 @@ import useRefreshToken from '@/utils/hooks/useRefreshToken';
 import MyAdoptModal from './myAdoptModal';
 import MyAdoptCard from './myAdoptCard';
 import styles from '@/styles/components/myPage/myAdopt/myAdoptCardList.module.scss';
+import useFetch from '@/utils/hooks/useFetch';
 
 function MyAdoptCardList() {
 	const refresh = useRefreshToken();
 	const [myAdoptBoardType, setMyAdoptBoardType] =
 		useRecoilState(AmyAdoptBoardType);
 	const [myAdoptModal, setMyAdoptModal] = useRecoilState(AmyAdoptModal);
-	const [accessToken, setAccessToken] = useState(
-		typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '',
+
+	const fetchMyAdopt = useFetch(
+		`/mypage/adopt?status=${myAdoptBoardType}`,
+		'GET',
+		true,
+		data => {
+			setMyAdoptData(data);
+		},
 	);
 	const [refetch, setRefetch] = useRecoilState(ArefetchAdoptList);
 	const [myAdoptData, setMyAdoptData] = useState<any[]>([]);
 
 	useEffect(() => {
-		async function fetchMyInfo() {
-			await fetch(
-				`${process.env.NEXT_PUBLIC_SERVER_URL}/mypage/adopt?status=${myAdoptBoardType}`,
-				{
-					method: 'GET',
-					headers: {
-						Authorization: `${accessToken}`,
-					},
-				},
-			)
-				.then(response => response.json())
-				.then(data => {
-					data.status === 401 ? refresh() : setMyAdoptData(data);
-					data.status === 500 ? alert('DB오류') : null;
-				});
-		}
-		fetchMyInfo();
+		fetchMyAdopt();
 	}, [myAdoptBoardType, refetch]);
 
 	return (

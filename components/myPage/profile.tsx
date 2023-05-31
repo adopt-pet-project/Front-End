@@ -1,9 +1,9 @@
 import {useEffect, useRef, useState} from 'react';
 import {useRouter} from 'next/router';
 import styles from '@/styles/components/myPage/profile.module.scss';
-import useRefreshToken from '@/utils/hooks/useRefreshToken';
 import {useRecoilState} from 'recoil';
 import {AuserInfo} from '@/utils/recoil/recoilStore';
+import useFetch from '@/utils/hooks/useFetch';
 
 function Profile() {
 	const router = useRouter();
@@ -13,27 +13,9 @@ function Profile() {
 
 	const inputRef = useRef<HTMLInputElement>(null);
 	const inputImgRef = useRef<HTMLInputElement>(null);
-	const [accessToken, setAccessToken] = useState(
-		typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '',
-	);
 	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
 	const [currentImg, setCurrentImg] = useState('');
-
-	async function withdraw() {
-		async function deleteInfo() {
-			await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member`, {
-				method: 'DELETE',
-				headers: {
-					Authorization: `${accessToken}`,
-				},
-			})
-				.then(response => response.json())
-				.then(data => {
-					data.status === 200 ? alert('탈퇴 완료') : alert('오류 발생!');
-				});
-		}
-		deleteInfo();
-	}
+	const withDraw = useFetch('/member', 'DELETE', true); //계정삭제
 
 	useEffect(() => {
 		setCurrentImg(userInfo.profile);
@@ -113,7 +95,7 @@ function Profile() {
 			<div className={styles.buttonWrap}>
 				<button
 					onClick={() => {
-						withdraw();
+						withDraw();
 						router.push('/');
 					}}
 				>
