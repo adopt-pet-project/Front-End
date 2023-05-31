@@ -58,11 +58,6 @@ function useFetch<FetchReturnType, BT>(
 		if (result) {
 			if (result.status === 401) {
 				refresh();
-				setAccessToken(
-					typeof window !== 'undefined'
-						? localStorage.getItem('accessToken')
-						: '',
-				);
 				fetchAPI(body); // 토큰이 이상하면 페치 api를 다시 날림
 				alert('다시 시도합니다.');
 			} else if (result.status === 404) {
