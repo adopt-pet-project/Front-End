@@ -2,28 +2,14 @@ import React, {useState} from 'react';
 import {useRecoilState} from 'recoil';
 import {AmyAdoptModal, ArefetchAdoptList} from '@/utils/recoil/recoilStore';
 import styles from '@/styles/components/myPage/myAdopt/myAdoptModal.module.scss';
+import useFetch from '@/utils/hooks/useFetch';
 
 function MyAdoptModal() {
 	const [myAdoptModal, setMyAdoptModal] = useRecoilState(AmyAdoptModal);
 	const [refetch, setRefetch] = useRecoilState(ArefetchAdoptList);
-	const [accessToken, setAccessToken] = useState(
-		typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '',
-	);
-	function updateMyAdoptState(status: any) {
-		fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/adopt`, {
-			method: 'PATCH',
-			headers: {
-				Authorization: `${accessToken}`,
-				'content-type': 'application/json',
-			},
-			body: JSON.stringify({
-				id: myAdoptModal.modalID,
-				status: status,
-			}),
-		}).then(() => {
-			setRefetch(prev => (prev === 0 ? 1 : 0));
-		});
-	}
+	const [_, updateMyAdoptState] = useFetch('/adopt', 'PATCH', true, () => {
+		setRefetch(prev => (prev === 0 ? 1 : 0));
+	});
 
 	return (
 		<div
@@ -33,7 +19,10 @@ function MyAdoptModal() {
 			{myAdoptModal.type == 'adopting' ? (
 				<div
 					onClick={() => {
-						updateMyAdoptState('reserved');
+						updateMyAdoptState({
+							id: myAdoptModal.modalID, // 분양글의 고유 번호
+							status: 'reserved', // 변경 할 상태 값 -> adopting, end, reserved
+						});
 					}}
 				>
 					예약됨
@@ -41,7 +30,10 @@ function MyAdoptModal() {
 			) : (
 				<div
 					onClick={() => {
-						updateMyAdoptState('adopting');
+						updateMyAdoptState({
+							id: myAdoptModal.modalID, // 분양글의 고유 번호
+							status: 'adopting', // 변경 할 상태 값 -> adopting, end, reserved
+						});
 					}}
 				>
 					분양중
@@ -49,7 +41,10 @@ function MyAdoptModal() {
 			)}
 			<div
 				onClick={() => {
-					updateMyAdoptState('end');
+					updateMyAdoptState({
+						id: myAdoptModal.modalID, // 분양글의 고유 번호
+						status: 'end', // 변경 할 상태 값 -> adopting, end, reserved
+					});
 				}}
 			>
 				분양완료

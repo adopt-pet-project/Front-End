@@ -3,6 +3,7 @@ import {useRecoilState} from 'recoil';
 import {EventSourcePolyfill} from 'event-source-polyfill';
 import {
 	AalarmData,
+	AalarmRefetch,
 	AisAlarmBoxOn,
 	AisProfileBoxOn,
 	AuserInfo,
@@ -10,17 +11,24 @@ import {
 import ProfileBox from './profile/profileBox';
 import AlarmBox from './alarm/alarmBox';
 import styles from '@/styles/components/header/profileLoginTrue.module.scss';
-import useRefreshToken from '@/utils/hooks/useRefreshToken';
-import {isJsxTagNameExpression} from 'typescript';
+import useFetch from '@/utils/hooks/useFetch';
 
 function ProfileLoginTrue() {
-	const refresh = useRefreshToken();
 	const accessToken = window.localStorage.getItem('accessToken');
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
 	const [alarmData, setAlarmData] = useRecoilState(AalarmData);
+	const [alarmRefetch, setAlarmRefetch] = useRecoilState(AalarmRefetch);
 	const [isNew, setIsNew] = useState(false);
 	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
+
+	const [_1, fetchUserInfo] = useFetch('/member/0', 'GET', true, setUserInfo);
+	const [_2, fetchAlarmData] = useFetch(
+		'/notification/all',
+		'GET',
+		true,
+		setAlarmData,
+	);
 
 	useEffect(() => {
 		const eventSource = new EventSourcePolyfill(
@@ -62,43 +70,20 @@ function ProfileLoginTrue() {
 
 	useEffect(() => {
 		// 유저 정보 조회
-		async function getMyInfo() {
-			let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`;
-			let response = await fetch(`${URL}`, {
-				method: 'GET',
-				headers: {
-					Authorization: `${accessToken}`,
-				},
-			});
-			const result = await response.json();
-			if (result.status === 401) refresh();
-			setUserInfo(await result);
+		async function getUserInfoData() {
+			await fetchUserInfo();
 		}
 
-		getMyInfo();
+		getUserInfoData();
 	}, []);
 
 	useEffect(() => {
-		// 회원 알림 전체 조회
-		async function getMyAlarm() {
-			let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/notification/all`;
-			let response = await fetch(`${URL}`, {
-				method: 'GET',
-				headers: {
-					Authorization: `${accessToken}`,
-				},
-			});
-			const result = await response.json();
-			console.log(result);
-			if (result.status === 404) {
-				alert('해당 알림을 찾을 수 없습니다.');
-				setAlarmData([]);
-			}
-			setAlarmData(result);
+		// 알림 조회
+		async function getAlarmData() {
+			await fetchAlarmData();
 		}
-
-		getMyAlarm();
-	}, []);
+		getAlarmData();
+	}, [alarmRefetch]);
 
 	useEffect(() => {
 		setIsNew(() => {

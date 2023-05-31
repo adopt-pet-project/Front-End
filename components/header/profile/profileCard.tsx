@@ -10,9 +10,6 @@ function ProfileCard() {
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
 	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
 
-	console.log(userInfo);
-
-	console.log(userInfo);
 	return (
 		<div className={styles.profileWrap}>
 			<div className={styles.profileCard}>

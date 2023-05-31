@@ -1,14 +1,31 @@
-import {useEffect, useRef, useState} from 'react';
-import {useRecoilState} from 'recoil';
-import {AalarmData, AisAlarmBoxOn} from '@/utils/recoil/recoilStore';
+import {useEffect, useRef} from 'react';
+import {useRecoilState, useRecoilValue} from 'recoil';
+import {
+	AalarmData,
+	AalarmRefetch,
+	AcheckedAlarmList,
+	AisAlarmBoxOn,
+} from '@/utils/recoil/recoilStore';
 import CardListWrap from './cardListWrap';
 import styles from '@/styles/components/header/alarm/alarmBox.module.scss';
+import useFetch from '@/utils/hooks/useFetch';
 
 function AlarmBox() {
 	const alarmBoxRef = useRef<HTMLDivElement>(null);
-	const accessToken = window.localStorage.getItem('accessToken');
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
 	const [alarmData, setAlarmData] = useRecoilState(AalarmData);
+	const checkedAlarmList = useRecoilValue(AcheckedAlarmList);
+	const [alarmRefetch, setAlarmRefetch] = useRecoilState(AalarmRefetch);
+
+	const [_, fetchDeleteAlarmData] = useFetch(
+		'/notification',
+		'POST',
+		true,
+		() => {
+			setAlarmRefetch(prev => (prev === 0 ? 1 : 0));
+		},
+	);
+
 	const findHaveParent = (
 		node: HTMLElement,
 		target: HTMLElement,
@@ -37,49 +54,31 @@ function AlarmBox() {
 
 	function deleteCheckedAlarm() {
 		let delay = 0;
-		alarmData.map((data, i) => {
-			delay += 70;
-			if (data && data.checked) {
-				setTimeout(() => {
-					setAlarmData(prev => {
-						let result = [...prev];
-						result[i] = {...prev[i]};
-						result[i].del = true;
+		// 확인된 알림의 id를 가진 객체의 del을 true로 변경함
 
-						return result;
+		checkedAlarmList.map(checkedListId => {
+			setTimeout(() => {
+				setAlarmData(prev => {
+					//0.07초 주기로 리스트를 하나씩 del true함
+					let result = [...prev];
+					console.log('on this');
+					result = prev.map((alarmData, i) => {
+						if (alarmData.id === checkedListId) {
+							return {...alarmData, del: true};
+						}
+						return alarmData;
 					});
-					if (i === alarmData.length - 1) {
-						let delList: any = [];
 
-						setTimeout(() => {
-							setAlarmData(prev =>
-								prev.filter(datas => {
-									if (datas.del) {
-										delList.push(datas.id);
-									}
-									return !datas.del;
-								}),
-							);
-							deleteCheckedAlarmAPI(delList);
-						}, 100);
-					}
-				}, delay);
-			}
+					return result;
+				});
+			}, delay);
+			delay += 70;
 		});
-	}
 
-	async function deleteCheckedAlarmAPI(delList: any) {
-		let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/notification`;
-		fetch(`${URL}`, {
-			method: 'POST',
-			headers: {
-				Authorization: `${accessToken}`,
-				'content-type': 'application/json',
-			},
-			body: JSON.stringify({
-				idList: delList,
-			}),
-		});
+		setTimeout(() => {
+			console.log('end');
+			fetchDeleteAlarmData({idList: checkedAlarmList});
+		}, checkedAlarmList.length * 70);
 	}
 
 	useEffect(() => {

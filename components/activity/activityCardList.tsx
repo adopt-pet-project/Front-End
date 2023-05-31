@@ -5,6 +5,7 @@ import ActivityCard from './activityCard';
 import ActivityComment from './activityComment';
 import styles from '@/styles/components/activity/activityCardList.module.scss';
 import useRefreshToken from '@/utils/hooks/useRefreshToken';
+import useFetch from '@/utils/hooks/useFetch';
 
 function ActivityCardList() {
 	const [accessToken, setAccessToken] = useState(
@@ -13,44 +14,28 @@ function ActivityCardList() {
 	const [isComment, setIsComment] = useRecoilState(AisComment);
 	const [myDoc, setMyDoc] = useState<Activitydoc[]>([]);
 	const [myComment, setMyComment] = useState<Activitycomment[]>([]);
-	const refresh = useRefreshToken();
+	const [_1, fetchMyDoc] = useFetch(`/mypage/article`, 'GET', true, data => {
+		setMyDoc(data);
+	});
+	const [_2, fetchMyComment] = useFetch(
+		`/mypage/comment`,
+		'GET',
+		true,
+		data => {
+			setMyComment(data);
+		},
+	);
 
 	useEffect(() => {
-		// 유저 게시글 조회
-		async function getMyDoc() {
-			let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/mypage/article`;
-			let response = await fetch(`${URL}`, {
-				method: 'GET',
-				headers: {
-					Authorization: `${accessToken}`,
-				},
-			});
-			const result = await response.json();
-			console.log(result);
-			if (result.status === 401) refresh();
-			setMyDoc(await result);
-		}
+		// 내 게시글 조회
 
-		getMyDoc();
+		fetchMyDoc();
 	}, []);
 
 	useEffect(() => {
 		// 유저 댓글 조회
-		async function getMyComment() {
-			let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/mypage/comment`;
-			let response = await fetch(`${URL}`, {
-				method: 'GET',
-				headers: {
-					Authorization: `${accessToken}`,
-				},
-			});
-			const result = await response.json();
-			console.log(result);
-			if (result.status === 401) refresh();
-			setMyComment(await result);
-		}
 
-		getMyComment();
+		fetchMyComment();
 	}, []);
 
 	return (
