@@ -2,19 +2,19 @@ import {useRouter} from 'next/router';
 import styles from '@/styles/components/activity/activityComment.module.scss';
 
 function ActivityComment({article}: {article: any}) {
-	const {id, docId, title, comment, publishedAt} = article;
+	const {refId, title, contents, publishedAt} = article;
 	const router = useRouter();
 
 	return (
 		<li
 			onClick={() => {
-				router.push('/board/11');
+				router.push(`/board/${refId}`);
 			}}
 			className={styles.comment}
 		>
 			<div className={styles.title}>{title}</div>
-			<div className={styles.content}>{comment}</div>
-			<div>2023. 5. 3</div>
+			<div className={styles.content}>{contents}</div>
+			<div>{publishedAt}</div>
 		</li>
 	);
 }

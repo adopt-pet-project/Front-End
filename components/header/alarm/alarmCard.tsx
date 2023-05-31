@@ -1,9 +1,36 @@
 import React from 'react';
 import styles from '@/styles/components/header/alarm/alarmCard.module.scss';
+import {useRecoilState} from 'recoil';
+import {AalarmData, AisAlarmBoxOn, AuserInfo} from '@/utils/recoil/recoilStore';
+import {useRouter} from 'next/router';
+import useFetch from '@/utils/hooks/useFetch';
 
 function AlarmCard({data}: {data: Alarmdata | Alarmdataname}) {
+	const router = useRouter();
+	const accessToken = window.localStorage.getItem('accessToken');
+	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
+	const [alarmData, setAlarmData] = useRecoilState(AalarmData);
+	const [_, updateAlarmCheck] = useFetch(
+		`/notification/checked/${data.id}`,
+		'PATCH',
+		true,
+	);
+
 	return (
 		<div
+			onClick={() => {
+				updateAlarmCheck();
+				setAlarmData(prev => {
+					let result = [...prev];
+					result = result.map((mapData, i) =>
+						mapData.id === data.id ? {...mapData, checked: true} : mapData,
+					);
+
+					return result;
+				});
+				setIsAlarmBoxOn(false);
+				router.push(`${data.url}`);
+			}}
 			className={`${styles.cardWrap} ${
 				data.checked === false ? styles.checked : null
 			} ${data.del ? styles.del : null}`}
@@ -22,7 +49,11 @@ function AlarmCard({data}: {data: Alarmdata | Alarmdataname}) {
 				) : (
 					<span style={{color: 'purple', fontWeight: 'bold'}}>쪽지 알림</span>
 				)}
-				<span>{data.date}</span>
+				<span>
+					{data.publishedAt[0]}년 {data.publishedAt[1]}월 {data.publishedAt[2]}
+					일 {data.publishedAt[3]}시 {data.publishedAt[4]}분{' '}
+					{data.publishedAt[5]}초
+				</span>
 			</div>
 
 			<div className={styles.explane}>
@@ -43,7 +74,7 @@ function AlarmCard({data}: {data: Alarmdata | Alarmdataname}) {
 				) : null}
 			</div>
 			<div className={styles.alarmAnnounce}>
-				{data.type === 'documentHot' ? null : `${data.contents}`}
+				{data.type === 'documentHot' ? null : `${data.content}`}
 			</div>
 		</div>
 	);

@@ -1,4 +1,4 @@
-import {atom} from 'recoil';
+import {atom, selector} from 'recoil';
 import {v1} from 'uuid';
 
 export const AisStatistic = atom<boolean>({
@@ -98,6 +98,47 @@ export const AisLogin = atom({
 
 export const AcurrentMyPageCtg = atom<0 | 1 | 2>({
 	key: `myPageCtg/${v1()}`,
+	default: 0,
+});
+
+export const AuserInfo = atom<Userinfo>({
+	key: `userInfo/${v1()}`,
+	default: {
+		id: 0,
+		profile: '',
+		name: '',
+		location: '',
+		activity: {
+			document: 0,
+			comment: 0,
+			sanction: 0,
+		},
+	},
+});
+
+export const AalarmData = atom<(Alarmdata | Alarmdataname)[]>({
+	key: `alarmData/${v1()}`,
+	default: [],
+});
+
+export const AalarmRefetch = atom<0 | 1>({
+	key: `alarmDataRefetch/${v1()}`,
+	default: 0,
+});
+
+export const AcheckedAlarmList = selector<number[]>({
+	key: `alarmData/${v1()}`,
+	get: ({get}) => {
+		const alarmData = get(AalarmData);
+		const checkedList = alarmData.filter(data => data.checked);
+		const result = checkedList.map(data => data.id);
+
+		return result;
+	},
+});
+
+export const ArefetchAdoptList = atom<0 | 1>({
+	key: `refetch/${v1()}`,
 	default: 0,
 });
 export default {};

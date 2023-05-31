@@ -1,11 +1,8 @@
 import {useEffect, useState} from 'react';
-import {Map, MapMarker, useInjectKakaoMapApi} from 'react-kakao-maps-sdk';
+import {Map, MapMarker} from 'react-kakao-maps-sdk';
 import styles from '@/styles/components/adopt/coords.module.scss';
 
 export default function Position({coords}: {coords: AdoptCoords}) {
-	const {loading, error} = useInjectKakaoMapApi({
-		appkey: `${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}`,
-	});
 	const [address, setAddress] = useState<string>('');
 
 	useEffect(() => {
@@ -32,20 +29,17 @@ export default function Position({coords}: {coords: AdoptCoords}) {
 	return (
 		<div className={styles.container}>
 			<span className={styles.title}>분양 지역</span>
-
-			{!loading ? (
-				<Map
-					center={{lat: coords.latitude, lng: coords.longitude}}
-					style={{
-						height: '300px',
-					}}
-					level={3}
-				>
-					<MapMarker
-						position={{lat: coords.latitude, lng: coords.longitude}}
-					></MapMarker>
-				</Map>
-			) : null}
+			<Map
+				center={{lat: coords.latitude, lng: coords.longitude}}
+				style={{
+					height: '300px',
+				}}
+				level={3}
+			>
+				<MapMarker
+					position={{lat: coords.latitude, lng: coords.longitude}}
+				></MapMarker>
+			</Map>
 			<span className={styles.address}>{address}</span>
 		</div>
 	);

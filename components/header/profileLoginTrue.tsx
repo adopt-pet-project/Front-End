@@ -1,108 +1,99 @@
 import React, {useEffect, useState} from 'react';
 import {useRecoilState} from 'recoil';
-import {AisAlarmBoxOn, AisProfileBoxOn} from '@/utils/recoil/recoilStore';
+import {EventSourcePolyfill} from 'event-source-polyfill';
+import {
+	AalarmData,
+	AalarmRefetch,
+	AisAlarmBoxOn,
+	AisProfileBoxOn,
+	AuserInfo,
+} from '@/utils/recoil/recoilStore';
 import ProfileBox from './profile/profileBox';
 import AlarmBox from './alarm/alarmBox';
 import styles from '@/styles/components/header/profileLoginTrue.module.scss';
-import useRefreshToken from '@/utils/hooks/useRefreshToken';
+import useFetch from '@/utils/hooks/useFetch';
 
 function ProfileLoginTrue() {
-	const refresh = useRefreshToken();
 	const accessToken = window.localStorage.getItem('accessToken');
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
-	const [userInfo, setUserInfo] = useState<Userinfo>({
-		id: 0,
-		profile: 'string',
-		name: 'string',
-		location: 'string',
-		activity: {
-			document: 0,
-			comment: 0,
-			sanction: 0,
-		},
-	});
-	const [alarmData, setAlarmData] = useState<(Alarmdata | Alarmdataname)[]>([
-		{
-			id: 2,
-			type: 'announcement',
-			refid: 3,
-			date: '2023. 5. 1',
-			contents: '개인정보 처리 방침이 변경되었습니다.',
-			checked: false,
-			del: false,
-		},
-		{
-			id: 13,
-			type: 'documentHot',
-			refid: 4,
-			date: '2023. 5. 2',
-			contents: '',
-			checked: true,
-			del: false,
-		},
-		{
-			id: 15,
-			type: 'comment',
-			refid: 5,
-			name: '성익현',
-			date: '2023. 5. 1',
-			contents: '그건 좀;',
-			checked: true,
-			del: false,
-		},
-		{
-			id: 17,
-			type: 'recomment',
-			refid: 6,
-			name: '성익현',
-			date: '2023. 5. 4',
-			contents: '어쩌라고',
-			checked: false,
-			del: false,
-		},
-		{
-			id: 7,
-			type: 'note',
-			refid: 8,
-			name: '민지',
-			contents: '왜 연락을 안받니',
-			date: '2022.10.11',
-			checked: false,
-			del: false,
-		},
+	const [alarmData, setAlarmData] = useRecoilState(AalarmData);
+	const [alarmRefetch, setAlarmRefetch] = useRecoilState(AalarmRefetch);
+	const [isNew, setIsNew] = useState(false);
+	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
 
-		{
-			id: 4,
-			type: 'chat',
-			refid: 9,
-			name: '홍길동',
-			contents: '혹시 댕댕이 예방접종 받았나요...?',
-			date: '2023. 5. 1',
-			checked: true,
-			del: false,
-		},
-	]);
+	const [_1, fetchUserInfo] = useFetch('/member/0', 'GET', true, setUserInfo);
+	const [_2, fetchAlarmData] = useFetch(
+		'/notification/all',
+		'GET',
+		true,
+		setAlarmData,
+	);
 
 	useEffect(() => {
-		async function getMyInfo() {
-			let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/member/1`;
-			let response = await fetch(`${URL}`, {
-				method: 'GET',
+		const eventSource = new EventSourcePolyfill(
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/notification/connect`,
+			{
 				headers: {
 					Authorization: `${accessToken}`,
 				},
-			});
-			const result = await response.json();
-			result.status == 500
-				? console.log('오류발생')
-				: result.status == 401
-				? refresh()
-				: setUserInfo(await result.data);
+			},
+		);
+
+		eventSource.onopen = () => {
+			console.log('connected');
+		};
+
+		eventSource.addEventListener('sse', (e: any) => {
+			console.log(e.data);
+			if (e.data.includes('EventStream Created')) {
+			} else {
+				setAlarmData(prev => {
+					const result = [...prev];
+					result.unshift(JSON.parse(e.data));
+					console.log(result);
+					return result;
+				});
+			}
+		});
+
+		eventSource.onerror = (e: any) => {
+			if (e.error) {
+				console.log('Error');
+			}
+
+			if (e.target.readyState === EventSource.CLOSED) {
+				console.log('closed');
+			}
+		};
+	}, []);
+
+	useEffect(() => {
+		// 유저 정보 조회
+		async function getUserInfoData() {
+			await fetchUserInfo();
 		}
 
-		getMyInfo();
+		getUserInfoData();
 	}, []);
+
+	useEffect(() => {
+		// 알림 조회
+		async function getAlarmData() {
+			await fetchAlarmData();
+		}
+		getAlarmData();
+	}, [alarmRefetch]);
+
+	useEffect(() => {
+		setIsNew(() => {
+			let result = false;
+			alarmData.map((data, i) => {
+				if (!data.checked) result = true;
+			});
+			return result;
+		});
+	}, [alarmData]);
 
 	return (
 		<div className={styles.profileLoginWrap}>
@@ -121,7 +112,9 @@ function ProfileLoginTrue() {
 					height={24}
 					alt="alarm icon"
 				/>
-				<div style={{pointerEvents: 'none'}} className={styles.alarmD}></div>
+				{isNew ? (
+					<div style={{pointerEvents: 'none'}} className={styles.alarmD} />
+				) : null}
 			</div>
 
 			<div
@@ -142,9 +135,7 @@ function ProfileLoginTrue() {
 			</div>
 			{isProfileBoxOn ? <ProfileBox /> : null}
 
-			{isAlarmBoxOn ? (
-				<AlarmBox alarmData={alarmData} setAlarmData={setAlarmData} />
-			) : null}
+			{isAlarmBoxOn ? <AlarmBox /> : null}
 		</div>
 	);
 }

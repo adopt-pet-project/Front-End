@@ -1,45 +1,22 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useRecoilState} from 'recoil';
 import {useRouter} from 'next/router';
-import {AisProfileBoxOn} from '@/utils/recoil/recoilStore';
-import styles from '@/styles/components/header/profile/profileCard.module.scss';
+import {AisProfileBoxOn, AuserInfo} from '@/utils/recoil/recoilStore';
 import ChatNoteBox from './chatNoteBox';
-import {useQuery} from 'react-query';
+import styles from '@/styles/components/header/profile/profileCard.module.scss';
 
 function ProfileCard() {
-	const accessToken = window.localStorage.getItem('accessToken');
-
 	const router = useRouter();
 	const [isProfileBoxOn, setIsProfileBoxOn] = useRecoilState(AisProfileBoxOn);
-
-	const userInfo = useQuery<Userinfo>(
-		['readMyInfo'],
-		async () => {
-			return await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/member/0`, {
-				method: 'GET',
-				headers: {
-					Authorization: `${accessToken}`,
-				},
-			})
-				.then(response => response.json())
-				.then(data => {
-					return data;
-				});
-		},
-		{retry: 0},
-	);
+	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
 
 	return (
 		<div className={styles.profileWrap}>
 			<div className={styles.profileCard}>
-				<img
-					className={styles.profileImgWrap}
-					src={userInfo.data?.profile}
-					alt=""
-				/>
+				<img className={styles.profileImgWrap} src={userInfo.profile} alt="" />
 				<div>
-					<div className={styles.name}>{userInfo.data?.name}</div>
-					<div className={styles.address}>{userInfo.data?.location}</div>
+					<div className={styles.name}>{userInfo.name}</div>
+					<div className={styles.address}>{userInfo.location}</div>
 					<div className={styles.activity}>
 						<div
 							onClick={() => {
@@ -50,8 +27,8 @@ function ProfileCard() {
 						>
 							활동내역
 						</div>
-						<span>게시글 {userInfo.data?.activity.document}</span>
-						<span>댓글 {userInfo.data?.activity.comment}</span>
+						<span>게시글 {userInfo.activity.document}</span>
+						<span>댓글 {userInfo.activity.comment}</span>
 					</div>
 				</div>
 			</div>

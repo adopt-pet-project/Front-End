@@ -3,7 +3,6 @@ import {ReactElement} from 'react';
 import MainMap from '@/components/main/mainMap';
 import styles from '@/styles/pages/index.module.scss';
 import Layout from '@/components/layout/layout';
-import Script from 'next/script';
 
 export default function Home() {
 	return (

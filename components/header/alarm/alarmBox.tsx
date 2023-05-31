@@ -1,20 +1,31 @@
-import {useEffect, useRef, useState} from 'react';
-import {useRecoilState} from 'recoil';
-import {AisAlarmBoxOn} from '@/utils/recoil/recoilStore';
+import {useEffect, useRef} from 'react';
+import {useRecoilState, useRecoilValue} from 'recoil';
+import {
+	AalarmData,
+	AalarmRefetch,
+	AcheckedAlarmList,
+	AisAlarmBoxOn,
+} from '@/utils/recoil/recoilStore';
 import CardListWrap from './cardListWrap';
 import styles from '@/styles/components/header/alarm/alarmBox.module.scss';
+import useFetch from '@/utils/hooks/useFetch';
 
-function AlarmBox({
-	alarmData,
-	setAlarmData,
-}: {
-	alarmData: (Alarmdata | Alarmdataname)[];
-	setAlarmData: React.Dispatch<
-		React.SetStateAction<(Alarmdata | Alarmdataname)[]>
-	>;
-}) {
+function AlarmBox() {
 	const alarmBoxRef = useRef<HTMLDivElement>(null);
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
+	const [alarmData, setAlarmData] = useRecoilState(AalarmData);
+	const checkedAlarmList = useRecoilValue(AcheckedAlarmList);
+	const [alarmRefetch, setAlarmRefetch] = useRecoilState(AalarmRefetch);
+
+	const [_, fetchDeleteAlarmData] = useFetch(
+		'/notification',
+		'POST',
+		true,
+		() => {
+			setAlarmRefetch(prev => (prev === 0 ? 1 : 0));
+		},
+	);
+
 	const findHaveParent = (
 		node: HTMLElement,
 		target: HTMLElement,
@@ -41,6 +52,35 @@ function AlarmBox({
 		} else setIsAlarmBoxOn(false);
 	};
 
+	function deleteCheckedAlarm() {
+		let delay = 0;
+		// 확인된 알림의 id를 가진 객체의 del을 true로 변경함
+
+		checkedAlarmList.map(checkedListId => {
+			setTimeout(() => {
+				setAlarmData(prev => {
+					//0.07초 주기로 리스트를 하나씩 del true함
+					let result = [...prev];
+					console.log('on this');
+					result = prev.map((alarmData, i) => {
+						if (alarmData.id === checkedListId) {
+							return {...alarmData, del: true};
+						}
+						return alarmData;
+					});
+
+					return result;
+				});
+			}, delay);
+			delay += 70;
+		});
+
+		setTimeout(() => {
+			console.log('end');
+			fetchDeleteAlarmData({idList: checkedAlarmList});
+		}, checkedAlarmList.length * 70);
+	}
+
 	useEffect(() => {
 		window.addEventListener<any>('click', handleCloseAlarm);
 
@@ -48,10 +88,6 @@ function AlarmBox({
 			window.removeEventListener<any>('click', handleCloseAlarm);
 		};
 	}, []);
-
-	useEffect(() => {
-		console.log(alarmData);
-	}, [alarmData]);
 
 	return (
 		<div ref={alarmBoxRef} className={styles.box}>
@@ -71,25 +107,7 @@ function AlarmBox({
 				</div>
 				<div
 					onClick={() => {
-						let delay = 0;
-						alarmData.map((data, i) => {
-							delay += 70;
-							if (data && data.checked) {
-								setTimeout(() => {
-									setAlarmData(prev => {
-										let result = [...prev];
-										result[i].del = true;
-
-										return result;
-									});
-									if (i === alarmData.length - 1) {
-										setTimeout(() => {
-											setAlarmData(prev => prev.filter(datas => !datas.del));
-										}, 100);
-									}
-								}, delay);
-							}
-						});
+						deleteCheckedAlarm();
 					}}
 					className={styles.delRead}
 				>

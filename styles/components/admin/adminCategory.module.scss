@@ -25,12 +25,12 @@
 		left: 15px;
 		top: 40px;
 		border: 1px solid var(--skyblue);
-
+		transform: translateX(0px);
 		transition: var(--transition);
 	}
 
 	.onRight {
-		left: 84px;
+		transform: translateX(71px);
 	}
 }
 
