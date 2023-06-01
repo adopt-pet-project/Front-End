@@ -78,6 +78,13 @@
 	border-radius: 50px;
 }
 
+.author {
+	cursor: pointer;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
 @media screen and (max-width: 768px) {
 	.upper {
 		padding-top: 12px;

@@ -1,6 +1,7 @@
 import {toDate} from '@/utils/functions/toDate';
 import styles from '@/styles/components/board/comments.module.scss';
 import useRefreshToken from '@/utils/hooks/useRefreshToken';
+import useLetter from '@/utils/hooks/useLetter';
 
 export default function Comments({
 	parentId,
@@ -20,6 +21,7 @@ export default function Comments({
 	entireCommentList?: Comment[];
 }) {
 	const refresh = useRefreshToken();
+	const fadeLetterModal = useLetter();
 
 	function setCommentTarget(
 		commentId: number,
@@ -169,7 +171,17 @@ export default function Comments({
 											src={comment.profile}
 											alt={`${comment.profile} profile`}
 										/>
-										<span>{comment.author}</span>
+										<span
+											className={styles.author}
+											onClick={() => {
+												fadeLetterModal({
+													username: comment.author,
+													targetId: comment.authorId,
+												});
+											}}
+										>
+											{comment.author}
+										</span>
 									</div>
 									<div className={styles.action}>
 										{comment.mine ? (

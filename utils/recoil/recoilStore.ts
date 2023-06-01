@@ -32,6 +32,7 @@ export const AmodalType = atom<
 	| 'checkReport'
 	| 'setAdoptType'
 	| 'deleteModal'
+	| 'LetterModal'
 	| 'none'
 >({
 	key: `modalType/${v1()}`,
@@ -141,4 +142,10 @@ export const ArefetchAdoptList = atom<0 | 1>({
 	key: `refetch/${v1()}`,
 	default: 0,
 });
+
+export const AletterTarget = atom<LetterTarget>({
+	key: `letterTarget/${v1()}`,
+	default: undefined,
+});
+
 export default {};

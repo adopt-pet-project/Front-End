@@ -197,7 +197,14 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 			<div style={{display: 'flex', flexGrow: '1', flexDirection: 'column'}}>
 				<Header header={board.header} />
 				<Context context={board.context} />
-				<Option id={id} like={board.header.like} />
+				<Option
+					id={id}
+					like={board.header.like}
+					target={{
+						username: board.header.username,
+						targetId: board.header.authorId,
+					}}
+				/>
 				<Link className={styles.return} href={'/board'}>
 					목록으로
 				</Link>

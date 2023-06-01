@@ -1,3 +1,4 @@
+import LetterModal from '../letterModal';
 import AdminBlock from '../admin/modal/adminBlock';
 import CheckReport from '../admin/modal/checkReport';
 import UserInfo from '../admin/modal/userInfo';
@@ -16,6 +17,8 @@ export default function ModalSelector({modalType}: {modalType: string}) {
 			return <SetAdoptType />;
 		case 'deleteModal':
 			return <DeleteModal />;
+		case 'LetterModal':
+			return <LetterModal />;
 		default:
 			return <></>;
 	}

@@ -1,9 +1,19 @@
 import useRefreshToken from '@/utils/hooks/useRefreshToken';
 import {useState} from 'react';
 import styles from '@/styles/components/board/option.module.scss';
+import useLetter from '@/utils/hooks/useLetter';
 
-export default function Option({id, like}: {id: string; like: number}) {
+export default function Option({
+	id,
+	like,
+	target,
+}: {
+	id: string;
+	like: number;
+	target: LetterTarget;
+}) {
 	const [likeCount, setLikeCount] = useState<number>(like);
+	const fadeLetterModal = useLetter();
 	const refresh = useRefreshToken();
 	async function onClickLike() {
 		const token = window.localStorage.getItem('accessToken');
@@ -57,7 +67,12 @@ export default function Option({id, like}: {id: string; like: number}) {
 				<img src="/icon/like.svg" alt="like" />
 				좋아요 {likeCount}
 			</div>
-			<div className={styles.item}>
+			<div
+				className={styles.item}
+				onClick={() => {
+					fadeLetterModal(target);
+				}}
+			>
 				<img src="/icon/letter.svg" alt="letter" />
 				쪽지
 			</div>

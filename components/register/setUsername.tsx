@@ -18,13 +18,22 @@ export default function SetUsername({
 	const [isUsernameValid, setIsUsernameValid] = useState<boolean>(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 
-	const validateUsername = (e: BaseSyntheticEvent) => {
+	const validateUsername = async (e: BaseSyntheticEvent) => {
 		e.preventDefault();
 
-		// 닉네임 중복 검증 로직
+		let response = await fetch(
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/member/validate?nickname=${inputRef.current?.value}`,
+		);
 
-		setValid(true);
-		userInfo.current.nickname = inputRef.current?.value as string;
+		let result = await response.json();
+
+		if (!result.duplicated) {
+			setValid(true);
+			userInfo.current.nickname = inputRef.current?.value as string;
+		} else {
+			if (inputRef.current) inputRef.current.style.border = '1px solid red';
+			setValid(false);
+		}
 	};
 
 	function setValid(value: boolean) {
