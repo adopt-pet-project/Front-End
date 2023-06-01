@@ -12,10 +12,6 @@ export default function NewMessageArea({
 	mine: boolean;
 	authorId: number;
 }) {
-	const {loading, error} = useInjectKakaoMapApi({
-		appkey: `${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}`,
-	});
-
 	return (
 		<div className={styles.container}>
 			{message.map((chat: Chat, index: number) => {
@@ -66,7 +62,7 @@ export default function NewMessageArea({
 								</div>
 							)}
 
-							{chat.contentType === 'coords' && !loading && (
+							{chat.contentType === 'coords' && (
 								<div className={styles.multimedia}>
 									<Map
 										style={{

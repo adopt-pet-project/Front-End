@@ -5,9 +5,6 @@ const profile =
 	'https://project-adopt-bucket.s3.ap-northeast-2.amazonaws.com/other/default-profile-image.jpeg';
 
 export default function MessageArea({message}: {message: Chat[]}) {
-	const {loading, error} = useInjectKakaoMapApi({
-		appkey: `${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}`,
-	});
 	return (
 		<div className={styles.container}>
 			{message.map((chat: Chat, index: number) => {
@@ -57,7 +54,7 @@ export default function MessageArea({message}: {message: Chat[]}) {
 									/>
 								</div>
 							)}
-							{chat.contentType === 'coords' && !loading && (
+							{chat.contentType === 'coords' && (
 								<div className={styles.multimedia}>
 									<Map
 										style={{
