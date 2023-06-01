@@ -13,8 +13,9 @@ function MyPageCtg() {
 
 	return (
 		<div className={styles.myPageCtg}>
-			{ctg.map(data => (
+			{ctg.map((data, i) => (
 				<span
+					key={i}
 					onClick={() => {
 						setCurrentCtg(data.num);
 					}}

@@ -8,18 +8,32 @@ import useFetch from '@/utils/hooks/useFetch';
 function Profile() {
 	const router = useRouter();
 	const [isModify, setIsModify] = useState(false);
-	const [name, setName] = useState('');
+	const [currentName, setCurrentName] = useState('');
 	const [newName, setNewName] = useState('');
 
 	const inputRef = useRef<HTMLInputElement>(null);
 	const inputImgRef = useRef<HTMLInputElement>(null);
 	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
 	const [currentImg, setCurrentImg] = useState('');
-	const [_, withDraw] = useFetch('/member', 'DELETE', true); //계정삭제
+	const [_1, withDraw] = useFetch('/member', 'DELETE', true);
+	const [_2, checkName] = useFetch(
+		`/member/validate?nickname=${newName}`,
+		'GET',
+		true,
+		data => {
+			console.log('this' + data);
+		},
+	);
 
 	useEffect(() => {
 		setCurrentImg(userInfo.profile);
+		setCurrentName(userInfo.name);
+		setNewName(userInfo.name);
 	}, [userInfo]);
+
+	useEffect(() => {
+		isModify === true ? inputRef.current?.focus() : null;
+	}, [isModify]);
 	return (
 		<>
 			<div className={styles.profileWrap}>
@@ -69,22 +83,23 @@ function Profile() {
 									setNewName(e.target.value);
 								}}
 								onBlur={() => {
-									setNewName(name);
+									setNewName(currentName);
 									setIsModify(false);
 								}}
 								onKeyUp={e => {
 									console.log(e.code);
 									if (e.code === 'Enter') {
-										setName(newName);
+										checkName();
+										setCurrentName(newName);
 										setIsModify(false);
 									} else if (e.code === 'Escape') {
-										setNewName(name);
+										setNewName(currentName);
 										setIsModify(false);
 									}
 								}}
 							/>
 						) : (
-							`${userInfo.name}`
+							`${newName}`
 						)}
 					</h1>
 					<p>{userInfo.location}</p>
