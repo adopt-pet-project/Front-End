@@ -23,3 +23,8 @@ interface Userinfo {
 		sanction: number;
 	};
 }
+
+interface LetterTarget {
+	username: string;
+	targetId: number;
+}
