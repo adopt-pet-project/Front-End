@@ -15,8 +15,11 @@ function useRefreshToken() {
 	function refresh() {
 		let token = window.localStorage.getItem('accessToken');
 
-		if (!token) return;
-
+		if (!token) {
+			console.log('lose token');
+			return;
+		}
+		console.log('refreshed');
 		refreshToken(token);
 	}
 

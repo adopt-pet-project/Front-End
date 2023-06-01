@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useRef} from 'react';
 import useRefreshToken from './useRefreshToken';
 const refresh = useRefreshToken();
 
@@ -18,13 +18,9 @@ function useFetch<FetchReturnType, BT>(
 ): [string, (body?: any) => any] {
 	// 브라우저에서 토큰을 가져옴
 	const [status, setStatus] = useState<string>('');
-	const [accessToken, setAccessToken] = useState(
+	const accessToken = useRef(
 		typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '',
 	);
-
-	useEffect(() => {
-		console.log(status);
-	}, [status]);
 
 	/**
 	 *
@@ -43,7 +39,7 @@ function useFetch<FetchReturnType, BT>(
 					method: method,
 					headers: {
 						'Content-Type': `application/json`,
-						Authorization: `${accessToken}`,
+						Authorization: `${accessToken.current}`,
 					},
 					body: JSON.stringify(body),
 			  }))
@@ -54,19 +50,20 @@ function useFetch<FetchReturnType, BT>(
 
 		//fetch 이후 반납되는 데이터
 		result = await response.json();
-		if (await result) setStatus('end');
 		if (result) {
+			setStatus('end');
 			if (result.status === 401) {
 				refresh();
-				fetchAPI(body); // 토큰이 이상하면 페치 api를 다시 날림
-				alert('다시 시도합니다.');
+				console.log(accessToken);
+				if (accessToken) fetchAPI(body);
+				console.log('다시 날림');
 			} else if (result.status === 404) {
 				alert('존재하지 않거나 삭제된 페이지');
 			} else if (result.status === 500) {
 				alert('서버 에러');
 			}
 		}
-
+		console.log(result);
 		callback ? callback(result) : null; // 패치 결과를 콜백에 인자로 전송함
 		return await result;
 	}

@@ -5,22 +5,25 @@ function NoteLogCard({
 }: {
 	data: {
 		id: number;
-		my: boolean;
+		mine: boolean;
 		contents: string;
-		date: string;
+		publishedAt: string;
+		deleteStatus: 0 | 1;
 	};
 }) {
 	return (
 		<li className={styles.noteLogCard}>
 			<div className={styles.name}>
-				{data.my ? (
+				{data.mine ? (
 					<span style={{color: 'green'}}>보낸 쪽지</span>
 				) : (
 					<span style={{color: 'red'}}>받은 쪽지</span>
 				)}
-				<span className={styles.date}>{data.date}</span>
+				<span className={styles.date}>{data.publishedAt}</span>
 			</div>
-			<div className={styles.contents}>{data.contents}</div>
+			<div className={styles.contents}>
+				{data.deleteStatus === 1 ? null : data.contents}
+			</div>
 		</li>
 	);
 }
