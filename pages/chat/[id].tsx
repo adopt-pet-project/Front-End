@@ -23,19 +23,51 @@ export default function Chat({query}: {query: any}) {
 	const subscribe = useRef<StompSubscription>();
 	const isMine = useRef<boolean>(false);
 	const newMessageRef = useRef<Chat[]>([]);
+	const messageRef = useRef<Chat[]>([]);
 	const email = useRef<string>('');
 	const router = useRouter();
 	const refresh = useRefreshToken();
 
-	function handleMessage(message: IMessage) {
-		const body: Chat = JSON.parse(message.body);
+	function handleMessage(msg: IMessage) {
+		const body: Chat = JSON.parse(msg.body);
+		const opponentRead =
+			body.readCount === 0 &&
+			(body.senderNo === Number(adoptInfo?.author.id)
+				? isMine.current
+				: !isMine.current);
+
+		console.log(body, opponentRead);
+		if (
+			body.readCount === 0 &&
+			(body.senderNo === Number(adoptInfo?.author.id)
+				? isMine.current
+				: !isMine.current)
+		) {
+			// 새 메시지 읽음여부 갱신 state 갱신은 뒤에서 같이 처리
+			newMessageRef.current = newMessageRef.current.map((chat: Chat) => {
+				return {...chat, readCount: 0};
+			});
+
+			// 기존 메시지 읽음여부 갱신
+			messageRef.current = messageRef.current.map((chat: Chat) => {
+				return {...chat, readCount: 0};
+			});
+
+			setMessage(messageRef.current);
+		}
+
+		fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/chatroom/notification`, {
+			headers: {'Content-Type': 'application/json'},
+			method: 'POST',
+			body: JSON.stringify({...body, senderEmail: email.current}),
+		});
 
 		const DATE = new Date(
 			((body.sendDate || body.sendTime) as number) -
 				new Date().getTimezoneOffset() * 60 * 1000,
 		);
 
-		body.dateString = `${DATE.getMonth()
+		body.dateString = `${(DATE.getMonth() + 1)
 			.toString()
 			.padStart(2, '0')}/${DATE.getDate().toString().padStart(2, '0')}`;
 		body.timeString =
@@ -100,7 +132,7 @@ export default function Chat({query}: {query: any}) {
 							new Date().getTimezoneOffset() * 60 * 1000,
 					);
 
-					message.dateString = `${DATE.getMonth()
+					message.dateString = `${(DATE.getMonth() + 1)
 						.toString()
 						.padStart(2, '0')}/${DATE.getDate().toString().padStart(2, '0')}`;
 					message.timeString =
@@ -116,7 +148,8 @@ export default function Chat({query}: {query: any}) {
 									.toString()
 									.padStart(2, '0')}`;
 				});
-				setMessage(msg);
+				messageRef.current = msg;
+				setMessage(messageRef.current);
 			}
 		}
 

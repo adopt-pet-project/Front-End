@@ -1,4 +1,4 @@
-import {Map, MapMarker} from 'react-kakao-maps-sdk';
+import {Map, MapMarker, useInjectKakaoMapApi} from 'react-kakao-maps-sdk';
 import styles from '@/styles/components/chat/messageArea.module.scss';
 
 const profile =
@@ -12,6 +12,10 @@ export default function NewMessageArea({
 	mine: boolean;
 	authorId: number;
 }) {
+	const {loading, error} = useInjectKakaoMapApi({
+		appkey: `${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}`,
+	});
+
 	return (
 		<div className={styles.container}>
 			{message.map((chat: Chat, index: number) => {
@@ -38,7 +42,7 @@ export default function NewMessageArea({
 
 				return (
 					<div
-						key={chat.id}
+						key={chat.sendTime}
 						className={`${styles.message} ${
 							chat.mine ? styles.me : styles.opponent
 						}`}
@@ -62,7 +66,7 @@ export default function NewMessageArea({
 								</div>
 							)}
 
-							{chat.contentType === 'coords' && (
+							{chat.contentType === 'coords' && !loading && (
 								<div className={styles.multimedia}>
 									<Map
 										style={{

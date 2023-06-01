@@ -47,17 +47,19 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	).json();
 
 	result.list.forEach((article: any) => {
-		article.publishedAt = convertDate(new Date(article.publishedAt).getTime());
+		article.publishedAt = convertDate(
+			new Date(article.publishedAt).getTime() - 32400000,
+		);
 		if (article.author == null) article.author = '탈퇴한 사용자';
 	});
 
 	if (result.hot)
 		result.hot.publishedAt = convertDate(
-			new Date(result.hot.publishedAt).getTime(),
+			new Date(result.hot.publishedAt).getTime() - 32400000,
 		);
 	if (result.weekly)
 		result.weekly.publishedAt = convertDate(
-			new Date(result.weekly.publishedAt).getTime(),
+			new Date(result.weekly.publishedAt).getTime() - 32400000,
 		);
 
 	return {

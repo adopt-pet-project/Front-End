@@ -76,7 +76,7 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	let result = await response.json();
 
 	if (!result.status)
-		result.header.publishedAt = toDate(result.header.publishedAt);
+		result.header.publishedAt = toDate(result.header.publishedAt + 32400000);
 
 	return result.status
 		? {

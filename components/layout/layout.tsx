@@ -4,7 +4,6 @@ import {QueryClient, QueryClientProvider} from 'react-query';
 import Aside from '../aside/aside';
 import Header from '../header/header';
 import ModalWrap from './modalWrap';
-import Script from 'next/script';
 
 const queryClient = new QueryClient();
 
