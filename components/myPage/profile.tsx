@@ -4,6 +4,9 @@ import styles from '@/styles/components/myPage/profile.module.scss';
 import {useRecoilState} from 'recoil';
 import {AuserInfo} from '@/utils/recoil/recoilStore';
 import useFetch from '@/utils/hooks/useFetch';
+import DuplicateAlert from './duplicateAlert';
+import ImageUploader from '../imageUploader';
+import useRefreshToken from '@/utils/hooks/useRefreshToken';
 
 function Profile() {
 	const router = useRouter();
@@ -14,12 +17,23 @@ function Profile() {
 		already: boolean;
 	}>({modify: false, view: false, already: false});
 
-	const [currentName, setCurrentName] = useState('');
+	const refresh = useRefreshToken();
+	const [currentName, setCurrentName] = useState<string | null>('');
 	const [newName, setNewName] = useState('');
 	const inputRef = useRef<HTMLInputElement>(null);
 	const inputImgRef = useRef<HTMLInputElement>(null);
 	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
 	const [currentImg, setCurrentImg] = useState('');
+	const [returnValue, setReturnValue] = useState<{
+		id: number | null;
+		url: string | null;
+	}>({
+		id: null,
+		url: null,
+	});
+	const accessToken = useRef(
+		typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '',
+	);
 
 	const [_1, withDraw] = useFetch('/member', 'DELETE', true);
 	const [_2, checkName] = useFetch(
@@ -40,6 +54,62 @@ function Profile() {
 	useEffect(() => {
 		inputState.modify ? inputRef.current?.focus() : null;
 	}, [inputState]);
+
+	async function fetchImage(file: File) {
+		let formData = new FormData();
+		formData.append('file', file);
+		formData.append('type', 'profile');
+		const data = await fetch(
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/api/image`,
+			{
+				method: 'POST',
+				headers: {
+					Authorization: window.localStorage.getItem('accessToken') as string,
+				},
+				body: formData,
+			},
+		);
+
+		const returnValue = await data.json();
+		setReturnValue({id: returnValue.data.id, url: returnValue.data.url});
+	}
+
+	async function saveImage() {
+		let sendName: string | null = '';
+		if (currentName === userInfo.name) {
+			sendName = null;
+		} else {
+			sendName = currentName;
+		}
+		const fetchImage = await fetch(
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/member`,
+			{
+				method: 'PATCH',
+
+				headers: {
+					Authorization: window.localStorage.getItem('accessToken') as string,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					name: sendName,
+					image: {
+						imageUrl: returnValue.url,
+						imageKey: returnValue.id,
+					},
+				}),
+			},
+		);
+		let result = await fetchImage.json();
+		if (result.status === 200) {
+			alert('저장이 완료되었습니다.');
+			router.reload();
+		} else if (result.status === 401) {
+			refresh();
+			throw new Error('다시 시도해 주세요.');
+		} else {
+			throw new Error('저장 실패');
+		}
+	}
 	return (
 		<>
 			<div className={styles.profileWrap}>
@@ -64,6 +134,7 @@ function Profile() {
 								reader.onloadend = () => {
 									setCurrentImg(reader.result as string);
 								};
+								fetchImage(inputImgRef?.current?.files![0]);
 							}
 						}}
 						id="profileInput"
@@ -115,42 +186,21 @@ function Profile() {
 								/>
 								{inputState.view && _2 === 'end' ? (
 									inputState.already ? (
-										<span className={`${styles.checkName} ${styles.already}`}>
-											이미 존재하는 닉네임입니다.
-										</span>
+										<DuplicateAlert
+											newName={newName}
+											setCurrentName={setCurrentName}
+											setInputState={setInputState}
+											setNewName={setNewName}
+											already={false}
+										/>
 									) : (
-										<>
-											<span className={styles.checkName}>
-												이 닉네임으로 하시겠습니까?
-											</span>
-											<button
-												onClick={e => {
-													e.stopPropagation();
-													setCurrentName(newName);
-													setInputState({
-														modify: false,
-														view: false,
-														already: false,
-													});
-												}}
-											>
-												네
-											</button>
-											<button
-												onClick={e => {
-													e.stopPropagation();
-													setCurrentName(userInfo.name);
-													setNewName(userInfo.name);
-													setInputState({
-														modify: false,
-														view: false,
-														already: false,
-													});
-												}}
-											>
-												아니요
-											</button>
-										</>
+										<DuplicateAlert
+											newName={newName}
+											setCurrentName={setCurrentName}
+											setInputState={setInputState}
+											setNewName={setNewName}
+											already={true}
+										/>
 									)
 								) : null}
 							</>
@@ -165,7 +215,14 @@ function Profile() {
 					</h1>
 					<p>{userInfo.location}</p>
 					<p></p>
-					<button className={styles.saveBtn}>저장</button>
+					<button
+						onClick={() => {
+							saveImage();
+						}}
+						className={styles.saveBtn}
+					>
+						저장
+					</button>
 				</div>
 			</div>
 			<div className={styles.buttonWrap}>
