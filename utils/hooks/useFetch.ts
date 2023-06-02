@@ -54,9 +54,8 @@ function useFetch<FetchReturnType, BT>(
 			setStatus('end');
 			if (result.status === 401) {
 				refresh();
-				console.log(accessToken);
-				if (accessToken) fetchAPI(body);
-				console.log('다시 날림');
+				accessToken.current = window.localStorage.getItem('accessToken');
+				fetchAPI(body);
 			} else if (result.status === 404) {
 				alert('존재하지 않거나 삭제된 페이지');
 			} else if (result.status === 500) {
