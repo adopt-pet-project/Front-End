@@ -24,6 +24,7 @@ function Profile() {
 	const inputImgRef = useRef<HTMLInputElement>(null);
 	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
 	const [currentImg, setCurrentImg] = useState('');
+	const [getCheck, setGetCheck] = useState(false);
 	const [returnValue, setReturnValue] = useState<{
 		id: number | null;
 		url: string | null;
@@ -34,7 +35,7 @@ function Profile() {
 	const accessToken = useRef(
 		typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '',
 	);
-
+	const [checkAlert, setCheckAlert] = useState(false);
 	const [_1, withDraw] = useFetch('/member', 'DELETE', true);
 	const [_2, checkName] = useFetch(
 		`/member/validate?nickname=${newName}`,
@@ -81,6 +82,14 @@ function Profile() {
 		} else {
 			sendName = currentName;
 		}
+
+		const body = returnValue.url
+			? {
+					name: sendName,
+					image: {imageUrl: returnValue.url, imageKey: returnValue.id},
+			  }
+			: {name: sendName};
+
 		const fetchImage = await fetch(
 			`${process.env.NEXT_PUBLIC_SERVER_URL}/member`,
 			{
@@ -90,13 +99,7 @@ function Profile() {
 					Authorization: window.localStorage.getItem('accessToken') as string,
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({
-					name: sendName,
-					image: {
-						imageUrl: returnValue.url,
-						imageKey: returnValue.id,
-					},
-				}),
+				body: JSON.stringify(body),
 			},
 		);
 		let result = await fetchImage.json();
@@ -105,9 +108,9 @@ function Profile() {
 			router.reload();
 		} else if (result.status === 401) {
 			refresh();
-			throw new Error('다시 시도해 주세요.');
+			alert('다시 시도해 주세요');
 		} else {
-			throw new Error('저장 실패');
+			alert('저장 실패');
 		}
 	}
 	return (
@@ -159,6 +162,7 @@ function Profile() {
 									type="text"
 									onChange={e => {
 										setNewName(e.target.value);
+										setGetCheck(false);
 									}}
 									onKeyUp={e => {
 										console.log(e.code);
@@ -173,9 +177,10 @@ function Profile() {
 													view: false,
 													already: false,
 												});
+												setGetCheck(false);
 											}
 										} else if (e.code === 'Escape') {
-											setNewName(currentName);
+											setNewName(currentName!);
 											setInputState({
 												modify: false,
 												view: false,
@@ -191,6 +196,8 @@ function Profile() {
 											setCurrentName={setCurrentName}
 											setInputState={setInputState}
 											setNewName={setNewName}
+											setGetCheck={setGetCheck}
+											setCheckAlert={setCheckAlert}
 											already={false}
 										/>
 									) : (
@@ -199,6 +206,8 @@ function Profile() {
 											setCurrentName={setCurrentName}
 											setInputState={setInputState}
 											setNewName={setNewName}
+											setGetCheck={setGetCheck}
+											setCheckAlert={setCheckAlert}
 											already={true}
 										/>
 									)
@@ -215,9 +224,26 @@ function Profile() {
 					</h1>
 					<p>{userInfo.location}</p>
 					<p></p>
+					{checkAlert ? (
+						<span
+							style={{
+								position: 'absolute',
+								right: '70px',
+								bottom: '5px',
+								color: 'red',
+							}}
+						>
+							중복체크를 해주세요
+						</span>
+					) : null}
 					<button
 						onClick={() => {
-							saveImage();
+							if (getCheck) {
+								setCheckAlert(false);
+								saveImage();
+							} else {
+								userInfo.name !== currentName ? null : saveImage();
+							}
 						}}
 						className={styles.saveBtn}
 					>

@@ -9,10 +9,12 @@ function DuplicateAlert({
 	setNewName,
 	setCurrentName,
 	setInputState,
+	setGetCheck,
+	setCheckAlert,
 }: {
 	already: boolean;
 	newName: string;
-	setCurrentName: React.Dispatch<React.SetStateAction<string>>;
+	setCurrentName: React.Dispatch<React.SetStateAction<string | null>>;
 	setInputState: React.Dispatch<
 		React.SetStateAction<{
 			modify: boolean;
@@ -21,6 +23,8 @@ function DuplicateAlert({
 		}>
 	>;
 	setNewName: React.Dispatch<React.SetStateAction<string>>;
+	setGetCheck: React.Dispatch<React.SetStateAction<boolean>>;
+	setCheckAlert: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
 	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
 
@@ -31,6 +35,8 @@ function DuplicateAlert({
 				className={styles.checkBtn}
 				onClick={e => {
 					e.stopPropagation();
+					setGetCheck(true);
+					setCheckAlert(false);
 					setCurrentName(newName);
 					setInputState({
 						modify: false,
