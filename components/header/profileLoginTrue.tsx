@@ -31,9 +31,6 @@ function ProfileLoginTrue() {
 	);
 
 	useEffect(() => {
-		console.log(alarmData);
-	}, [alarmData]);
-	useEffect(() => {
 		const eventSource = new EventSourcePolyfill(
 			`${process.env.NEXT_PUBLIC_SERVER_URL}/notification/connect`,
 			{
