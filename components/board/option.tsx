@@ -70,6 +70,12 @@ export default function Option({
 			<div
 				className={styles.item}
 				onClick={() => {
+					const token = window.localStorage.getItem('accessToken');
+					if (!token) {
+						dispatchEvent(new Event('fadeLogin'));
+						return;
+					}
+
 					fadeLetterModal(target);
 				}}
 			>
