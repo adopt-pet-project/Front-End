@@ -1,26 +1,31 @@
 function useRefreshToken() {
 	async function refreshToken(token: string) {
-		const response = await fetch(`https://ez-tour.org/token/refresh`, {
-			method: 'POST',
-			headers: {Authorization: token},
-		});
-		const result = await response.json();
-		if (result.status === 200) {
-			window.localStorage.setItem('accessToken', result.accessToken);
-		} else {
-			window.localStorage.removeItem('accessToken');
+		try {
+			const response = await fetch(`https://ez-tour.org/token/refresh`, {
+				method: 'POST',
+				headers: {Authorization: token},
+			});
+			const result = await response.json();
+			if (result.status === 200) {
+				window.localStorage.setItem('accessToken', result.accessToken);
+			} else {
+				window.localStorage.removeItem('accessToken');
+			}
+			return result.accessToken;
+		} catch {
+			return undefined;
 		}
 	}
 
-	function refresh() {
+	async function refresh() {
 		let token = window.localStorage.getItem('accessToken');
 
 		if (!token) {
-			console.log('lose token');
+			// 프론트단에서 로그아웃 처리
 			return;
 		}
-		console.log('refreshed');
-		refreshToken(token);
+
+		return await refreshToken(token);
 	}
 
 	return refresh;

@@ -53,9 +53,13 @@ function useFetch<FetchReturnType, BT>(
 		if (result) {
 			setStatus('end');
 			if (result.status === 401) {
-				refresh();
-				accessToken.current = window.localStorage.getItem('accessToken');
-				fetchAPI(body);
+				let res = await refresh();
+				if (res) {
+					accessToken.current = window.localStorage.getItem('accessToken');
+					fetchAPI(body);
+				} else {
+					alert('다시 로그인 해 주세요.');
+				}
 			} else if (result.status === 404) {
 				alert('존재하지 않거나 삭제된 페이지');
 			} else if (result.status === 500) {
