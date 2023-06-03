@@ -27,12 +27,6 @@ export default function Home() {
 	);
 }
 
-export const getServerSideProps: GetServerSideProps = async context => {
-	return {
-		props: {},
-	};
-};
-
 Home.getLayout = function getLayout(page: ReactElement) {
 	return <Layout>{page}</Layout>;
 };
