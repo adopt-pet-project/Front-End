@@ -21,7 +21,6 @@ function useRefreshToken() {
 		let token = window.localStorage.getItem('accessToken');
 
 		if (!token) {
-			// 프론트단에서 로그아웃 처리
 			return;
 		}
 
