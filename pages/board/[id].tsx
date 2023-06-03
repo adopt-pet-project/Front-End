@@ -39,10 +39,10 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 		let result = await (response as Response).json();
 		if (result.status === 401) {
 			refresh();
-			router.push(`/board/${id}`);
+			router.reload();
 		} else if (result.status === 500) {
 			alert(`error code : ${result}`);
-			router.push(`/board/${id}`);
+			router.reload();
 		} else {
 			setCommentList(result);
 		}

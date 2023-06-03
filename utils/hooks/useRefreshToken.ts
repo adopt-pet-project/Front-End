@@ -21,7 +21,7 @@ function useRefreshToken() {
 		let token = window.localStorage.getItem('accessToken');
 
 		if (!token) {
-			return;
+			return undefined;
 		}
 
 		return await refreshToken(token);
