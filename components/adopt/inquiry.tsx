@@ -33,7 +33,7 @@ export default function Inquiry({
 
 		let result = await response.json();
 		if (result.status === 401) {
-			refresh();
+			await refresh();
 			alert('다시 시도하세요.');
 		} else if (!result.status) {
 			setChatList(result);

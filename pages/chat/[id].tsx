@@ -196,8 +196,7 @@ export default function Chat({query}: {query: any}) {
 				setAdoptInfo(result);
 				isMine.current = result.mine;
 			} else if (result.status === 401) {
-				refresh();
-				router.push('');
+				await refresh();
 			} else {
 				alert(`error : ${result.status}`);
 			}

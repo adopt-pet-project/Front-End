@@ -135,7 +135,7 @@ export default function Modify({query}: {query: {id: string}}) {
 		if (result.status === 200) {
 			router.push(`/adopt/${router.query.id}`);
 		} else if (result.status === 401) {
-			refresh();
+			await refresh();
 			alert('다시 시도해 주세요.');
 		} else {
 			alert(result.error);

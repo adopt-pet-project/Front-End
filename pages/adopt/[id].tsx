@@ -11,6 +11,7 @@ import Inquiry from '@/components/adopt/inquiry';
 import {toDate} from '@/utils/functions/toDate';
 import useRefreshToken from '@/utils/hooks/useRefreshToken';
 import Link from 'next/link';
+import {useRouter} from 'next/router';
 import styles from '@/styles/pages/adopt/view.module.scss';
 
 export default function View({
@@ -21,7 +22,9 @@ export default function View({
 	id: number;
 }) {
 	const [isMine, setIsMine] = useState<boolean>(false);
+	const router = useRouter();
 	const refresh = useRefreshToken();
+
 	useEffect(() => {
 		async function fetchMine() {
 			let response = await fetch(
@@ -35,7 +38,8 @@ export default function View({
 			let result = await response.json();
 
 			if (result.status === 401) {
-				refresh();
+				await refresh();
+				router.reload();
 			} else {
 				setIsMine(result.mine);
 			}
