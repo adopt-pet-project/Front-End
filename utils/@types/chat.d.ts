@@ -44,3 +44,7 @@ interface ChatList {
 	latestMessage: ChatLatestMessage;
 	unReadCount: number;
 }
+
+interface ChatOnMy extends ChatList {
+	saleTitle: string;
+}
