@@ -33,7 +33,7 @@ function ChatCard({data}: {data: ChatOnMy}) {
 			</div>
 			<div className={styles.contents}>
 				{!latestMessage ? (
-					<span style={{color: 'purple'}}>새로 생성된 채팅방</span>
+					<span style={{color: 'purple'}}>대화가 없습니다.</span>
 				) : latestMessage.context ? (
 					latestMessage.context
 				) : null}
