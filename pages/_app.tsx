@@ -39,8 +39,8 @@ export default function App({Component, pageProps}: AppPropsWithLayout) {
 	return getLayout(
 		<>
 			<Head>
-				<title>Temporary</title>
-				<meta name="description" content="" />
+				<title>Pet Hub</title>
+				<meta name="description" content="Pet Hub" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>

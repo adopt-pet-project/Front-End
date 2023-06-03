@@ -9,9 +9,11 @@ import {
 import styles from '@/styles/components/register/setProfile.module.scss';
 
 export default function setProfile({
+	email,
 	userInfo,
 	setIsReady,
 }: {
+	email: string;
 	userInfo: MutableRefObject<Register>;
 	setIsReady: Dispatch<SetStateAction<boolean>>;
 }) {
@@ -43,12 +45,7 @@ export default function setProfile({
 			}
 			formData.append('file', myFile.localFile);
 			formData.append('type', 'profile');
-
-			const register = window.localStorage.getItem('register');
-			if (register != null) {
-				let email = JSON.parse(register).email;
-				formData.append('email', email);
-			}
+			formData.append('email', email);
 			let response = await fetch(
 				`${process.env.NEXT_PUBLIC_SERVER_URL}/api/image`,
 				{
@@ -58,7 +55,6 @@ export default function setProfile({
 			);
 
 			let result = await response.json();
-			console.log(result);
 			if (result.status === 200) {
 				myFile.isUploaded = true;
 				myFile.imageId = result.data.id;

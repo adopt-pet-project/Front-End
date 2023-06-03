@@ -22,7 +22,6 @@ export default function SetUsername({
 		e.preventDefault();
 
 		if (inputRef.current && inputRef.current.value === '') {
-			inputRef.current.style.border = '1px solid red';
 			setValid(false);
 			return;
 		}
@@ -37,12 +36,14 @@ export default function SetUsername({
 			setValid(true);
 			userInfo.current.nickname = inputRef.current?.value as string;
 		} else {
-			if (inputRef.current) inputRef.current.style.border = '1px solid red';
 			setValid(false);
 		}
 	};
 
 	function setValid(value: boolean) {
+		if (inputRef.current)
+			inputRef.current.style.border = value ? 'none' : '1px solid red';
+
 		setIsUsernameValid(value);
 		setIsReady(value);
 	}
