@@ -22,7 +22,7 @@ export default function Footer() {
 				})}
 			</ul>
 			<div className={styles.info}>
-				<span className={styles.copyright}>© 2023 adopt-pet</span>
+				<span className={styles.copyright}>© 2023 pet-hub</span>
 				<Link
 					className={styles.link}
 					href={'https://github.com/adopt-pet-project'}
