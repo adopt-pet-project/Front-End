@@ -21,6 +21,11 @@ export default function SetUsername({
 	const validateUsername = async (e: BaseSyntheticEvent) => {
 		e.preventDefault();
 
+		if (inputRef.current && inputRef.current.value === '') {
+			setValid(false);
+			return;
+		}
+
 		let response = await fetch(
 			`${process.env.NEXT_PUBLIC_SERVER_URL}/member/validate?nickname=${inputRef.current?.value}`,
 		);
@@ -31,12 +36,14 @@ export default function SetUsername({
 			setValid(true);
 			userInfo.current.nickname = inputRef.current?.value as string;
 		} else {
-			if (inputRef.current) inputRef.current.style.border = '1px solid red';
 			setValid(false);
 		}
 	};
 
 	function setValid(value: boolean) {
+		if (inputRef.current)
+			inputRef.current.style.border = value ? 'none' : '1px solid red';
+
 		setIsUsernameValid(value);
 		setIsReady(value);
 	}

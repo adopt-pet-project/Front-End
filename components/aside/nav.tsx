@@ -4,7 +4,6 @@ import styles from '@/styles/components/aside/nav.module.scss';
 const communityLinkItem: Link[] = [
 	{text: '메인', href: '/'},
 	{text: '게시판', href: '/board'},
-	{text: '공지사항', href: '/notice'},
 ];
 const adpotLinkItem: Link[] = [
 	{text: '전체', href: '/adopt'},

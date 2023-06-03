@@ -94,8 +94,22 @@ export default function Login({hideModal}: {hideModal: () => void}) {
 					})}
 				</ul>
 				<div className={styles.policy}>
-					<Link href={'/tos'}>서비스 이용약관</Link>
-					<Link href={'/policy'}>개인정보 처리방침</Link>
+					<Link
+						href={'/tos'}
+						onClick={() => {
+							window.dispatchEvent(new Event('hideLogin'));
+						}}
+					>
+						서비스 이용약관
+					</Link>
+					<Link
+						href={'/policy'}
+						onClick={() => {
+							window.dispatchEvent(new Event('hideLogin'));
+						}}
+					>
+						개인정보 처리방침
+					</Link>
 				</div>
 			</div>
 		</div>

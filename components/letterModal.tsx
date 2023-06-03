@@ -20,6 +20,10 @@ export default function LetterModal() {
 	async function onClickApply() {
 		if (!window.localStorage.getItem('accessToken')) {
 			dispatchEvent(new Event('fadeLogin'));
+			textareaRef.current!.value = '';
+			if (modalRef && modalRef.current!)
+				modalRef.current.style.display = 'none';
+
 			return;
 		}
 
@@ -37,11 +41,6 @@ export default function LetterModal() {
 				}),
 			},
 		);
-
-		console.log({
-			targetId: letterTarget.targetId,
-			contents: textareaRef.current?.value,
-		});
 
 		textareaRef.current!.value = '';
 		if (modalRef && modalRef.current!) modalRef.current.style.display = 'none';
