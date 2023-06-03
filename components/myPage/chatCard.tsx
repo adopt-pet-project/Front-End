@@ -6,7 +6,6 @@ import timeTransformerToNum from '@/utils/functions/timeTranslaterToNum';
 function ChatCard({data}: {data: ChatOnMy}) {
 	const router = useRouter();
 
-	console.log(data);
 	const {
 		chatNo,
 		latestMessage,
@@ -17,11 +16,14 @@ function ChatCard({data}: {data: ChatOnMy}) {
 		saleNo,
 	} = data;
 
+
 	console.log(data.latestMessage);
 	return (
 		<li
 			onClick={() => {
+
 				router.push(`/chat/${chatNo}?adoptId=${saleNo}`);
+
 			}}
 			className={styles.chatCard}
 		>
