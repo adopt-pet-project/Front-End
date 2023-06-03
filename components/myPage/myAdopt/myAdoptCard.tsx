@@ -3,6 +3,7 @@ import Image from 'next/image';
 import {useRouter} from 'next/router';
 import More from '../more';
 import styles from '@/styles/components/myPage/myAdopt/myAdoptCard.module.scss';
+import {convertDate} from '@/utils/functions/convertDate';
 
 function MyAdoptCard({article, boardType}: {article: any; boardType: string}) {
 	const router = useRouter();
@@ -45,7 +46,9 @@ function MyAdoptCard({article, boardType}: {article: any; boardType: string}) {
 					<span className={styles.context}>{article.context}</span>
 				</div>
 				<div className={styles.metadata}>
-					<span>{`${article.author} · ${article.publishedAt}`}</span>
+					<span>{`${article.author} · ${convertDate(
+						new Date(article.publishedAt).getTime(),
+					)}`}</span>
 					<ul className={styles.dataList}>
 						<li>
 							<img style={{marginTop: '2px'}} src="/icon/view.svg" alt="view" />
