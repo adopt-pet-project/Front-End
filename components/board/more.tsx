@@ -54,7 +54,6 @@ export default function More() {
 			if (result.status == null) {
 				setIsMine(result.mine ? 1 : 0);
 			} else if (result.status === 401) {
-				refresh();
 			} else {
 				alert('오류가 발생했습니다.');
 			}

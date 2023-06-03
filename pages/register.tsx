@@ -67,8 +67,6 @@ export default function Register() {
 			body: JSON.stringify(userInfo.current),
 		});
 		let result = await response.json();
-		console.log(result);
-		console.log(userInfo);
 		if (result.status !== 200) {
 			alert(`회원가입에 실패했습니다.\
 			사유 : ${result.error}`);
