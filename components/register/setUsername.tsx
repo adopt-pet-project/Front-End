@@ -21,6 +21,12 @@ export default function SetUsername({
 	const validateUsername = async (e: BaseSyntheticEvent) => {
 		e.preventDefault();
 
+		if (inputRef.current && inputRef.current.value === '') {
+			inputRef.current.style.border = '1px solid red';
+			setValid(false);
+			return;
+		}
+
 		let response = await fetch(
 			`${process.env.NEXT_PUBLIC_SERVER_URL}/member/validate?nickname=${inputRef.current?.value}`,
 		);
