@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '@/styles/components/myPage/noteLog/noteLogCard.module.scss';
+import {convertDate} from '@/utils/functions/convertDate';
 function NoteLogCard({
 	data,
 }: {
@@ -11,6 +12,7 @@ function NoteLogCard({
 		deleteStatus: 0 | 1;
 	};
 }) {
+	console.log(data.publishedAt);
 	return (
 		<li className={styles.noteLogCard}>
 			<div className={styles.name}>
@@ -19,7 +21,9 @@ function NoteLogCard({
 				) : (
 					<span style={{color: 'red'}}>받은 쪽지</span>
 				)}
-				<span className={styles.date}>{data.publishedAt}</span>
+				<span className={styles.date}>
+					{convertDate(new Date(data.publishedAt).getTime())}
+				</span>
 			</div>
 			<div className={styles.contents}>
 				{data.deleteStatus === 1 ? null : data.contents}

@@ -3,6 +3,7 @@ import {useRouter} from 'next/router';
 import styles from '@/styles/components/myPage/noteCard.module.scss';
 import useFetch from '@/utils/hooks/useFetch';
 import {useRecoilState} from 'recoil';
+import {convertDate} from '@/utils/functions/convertDate';
 function NoteCard({
 	data,
 }: {
@@ -37,7 +38,9 @@ function NoteCard({
 				{data.deleteStatus === 1 ? null : data.contents}
 			</div>
 
-			<div className={styles.date}>{data.publishedAt}</div>
+			<div className={styles.date}>
+				{convertDate(new Date(data.publishedAt).getTime())}
+			</div>
 		</li>
 	);
 }
