@@ -8,14 +8,21 @@ function ChatCard({data}: {data: ChatOnMy}) {
 	const router = useRouter();
 
 	console.log(data);
-	const {chatNo, latestMessage, participant, regDate, saleTitle, unReadCount} =
-		data;
+	const {
+		chatNo,
+		latestMessage,
+		participant,
+		regDate,
+		saleTitle,
+		unReadCount,
+		saleNo,
+	} = data;
 
 	console.log(data.latestMessage);
 	return (
 		<li
 			onClick={() => {
-				router.push(`/chat/${chatNo}`);
+				`/chat/${chatNo}?adoptId=${saleNo}`;
 			}}
 			className={styles.chatCard}
 		>
