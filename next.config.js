@@ -4,7 +4,10 @@ const path = require('path');
 const nextConfig = {
 	reactStrictMode: false,
 	images: {
-		domains: ['project-adopt-bucket.s3.ap-northeast-2.amazonaws.com'],
+		domains: [
+			'mblogthumb-phinf.pstatic.net',
+			'project-adopt-bucket.s3.ap-northeast-2.amazonaws.com',
+		],
 	},
 	sassOptions: {
 		includePaths: [path.join(__dirname, 'styles')],
