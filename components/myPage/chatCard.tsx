@@ -2,7 +2,6 @@ import React from 'react';
 import {useRouter} from 'next/router';
 import styles from '@/styles/components/myPage/chatCard.module.scss';
 import timeTransformerToNum from '@/utils/functions/timeTranslaterToNum';
-import timeTransformerToDate from '@/utils/functions/timeTransformerToDate';
 
 function ChatCard({data}: {data: ChatOnMy}) {
 	const router = useRouter();
@@ -22,7 +21,7 @@ function ChatCard({data}: {data: ChatOnMy}) {
 	return (
 		<li
 			onClick={() => {
-				`/chat/${chatNo}?adoptId=${saleNo}`;
+				router.push(`/chat/${chatNo}?adoptId=${saleNo}`);
 			}}
 			className={styles.chatCard}
 		>
