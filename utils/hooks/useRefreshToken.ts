@@ -1,4 +1,7 @@
+import {useRouter} from 'next/router';
+
 function useRefreshToken() {
+	const router = useRouter();
 	async function refreshToken(token: string) {
 		try {
 			const response = await fetch(`https://ez-tour.org/token/refresh`, {
@@ -21,7 +24,7 @@ function useRefreshToken() {
 		let token = window.localStorage.getItem('accessToken');
 
 		if (!token) {
-			// 프론트단에서 로그아웃 처리
+			router.reload();
 			return;
 		}
 
