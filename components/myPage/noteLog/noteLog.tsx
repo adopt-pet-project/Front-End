@@ -7,6 +7,7 @@ import {
 	AletterTarget,
 	AmodalType,
 	AmodalWrap,
+	ArefetchNote,
 } from '@/utils/recoil/recoilStore';
 import {useRecoilState} from 'recoil';
 function NoteLog() {
@@ -14,6 +15,7 @@ function NoteLog() {
 	const [modalRef, setModalRef] = useRecoilState(AmodalWrap);
 	const [modalType, setModalType] = useRecoilState(AmodalType);
 	const [letterTarget, setLetterTarget] = useRecoilState(AletterTarget);
+	const [refetchNote, setRefetchNote] = useRecoilState(ArefetchNote);
 	const [noteData, setNoteData] = useState<
 		{
 			id: number;
@@ -36,7 +38,7 @@ function NoteLog() {
 
 	useEffect(() => {
 		if (router.query.id) fetchNote();
-	}, [router.query.id]);
+	}, [router.query.id, refetchNote]);
 
 	return (
 		<div className={styles.noteLog}>
@@ -50,7 +52,7 @@ function NoteLog() {
 						setModalType('LetterModal');
 						setLetterTarget({
 							username: router.query.name as string,
-							targetId: Number(router.query.id),
+							targetId: Number(router.query.target),
 						});
 					}
 				}}

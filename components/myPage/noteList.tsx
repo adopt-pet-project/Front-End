@@ -11,6 +11,7 @@ function NoteList() {
 			contents: string;
 			publishedAt: string;
 			checked: boolean;
+			targetId: number;
 			deleteStatus: 0 | 1;
 		}[]
 	>([]);

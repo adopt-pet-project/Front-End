@@ -4,8 +4,6 @@ import Layout from '@/components/layout/layout';
 import Header from '@/components/myPage/header';
 import NoteLog from '@/components/myPage/noteLog/noteLog';
 import {useRouter} from 'next/router';
-import {AmodalWrap} from '@/utils/recoil/recoilStore';
-import {useRecoilState} from 'recoil';
 
 function noteLog() {
 	const router = useRouter();

@@ -12,6 +12,7 @@ function NoteCard({
 		contents: string;
 		publishedAt: string;
 		checked: boolean;
+		targetId: number;
 		deleteStatus: 0 | 1;
 	};
 }) {
@@ -21,7 +22,7 @@ function NoteCard({
 		<li
 			onClick={() => {
 				fetchNote();
-				router.push(`/myPage/noteLog/${data.id}/${data.name}`);
+				router.push(`/myPage/noteLog/${data.id}/${data.name}/${data.targetId}`);
 			}}
 			className={styles.noteCard}
 		>
