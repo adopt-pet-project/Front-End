@@ -54,8 +54,9 @@ function useFetch<FetchReturnType, BT>(
 			setStatus('end');
 			if (result.status === 401) {
 				let res = await refresh();
-				if (res) {
-					accessToken.current = window.localStorage.getItem('accessToken');
+				let token = window.localStorage.getItem('accessToken');
+				if (res && token) {
+					accessToken.current = token;
 					fetchAPI(body);
 				} else {
 					alert('다시 로그인 해 주세요.');
