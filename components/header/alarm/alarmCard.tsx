@@ -16,7 +16,6 @@ function AlarmCard({data}: {data: Alarmdata | Alarmdataname}) {
 		true,
 	);
 
-	console.log(data.url);
 	return (
 		<div
 			onClick={() => {
