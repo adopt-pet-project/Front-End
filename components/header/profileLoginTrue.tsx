@@ -49,12 +49,29 @@ function ProfileLoginTrue() {
 			console.log(e.data);
 			if (e.data.includes('EventStream Created')) {
 			} else {
-				setAlarmData(prev => {
-					const result = [...prev];
-					result.unshift(JSON.parse(e.data));
-					console.log(result);
-					return result;
-				});
+				if (JSON.parse(e.data).type === 'chat' || 'note') {
+					setAlarmData(prev => {
+						let result = [...prev];
+						result = result.filter(data => {
+							console.log(!(data.url == JSON.parse(e.data).url));
+							return (
+								(!(data.url == JSON.parse(e.data).url) &&
+									!(data.type === 'chat')) ||
+								!(data.type === 'note')
+							);
+						});
+						result.unshift(JSON.parse(e.data));
+						console.log(result);
+						return result;
+					});
+				} else {
+					setAlarmData(prev => {
+						const result = [...prev];
+						result.unshift(JSON.parse(e.data));
+						console.log(result);
+						return result;
+					});
+				}
 			}
 		});
 
