@@ -37,6 +37,7 @@ function ProfileLoginTrue() {
 				headers: {
 					Authorization: `${accessToken}`,
 				},
+				heartbeatTimeout: 1740000,
 			},
 		);
 
