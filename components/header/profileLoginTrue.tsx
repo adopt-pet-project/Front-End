@@ -88,9 +88,10 @@ function ProfileLoginTrue() {
 	useEffect(() => {
 		setIsNew(() => {
 			let result = false;
-			alarmData.map((data, i) => {
-				if (!data.checked) result = true;
-			});
+			if (alarmData)
+				alarmData.map((data, i) => {
+					if (!data.checked) result = true;
+				});
 			return result;
 		});
 	}, [alarmData]);
