@@ -14,14 +14,14 @@ export default function Home() {
 						<MainMap />
 					</div>
 				</article>
-				<article className={styles.article}>
+				{/* <article className={styles.article}>
 					<span className={styles.title}>인기 게시글</span>
 					<div className={styles.map}></div>
 				</article>
 				<article className={`${styles.article} ${styles.lastArticle}`}>
 					<span className={styles.title}>핫한 분양글</span>
 					<div className={styles.map}></div>
-				</article>
+				</article> */}
 			</section>
 		</>
 	);
