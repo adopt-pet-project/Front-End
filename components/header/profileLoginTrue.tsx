@@ -12,6 +12,7 @@ import ProfileBox from './profile/profileBox';
 import AlarmBox from './alarm/alarmBox';
 import styles from '@/styles/components/header/profileLoginTrue.module.scss';
 import useFetch from '@/utils/hooks/useFetch';
+import {useRouter} from 'next/router';
 
 function ProfileLoginTrue() {
 	const accessToken = window.localStorage.getItem('accessToken');
@@ -21,6 +22,7 @@ function ProfileLoginTrue() {
 	const [alarmRefetch, setAlarmRefetch] = useRecoilState(AalarmRefetch);
 	const [isNew, setIsNew] = useState(false);
 	const [userInfo, setUserInfo] = useRecoilState(AuserInfo);
+	const router = useRouter();
 
 	const [_1, fetchUserInfo] = useFetch('/member/0', 'GET', true, setUserInfo);
 	const [_2, fetchAlarmData] = useFetch(
@@ -29,6 +31,7 @@ function ProfileLoginTrue() {
 		true,
 		data => {
 			if (data.status == null || data.status == 200) setAlarmData(data);
+			else router.reload();
 		},
 	);
 

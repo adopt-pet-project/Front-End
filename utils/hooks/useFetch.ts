@@ -3,7 +3,6 @@ import useRefreshToken from './useRefreshToken';
 const refresh = useRefreshToken();
 
 /**
- *
  * @param endpoint REST를 찌를 엔드포인트
  * @param method 'GET' | 'POST' | 'PATCH' | 'DELETE' 메서드
  * @param token boolean 헤더에 토큰을 담을지 말지
