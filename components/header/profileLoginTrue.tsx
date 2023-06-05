@@ -27,7 +27,9 @@ function ProfileLoginTrue() {
 		'/notification/all',
 		'GET',
 		true,
-		setAlarmData,
+		data => {
+			if (data.status == null || data.status == 200) setAlarmData(data);
+		},
 	);
 
 	useEffect(() => {
@@ -88,10 +90,9 @@ function ProfileLoginTrue() {
 	useEffect(() => {
 		setIsNew(() => {
 			let result = false;
-			if (alarmData)
-				alarmData.map((data, i) => {
-					if (!data.checked) result = true;
-				});
+			alarmData.map((data, i) => {
+				if (!data.checked) result = true;
+			});
 			return result;
 		});
 	}, [alarmData]);

@@ -67,7 +67,6 @@ function useFetch<FetchReturnType, BT>(
 				alert('서버 에러');
 			}
 		}
-		console.log(result);
 		callback ? callback(result) : null; // 패치 결과를 콜백에 인자로 전송함
 		return await result;
 	}
