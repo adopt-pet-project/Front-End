@@ -62,7 +62,8 @@ function ProfileLoginTrue() {
 							return (
 								(!(data.url == JSON.parse(e.data).url) &&
 									!(data.type === 'chat')) ||
-								!(data.type === 'note')
+								(!(data.url == JSON.parse(e.data).url) &&
+									!(data.type === 'note'))
 							);
 						});
 						result.unshift(JSON.parse(e.data));
