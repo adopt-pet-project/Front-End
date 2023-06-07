@@ -58,12 +58,9 @@ function ProfileLoginTrue() {
 					setAlarmData(prev => {
 						let result = [...prev];
 						result = result.filter(data => {
-							console.log(!(data.url == JSON.parse(e.data).url));
 							return (
-								(!(data.url == JSON.parse(e.data).url) &&
-									!(data.type === 'chat')) ||
-								(!(data.url == JSON.parse(e.data).url) &&
-									!(data.type === 'note'))
+								!data.url === JSON.parse(e.data).url &&
+								!(data.type === 'chat' || data.type === 'note')
 							);
 						});
 						result.unshift(JSON.parse(e.data));
