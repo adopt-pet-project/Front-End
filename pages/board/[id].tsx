@@ -256,7 +256,10 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	const id = query.id;
 
 	let result = await (
-		await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article/${id}`)
+		await fetch(
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article/${id}`,
+			{credentials: 'include'},
+		)
 	).json();
 
 	if (result.status)
