@@ -5,14 +5,14 @@ import styles from '@/styles/components/board/article.module.scss';
 export default function Article({article}: {article: any}) {
 	const router = useRouter();
 
-	console.log(article);
 	const fetchView = async () => {
-		return await fetch(
-			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/view/${article.id}`,
-			{
-				credentials: 'include',
-			},
-		);
+		return await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community/view`, {
+			method: 'POST',
+			credentials: 'include',
+			body: JSON.stringify({
+				id: article.id,
+			}),
+		});
 	};
 
 	return (
