@@ -19,6 +19,17 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 	const router = useRouter();
 	const refresh = useRefreshToken();
 
+	const getarticle = async () => {
+		await fetch(
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article/${id}`,
+			{
+				credentials: 'include',
+			},
+		);
+	};
+
+	console.log(getarticle());
+
 	async function fetchCommentList() {
 		let response;
 		if (!window.localStorage.getItem('accessToken')) {
