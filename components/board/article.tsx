@@ -9,6 +9,9 @@ export default function Article({article}: {article: any}) {
 		return await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community/view`, {
 			method: 'POST',
 			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
 			body: JSON.stringify({
 				id: article.id,
 			}),
