@@ -20,7 +20,7 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 	const refresh = useRefreshToken();
 
 	const getarticle = async () => {
-		await fetch(
+		return await fetch(
 			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article/${id}`,
 			{
 				credentials: 'include',
