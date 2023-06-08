@@ -255,28 +255,35 @@ export default function View({board, id}: {board: BoardDetail; id: string}) {
 export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	const id = query.id;
 
-	let result = await (
-		await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article/${id}`)
-	).json();
+	let result;
 
-	if (result.status)
+	try {
+		result = await (
+			await fetch(
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article/${id}`,
+			)
+		).json();
+
+		if (result.status) throw new Error('error');
+
+		result.header.publishedAt = toDate(
+			new Date(result.header.publishedAt).getTime(),
+		);
+
+		if (result.header.username == null) {
+			result.header.username = '탈퇴한 사용자';
+		}
+		return {
+			props: {board: result, id},
+		};
+	} catch {
 		return {
 			redirect: {
 				permanent: false,
 				destination: '/404',
 			},
 		};
-
-	result.header.publishedAt = toDate(
-		new Date(result.header.publishedAt).getTime(),
-	);
-
-	if (result.header.username == null) {
-		result.header.username = '탈퇴한 사용자';
 	}
-	return {
-		props: {board: result, id},
-	};
 };
 
 View.getLayout = function getLayout(page: ReactElement) {

@@ -76,25 +76,28 @@ export default function View({
 
 export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	let URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/adopt/${query.id}`;
-	let response = await fetch(`${URL}`);
-	let result = await response.json();
+	try {
+		let response = await fetch(`${URL}`);
+		let result = await response.json();
 
-	if (!result.status)
-		result.header.publishedAt = toDate(result.header.publishedAt + 32400000);
+		if (!result.status)
+			result.header.publishedAt = toDate(result.header.publishedAt + 32400000);
+		else throw new Error('error');
 
-	return result.status
-		? {
-				redirect: {
-					permanent: false,
-					destination: '/404',
-				},
-		  }
-		: {
-				props: {
-					id: query.id,
-					article: result,
-				},
-		  };
+		return {
+			props: {
+				id: query.id,
+				article: result,
+			},
+		};
+	} catch {
+		return {
+			redirect: {
+				permanent: false,
+				destination: '/404',
+			},
+		};
+	}
 };
 
 View.getLayout = function getLayout(page: ReactElement) {
