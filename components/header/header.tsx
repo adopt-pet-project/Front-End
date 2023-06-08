@@ -1,4 +1,4 @@
-import {RefObject} from 'react';
+import {RefObject, useEffect} from 'react';
 import Logo from './logo';
 import Menu from './menu';
 import Profile from './profile';

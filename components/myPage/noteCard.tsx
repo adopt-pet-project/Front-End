@@ -2,6 +2,8 @@ import React from 'react';
 import {useRouter} from 'next/router';
 import styles from '@/styles/components/myPage/noteCard.module.scss';
 import useFetch from '@/utils/hooks/useFetch';
+import {useRecoilState} from 'recoil';
+import {convertDate} from '@/utils/functions/convertDate';
 function NoteCard({
 	data,
 }: {
@@ -11,17 +13,17 @@ function NoteCard({
 		contents: string;
 		publishedAt: string;
 		checked: boolean;
+		targetId: number;
 		deleteStatus: 0 | 1;
 	};
 }) {
 	const [_, fetchNote] = useFetch(`/note/checked/${data.id}`, 'PATCH', true);
-
 	const router = useRouter();
 	return (
 		<li
 			onClick={() => {
 				fetchNote();
-				router.push(`/myPage/noteLog/${data.id}`);
+				router.push(`/myPage/noteLog/${data.id}/${data.name}/${data.targetId}`);
 			}}
 			className={styles.noteCard}
 		>
@@ -36,7 +38,9 @@ function NoteCard({
 				{data.deleteStatus === 1 ? null : data.contents}
 			</div>
 
-			<div className={styles.date}>{data.publishedAt}</div>
+			<div className={styles.date}>
+				{convertDate(new Date(data.publishedAt).getTime())}
+			</div>
 		</li>
 	);
 }

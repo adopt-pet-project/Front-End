@@ -1,15 +1,19 @@
 import {useRouter} from 'next/router';
 import {useRecoilState} from 'recoil';
-import {AletterTarget, AmodalWrap} from '@/utils/recoil/recoilStore';
+import {
+	AletterTarget,
+	AmodalWrap,
+	ArefetchNote,
+} from '@/utils/recoil/recoilStore';
 import useRefreshToken from '@/utils/hooks/useRefreshToken';
 import styles from '@/styles/components/letterModal.module.scss';
 import {useRef} from 'react';
 
 export default function LetterModal() {
+	const [refetchNote, setRefetchNote] = useRecoilState(ArefetchNote);
 	const [modalRef] = useRecoilState(AmodalWrap);
 	const [letterTarget] = useRecoilState(AletterTarget);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
-
 	const router = useRouter();
 	const refresh = useRefreshToken();
 
@@ -43,6 +47,7 @@ export default function LetterModal() {
 
 		let result = await response.json();
 		if (result.status === 200) {
+			setRefetchNote(prev => (prev === 1 ? 0 : 1));
 			alert('쪽지를 전송했습니다.');
 		} else if (result.status === 401) {
 			refresh();

@@ -12,13 +12,10 @@ function ActivityCard({article}: {article: any}) {
 				router.push(`/board/${article.id}`);
 			}}
 		>
-			{article.thumb && article.thumb === 'null' ? (
-				<div className={styles.dummyThumbnails} />
-			) : (
-				<Image
+			{!article.thumb && article.thumbnail === 'NONE' ? null : (
+				<img
 					width={92}
 					height={92}
-					quality={75}
 					loading="lazy"
 					className={styles.thumbnail}
 					src={article.thumbnail}

@@ -143,6 +143,11 @@ export const ArefetchAdoptList = atom<0 | 1>({
 	default: 0,
 });
 
+export const ArefetchNote = atom<0 | 1>({
+	key: `refetchNote/${v1()}`,
+	default: 0,
+});
+
 export const AletterTarget = atom<LetterTarget>({
 	key: `letterTarget/${v1()}`,
 	default: undefined,

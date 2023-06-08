@@ -4,13 +4,9 @@ import {AisComment} from '@/utils/recoil/recoilStore';
 import ActivityCard from './activityCard';
 import ActivityComment from './activityComment';
 import styles from '@/styles/components/activity/activityCardList.module.scss';
-import useRefreshToken from '@/utils/hooks/useRefreshToken';
 import useFetch from '@/utils/hooks/useFetch';
 
 function ActivityCardList() {
-	const [accessToken, setAccessToken] = useState(
-		typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '',
-	);
 	const [isComment, setIsComment] = useRecoilState(AisComment);
 	const [myDoc, setMyDoc] = useState<Activitydoc[]>([]);
 	const [myComment, setMyComment] = useState<Activitycomment[]>([]);

@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from '@/styles/components/header/alarm/alarmCard.module.scss';
 import {useRecoilState} from 'recoil';
-import {AalarmData, AisAlarmBoxOn, AuserInfo} from '@/utils/recoil/recoilStore';
+import {AalarmData, AisAlarmBoxOn} from '@/utils/recoil/recoilStore';
 import {useRouter} from 'next/router';
 import useFetch from '@/utils/hooks/useFetch';
+import {convertDate} from '@/utils/functions/convertDate';
 
 function AlarmCard({data}: {data: Alarmdata | Alarmdataname}) {
 	const router = useRouter();
-	const accessToken = window.localStorage.getItem('accessToken');
 	const [isAlarmBoxOn, setIsAlarmBoxOn] = useRecoilState(AisAlarmBoxOn);
 	const [alarmData, setAlarmData] = useRecoilState(AalarmData);
 	const [_, updateAlarmCheck] = useFetch(
@@ -50,9 +50,16 @@ function AlarmCard({data}: {data: Alarmdata | Alarmdataname}) {
 					<span style={{color: 'purple', fontWeight: 'bold'}}>쪽지 알림</span>
 				)}
 				<span>
-					{data.publishedAt[0]}년 {data.publishedAt[1]}월 {data.publishedAt[2]}
-					일 {data.publishedAt[3]}시 {data.publishedAt[4]}분{' '}
-					{data.publishedAt[5]}초
+					{convertDate(
+						new Date(
+							data.publishedAt[0],
+							data.publishedAt[1] - 1,
+							data.publishedAt[2],
+							data.publishedAt[3],
+							data.publishedAt[4],
+							data.publishedAt[5],
+						).getTime(),
+					)}
 				</span>
 			</div>
 
