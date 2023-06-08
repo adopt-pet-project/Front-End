@@ -37,3 +37,10 @@
 	color: var(--white);
 	min-width: 72px;
 }
+
+.duplicatedName {
+	color: var(--red);
+	position: absolute;
+	top: 50px;
+	left: 10px;
+}
