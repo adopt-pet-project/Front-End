@@ -89,6 +89,15 @@ export default function NewMessageArea({
 							{(chat.contentType === 'text' || chat.contentType == null) && (
 								<span className={styles.text}>{chat.content}</span>
 							)}
+							<div className={styles.infoText}>
+								{chat.readCount === 0 && chat.mine && (
+									<span className={styles.read}>읽음</span>
+								)}
+								<span className={styles.time}>{dateString}</span>
+							</div>
+							{chat.readCount === 0 && chat.mine && (
+								<span className={styles.read}>읽음</span>
+							)}
 							<span className={styles.time}>{dateString}</span>
 						</div>
 						{(index === 0 ||
