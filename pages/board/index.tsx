@@ -42,41 +42,48 @@ export default function Board({
 export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	const order = query.order === 'like' ? 'like' : 'recent';
 
-	let result = await (
-		await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community/list/${order}`)
-	).json();
+	let result;
 
-	result.list.forEach((article: any) => {
-		article.publishedAt = convertDate(
-			new Date(article.publishedAt).getTime() - 32400000,
-		);
-		if (article.author == null) article.author = '탈퇴한 사용자';
-	});
+	try {
+		result = await (
+			await fetch(
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/list/${order}`,
+			)
+		).json();
 
-	if (result.hot)
-		result.hot.publishedAt = convertDate(
-			new Date(result.hot.publishedAt).getTime() - 32400000,
-		);
-	if (result.weekly)
-		result.weekly.publishedAt = convertDate(
-			new Date(result.weekly.publishedAt).getTime() - 32400000,
-		);
+		if (result.status) throw new Error('error');
 
-	return result.status
-		? {
-				redirect: {
-					permanent: false,
-					destination: '/404',
-				},
-		  }
-		: {
-				props: {
-					order: query.order || 'recent',
-					query: query.q || '',
-					param: query,
-					firstPage: result,
-				},
-		  };
+		result.list.forEach((article: any) => {
+			article.publishedAt = convertDate(
+				new Date(article.publishedAt).getTime() - 32400000,
+			);
+			if (article.author == null) article.author = '탈퇴한 사용자';
+		});
+
+		if (result.hot)
+			result.hot.publishedAt = convertDate(
+				new Date(result.hot.publishedAt).getTime() - 32400000,
+			);
+		if (result.weekly)
+			result.weekly.publishedAt = convertDate(
+				new Date(result.weekly.publishedAt).getTime() - 32400000,
+			);
+		return {
+			props: {
+				order: query.order || 'recent',
+				query: query.q || '',
+				param: query,
+				firstPage: result,
+			},
+		};
+	} catch {
+		return {
+			redirect: {
+				permanent: false,
+				destination: '/404',
+			},
+		};
+	}
 };
 
 Board.getLayout = function getLayout(page: ReactElement) {

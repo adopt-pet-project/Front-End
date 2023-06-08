@@ -55,26 +55,34 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 
 	URL += keyword ? `&keyword=${keyword}&option=${Number(option)}` : '';
 	URL += filter ? `&filter=${filterBind[filter as 'dog' | 'cat' | 'etc']}` : '';
-	let response = await fetch(`${URL}`);
-	let result = await response.json();
-	result.forEach((article: any) => {
-		article.publishedAt = convertDate(article.publishedAt);
-	});
-	return result.status
-		? {
-				redirect: {
-					permanent: false,
-					destination: '/404',
-				},
-		  }
-		: {
-				props: {
-					filter: query.filter || '',
-					query: query.q || '',
-					param: query,
-					firstPage: result,
-				},
-		  };
+
+	let response;
+	let result;
+
+	try {
+		response = await fetch(`${URL}`);
+		result = await response.json();
+		result.forEach((article: any) => {
+			article.publishedAt = convertDate(article.publishedAt);
+		});
+		if (result.status) throw new Error('error');
+
+		return {
+			props: {
+				filter: query.filter || '',
+				query: query.q || '',
+				param: query,
+				firstPage: result,
+			},
+		};
+	} catch {
+		return {
+			redirect: {
+				permanent: false,
+				destination: '/404',
+			},
+		};
+	}
 };
 
 Adopt.getLayout = function getLayout(page: ReactElement) {
