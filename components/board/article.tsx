@@ -5,10 +5,24 @@ import styles from '@/styles/components/board/article.module.scss';
 export default function Article({article}: {article: any}) {
 	const router = useRouter();
 
+	const fetchView = async () => {
+		return await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/community/view`, {
+			method: 'POST',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				id: article.id,
+			}),
+		});
+	};
+
 	return (
 		<article
 			className={styles.container}
 			onClick={() => {
+				fetchView();
 				if (article.id != null) router.push(`/board/${article.id}`);
 			}}
 		>

@@ -87,14 +87,13 @@ export default function Chat({query}: {query: any}) {
 	function onConnect() {
 		if (client.current) {
 			client.current.onDisconnect = () => {
-				fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/chatroom`, {
-					method: 'DELETE',
-					headers: {
-						Authorization: window.localStorage.getItem('accessToken') as string,
-						'Content-Type': 'application/json',
+				fetch(
+					`${process.env.NEXT_PUBLIC_SERVER_URL}/chatroom/${query.id}?email=${email.current}`,
+					{
+						method: 'POST',
+						keepalive: true,
 					},
-					body: JSON.stringify({chatRoomNo: query.id, email: email.current}),
-				});
+				);
 			};
 			subscribe.current = client.current.subscribe(
 				`/subscribe/public/${query.id}`,
@@ -170,6 +169,19 @@ export default function Chat({query}: {query: any}) {
 			onConnect,
 			onError,
 		);
+
+		function disconnectStomp() {
+			fetch(
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/chatroom/${query.id}?email=${email.current}`,
+				{
+					method: 'POST',
+					keepalive: true,
+				},
+			);
+		}
+		window.addEventListener('beforeunload', () => {
+			disconnectStomp();
+		});
 
 		return () => {
 			console.log('disconnected');

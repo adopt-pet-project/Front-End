@@ -8,7 +8,6 @@ import {
 import {CompatClient} from '@stomp/stompjs';
 import {useRouter} from 'next/router';
 import styles from '@/styles/components/chat/chatInput.module.scss';
-
 export default function ChatInput({
 	client,
 	id,
@@ -62,6 +61,7 @@ export default function ChatInput({
 						chatNo: id,
 						contentType: type.current,
 						content: inputRef.current.value,
+						saleNo: Number(router.query.adoptId),
 					}),
 				);
 			} catch (e) {
