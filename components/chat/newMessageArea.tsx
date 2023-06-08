@@ -95,10 +95,6 @@ export default function NewMessageArea({
 								)}
 								<span className={styles.time}>{dateString}</span>
 							</div>
-							{chat.readCount === 0 && chat.mine && (
-								<span className={styles.read}>읽음</span>
-							)}
-							<span className={styles.time}>{dateString}</span>
 						</div>
 						{(index === 0 ||
 							message[index - 1].mine !== message[index].mine) && (
