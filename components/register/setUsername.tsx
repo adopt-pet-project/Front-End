@@ -3,6 +3,7 @@ import {
 	Dispatch,
 	MutableRefObject,
 	SetStateAction,
+	useEffect,
 	useRef,
 	useState,
 } from 'react';
@@ -17,7 +18,7 @@ export default function SetUsername({
 }) {
 	const [isUsernameValid, setIsUsernameValid] = useState<boolean>(false);
 	const inputRef = useRef<HTMLInputElement>(null);
-
+	const [search, isSearch] = useState(false);
 	const validateUsername = async (e: BaseSyntheticEvent) => {
 		e.preventDefault();
 
@@ -25,6 +26,7 @@ export default function SetUsername({
 			setValid(false);
 			return;
 		}
+		isSearch(true);
 
 		let response = await fetch(
 			`${process.env.NEXT_PUBLIC_SERVER_URL}/member/validate?nickname=${inputRef.current?.value}`,
@@ -41,10 +43,7 @@ export default function SetUsername({
 	};
 
 	function setValid(value: boolean) {
-		if (inputRef.current)
-			inputRef.current.style.border = value ? 'none' : '1px solid red';
-
-		setIsUsernameValid(value);
+		if (inputRef.current) setIsUsernameValid(value);
 		setIsReady(value);
 	}
 
@@ -69,8 +68,14 @@ export default function SetUsername({
 					type="text"
 					name="username"
 					placeholder="닉네임을 입력해 주세요."
-					onChange={() => setValid(false)}
+					onChange={() => {
+						isSearch(false);
+						setValid(false);
+					}}
 				/>
+				{!isUsernameValid && search ? (
+					<div className={styles.duplicatedName}>중복된 닉네임</div>
+				) : null}
 				{!isUsernameValid && (
 					<button onClick={validateUsername} className={styles.button}>
 						중복확인
