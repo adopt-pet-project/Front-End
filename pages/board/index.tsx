@@ -62,14 +62,21 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 			new Date(result.weekly.publishedAt).getTime() - 32400000,
 		);
 
-	return {
-		props: {
-			order: query.order || 'recent',
-			query: query.q || '',
-			param: query,
-			firstPage: result,
-		},
-	};
+	return result.status
+		? {
+				redirect: {
+					permanent: false,
+					destination: '/404',
+				},
+		  }
+		: {
+				props: {
+					order: query.order || 'recent',
+					query: query.q || '',
+					param: query,
+					firstPage: result,
+				},
+		  };
 };
 
 Board.getLayout = function getLayout(page: ReactElement) {
