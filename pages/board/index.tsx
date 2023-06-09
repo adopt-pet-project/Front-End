@@ -33,7 +33,7 @@ export default function Board({
 				{firstPage.list.map((article: Board) => {
 					return <Article key={article.id} article={article} />;
 				})}
-				<Paging param={param} />
+				{firstPage.list.length == 10 && <Paging param={param} />}
 			</section>
 		</>
 	);
@@ -44,12 +44,18 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 
 	let result;
 
+	let url = `${process.env.NEXT_PUBLIC_SERVER_URL}/community/list/${order}?`;
+
+	if (query.q) {
+		url += `&keyword=${query.q}`;
+	}
+
+	if (query.option) {
+		url += `&option=${query.option}`;
+	}
+
 	try {
-		result = await (
-			await fetch(
-				`${process.env.NEXT_PUBLIC_SERVER_URL}/community/list/${order}`,
-			)
-		).json();
+		result = await (await fetch(url)).json();
 
 		if (result.status) throw new Error('error');
 
