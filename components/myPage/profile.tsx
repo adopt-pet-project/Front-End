@@ -255,6 +255,7 @@ function Profile() {
 				<button
 					onClick={() => {
 						withDraw();
+						window.localStorage.removeItem('accessToken');
 						router.push('/');
 					}}
 				>
