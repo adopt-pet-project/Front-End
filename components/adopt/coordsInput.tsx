@@ -1,4 +1,4 @@
-import {BaseSyntheticEvent, useEffect, useRef} from 'react';
+import {BaseSyntheticEvent, useEffect, useRef, useState} from 'react';
 import {Map, MapMarker} from 'react-kakao-maps-sdk';
 import styles from '@/styles/components/adopt/coordsInput.module.scss';
 
@@ -11,22 +11,33 @@ export default function CoordsInput({coords}: {coords?: AdoptCoords}) {
 		borderRadius: '8px',
 	};
 
+	const INIT_LATITUDE = '37.55467';
+	const INIT_LONGITUDE = '126.970609';
+	const INIT_ADDRESS = '서울특별시 중구';
+
+	// coords for display
+	const [latitude, setLatitude] = useState<string>(INIT_LATITUDE);
+	const [longitude, setLongitude] = useState<string>(INIT_LONGITUDE);
+
+	// coords for logic
 	const latitudeRef = useRef<HTMLInputElement>(null);
 	const longitudeRef = useRef<HTMLInputElement>(null);
 	const addressRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		if (
-			coords &&
-			latitudeRef.current &&
-			longitudeRef.current &&
-			addressRef.current
-		) {
-			latitudeRef.current.value = coords.latitude.toString();
-			longitudeRef.current.value = coords.longitude.toString();
-			addressRef.current.value = coords.address;
+		if (latitudeRef.current && longitudeRef.current && addressRef.current) {
+			latitudeRef.current.value = coords
+				? coords.latitude.toString()
+				: INIT_LATITUDE;
+			longitudeRef.current.value = coords
+				? coords.longitude.toString()
+				: INIT_LONGITUDE;
+			addressRef.current.value = coords ? coords.address : INIT_ADDRESS;
+
+			setLatitude(latitudeRef.current.value);
+			setLongitude(longitudeRef.current.value);
 		}
-	}, [latitudeRef.current, longitudeRef.current, addressRef.current]);
+	}, []);
 
 	function getCurrentPosition(e: BaseSyntheticEvent) {
 		e.preventDefault();
@@ -51,8 +62,7 @@ export default function CoordsInput({coords}: {coords?: AdoptCoords}) {
 			},
 		);
 		let result = await response.json();
-
-		if (addressRef.current) {
+		if (addressRef.current && result.documents[0]) {
 			addressRef.current.value = result.documents[0].road_address
 				? result.documents[0].road_address.address_name
 						.split(' ')
@@ -63,8 +73,10 @@ export default function CoordsInput({coords}: {coords?: AdoptCoords}) {
 						.slice(0, 2)
 						.join(' ');
 		}
-	}
 
+		setLatitude(lat.toString());
+		setLongitude(lng.toString());
+	}
 	return (
 		<>
 			<div className={styles.container}>
@@ -81,16 +93,16 @@ export default function CoordsInput({coords}: {coords?: AdoptCoords}) {
 						setAddress({lat, lng});
 					}}
 					center={{
-						lat: Number(latitudeRef.current?.value || '126.970609'),
-						lng: Number(longitudeRef.current?.value || '37.55467'),
+						lat: Number(latitude),
+						lng: Number(longitude),
 					}}
 					style={mapStyle}
 					level={6}
 				>
 					<MapMarker
 						position={{
-							lat: Number(latitudeRef.current?.value || '126.970609'),
-							lng: Number(longitudeRef.current?.value || '37.55467'),
+							lat: Number(latitude),
+							lng: Number(longitude),
 						}}
 					></MapMarker>
 				</Map>
