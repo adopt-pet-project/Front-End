@@ -14,9 +14,9 @@ export default function Header() {
 					router.back();
 				}}
 			/>
-			<button type="submit" className={styles.writeButton}>
+			{/* <button type="submit" className={styles.writeButton}>
 				나가기
-			</button>
+			</button> */}
 		</div>
 	);
 }

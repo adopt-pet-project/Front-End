@@ -36,7 +36,6 @@ export default function Chat({query}: {query: any}) {
 				? isMine.current
 				: !isMine.current);
 
-		console.log(body, opponentRead);
 		if (
 			body.readCount === 0 &&
 			(body.senderNo === Number(adoptInfo?.author.id)
