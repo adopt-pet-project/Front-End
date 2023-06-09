@@ -90,7 +90,7 @@ export default function New({query}: {query: {type: string}}) {
 			alert('다시 시도해 주세요.');
 			router.reload();
 		} else {
-			alert(result.error);
+			alert(`Server Error : ${result.status}`);
 			router.push('/adopt');
 		}
 	}
