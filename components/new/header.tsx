@@ -1,8 +1,18 @@
 import {useRouter} from 'next/router';
 import styles from '@/styles/components/new/header.module.scss';
+import {BaseSyntheticEvent, useState} from 'react';
 
 export default function Header({type}: {type: string}) {
 	const router = useRouter();
+	const [isClicked, setIsClick] = useState<boolean>(false);
+
+	function onClickSubmit(e: BaseSyntheticEvent) {
+		if (isClicked) {
+			e.preventDefault();
+		} else {
+			setIsClick(true);
+		}
+	}
 
 	return (
 		<div className={styles.container}>
@@ -15,7 +25,11 @@ export default function Header({type}: {type: string}) {
 				}}
 			/>
 			새 {type} 작성
-			<button type="submit" className={styles.writeButton}>
+			<button
+				type="submit"
+				onClick={onClickSubmit}
+				className={styles.writeButton}
+			>
 				작성
 			</button>
 		</div>
