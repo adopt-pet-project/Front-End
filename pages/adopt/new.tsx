@@ -88,6 +88,7 @@ export default function New({query}: {query: {type: string}}) {
 		} else if (result.status === 401) {
 			await refresh();
 			alert('다시 시도해 주세요.');
+			router.reload();
 		} else {
 			alert(result.error);
 			router.push('/adopt');

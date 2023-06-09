@@ -1,4 +1,4 @@
-import {BaseSyntheticEvent, useState} from 'react';
+import {BaseSyntheticEvent, useEffect, useRef} from 'react';
 import {Map, MapMarker} from 'react-kakao-maps-sdk';
 import styles from '@/styles/components/adopt/coordsInput.module.scss';
 
@@ -11,50 +11,58 @@ export default function CoordsInput({coords}: {coords?: AdoptCoords}) {
 		borderRadius: '8px',
 	};
 
-	//현재 지정된 포인트
-	const [currentPosition, setCurrentPosition] = useState({
-		lat: 37.55467,
-		lng: 126.970609,
-	});
-	const [address, setAddress] = useState('');
+	const latitudeRef = useRef<HTMLInputElement>(null);
+	const longitudeRef = useRef<HTMLInputElement>(null);
+	const addressRef = useRef<HTMLInputElement>(null);
 
-	//버튼을 누를 시 현재 접속자 위치로 포지션 변경 → 안건들임
-	function setCurrentPositionByBtn(e: BaseSyntheticEvent) {
-		// 버튼
+	useEffect(() => {
+		if (
+			coords &&
+			latitudeRef.current &&
+			longitudeRef.current &&
+			addressRef.current
+		) {
+			latitudeRef.current.value = coords.latitude.toString();
+			longitudeRef.current.value = coords.longitude.toString();
+			addressRef.current.value = coords.address;
+		}
+	}, [latitudeRef.current, longitudeRef.current, addressRef.current]);
+
+	function getCurrentPosition(e: BaseSyntheticEvent) {
 		e.preventDefault();
 		navigator.geolocation.getCurrentPosition(position => {
 			let {latitude, longitude} = position.coords;
 			const coord = new window.kakao.maps.LatLng(latitude, longitude);
+			latitudeRef.current!.value = coord.Ma;
+			longitudeRef.current!.value = coord.La;
 
-			setCurrentPosition(coord);
+			setAddress({lat: coord.Ma, lng: coord.La});
 		});
 	}
 
-	//좌표로 주소를 받는 rest api
-	function getAddressByCoords() {
-		fetch(
-			`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${currentPosition.lng}&y=${currentPosition.lat}&input_coord=WGS84`,
+	async function setAddress({lat, lng}: {lat: number; lng: number}) {
+		let response = await fetch(
+			`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`,
 			{
 				method: 'GET',
 				headers: {
 					Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`,
 				},
 			},
-		)
-			.then(data => data.json())
-			.then(data => {
-				setAddress(
-					data.documents[0].road_address
-						? data.documents[0].road_address.address_name
-								.split(' ')
-								.slice(0, 2)
-								.join(' ')
-						: data.documents[0].address.address_name
-								.split(' ')
-								.slice(0, 2)
-								.join(' '),
-				);
-			});
+		);
+		let result = await response.json();
+
+		if (addressRef.current) {
+			addressRef.current.value = result.documents[0].road_address
+				? result.documents[0].road_address.address_name
+						.split(' ')
+						.slice(0, 2)
+						.join(' ')
+				: result.documents[0].address.address_name
+						.split(' ')
+						.slice(0, 2)
+						.join(' ');
+		}
 	}
 
 	return (
@@ -62,41 +70,43 @@ export default function CoordsInput({coords}: {coords?: AdoptCoords}) {
 			<div className={styles.container}>
 				<div className={styles.header}>
 					<span>지역 설정</span>
-					<button onClick={setCurrentPositionByBtn}>현 위치로 지정</button>
+					<button onClick={getCurrentPosition}>현 위치로 지정</button>
 				</div>
 				<Map
 					onClick={(_t, e) => {
-						getAddressByCoords();
-						setCurrentPosition({
-							lat: e.latLng.getLat(),
-							lng: e.latLng.getLng(),
-						});
+						let lat = e.latLng.getLat();
+						let lng = e.latLng.getLng();
+						latitudeRef.current!.value = lat.toString();
+						longitudeRef.current!.value = lng.toString();
+						setAddress({lat, lng});
 					}}
-					center={currentPosition}
+					center={{
+						lat: Number(latitudeRef.current?.value || '126.970609'),
+						lng: Number(longitudeRef.current?.value || '37.55467'),
+					}}
 					style={mapStyle}
 					level={6}
 				>
-					<MapMarker position={currentPosition}></MapMarker>
+					<MapMarker
+						position={{
+							lat: Number(latitudeRef.current?.value || '126.970609'),
+							lng: Number(longitudeRef.current?.value || '37.55467'),
+						}}
+					></MapMarker>
 				</Map>
-				<input
-					type="text"
-					name="latitude"
-					id="latitude"
-					value={currentPosition.lat}
-					onChange={e => {}}
-				/>
+				<input type="text" name="latitude" id="latitude" ref={latitudeRef} />
 				<input
 					type="text"
 					name="longitude"
 					id="longitude"
-					value={currentPosition.lng}
+					ref={longitudeRef}
 					onChange={e => {}}
 				/>
 				<input
 					type="text"
 					name="address"
 					id="address"
-					value={address}
+					ref={addressRef}
 					onChange={e => {}}
 				/>
 			</div>
