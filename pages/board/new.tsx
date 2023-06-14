@@ -8,6 +8,7 @@ import styles from '@/styles/pages/board/new.module.scss';
 
 export default function New() {
 	const [serverImageList, setServerImageList] = useState<MyFile[]>([]);
+	const [preventClick, setPreventClick] = useState<boolean>(false);
 	const router = useRouter();
 	const refresh = useRefreshToken();
 
@@ -20,11 +21,14 @@ export default function New() {
 	async function onSubmit(e: BaseSyntheticEvent) {
 		e.preventDefault();
 
-		if (e.target.title.value == '' || e.target.context.value == '') {
+		if (
+			e.target.title.value.trim() == '' ||
+			e.target.context.value.trim() == ''
+		) {
 			alert('제목과 본문은 필수 입력사항입니다.');
 			return;
 		}
-
+		setPreventClick(true);
 		let response = await fetch(
 			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article`,
 			{
@@ -55,6 +59,7 @@ export default function New() {
 		} else if (result.status === 401) {
 			await refresh();
 			alert('다시 시도해 주세요.');
+			setPreventClick(false);
 		} else {
 			alert(result.error);
 			router.push('/board');
@@ -64,7 +69,7 @@ export default function New() {
 	return (
 		<section className="body" style={{zIndex: '101'}}>
 			<form className={styles.form} onSubmit={onSubmit}>
-				<Header type="게시글" />
+				<Header preventClick={preventClick} type="게시글" />
 				<ImageUploader
 					serverImageList={serverImageList}
 					setServerImageList={setServerImageList}
