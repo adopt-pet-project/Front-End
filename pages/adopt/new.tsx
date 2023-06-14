@@ -11,6 +11,7 @@ import useRefreshToken from '@/utils/hooks/useRefreshToken';
 
 export default function New({query}: {query: {type: string}}) {
 	const [serverImageList, setServerImageList] = useState<MyFile[]>([]);
+	const [preventClick, setPreventClick] = useState<boolean>(false);
 	const router = useRouter();
 	const refresh = useRefreshToken();
 
@@ -74,6 +75,8 @@ export default function New({query}: {query: {type: string}}) {
 			return;
 		}
 
+		setPreventClick(true);
+
 		let response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/adopt`, {
 			headers: {
 				'Content-Type': 'application/json',
@@ -89,6 +92,7 @@ export default function New({query}: {query: {type: string}}) {
 			await refresh();
 			alert('다시 시도해 주세요.');
 			router.reload();
+			setPreventClick(false);
 		} else {
 			alert(`Server Error : ${result.status}`);
 			router.push('/adopt');
@@ -98,7 +102,7 @@ export default function New({query}: {query: {type: string}}) {
 	return (
 		<section className="body" style={{zIndex: '101'}}>
 			<form className={styles.form} onSubmit={onSubmit} method="POST">
-				<Header type="분양글" />
+				<Header preventClick={preventClick} type="분양글" />
 				<ImageUploader
 					serverImageList={serverImageList}
 					setServerImageList={setServerImageList}

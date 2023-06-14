@@ -26,13 +26,13 @@ export default function SetUsername({
 			setValid(false);
 			return;
 		}
-		isSearch(true);
 
 		let response = await fetch(
 			`${process.env.NEXT_PUBLIC_SERVER_URL}/member/validate?nickname=${inputRef.current?.value}`,
 		);
 
 		let result = await response.json();
+		isSearch(true);
 
 		if (!result.duplicated) {
 			setValid(true);

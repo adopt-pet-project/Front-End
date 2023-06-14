@@ -1,16 +1,19 @@
 import {useRouter} from 'next/router';
 import styles from '@/styles/components/new/header.module.scss';
-import {BaseSyntheticEvent, useState} from 'react';
+import {BaseSyntheticEvent} from 'react';
 
-export default function Header({type}: {type: string}) {
+export default function Header({
+	type,
+	preventClick,
+}: {
+	type: string;
+	preventClick: boolean;
+}) {
 	const router = useRouter();
-	const [isClicked, setIsClick] = useState<boolean>(false);
 
 	function onClickSubmit(e: BaseSyntheticEvent) {
-		if (isClicked) {
+		if (preventClick) {
 			e.preventDefault();
-		} else {
-			setIsClick(true);
 		}
 	}
 
