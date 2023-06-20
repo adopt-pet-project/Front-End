@@ -60,6 +60,14 @@ export default function Modify({query}: {query: {id: string}}) {
 	async function onSubmit(e: BaseSyntheticEvent) {
 		e.preventDefault();
 
+		if (
+			e.target.title.value.trim() == '' ||
+			e.target.context.value.trim() == ''
+		) {
+			alert('제목과 본문은 필수 입력사항입니다.');
+			return;
+		}
+
 		let response = await fetch(
 			`${process.env.NEXT_PUBLIC_SERVER_URL}/community/article/${
 				query.id as string
