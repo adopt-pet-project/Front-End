@@ -1,0 +1,51 @@
+.banner {
+	overflow: hidden;
+	padding: 4px 16px;
+	user-select: none;
+	border-bottom: 1px solid var(--gray);
+
+	.weekly,
+	.trending {
+		cursor: pointer;
+		margin: 8px 0;
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+
+		.hot {
+			min-width: 60px;
+			width: 60px;
+			text-align: center;
+			margin-right: 8px;
+			color: var(--white);
+			padding: 4px;
+			font-size: 12px;
+			line-height: 16px;
+			border-radius: 4px;
+			font-weight: 500;
+		}
+
+		.bannerTitle {
+			flex-grow: 1;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			word-break: break-all;
+			font-weight: bold;
+		}
+
+		.bannerTime {
+			text-align: right;
+			height: inherit;
+			min-width: 60px;
+			font-size: 14px;
+		}
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.banner {
+		border-top: 1px solid var(--gray);
+		padding: 4px 12px;
+	}
+}

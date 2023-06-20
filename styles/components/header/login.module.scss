@@ -1,0 +1,153 @@
+.loginModal {
+	background-color: var(--white);
+	width: 100%;
+	height: 100%;
+	border-radius: 8px;
+	max-width: 768px;
+	max-height: 400px;
+	transition: var(--transition);
+	animation: 0.3s ease-in-out fadeInDesktop;
+}
+
+.header {
+	padding: 10px 14px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	height: 48px;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px -1px 0px 0px inset;
+}
+
+.close {
+	cursor: pointer;
+	user-select: none;
+	width: 28px;
+	height: 28px;
+}
+
+.body {
+	padding: 16px;
+	height: calc(100% - 48px);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	.message {
+		margin-top: 16px;
+		font-size: 18px;
+		font-weight: bold;
+	}
+}
+
+.provider {
+	padding: 16px 48px;
+	user-select: none;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	li {
+		text-align: center;
+		list-style-type: none;
+	}
+
+	.logo {
+		width: 56px;
+		height: 56px;
+	}
+
+	.kakao,
+	.naver,
+	.google {
+		border: none;
+		cursor: pointer;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 140px;
+		height: 140px;
+		border-radius: 8px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.16), 0 0px 4px rgba(0, 0, 0, 0.05);
+	}
+
+	.kakao {
+		background-color: #fee500;
+	}
+	.naver {
+		background-color: #03c75a;
+	}
+
+	.google {
+		background-color: #fff;
+	}
+}
+
+.subMessage {
+	color: var(--darkgray);
+	display: inline-block;
+	margin-top: 8px;
+}
+
+.policy {
+	padding: 8px 48px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+
+	a {
+		text-decoration: none;
+		color: var(--black);
+	}
+}
+
+@keyframes fadeInDesktop {
+	0% {
+		opacity: 0;
+		transform: translate3d(0px, -50px, 0px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translate3d(0px, 0px, 0px);
+	}
+}
+
+@keyframes fadeInMobile {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.loginModal {
+		max-height: 100vh;
+		border-radius: 0;
+		animation: 0.3s ease-in-out fadeInMobile;
+	}
+
+	.provider {
+		.kakao,
+		.naver,
+		.google {
+			width: 100%;
+			height: 56px;
+		}
+
+		.logo {
+			width: 28px;
+			height: 28px;
+		}
+
+		.subMessage {
+			margin-bottom: 32px;
+		}
+
+		flex-direction: column;
+	}
+}

@@ -1,0 +1,42 @@
+.container {
+	display: flex;
+	overflow: hidden;
+	min-width: 32px;
+	width: 32px;
+	box-sizing: border-box;
+	border: 1px solid #d1d6db;
+	background-color: var(--greyBackground);
+	z-index: 1;
+	border-radius: 4px;
+	height: 32px;
+	cursor: pointer;
+	transition: var(--transition);
+
+	img {
+		display: block;
+		user-select: none;
+		padding: 4px;
+		height: 100%;
+	}
+	input {
+		display: block;
+		min-width: 60px;
+		padding: 4px 0 4px 4px;
+		font-size: 16px;
+		flex-grow: 1;
+		outline: none;
+		border: none;
+	}
+
+	&:hover {
+		background-color: var(--white);
+	}
+}
+
+.container[data-active] {
+	overflow: visible;
+	flex-direction: row-reverse;
+	background-color: var(--white);
+	width: calc(100% - 16px);
+	flex-grow: 1;
+}

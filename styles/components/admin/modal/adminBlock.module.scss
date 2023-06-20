@@ -1,0 +1,99 @@
+.adminBlock {
+	background: white;
+	width: max(30%, 420px);
+	height: max(50%, 350px);
+	margin-bottom: 40px;
+	border-radius: 8px;
+	border: 1px solid rgb(129, 129, 129);
+	transition: var(--transition);
+	animation: 0.3s ease-in-out fadeInDesktop;
+	input {
+		border: none;
+		width: 80%;
+		font-size: 15px;
+		&:focus {
+			outline: none;
+		}
+	}
+	textarea {
+		font-size: 15px;
+		height: 98%;
+		margin: 0px;
+		padding: 2px;
+		resize: none;
+		width: 80%;
+		border: 1px solid lightgrey;
+		&:focus {
+			outline: none;
+			border: 1px solid black;
+		}
+	}
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid black;
+	padding: 5px;
+	hr {
+		width: 100%;
+	}
+	:nth-child(1),
+	:nth-child(3),
+	:nth-child(5) {
+		:nth-child(1) {
+			padding-right: 5px;
+			margin-right: 5px;
+			border-right: 1px solid black;
+		}
+	}
+
+	:nth-child(5) {
+		display: flex;
+		height: 400px;
+		:nth-child(1) {
+			height: 100%;
+			display: flex;
+			align-items: center;
+		}
+	}
+	:nth-child(7) {
+		display: flex;
+		justify-content: space-between;
+
+		.cancelBtn {
+			border: none;
+			background: none;
+			cursor: pointer;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+		:nth-child(2) {
+			button {
+				text-decoration: none;
+				background: rgb(255, 68, 68);
+				border: 2px solid rgb(255, 155, 155);
+				border-radius: 8px;
+				margin-left: 5px;
+				font-weight: bold;
+				color: white;
+				padding: 8px;
+				cursor: pointer;
+				&:hover {
+					background: rgb(219, 58, 58);
+				}
+			}
+		}
+	}
+}
+
+@keyframes fadeInDesktop {
+	0% {
+		opacity: 0;
+		transform: translate3d(0px, 50px, 0px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translate3d(0px, 0px, 0px);
+	}
+}

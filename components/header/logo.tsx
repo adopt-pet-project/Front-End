@@ -1,5 +1,14 @@
-import styles from '@/styles/components/header/header.module.scss';
-
+import {useRouter} from 'next/router';
 export default function Logo() {
-	return <div>Logo</div>;
+	const router = useRouter();
+	return (
+		<div
+			onClick={() => {
+				router.push('/');
+			}}
+			style={{display: 'flex', cursor: 'pointer'}}
+		>
+			<img src="/image/logo.png" alt="logo" height={52} />
+		</div>
+	);
 }

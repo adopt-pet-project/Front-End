@@ -1,0 +1,6 @@
+.userName {
+	cursor: pointer;
+	&:hover {
+		text-decoration: underline;
+	}
+}

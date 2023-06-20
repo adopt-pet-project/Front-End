@@ -1,0 +1,32 @@
+.container {
+	margin: 16px 16px 0 16px;
+	min-height: 100px;
+}
+
+.message {
+	position: relative;
+	flex-grow: 1;
+	min-height: 32px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin: 0 40px;
+	.text {
+		background-color: var(--gray);
+		line-height: 28px;
+		border-radius: 8px;
+		margin: 2px;
+		padding: 0 8px;
+	}
+}
+
+.me {
+	justify-content: flex-end;
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		margin: 12px 12px 0 12px;
+	}
+}

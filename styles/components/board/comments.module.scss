@@ -1,0 +1,96 @@
+.container {
+	width: 100%;
+}
+
+.comment {
+	border-bottom: 1px solid var(--gray);
+	position: relative;
+}
+
+.reply {
+	padding-left: 40px;
+}
+
+.empty {
+	flex-grow: 1;
+	margin: 16px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.upper,
+.lower {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	button {
+		cursor: pointer;
+		font-size: 12px;
+		user-select: none;
+		border: none;
+		background-color: transparent;
+		outline: none;
+	}
+}
+
+.upper {
+	align-items: flex-start;
+	padding-top: 16px;
+}
+
+.middle {
+	word-break: break-all;
+}
+
+.lower {
+	align-items: center;
+	margin-top: 16px;
+	padding-bottom: 8px;
+}
+
+.middle,
+.lower {
+	margin-left: 40px;
+	font-size: 14px;
+}
+
+.user {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	span {
+		font-weight: bold;
+	}
+}
+
+.profile {
+	user-select: none;
+	width: 28px;
+	height: 28px;
+	margin-right: 8px;
+	border-radius: 50%;
+}
+
+.likeCount {
+	margin-left: 8px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	left: 0;
+	user-select: none;
+	border-radius: 50px;
+}
+
+.author {
+	cursor: pointer;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.upper {
+		padding-top: 12px;
+	}
+}

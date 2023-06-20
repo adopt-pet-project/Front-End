@@ -1,0 +1,22 @@
+.timeSelectBar {
+	margin: 15px 0;
+	text-align: right;
+	span {
+		margin-left: 10px;
+		font-weight: normal;
+		cursor: pointer;
+	}
+	.selected {
+		font-weight: bold;
+	}
+}
+
+.graphWrap {
+	transition: all 0.8s ease;
+	height: 0px;
+	overflow: hidden;
+}
+
+.on {
+	height: 100%;
+}

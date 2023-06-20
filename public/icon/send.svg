@@ -1,0 +1,13 @@
+<svg width="30" height="30" xmlns="http://www.w3.org/2000/svg" version="1.1">
+
+ <metadata id="metadata819">image/svg+xml</metadata>
+ <g>
+  <title>Layer 1</title>
+  <g id="svg_8">
+   <g id="layer1"  >
+    <path stroke-miterlimit="4" stroke-width="2" fill="#000000" id="rect820" d="m25,15.5c0,-1.11962 -1,-1.5 -1,-1.5l-20,-8l3.60352,8.56055l9.39648,0.93945l-9.39648,0.93945l-3.60352,8.56055l20,-8c0,0 1,-0.38038 1,-1.5z" />
+   </g>
+   <path transform="rotate(90 22.0506 15.5087)" stroke="#000" id="svg_6" d="m18.44992,20.14197l3.60071,-9.26654l3.60071,9.26654l-7.20143,0z" fill="#000000"/>
+  </g>
+ </g>
+</svg>

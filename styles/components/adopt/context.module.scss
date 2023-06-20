@@ -1,0 +1,29 @@
+.container {
+	padding: 16px;
+	border-bottom: 1px solid var(--gray);
+}
+
+.info {
+	user-select: none;
+	display: flex;
+	justify-content: space-between;
+}
+
+.modify,
+.delete {
+	cursor: pointer;
+	margin: 0;
+	padding: 0;
+	border: none;
+	outline: none;
+	text-decoration: none;
+	background-color: transparent;
+	font-size: 16px;
+	color: var(--black);
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		padding: 12px;
+	}
+}

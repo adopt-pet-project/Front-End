@@ -1,0 +1,14 @@
+.container {
+	padding: 16px;
+	min-height: 200px;
+
+	span {
+		word-break: break-all;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		padding: 12px;
+	}
+}

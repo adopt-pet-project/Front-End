@@ -1,0 +1,24 @@
+.comment {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	margin-bottom: 12px;
+	border: 2px solid rgb(201, 201, 201);
+	border-radius: 8px;
+	padding: 3px;
+	cursor: pointer;
+	transition: linear 0.2s all;
+	&:hover {
+		border: 2px solid var(--black);
+	}
+
+	.title {
+		font-weight: bold;
+		margin-bottom: 4px;
+	}
+	.content {
+		margin-bottom: 4px;
+		margin-left: 3px;
+	}
+}

@@ -1,0 +1,71 @@
+.container {
+	user-select: none;
+	background-color: var(--white);
+	border-radius: 8px;
+	padding: 16px;
+	width: 300px;
+	height: 300px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+.selector {
+	margin: 16px 0 0 0;
+	padding: 0;
+	height: 46px;
+	width: 140px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 4px 12px;
+	font-size: 18px;
+	border: 1px solid var(--middlegray);
+	border-radius: 8px;
+	outline: none;
+	position: relative;
+	cursor: pointer;
+	box-sizing: border-box;
+}
+
+.options {
+	box-shadow: var(--boxShadow);
+	position: absolute;
+	top: 52px;
+	left: -2px;
+	border: 1px solid var(--gray);
+	border-radius: 8px;
+	width: 140px;
+	list-style-type: none;
+	background-color: var(--white);
+}
+
+.option {
+	margin: 6px;
+	padding: 6px;
+	border-radius: 8px;
+	&:hover {
+		background-color: var(--gray);
+	}
+}
+
+.button {
+	width: 100%;
+	height: 36px;
+	border: none;
+	background-color: var(--black);
+	color: var(--white);
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		background-color: var(--white);
+		border-radius: 8px;
+		padding: 12px;
+		width: 280px;
+		height: 280px;
+	}
+}

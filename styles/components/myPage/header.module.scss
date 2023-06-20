@@ -1,0 +1,22 @@
+.container {
+	display: flex;
+	align-items: center;
+	height: 48px;
+	padding: 6px 12px;
+	border-bottom: 1px solid var(--gray);
+	width: 100%;
+	font-weight: bold;
+}
+
+.goBack {
+	cursor: pointer;
+	width: 36px;
+	height: 36px;
+	transform: translateY(-1px);
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		padding: 0;
+	}
+}

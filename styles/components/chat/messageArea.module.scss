@@ -1,0 +1,87 @@
+.container {
+	margin: 16px;
+}
+
+.message {
+	position: relative;
+	flex-grow: 1;
+	min-height: 32px;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+	justify-content: center;
+	margin: 0 40px;
+	.text {
+		word-break: break-word;
+		display: inline-block;
+		background-color: var(--gray);
+		line-height: 28px;
+		border-radius: 8px;
+		margin: 2px 4px;
+		padding: 0 8px;
+	}
+
+	.profile {
+		user-select: none;
+		position: absolute;
+		top: 0;
+	}
+}
+
+.opponent {
+	justify-content: flex-start;
+	.profile {
+		left: -40px;
+	}
+	.infoText {
+		align-items: flex-start;
+	}
+}
+
+.textContainer {
+	display: flex;
+	align-items: flex-end;
+	min-height: 28px;
+}
+
+.me {
+	justify-content: flex-end;
+	.profile {
+		right: -40px;
+	}
+	.infoText {
+		align-items: flex-end;
+	}
+}
+
+.time {
+	font-size: 10px;
+}
+
+.rowReverse {
+	flex-direction: row-reverse;
+}
+
+.multimedia {
+	margin: 2px 4px;
+	width: 200px;
+	height: 200px;
+	border-radius: 8px;
+	background-color: var(--gray);
+}
+
+.read {
+	font-size: 10px;
+}
+
+.infoText {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		margin: 12px;
+	}
+}

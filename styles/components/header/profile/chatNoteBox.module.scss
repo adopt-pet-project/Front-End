@@ -1,0 +1,18 @@
+.navWrap {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+
+	height: 40px;
+	.box {
+		cursor: pointer;
+		border-radius: 8px;
+		background: rgb(140, 140, 140);
+		font-weight: bold;
+		width: 48.5%;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+}

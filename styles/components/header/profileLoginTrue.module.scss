@@ -1,0 +1,34 @@
+.profileLoginWrap {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	.imgWrap {
+		display: flex;
+		background: none;
+		position: relative;
+		cursor: pointer;
+
+		.alarmD {
+			width: 12px;
+			height: 12px;
+			background: rgb(255, 64, 64);
+			position: absolute;
+			border-radius: 50%;
+			top: -4px;
+			left: 12px;
+		}
+	}
+	.profile {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		margin-left: 20px;
+		cursor: pointer;
+		.img {
+			border-radius: 50%;
+		}
+	}
+}

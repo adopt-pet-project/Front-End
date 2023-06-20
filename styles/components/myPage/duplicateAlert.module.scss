@@ -1,0 +1,24 @@
+.checkWrap {
+	margin-top: 5px;
+	display: flex;
+	.checkName {
+		font-size: 15px;
+		color: var(--skyblue);
+	}
+	.already {
+		color: red;
+	}
+
+	.checkBtn {
+		font-weight: bold;
+		margin-left: 5px;
+		cursor: pointer;
+		background: none;
+		border: none;
+		&:hover {
+			text-decoration: underline;
+			background: rgba(0, 0, 0, 0.05);
+			border-radius: 5px;
+		}
+	}
+}

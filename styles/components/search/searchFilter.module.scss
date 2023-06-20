@@ -1,0 +1,38 @@
+.container {
+	user-select: none;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0 12px;
+	margin: 0;
+	min-width: max-content;
+}
+
+.optionList {
+	box-shadow: var(--boxShadow);
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	top: -4px;
+	left: -0.8px;
+	width: max-content;
+	position: absolute;
+	border: 1px solid var(--bordergray);
+	border-radius: 6px;
+	background-color: var(--white);
+
+	li {
+		border-radius: 6px;
+		padding: 4px 6px;
+		margin: 4px 6px;
+		&:hover {
+			background-color: var(--gray);
+		}
+	}
+}
+
+.hidden {
+	display: none;
+}

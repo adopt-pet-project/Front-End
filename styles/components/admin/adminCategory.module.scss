@@ -1,0 +1,45 @@
+.adminCategory {
+	display: flex;
+	justify-content: left;
+	width: 100%;
+	position: relative;
+	margin-bottom: 15px;
+	padding: 20px 16px;
+
+	.categoryBtn {
+		margin-right: 20px;
+		width: 50px;
+		font-weight: bold;
+		color: var(--skyblue);
+		font-size: 23px;
+		margin-bottom: 8px;
+		cursor: pointer;
+	}
+	.currentBtn {
+		color: var(--black);
+	}
+
+	.ctgBoundary {
+		position: absolute;
+		width: 42px;
+		left: 15px;
+		top: 40px;
+		border: 1px solid var(--skyblue);
+		transform: translateX(0px);
+		transition: var(--transition);
+	}
+
+	.onRight {
+		transform: translateX(71px);
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.adminCategory {
+		display: flex;
+		justify-content: left;
+		width: 100%;
+		position: relative;
+		padding: 20px 12px;
+	}
+}

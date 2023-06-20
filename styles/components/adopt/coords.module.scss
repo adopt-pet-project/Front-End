@@ -1,0 +1,41 @@
+.container {
+	padding: 16px;
+	.map {
+		height: 300px;
+		border-radius: 8px;
+		z-index: 10;
+	}
+
+	.title,
+	.address {
+		font-size: 24px;
+		font-weight: bold;
+		display: inline-block;
+	}
+
+	.title {
+		text-align: left;
+		margin-bottom: 16px;
+	}
+
+	.address {
+		width: 100%;
+		text-align: center;
+		margin-top: 16px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		padding: 12px;
+
+		.title {
+			margin-bottom: 12px;
+		}
+
+		.address {
+			font-size: 18px;
+			margin-top: 12px;
+		}
+	}
+}

@@ -1,0 +1,47 @@
+.avtivityCategory {
+	padding: 5px;
+	display: flex;
+	justify-content: left;
+	width: 100%;
+	position: relative;
+	margin-bottom: 20px;
+
+	.categoryBtn {
+		margin-right: 20px;
+		width: 70px;
+		font-weight: bold;
+		color: var(--skyblue);
+		font-size: 23px;
+		margin-bottom: 8px;
+		cursor: pointer;
+	}
+	.currentBtn {
+		color: var(--black);
+	}
+
+	.ctgBoundary {
+		position: absolute;
+		width: 60px;
+		left: 5px;
+		top: 28px;
+		border: 1px solid var(--skyblue);
+		transform: translateX(0px);
+		transition: var(--transition);
+	}
+
+	.onRight {
+		transform: translateX(82px);
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.adminCategory {
+		display: flex;
+		justify-content: left;
+		width: 100%;
+		position: relative;
+		margin-bottom: 30px;
+		margin-top: 30px;
+		margin-left: 40px;
+	}
+}

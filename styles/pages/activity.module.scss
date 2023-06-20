@@ -1,0 +1,9 @@
+.activeWrap {
+	padding: 16px;
+}
+
+@media screen and (max-width: 768px) {
+	.activeWrap {
+		padding: 12px;
+	}
+}

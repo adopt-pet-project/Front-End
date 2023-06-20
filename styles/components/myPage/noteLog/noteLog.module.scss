@@ -1,0 +1,26 @@
+.noteLog {
+	width: 100%;
+	padding: 16px;
+	position: relative;
+	height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+	.noteLog {
+		padding: 12px;
+	}
+}
+
+.sendNote {
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+	background: rgba(0, 0, 0, 0.1);
+	border-radius: 50%;
+	display: flex;
+	padding: 5px;
+	cursor: pointer;
+	&:hover {
+		background: rgba(0, 0, 0, 0.15);
+	}
+}
