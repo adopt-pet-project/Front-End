@@ -11,15 +11,15 @@ export default function CoordsInput({coords}: {coords?: AdoptCoords}) {
 		borderRadius: '8px',
 	};
 
-	const INIT_LATITUDE = '37.55467';
-	const INIT_LONGITUDE = '126.970609';
+	const INIT_LATITUDE = 37.55467;
+	const INIT_LONGITUDE = 126.970609;
 	const INIT_ADDRESS = '서울특별시 중구';
 
-	// coords for display
-	const [latitude, setLatitude] = useState<string>(INIT_LATITUDE);
-	const [longitude, setLongitude] = useState<string>(INIT_LONGITUDE);
+	// coords for kakao map
+	const [latitude, setLatitude] = useState<number>(INIT_LATITUDE);
+	const [longitude, setLongitude] = useState<number>(INIT_LONGITUDE);
 
-	// coords for logic
+	// input ref for form
 	const latitudeRef = useRef<HTMLInputElement>(null);
 	const longitudeRef = useRef<HTMLInputElement>(null);
 	const addressRef = useRef<HTMLInputElement>(null);
@@ -28,55 +28,57 @@ export default function CoordsInput({coords}: {coords?: AdoptCoords}) {
 		if (latitudeRef.current && longitudeRef.current && addressRef.current) {
 			latitudeRef.current.value = coords
 				? coords.latitude.toString()
-				: INIT_LATITUDE;
+				: INIT_LATITUDE.toString();
 			longitudeRef.current.value = coords
 				? coords.longitude.toString()
-				: INIT_LONGITUDE;
+				: INIT_LONGITUDE.toString();
 			addressRef.current.value = coords ? coords.address : INIT_ADDRESS;
 
-			setLatitude(latitudeRef.current.value);
-			setLongitude(longitudeRef.current.value);
+			setLatitude(Number(latitudeRef.current.value));
+			setLongitude(Number(longitudeRef.current.value));
 		}
 	}, []);
+
+	useEffect(() => {
+		async function setInput({lat, lng}: {lat: number; lng: number}) {
+			let response = await fetch(
+				`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`,
+				{
+					method: 'GET',
+					headers: {
+						Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`,
+					},
+				},
+			);
+			let result = await response.json();
+			if (addressRef.current && result.documents[0]) {
+				addressRef.current.value = result.documents[0].road_address
+					? result.documents[0].road_address.address_name
+							.split(' ')
+							.slice(0, 2)
+							.join(' ')
+					: result.documents[0].address.address_name
+							.split(' ')
+							.slice(0, 2)
+							.join(' ');
+			}
+
+			latitudeRef.current!.value = lat.toString();
+			longitudeRef.current!.value = lng.toString();
+		}
+
+		setInput({lat: latitude, lng: longitude});
+	}, [latitude, longitude]);
 
 	function getCurrentPosition(e: BaseSyntheticEvent) {
 		e.preventDefault();
 		navigator.geolocation.getCurrentPosition(position => {
 			let {latitude, longitude} = position.coords;
-			const coord = new window.kakao.maps.LatLng(latitude, longitude);
-			latitudeRef.current!.value = coord.Ma;
-			longitudeRef.current!.value = coord.La;
-
-			setAddress({lat: coord.Ma, lng: coord.La});
+			setLongitude(longitude);
+			setLatitude(latitude);
 		});
 	}
 
-	async function setAddress({lat, lng}: {lat: number; lng: number}) {
-		let response = await fetch(
-			`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`,
-			{
-				method: 'GET',
-				headers: {
-					Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`,
-				},
-			},
-		);
-		let result = await response.json();
-		if (addressRef.current && result.documents[0]) {
-			addressRef.current.value = result.documents[0].road_address
-				? result.documents[0].road_address.address_name
-						.split(' ')
-						.slice(0, 2)
-						.join(' ')
-				: result.documents[0].address.address_name
-						.split(' ')
-						.slice(0, 2)
-						.join(' ');
-		}
-
-		setLatitude(lat.toString());
-		setLongitude(lng.toString());
-	}
 	return (
 		<>
 			<div className={styles.container}>
@@ -86,11 +88,8 @@ export default function CoordsInput({coords}: {coords?: AdoptCoords}) {
 				</div>
 				<Map
 					onClick={(_t, e) => {
-						let lat = e.latLng.getLat();
-						let lng = e.latLng.getLng();
-						latitudeRef.current!.value = lat.toString();
-						longitudeRef.current!.value = lng.toString();
-						setAddress({lat, lng});
+						setLatitude(e.latLng.getLat());
+						setLongitude(e.latLng.getLng());
 					}}
 					center={{
 						lat: Number(latitude),
@@ -107,20 +106,8 @@ export default function CoordsInput({coords}: {coords?: AdoptCoords}) {
 					></MapMarker>
 				</Map>
 				<input type="text" name="latitude" id="latitude" ref={latitudeRef} />
-				<input
-					type="text"
-					name="longitude"
-					id="longitude"
-					ref={longitudeRef}
-					onChange={e => {}}
-				/>
-				<input
-					type="text"
-					name="address"
-					id="address"
-					ref={addressRef}
-					onChange={e => {}}
-				/>
+				<input type="text" name="longitude" id="longitude" ref={longitudeRef} />
+				<input type="text" name="address" id="address" ref={addressRef} />
 			</div>
 		</>
 	);
