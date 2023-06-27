@@ -68,6 +68,7 @@ export default function ImageUploader({
 
 		localImageList.current = newImageList;
 
+		updateState();
 		for (let i = prevLength; i < newImageList.length; i++) {
 			await uploadImage(newImageList[i]);
 		}
@@ -147,7 +148,6 @@ export default function ImageUploader({
 	}
 
 	function updateState() {
-		console.log(localImageList.current);
 		setLocalImageUploadState(
 			localImageList.current.map((myFile: MyFile) => {
 				return myFile.isUploaded;
