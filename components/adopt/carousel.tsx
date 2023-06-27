@@ -100,7 +100,7 @@ export default function Carousel({
 					preventScroll.current = false;
 				}
 			};
-	}, [imagesRef.current]);
+	}, []);
 
 	function onClickLeft() {
 		if (!preventScroll.current && imagesRef.current) {
