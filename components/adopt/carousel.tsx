@@ -86,42 +86,33 @@ export default function Carousel({
 		};
 	}, [imagesRef.current, page]);
 
+	useEffect(() => {
+		if (imagesRef.current)
+			imagesRef.current.ontransitionend = () => {
+				if (page === 1 || page === carouselImageList.length - 2) {
+					setPage(page === 1 ? carouselImageList.length - 2 : 1);
+					imagesRef.current!.style.transition = 'none';
+					setTimeout(() => {
+						imagesRef.current!.style.transition = 'var(--transition)';
+						preventScroll.current = false;
+					}, 30);
+				} else {
+					preventScroll.current = false;
+				}
+			};
+	}, [imagesRef.current]);
+
 	function onClickLeft() {
 		if (!preventScroll.current && imagesRef.current) {
 			setPage(page - 1);
 			preventScroll.current = true;
-			imagesRef.current.ontransitionend = () => {
-				if (page === 1 && imagesRef.current) {
-					setPage(carouselImageList.length - 2);
-					imagesRef.current.style.transition = 'none';
-					setTimeout(() => {
-						if (imagesRef.current)
-							imagesRef.current.style.transition = 'var(--transition)';
-						preventScroll.current = false;
-					}, 50);
-				} else {
-					preventScroll.current = false;
-				}
-			};
 		}
 	}
+
 	function onClickRight() {
 		if (!preventScroll.current && imagesRef.current) {
 			setPage(page + 1);
 			preventScroll.current = true;
-			imagesRef.current.ontransitionend = () => {
-				if (page === carouselImageList.length - 2 && imagesRef.current) {
-					setPage(1);
-					imagesRef.current.style.transition = 'none';
-					setTimeout(() => {
-						if (imagesRef.current)
-							imagesRef.current.style.transition = 'var(--transition)';
-						preventScroll.current = false;
-					}, 50);
-				} else {
-					preventScroll.current = false;
-				}
-			};
 		}
 	}
 	return (
